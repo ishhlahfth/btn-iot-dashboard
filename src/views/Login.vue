@@ -15,20 +15,20 @@
         <p class="cursor-pointer text-blue-500 text-right font-medium">
           Forgot your password?
         </p>
-        <button type="submit" class="bg-blue-900 rounded-md p-2 text-white font-semibold">
-          SIGN IN
-        </button>
+        <help-button label="sign in" />
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import HelpButton from '../components/atoms/Button.vue';
 import HelpInput from '../components/atoms/Input.vue';
 
 export default {
   name: 'Login',
   components: {
+    HelpButton,
     HelpInput,
   },
   data() {
