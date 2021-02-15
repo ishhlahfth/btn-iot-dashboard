@@ -49,8 +49,8 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-textarea:focus, input:focus{
-    outline: none;
+textarea:focus, input:focus {
+  outline: none;
 }
 #app {
   font-family: Inter, sans-serif;

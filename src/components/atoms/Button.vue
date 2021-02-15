@@ -1,9 +1,16 @@
 <template>
   <button
     v-if="type === 'primary'"
-    class="rounded-lg bg-midnight py-2 px-4 text-snow font-semibold hover:bg-royal"
+    class="flex items-center justify-center rounded-lg bg-midnight py-2 px-4 text-snow font-semibold hover:bg-royal"
   >
-    {{ buttonLabel }}
+    <div class="grid grid-flow-col auto-cols-max gap-2">
+      <div class="h-full w-full flex items-center justify-center">
+        <icon />
+      </div>
+      <div class="h-full w-full flex items-center">
+        {{ buttonLabel }}
+      </div>
+    </div>
   </button>
   <button
     v-if="type === 'secondary'"
@@ -20,6 +27,8 @@
 </template>
 
 <script>
+import Icon from './Icon.vue';
+
 export default {
   name: 'HelpButton',
   props: {
@@ -31,6 +40,9 @@ export default {
       type: String,
       default: 'ok',
     },
+  },
+  components: {
+    Icon,
   },
   computed: {
     buttonLabel() {
