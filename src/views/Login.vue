@@ -12,7 +12,7 @@
       >
         <help-input type="email" label="Email" placeholder="yourmail@email.com" v-model="email" />
         <help-input type="password" label="Password" placeholder="password" v-model="password" />
-        <p class="cursor-pointer text-blue-500 text-right font-medium">
+        <p class="cursor-pointer text-royal text-right font-medium">
           Forgot your password?
         </p>
         <help-button label="sign in" />

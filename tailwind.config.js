@@ -248,6 +248,13 @@ module.exports = {
       '7xl': ['4.5rem', { lineHeight: '1' }],
       '8xl': ['6rem', { lineHeight: '1' }],
       '9xl': ['8rem', { lineHeight: '1' }],
+      xsmall: '0.71428571428rem',
+      small: '0.85714285714rem',
+      subheading: '1.14285714286rem',
+      heading4: '1.28571428571rem',
+      heading3: '1.42857142857rem',
+      heading2: '1.71428571429rem',
+      heading1: '1.85714285714rem',
     },
     fontWeight: {
       thin: '100',

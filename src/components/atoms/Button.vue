@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center justify-center rounded-lg py-2 px-4 font-semibold"
+    class="flex self-start items-center justify-center rounded-lg py-2 px-4 font-semibold"
     :class="[
       {
         'bg-midnight text-snow hover:bg-royal': type === 'primary',
@@ -19,7 +19,7 @@
         <icon :name="icon" />
       </div>
       <div class="h-full w-full flex items-center">
-        {{ buttonLabel }}
+        <p>{{ buttonLabel }}</p>
       </div>
     </div>
   </button>
