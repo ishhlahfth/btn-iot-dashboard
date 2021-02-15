@@ -19,17 +19,31 @@
     <p class="bg-flame self-start">Alignment Test 1</p>
     <div class="bg-mint-dark">No Self Align</div>
   </div>
+  <!-- <help-toggle /> -->
+  <p>- - - - -</p>
+  <help-toggle v-model="toggleState1" />
+  <help-toggle v-model="toggleState2" />
+  <help-toggle v-model="toggleState3" />
 </template>
 
 <script>
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
+import HelpToggle from '../components/atoms/Toggle.vue';
 
 export default {
   name: 'AnotherPage',
   components: {
     HelpBadge,
     HelpButton,
+    HelpToggle,
+  },
+  data() {
+    return {
+      toggleState1: true,
+      toggleState2: true,
+      toggleState3: false,
+    };
   },
 };
 </script>
