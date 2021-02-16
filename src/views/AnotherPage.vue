@@ -21,12 +21,16 @@
   </div>
   <!-- <help-toggle /> -->
   <p>- - - - -</p>
+  <help-checkbox v-model="checkboxState1" />
+  <help-checkbox v-model="checkboxState2" />
+  <help-checkbox v-model="checkboxState3" />
   <help-toggle v-model="toggleState1" />
   <help-toggle v-model="toggleState2" />
   <help-toggle v-model="toggleState3" />
 </template>
 
 <script>
+import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
@@ -34,6 +38,7 @@ import HelpToggle from '../components/atoms/Toggle.vue';
 export default {
   name: 'AnotherPage',
   components: {
+    HelpCheckbox,
     HelpBadge,
     HelpButton,
     HelpToggle,
@@ -43,6 +48,9 @@ export default {
       toggleState1: true,
       toggleState2: true,
       toggleState3: false,
+      checkboxState1: true,
+      checkboxState2: true,
+      checkboxState3: false,
     };
   },
 };
