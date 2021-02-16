@@ -43,6 +43,7 @@ export default {
 <style lang="scss">
 body {
   font-size: 14px;
+  color: #303B4D;
 }
 * {
   margin: 0;

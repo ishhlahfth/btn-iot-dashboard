@@ -19,7 +19,7 @@
         <icon :name="icon" />
       </div>
       <div class="h-full w-full flex items-center">
-        <p>{{ buttonLabel }}</p>
+        <p class="text-body">{{ buttonLabel }}</p>
       </div>
     </div>
   </button>

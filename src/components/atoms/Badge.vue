@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex self-start rounded-full font-medium text-center text-xsmall py-1 px-2"
+    class="flex justify-center max-w-min self-start rounded-full font-medium text-center text-xsmall py-1 px-2"
     :class="[
       { 'px-4': !icon },
       { 'text-mint-dark bg-mint-soft': color === 'positive' },

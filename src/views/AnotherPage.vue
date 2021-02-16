@@ -1,32 +1,57 @@
 <template>
-  <p>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum voluptatem pariatur eum,
-    porro fuga asperiores ipsum ipsam incidunt velit aliquid?
-  </p>
-  <div class="flex h-24">
-    <help-button label="sign in" />
-    <span>
-      <help-button label="edit" icon="edit" />
-    </span>
-    <span>
-      <help-badge label="Rp 300.120" icon="chevron-up" />
-    </span>
-    <help-badge label="Rp 300.120" icon="chevron-down" />
-    <help-badge label="Rp 300.120" icon="chevron-up" />
-    <help-badge label="Rp 300.120" />
+  <div class="p-4 grid grid-flow-row gap-6">
+    <p>
+      This page is a temporary page used to store all components made adjusted to Buy and Sell Figma
+      Prototype
+    </p>
+
+    <div class="grid grid-flow-row auto-cols-max gap-1">
+      <p class="font-medium">Buttons</p>
+      <div>
+        <help-button label="edit" icon="edit" />
+      </div>
+      <div>
+        <help-button label="yes i'm sure" />
+      </div>
+      <div>
+        <help-button label="save as draft" type="secondary" icon="download" />
+      </div>
+    </div>
+
+    <div class="grid grid-flow-row auto-cols-min gap-1">
+      <p class="font-medium">Badges</p>
+      <div>
+        <help-badge label="Rp 300.120" color="positive" icon="chevron-up" />
+      </div>
+      <div>
+        <help-badge label="Rp 300.120" icon="chevron-down" />
+      </div>
+      <div>
+        <help-badge label="Verivied" color="positive" />
+      </div>
+      <div>
+        <help-badge label="Not Verivied" />
+      </div>
+    </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Checkboxes</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-checkbox v-model="checkboxState1" />
+        <help-checkbox v-model="checkboxState2" />
+        <help-checkbox v-model="checkboxState3" />
+      </div>
+    </div>
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Toggles</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-toggle v-model="toggleState1" />
+        <help-toggle v-model="toggleState2" />
+        <help-toggle v-model="toggleState3" />
+      </div>
+    </div>
+    <div class="grid grid-flow-row gap-1"></div>
   </div>
-  <div class="flex h-24">
-    <p class="bg-flame self-start">Alignment Test 1</p>
-    <div class="bg-mint-dark">No Self Align</div>
-  </div>
-  <!-- <help-toggle /> -->
-  <p>- - - - -</p>
-  <help-checkbox v-model="checkboxState1" />
-  <help-checkbox v-model="checkboxState2" />
-  <help-checkbox v-model="checkboxState3" />
-  <help-toggle v-model="toggleState1" />
-  <help-toggle v-model="toggleState2" />
-  <help-toggle v-model="toggleState3" />
 </template>
 
 <script>
