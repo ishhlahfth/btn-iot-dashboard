@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss">
-:root {
+body {
   font-size: 14px;
 }
 * {
