@@ -7,7 +7,7 @@
     <icon name="photograph" />
     <p class="text-xsmall font-medium">No Image</p>
   </div>
-  <div v-else :style="bannerStyle">
+  <div v-else :style="bannerStyle" class="grid place-items-center">
     <img :src="src" alt="banner" class="rounded" />
   </div>
 </template>

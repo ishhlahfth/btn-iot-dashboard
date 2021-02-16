@@ -106,6 +106,16 @@
           :width="104"
           :height="104"
         />
+        <help-thumbnail
+          src="https://nos.jkt-1.neo.id/mcdonalds/foods/October2019/nhj93oZApoMavF1lC6Wm.png"
+          :width="104"
+          :height="104"
+        />
+        <help-thumbnail
+          src="https://nos.jkt-1.neo.id/mcdonalds/foods/August2019/H0YCaF0JIpZX2Jwzzx5O.png"
+          :width="104"
+          :height="104"
+        />
       </div>
     </div>
   </div>
