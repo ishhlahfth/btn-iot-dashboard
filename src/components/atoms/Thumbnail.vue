@@ -8,7 +8,7 @@
     <p class="text-xsmall font-medium">No Image</p>
   </div>
   <div v-else :style="bannerStyle">
-    <img :src="src" alt="banner" />
+    <img :src="src" alt="banner" class="rounded" />
   </div>
 </template>
 
@@ -16,18 +16,18 @@
 import Icon from './Icon.vue';
 
 export default {
-  name: 'Banner',
+  name: 'HelpThumbnail',
   components: {
     Icon,
   },
   props: {
     width: {
       type: Number,
-      default: 196,
+      default: 160,
     },
     height: {
       type: Number,
-      default: 80,
+      default: 90,
     },
     src: {
       type: String,

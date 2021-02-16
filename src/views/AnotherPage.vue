@@ -75,34 +75,59 @@
     </div>
 
     <div class="grid grid-flow-row gap-1">
-      <p class="font-medium">Banners</p>
+      <p class="font-medium">Thumbnails</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
-        <banner src="" />
-        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/Cashback50-BannerInApps_Low_.png" />
-        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/60%25_10k-BannerApps(1).png" />
-        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/BannerApps.png" />
+        <help-thumbnail src="" :width="196" :height="80" />
+        <help-thumbnail
+          src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/Cashback50-BannerInApps_Low_.png"
+          :width="196"
+          :height="80"
+        />
+        <help-thumbnail
+          src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/60%25_10k-BannerApps(1).png"
+          :width="196"
+          :height="80"
+        />
+        <help-thumbnail
+          src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/BannerApps.png"
+          :width="196"
+          :height="80"
+        />
+      </div>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-thumbnail src="" :width="104" :height="104" />
+        <help-thumbnail
+          src="https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg"
+          :width="104"
+          :height="104"
+        />
+        <help-thumbnail
+          src="https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg"
+          :width="104"
+          :height="104"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Banner from '../components/atoms/Banner.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
+import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 import Icon from '../components/atoms/Icon.vue';
 
 export default {
   name: 'AnotherPage',
   components: {
-    Banner,
     HelpCheckbox,
     HelpBadge,
     HelpButton,
     HelpRadio,
+    HelpThumbnail,
     HelpToggle,
     Icon,
   },
