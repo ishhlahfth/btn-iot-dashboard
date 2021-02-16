@@ -3,7 +3,7 @@
     @input="$emit('update:modelValue', !modelValue)"
     type="checkbox"
     :value="modelValue"
-    class="form-tick appearance-none h-5 w-5 m-1 border text-royal border-grey-2 rounded checked:bg-blue-600 checked:border-transparent focus:outline-none"
+    class="help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none cursor-pointer"
   />
 </template>
 
@@ -20,10 +20,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-tick:checked {
+.help-checkbox:checked {
   background-image: url(../../assets/icons/check.svg);
   border-color: transparent;
-  background-color: currentColor;
   background-size: 100% 100%;
   background-position: 50%;
   background-repeat: no-repeat;

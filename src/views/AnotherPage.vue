@@ -42,6 +42,16 @@
         <help-checkbox v-model="checkboxState3" />
       </div>
     </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Radio</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-radio v-model="radioState1" name="example-group" />
+        <help-radio v-model="radioState2" name="example-group" />
+        <help-radio v-model="radioState3" name="example-group" />
+      </div>
+    </div>
+
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Toggles</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
@@ -58,6 +68,7 @@
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
+import HelpRadio from '../components/atoms/Radio.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 
 export default {
@@ -66,6 +77,7 @@ export default {
     HelpCheckbox,
     HelpBadge,
     HelpButton,
+    HelpRadio,
     HelpToggle,
   },
   data() {
@@ -76,6 +88,9 @@ export default {
       checkboxState1: true,
       checkboxState2: true,
       checkboxState3: false,
+      radioState1: true,
+      radioState2: true,
+      radioState3: false,
     };
   },
 };
