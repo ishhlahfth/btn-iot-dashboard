@@ -73,10 +73,21 @@
         <icon name="shield" />
       </div>
     </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Banners</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <banner src="" />
+        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/Cashback50-BannerInApps_Low_.png" />
+        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/60%25_10k-BannerApps(1).png" />
+        <banner src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/BannerApps.png" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Banner from '../components/atoms/Banner.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
@@ -87,6 +98,7 @@ import Icon from '../components/atoms/Icon.vue';
 export default {
   name: 'AnotherPage',
   components: {
+    Banner,
     HelpCheckbox,
     HelpBadge,
     HelpButton,
