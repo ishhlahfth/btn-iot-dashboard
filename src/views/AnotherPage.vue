@@ -60,7 +60,19 @@
         <help-toggle v-model="toggleState3" />
       </div>
     </div>
-    <div class="grid grid-flow-row gap-1"></div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Icons</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <icon name="user-group" />
+        <icon name="cube" />
+        <icon name="filter" />
+        <icon name="download" />
+        <icon name="chevron-down" />
+        <icon name="photograph" />
+        <icon name="shield" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +82,7 @@ import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
+import Icon from '../components/atoms/Icon.vue';
 
 export default {
   name: 'AnotherPage',
@@ -79,6 +92,7 @@ export default {
     HelpButton,
     HelpRadio,
     HelpToggle,
+    Icon,
   },
   data() {
     return {
