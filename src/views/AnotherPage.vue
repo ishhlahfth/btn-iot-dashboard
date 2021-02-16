@@ -7,30 +7,36 @@
 
     <div class="grid grid-flow-row auto-cols-max gap-1">
       <p class="font-medium">Buttons</p>
-      <div>
-        <help-button label="edit" icon="edit" />
-      </div>
-      <div>
-        <help-button label="yes i'm sure" />
-      </div>
-      <div>
-        <help-button label="save as draft" type="secondary" icon="download" />
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <div>
+          <help-button label="edit" icon="edit" />
+        </div>
+        <div>
+          <help-button label="yes i'm sure" />
+        </div>
+        <div>
+          <help-button label="save as draft" type="secondary" icon="download" />
+        </div>
       </div>
     </div>
 
     <div class="grid grid-flow-row auto-cols-min gap-1">
       <p class="font-medium">Badges</p>
-      <div>
-        <help-badge label="Rp 300.120" color="positive" icon="chevron-up" />
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <div>
+          <help-badge label="Rp 300.120" color="positive" icon="chevron-up" />
+        </div>
+        <div>
+          <help-badge label="Rp 300.120" icon="chevron-down" />
+        </div>
       </div>
-      <div>
-        <help-badge label="Rp 300.120" icon="chevron-down" />
-      </div>
-      <div>
-        <help-badge label="Verivied" color="positive" />
-      </div>
-      <div>
-        <help-badge label="Not Verivied" />
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <div>
+          <help-badge label="Verivied" color="positive" />
+        </div>
+        <div>
+          <help-badge label="Not Verivied" />
+        </div>
       </div>
     </div>
 
@@ -58,6 +64,26 @@
         <help-toggle v-model="toggleState1" />
         <help-toggle v-model="toggleState2" />
         <help-toggle v-model="toggleState3" />
+      </div>
+    </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Avatars</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-avatar src="" :size="32" placeholder="Putri" />
+        <help-avatar
+          src="https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"
+          :size="32"
+        />
+        <help-avatar src="https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg" :size="32" />
+        <help-avatar
+          src="https://instagram.fjog3-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/s1080x1080/66827581_515397049002415_3097204635080124637_n.jpg?_nc_ht=instagram.fjog3-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=8W0W1Qiyo2wAX8f_PRo&tp=1&oh=4d9fe038537653efbb8b6cf3c30bf4c5&oe=6055D48F"
+          :size="64"
+        />
+        <help-avatar
+          src="https://awsimages.detik.net.id/community/media/visual/2020/09/25/kristo-immanuel_34.jpeg?"
+          :size="64"
+        />
       </div>
     </div>
 
@@ -122,6 +148,7 @@
 </template>
 
 <script>
+import HelpAvatar from '../components/atoms/Avatar.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
@@ -133,6 +160,7 @@ import Icon from '../components/atoms/Icon.vue';
 export default {
   name: 'AnotherPage',
   components: {
+    HelpAvatar,
     HelpCheckbox,
     HelpBadge,
     HelpButton,
