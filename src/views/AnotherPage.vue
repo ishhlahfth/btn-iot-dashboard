@@ -40,6 +40,51 @@
       </div>
     </div>
 
+    <div class="grid grid-flow-row auto-cols-min gap-1">
+      <p class="font-medium">Option Items</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-option-item label="Unselected" />
+        <help-option-item label="Selected" selected />
+      </div>
+    </div>
+
+    <div class="grid grid-flow-row auto-cols-min gap-1">
+      <p class="font-medium">Option</p>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <div class="w-52">
+          <help-option
+            :options="['Today', 'Yesterday', 'Last 7 Days', 'This Month']"
+            default="Yesterday"
+          />
+          <p class="text-xsmall text-mint">Fixed width</p>
+        </div>
+        <div>
+          <help-option
+            :options="[
+              'Gopay',
+              'Ovo',
+              'Shopee Pay',
+              'Dana',
+              'Very long text label but not lorem ipsum',
+            ]"
+          />
+          <p class="text-xsmall text-mint">Auto width</p>
+        </div>
+        <div class="w-52">
+          <help-option
+            :options="[
+              'Gopay',
+              'Ovo',
+              'Shopee Pay',
+              'Dana',
+              'Very long text label but not lorem ipsum another page icon checkbox button input option item so long',
+            ]"
+          />
+          <p class="text-xsmall text-mint">Fixed width (notice the ellipsis)</p>
+        </div>
+      </div>
+    </div>
+
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Checkboxes</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
@@ -152,6 +197,8 @@ import HelpAvatar from '../components/atoms/Avatar.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
+import HelpOption from '../components/molecules/Option.vue';
+import HelpOptionItem from '../components/atoms/OptionItem.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
 import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
@@ -164,6 +211,8 @@ export default {
     HelpCheckbox,
     HelpBadge,
     HelpButton,
+    HelpOption,
+    HelpOptionItem,
     HelpRadio,
     HelpThumbnail,
     HelpToggle,
