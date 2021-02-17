@@ -50,16 +50,16 @@
 
     <div class="grid grid-flow-row auto-cols-min gap-1">
       <p class="font-medium">Option</p>
-      <div class="grid grid-flow-col auto-cols-max gap-1">
+      <div class="grid grid-flow-col auto-cols-max gap-2">
         <div class="w-52">
-          <help-option
+          <help-select
             :options="['Today', 'Yesterday', 'Last 7 Days', 'This Month']"
             default="Yesterday"
           />
           <p class="text-xsmall text-mint">Fixed width</p>
         </div>
         <div>
-          <help-option
+          <help-select
             :options="[
               'Gopay',
               'Ovo',
@@ -70,15 +70,9 @@
           />
           <p class="text-xsmall text-mint">Auto width</p>
         </div>
-        <div class="w-52">
-          <help-option
-            :options="[
-              'Gopay',
-              'Ovo',
-              'Shopee Pay',
-              'Dana',
-              'Very long text label but not lorem ipsum another page icon checkbox button input option item so long',
-            ]"
+        <div class="w-44">
+          <help-select
+            :options="['I Write Sins Not Tragedies', 'Brick By Boring Brick', 'Love The Way You Lie']"
           />
           <p class="text-xsmall text-mint">Fixed width (notice the ellipsis)</p>
         </div>
@@ -197,8 +191,8 @@ import HelpAvatar from '../components/atoms/Avatar.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
-import HelpOption from '../components/molecules/Option.vue';
 import HelpOptionItem from '../components/atoms/OptionItem.vue';
+import HelpSelect from '../components/molecules/Select.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
 import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
@@ -211,8 +205,8 @@ export default {
     HelpCheckbox,
     HelpBadge,
     HelpButton,
-    HelpOption,
     HelpOptionItem,
+    HelpSelect,
     HelpRadio,
     HelpThumbnail,
     HelpToggle,
