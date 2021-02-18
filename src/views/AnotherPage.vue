@@ -94,10 +94,10 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Radio</p>
-      <div class="grid grid-flow-col auto-cols-max gap-1">
-        <help-radio v-model="radioState1" name="example-group" />
-        <help-radio v-model="radioState2" name="example-group" />
-        <help-radio v-model="radioState3" name="example-group" />
+      <div class="grid grid-flow-col auto-cols-max gap-6">
+        <help-radio v-model="radioState1" group="example-group" label="Radio 1" />
+        <help-radio v-model="radioState2" group="example-group" label="Radio 2" />
+        <help-radio v-model="radioState3" group="example-group" label="Radio 3" />
       </div>
     </div>
 
