@@ -49,7 +49,7 @@
     </div>
 
     <div class="grid grid-flow-row auto-cols-min gap-1">
-      <p class="font-medium">Option</p>
+      <p class="font-medium">Select</p>
       <div class="grid grid-flow-col auto-cols-max gap-2">
         <div class="w-52">
           <help-select
