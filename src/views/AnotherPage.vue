@@ -5,7 +5,7 @@
       Prototype
     </p>
 
-    <div class="grid grid-flow-row auto-cols-max gap-1">
+    <div class="grid grid-flow-row auto-rows-max gap-1">
       <p class="font-medium">Buttons</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
         <div>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="grid grid-flow-row auto-cols-min gap-1">
+    <div class="grid grid-flow-row auto-rows-min gap-1">
       <p class="font-medium">Badges</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
         <div>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div class="grid grid-flow-row auto-cols-min gap-1">
+    <div class="grid grid-flow-row auto-rows-min gap-1">
       <p class="font-medium">Option Items</p>
       <div class="grid grid-flow-col auto-cols-max gap-1">
         <help-option-item label="Unselected" />
@@ -48,8 +48,8 @@
       </div>
     </div>
 
-    <div class="grid grid-flow-row auto-cols-min gap-1">
-      <p class="font-medium">Select</p>
+    <div class="grid grid-flow-row auto-rows-min gap-1">
+      <p class="font-medium">Selects</p>
       <div class="grid grid-flow-col auto-cols-max gap-2">
         <div class="w-52">
           <help-select
