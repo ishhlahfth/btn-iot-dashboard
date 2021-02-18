@@ -190,22 +190,49 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Inputs</p>
-      <div class="grid grid-flow-row auto-cols-max gap-1">
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-input v-model="inputValue" placeholder="This input has no label" type="text" />
+      </div>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
         <help-input
           v-model="inputValue"
-          label="Uyeah"
+          label="Name"
           placeholder="This is placeholder"
           type="text"
         />
-        <help-input v-model="inputValue" placeholder="This input has no label" type="text" />
-        <help-input v-model="inputValue" label="Date" placeholder="##-##-####" type="text">
-          <template v-slot:prepend>
-            <icon name="user-group" />
-          </template>
+        <help-input v-model="inputValue" label="Search" placeholder="With a right icon" type="text">
           <template v-slot:append>
             <icon name="search" />
           </template>
         </help-input>
+        <help-input v-model="inputValue" label="Group" placeholder="With a left icon" type="text">
+          <template v-slot:prepend>
+            <icon name="user-group" />
+          </template>
+        </help-input>
+      </div>
+      <div class="grid grid-flow-col auto-cols-max gap-1">
+        <help-input
+          v-model="inputTextareaValue"
+          label="Description"
+          placeholder="This input is for larger edit experience"
+          type="textarea"
+          :rows="3"
+        />
+        <help-input
+          v-model="inputTextareaValue"
+          label="Description"
+          placeholder="This input is for larger edit experience"
+          type="textarea"
+          :rows="4"
+        />
+        <help-input
+          v-model="inputTextareaValue"
+          label="Description"
+          placeholder="This input is for larger edit experience"
+          type="textarea"
+          :rows="5"
+        />
       </div>
     </div>
   </div>
@@ -251,6 +278,7 @@ export default {
       radioState2: true,
       radioState3: false,
       inputValue: '',
+      inputTextareaValue: '',
     };
   },
 };
