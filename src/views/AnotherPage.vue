@@ -85,10 +85,10 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Checkboxes</p>
-      <div class="grid grid-flow-col auto-cols-max gap-1">
-        <help-checkbox v-model="checkboxState1" />
-        <help-checkbox v-model="checkboxState2" />
-        <help-checkbox v-model="checkboxState3" />
+      <div class="grid grid-flow-col auto-cols-max gap-6">
+        <help-checkbox v-model="checkboxState1" label="Item 1" />
+        <help-checkbox v-model="checkboxState2" label="Item 2" />
+        <help-checkbox v-model="checkboxState3" label="Item 3" />
       </div>
     </div>
 

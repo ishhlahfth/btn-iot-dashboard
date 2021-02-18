@@ -1,10 +1,13 @@
 <template>
-  <input
-    @input="$emit('update:modelValue', !modelValue)"
-    type="checkbox"
-    :value="modelValue"
-    class="help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none cursor-pointer"
-  />
+  <div class="grid grid-flow-col auto-cols-max gap-1 place-items-center">
+    <input
+      @input="$emit('update:modelValue', !modelValue)"
+      type="checkbox"
+      :value="modelValue"
+      class="help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none cursor-pointer"
+    />
+    <label v-if="label" class="font-medium">{{ label }}</label>
+  </div>
 </template>
 
 <script>
@@ -14,6 +17,10 @@ export default {
     modelValue: {
       type: Boolean,
       default: false,
+    },
+    label: {
+      type: String,
+      default: '',
     },
   },
 };
