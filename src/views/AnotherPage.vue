@@ -72,7 +72,11 @@
         </div>
         <div class="w-44">
           <help-select
-            :options="['I Write Sins Not Tragedies', 'Brick By Boring Brick', 'Love The Way You Lie']"
+            :options="[
+              'I Write Sins Not Tragedies',
+              'Brick By Boring Brick',
+              'Love The Way You Lie',
+            ]"
           />
           <p class="text-xsmall text-mint">Fixed width (notice the ellipsis)</p>
         </div>
@@ -183,6 +187,27 @@
         />
       </div>
     </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Inputs</p>
+      <div class="grid grid-flow-row auto-cols-max gap-1">
+        <help-input
+          v-model="inputValue"
+          label="Uyeah"
+          placeholder="This is placeholder"
+          type="text"
+        />
+        <help-input v-model="inputValue" placeholder="This input has no label" type="text" />
+        <help-input v-model="inputValue" label="Date" placeholder="##-##-####" type="text">
+          <template v-slot:prepend>
+            <icon name="user-group" />
+          </template>
+          <template v-slot:append>
+            <icon name="search" />
+          </template>
+        </help-input>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -191,6 +216,7 @@ import HelpAvatar from '../components/atoms/Avatar.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
+import HelpInput from '../components/atoms/Input.vue';
 import HelpOptionItem from '../components/atoms/OptionItem.vue';
 import HelpSelect from '../components/molecules/Select.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
@@ -205,6 +231,7 @@ export default {
     HelpCheckbox,
     HelpBadge,
     HelpButton,
+    HelpInput,
     HelpOptionItem,
     HelpSelect,
     HelpRadio,
@@ -223,6 +250,7 @@ export default {
       radioState1: true,
       radioState2: true,
       radioState3: false,
+      inputValue: '',
     };
   },
 };
