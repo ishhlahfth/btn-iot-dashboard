@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 grid grid-flow-row gap-6">
+  <div class="p-4 grid grid-flow-row gap-6 bg-grey-2">
     <p>
       This page is a temporary page used to store all components made adjusted to Buy and Sell Figma
       Prototype
@@ -248,7 +248,110 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table Headers</p>
-      <table-header :columns="['name', 'email', 'address', 'phone number']" />
+      <table-header :columns="['name', 'email', 'address', 'phone number', 'role']" />
+    </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Table Body</p>
+      <table-body
+        :rows="[
+          {
+            name: 'Sheila',
+            email: 'sheila@gmail.com',
+            address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+            phone_number: '0812-3309-1090',
+            role: 'Super Admin',
+          },
+        ]"
+      />
+    </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Table</p>
+      <div class="overflow-x-auto rounded-lg">
+        <table class="min-w-full">
+          <table-header
+            :columns="[
+              'name',
+              'email',
+              'address',
+              'phone number',
+              'role',
+              'email2',
+              'address2',
+              'phone number2',
+              'role2',
+            ]"
+          />
+          <table-body
+            :rows="[
+              {
+                name: 'Sheila',
+                email: 'sheila@gmail.com',
+                address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number: '0812-3309-1090',
+                role: 'Super Admin',
+                email2: 'sheila@gmail.com',
+                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number2: '0812-3309-1090',
+                role2: 'Super Admin',
+              },
+              {
+                name: 'Kiara',
+                email: 'kiara@gmail.com',
+                address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number: '0812-3309-1090',
+                role: 'Super Admin',
+                email2: 'sheila@gmail.com',
+                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number2: '0812-3309-1090',
+                role2: 'Super Admin',
+              },
+              {
+                name: 'Alya',
+                email: 'alya@gmail.com',
+                address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
+                phone_number: '0812-2224-1590',
+                role: 'Admin',
+                email2: 'sheila@gmail.com',
+                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number2: '0812-3309-1090',
+                role2: 'Super Admin',
+              },
+            ]"
+          />
+        </table>
+      </div>
+      <div class="overflow-x-auto rounded-lg">
+        <table class="min-w-full">
+          <table-header :columns="['name', 'email', 'address', 'phone number', 'role']" />
+          <table-body
+            :rows="[
+              {
+                name: 'Sheila',
+                email: 'sheila@gmail.com',
+                address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number: '0812-3309-1090',
+                role: 'Super Admin',
+              },
+              {
+                name: 'Kiara',
+                email: 'kiara@gmail.com',
+                address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
+                phone_number: '0812-3309-1090',
+                role: 'Super Admin',
+              },
+              {
+                name: 'Alya',
+                email: 'alya@gmail.com',
+                address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
+                phone_number: '0812-2224-1590',
+                role: 'Admin',
+              },
+            ]"
+          />
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -267,6 +370,7 @@ import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
 import Icon from '../components/atoms/Icon.vue';
 import TableHeader from '../components/molecules/TableHeader.vue';
+import TableBody from '../components/molecules/TableBody.vue';
 
 export default {
   name: 'AnotherPage',
@@ -284,6 +388,7 @@ export default {
     HelpTooltip,
     Icon,
     TableHeader,
+    TableBody,
   },
   data() {
     return {

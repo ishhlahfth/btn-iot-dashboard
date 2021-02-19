@@ -50,6 +50,13 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+table {
+  border-collapse: collapse;
+}
+td, th {
+  text-align: left;
+  font-weight: inherit;
+}
 textarea:focus, input:focus {
   outline: none;
 }

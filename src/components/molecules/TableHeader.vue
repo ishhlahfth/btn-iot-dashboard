@@ -1,7 +1,15 @@
 <template>
-  <div class="grid grid-flow-col auto-rows-auto gap-x-16 py-3 px-6 bg-white uppercase">
-    <p v-for="(column, i) in columns" :key="i">{{ column }}</p>
-  </div>
+  <thead class="border-b border-grey-4 whitespace-nowrap min-w-full">
+    <tr class="bg-white uppercase">
+      <th
+        v-for="(column, i) in columns"
+        :key="i"
+        class="py-3 px-6 text-small font-medium text-grey-2"
+      >
+        {{ column }}
+      </th>
+    </tr>
+  </thead>
 </template>
 
 <script>
@@ -11,6 +19,9 @@ export default {
     columns: {
       type: Array,
       required: true,
+      default() {
+        return [];
+      },
     },
   },
 };
