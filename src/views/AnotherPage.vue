@@ -120,6 +120,14 @@
         />
         <help-avatar src="https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg" :size="32" />
         <help-avatar
+          :src="require('@/assets/partnerlogo/OVO-logo-circle.png')"
+          :size="40"
+        />
+        <help-avatar
+          :src="require('@/assets/partnerlogo/lalamove-logo-circle.png')"
+          :size="40"
+        />
+        <help-avatar
           src="https://instagram.fjog3-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/s1080x1080/66827581_515397049002415_3097204635080124637_n.jpg?_nc_ht=instagram.fjog3-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=8W0W1Qiyo2wAX8f_PRo&tp=1&oh=4d9fe038537653efbb8b6cf3c30bf4c5&oe=6055D48F"
           :size="64"
         />
@@ -128,6 +136,7 @@
           :size="64"
         />
       </div>
+      <p class="text-xsmall">*logo can also be used on thumbnail component</p>
     </div>
 
     <div class="grid grid-flow-row gap-1">
