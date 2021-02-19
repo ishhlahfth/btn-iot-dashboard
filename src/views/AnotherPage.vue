@@ -268,90 +268,8 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table</p>
-      <div class="overflow-x-auto rounded-lg">
-        <table class="min-w-full">
-          <table-header
-            :columns="[
-              'name',
-              'email',
-              'address',
-              'phone number',
-              'role',
-              'email2',
-              'address2',
-              'phone number2',
-              'role2',
-            ]"
-          />
-          <table-body
-            :rows="[
-              {
-                name: 'Sheila',
-                email: 'sheila@gmail.com',
-                address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number: '0812-3309-1090',
-                role: 'Super Admin',
-                email2: 'sheila@gmail.com',
-                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number2: '0812-3309-1090',
-                role2: 'Super Admin',
-              },
-              {
-                name: 'Kiara',
-                email: 'kiara@gmail.com',
-                address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number: '0812-3309-1090',
-                role: 'Super Admin',
-                email2: 'sheila@gmail.com',
-                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number2: '0812-3309-1090',
-                role2: 'Super Admin',
-              },
-              {
-                name: 'Alya',
-                email: 'alya@gmail.com',
-                address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
-                phone_number: '0812-2224-1590',
-                role: 'Admin',
-                email2: 'sheila@gmail.com',
-                address2: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number2: '0812-3309-1090',
-                role2: 'Super Admin',
-              },
-            ]"
-          />
-        </table>
-      </div>
-      <div class="overflow-x-auto rounded-lg">
-        <table class="min-w-full">
-          <table-header :columns="['name', 'email', 'address', 'phone number', 'role']" />
-          <table-body
-            :rows="[
-              {
-                name: 'Sheila',
-                email: 'sheila@gmail.com',
-                address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number: '0812-3309-1090',
-                role: 'Super Admin',
-              },
-              {
-                name: 'Kiara',
-                email: 'kiara@gmail.com',
-                address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
-                phone_number: '0812-3309-1090',
-                role: 'Super Admin',
-              },
-              {
-                name: 'Alya',
-                email: 'alya@gmail.com',
-                address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
-                phone_number: '0812-2224-1590',
-                role: 'Admin',
-              },
-            ]"
-          />
-        </table>
-      </div>
+      <help-table :columns="shortTableColumn" :rows="shortTableBody" />
+      <help-table :columns="longTableColumn" :rows="longTableBody" />
     </div>
   </div>
 </template>
@@ -369,6 +287,7 @@ import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
 import Icon from '../components/atoms/Icon.vue';
+import HelpTable from '../components/templates/Table.vue';
 import TableHeader from '../components/molecules/TableHeader.vue';
 import TableBody from '../components/molecules/TableBody.vue';
 
@@ -387,6 +306,7 @@ export default {
     HelpToggle,
     HelpTooltip,
     Icon,
+    HelpTable,
     TableHeader,
     TableBody,
   },
@@ -403,6 +323,72 @@ export default {
       radioState3: false,
       inputValue: '',
       inputTextareaValue: '',
+      shortTableColumn: ['name', 'email', 'address', 'phone number', 'role'],
+      shortTableBody: [
+        {
+          name: 'Sheila',
+          email: 'sheila@gmail.com',
+          address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+          phone_number: '0812-3309-1090',
+          role: 'Super Admin',
+        },
+        {
+          name: 'Kiara',
+          email: 'kiara@gmail.com',
+          address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
+          phone_number: '0812-3309-1090',
+          role: 'Super Admin',
+        },
+        {
+          name: 'Alya',
+          email: 'alya@gmail.com',
+          address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
+          phone_number: '0812-2224-1590',
+          role: 'Admin',
+        },
+      ],
+      longTableColumn: [
+        'name',
+        'email',
+        'address',
+        'phone number',
+        'role',
+        'email2',
+        'favorite_food',
+        'phone number2',
+      ],
+      longTableBody: [
+        {
+          name: 'Sheila',
+          email: 'sheila@gmail.com',
+          address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
+          phone_number: '0812-3309-1090',
+          role: 'Super Admin',
+          email2: 'sheila@rocketmail.co.id',
+          favorite_food: 'Ketela rebus dengan taburan wijen',
+          phone_number2: '0812-3309-1090',
+        },
+        {
+          name: 'Kiara',
+          email: 'kiara@gmail.com',
+          address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
+          phone_number: '0812-3309-1090',
+          role: 'Super Admin',
+          email2: 'kiara@rocketmail.co.id',
+          favorite_food: 'Cumi goreng asam manis',
+          phone_number2: '0812-0849-6690',
+        },
+        {
+          name: 'Alya',
+          email: 'alya@gmail.com',
+          address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
+          phone_number: '0812-2224-1590',
+          role: 'Admin',
+          email2: 'alya@rocketmail.co.id',
+          favorite_food: 'Ayam bakar madu',
+          phone_number2: '0813-3309-2090',
+        },
+      ],
     };
   },
 };
