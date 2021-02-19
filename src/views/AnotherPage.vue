@@ -245,6 +245,11 @@
         <help-tooltip text="this is a tooltip" />
       </div>
     </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Table Headers</p>
+      <table-header :columns="['name', 'email', 'address', 'phone number']" />
+    </div>
   </div>
 </template>
 
@@ -261,6 +266,7 @@ import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
 import Icon from '../components/atoms/Icon.vue';
+import TableHeader from '../components/molecules/TableHeader.vue';
 
 export default {
   name: 'AnotherPage',
@@ -277,6 +283,7 @@ export default {
     HelpToggle,
     HelpTooltip,
     Icon,
+    TableHeader,
   },
   data() {
     return {
