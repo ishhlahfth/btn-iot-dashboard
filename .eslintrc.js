@@ -13,5 +13,7 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     'max-len': [1, 100, 2, { ignorePattern: 'd="([\\s\\S]*?)"' }],
     'no-nested-ternary': 'off',
+    'no-obj-calls': 'off',
+    'no-prototype-builtins': 'off',
   },
 };

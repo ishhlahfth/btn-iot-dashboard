@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 grid grid-flow-row gap-6 bg-grey-2">
+  <div class="p-4 grid grid-flow-row gap-6">
     <p>
       This page is a temporary page used to store all components made adjusted to Buy and Sell Figma
       Prototype
@@ -246,26 +246,6 @@
       </div>
     </div>
 
-    <!-- <div class="grid grid-flow-row gap-1">
-      <p class="font-medium">Table Headers</p>
-      <table-header :columns="['name', 'email', 'address', 'phone number', 'role']" />
-    </div>
-
-    <div class="grid grid-flow-row gap-1">
-      <p class="font-medium">Table Body</p>
-      <table-body
-        :rows="[
-          {
-            name: 'Sheila',
-            email: 'sheila@gmail.com',
-            address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-            phone_number: '0812-3309-1090',
-            role: 'Super Admin',
-          },
-        ]"
-      />
-    </div> -->
-
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table</p>
       <help-table :columns="shortTableColumn" :rows="shortTableBody" />
@@ -328,41 +308,47 @@ export default {
       radioState3: false,
       inputValue: '',
       inputTextareaValue: '',
-      shortTableColumn: ['name', 'email', 'address', 'phone number', 'role'],
+      shortTableColumn: [
+        { field: 'name', label: 'name' },
+        { field: 'email', label: 'email' },
+        { field: 'address', label: 'address' },
+        { field: 'phone_number', label: 'phone number' },
+        { field: 'money_spent', label: 'money spent', align: 'right' },
+      ],
       shortTableBody: [
         {
           name: 'Sheila',
           email: 'sheila@gmail.com',
           address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
           phone_number: '0812-3309-1090',
-          role: 'Super Admin',
+          money_spent: 'Rp 220.500',
         },
         {
           name: 'Kiara',
           email: 'kiara@gmail.com',
           address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
           phone_number: '0812-3309-1090',
-          role: 'Super Admin',
+          money_spent: 'Rp 410.500',
         },
         {
           name: 'Alya',
           email: 'alya@gmail.com',
           address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
           phone_number: '0812-2224-1590',
-          role: 'Admin',
+          money_spent: 'Rp 29.000',
         },
       ],
       longTableColumn: [
-        'name',
-        'email',
-        'address',
-        'phone number',
-        'role',
-        'email2',
-        'favorite food',
-        'phone number2',
-        'verification status',
-        'status',
+        { field: 'name', label: 'name' },
+        { field: 'email', label: 'email' },
+        { field: 'address', label: 'address', align: 'right' },
+        { field: 'phone_number', label: 'phone number' },
+        { field: 'role', label: 'role', align: 'center' },
+        { field: 'email2', label: 'email 2' },
+        { field: 'favorite_food', label: 'favorite food' },
+        { field: 'phone_number2', label: 'phone number 2' },
+        { field: 'verification_status', label: 'verification status', align: 'center' },
+        { field: 'status', label: 'status', align: 'center' },
       ],
       longTableBody: [
         {
