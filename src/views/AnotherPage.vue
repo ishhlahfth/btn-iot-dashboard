@@ -246,7 +246,7 @@
       </div>
     </div>
 
-    <div class="grid grid-flow-row gap-1">
+    <!-- <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table Headers</p>
       <table-header :columns="['name', 'email', 'address', 'phone number', 'role']" />
     </div>
@@ -264,12 +264,21 @@
           },
         ]"
       />
-    </div>
+    </div> -->
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table</p>
       <help-table :columns="shortTableColumn" :rows="shortTableBody" />
-      <help-table :columns="longTableColumn" :rows="longTableBody" />
+      <help-table :columns="longTableColumn" :rows="longTableBody">
+        <template v-slot="{ column, row }">
+          <help-toggle v-if="column === 'status'" v-model="row.status" />
+          <help-badge
+            v-if="column === 'verification_status'"
+            :label="row.verification_status ? 'Verified' : 'Not Verified'"
+            :color="row.verification_status ? 'positive' : 'negative'"
+          />
+        </template>
+      </help-table>
     </div>
   </div>
 </template>
@@ -288,8 +297,6 @@ import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
 import Icon from '../components/atoms/Icon.vue';
 import HelpTable from '../components/templates/Table.vue';
-import TableHeader from '../components/molecules/TableHeader.vue';
-import TableBody from '../components/molecules/TableBody.vue';
 
 export default {
   name: 'AnotherPage',
@@ -307,8 +314,6 @@ export default {
     HelpTooltip,
     Icon,
     HelpTable,
-    TableHeader,
-    TableBody,
   },
   data() {
     return {
@@ -354,8 +359,10 @@ export default {
         'phone number',
         'role',
         'email2',
-        'favorite_food',
+        'favorite food',
         'phone number2',
+        'verification status',
+        'status',
       ],
       longTableBody: [
         {
@@ -367,6 +374,8 @@ export default {
           email2: 'sheila@rocketmail.co.id',
           favorite_food: 'Ketela rebus dengan taburan wijen',
           phone_number2: '0812-3309-1090',
+          verification_status: true,
+          status: true,
         },
         {
           name: 'Kiara',
@@ -377,6 +386,8 @@ export default {
           email2: 'kiara@rocketmail.co.id',
           favorite_food: 'Cumi goreng asam manis',
           phone_number2: '0812-0849-6690',
+          verification_status: true,
+          status: false,
         },
         {
           name: 'Alya',
@@ -387,6 +398,8 @@ export default {
           email2: 'alya@rocketmail.co.id',
           favorite_food: 'Ayam bakar madu',
           phone_number2: '0813-3309-2090',
+          verification_status: false,
+          status: true,
         },
       ],
     };

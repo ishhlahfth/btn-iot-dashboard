@@ -9,6 +9,7 @@
       :value="modelValue"
       type="checkbox"
       class="appearance-none cursor-pointer transition-all duration-200 ease-in-out"
+      @change="onToggle"
     />
     <label class="w-5 h-5 rounded-full bg-white shadow cursor-pointer" />
   </div>
@@ -21,6 +22,11 @@ export default {
     modelValue: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    onToggle() {
+      console.log('🌏 on toggle');
     },
   },
 };
