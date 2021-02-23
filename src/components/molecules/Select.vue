@@ -9,9 +9,10 @@
       <icon name="selector" />
     </div>
     <help-option
-      :class="{ 'hidden': !opened }"
+      :class="{ hidden: !opened }"
       :options="options"
-      :selected="selected"
+      :position="position"
+      :selected="modelValue"
       @changeSelected="changeSelected"
     />
   </div>
@@ -28,18 +29,22 @@ export default {
     Icon,
   },
   props: {
+    modelValue: {
+      type: [String, Number],
+      required: true,
+    },
     options: {
       type: Array,
       required: true,
     },
-    default: {
+    position: {
       type: String,
-      default: '',
+      default: 'below',
     },
   },
   data() {
     return {
-      selected: !this.default ? (this.options.length > 0 ? this.options[0] : null) : this.default,
+      selected: !this.modelValue ? (this.options.length > 0 ? this.options[0] : null) : this.modelValue,
       opened: false,
     };
   },
@@ -47,6 +52,7 @@ export default {
     changeSelected(newItem) {
       this.selected = newItem;
       this.opened = false;
+      this.$emit('update:modelValue', newItem);
     },
   },
 };

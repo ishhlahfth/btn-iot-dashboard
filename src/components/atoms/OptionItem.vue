@@ -19,7 +19,7 @@ export default {
       default: false,
     },
     label: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
   },

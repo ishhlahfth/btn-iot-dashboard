@@ -54,7 +54,7 @@
         <div class="w-52">
           <help-select
             :options="['Today', 'Yesterday', 'Last 7 Days', 'This Month']"
-            default="Yesterday"
+            v-model="selectState1"
           />
           <p class="text-xsmall text-mint">Fixed width</p>
         </div>
@@ -67,16 +67,19 @@
               'Dana',
               'Very long text label but not lorem ipsum',
             ]"
+            v-model="selectState2"
           />
           <p class="text-xsmall text-mint">Auto width</p>
         </div>
         <div class="w-44">
           <help-select
+            position="above"
             :options="[
               'I Write Sins Not Tragedies',
               'Brick By Boring Brick',
               'Love The Way You Lie',
             ]"
+            v-model="selectState3"
           />
           <p class="text-xsmall text-mint">Fixed width (notice the ellipsis)</p>
         </div>
@@ -248,8 +251,13 @@
 
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table</p>
-      <help-table :columns="shortTableColumn" :rows="shortTableBody" />
-      <help-table :columns="longTableColumn" :rows="longTableBody">
+      <!-- <help-table :columns="shortTableColumn" :rows="shortTableBody" /> -->
+      <help-table
+        :columns="longTableColumn"
+        :rows="longTableBody"
+        :pagination="parentPagination"
+        @onChangePagination="getAdmins($event)"
+      >
         <template v-slot="{ column, row }">
           <help-toggle v-if="column === 'status'" v-model="row.status" />
           <help-badge
@@ -264,6 +272,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import HelpAvatar from '../components/atoms/Avatar.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
@@ -308,6 +317,9 @@ export default {
       radioState3: false,
       inputValue: '',
       inputTextareaValue: '',
+      selectState1: 'Today',
+      selectState2: 'Gopay',
+      selectState3: 'Brick By Boring Brick',
       shortTableColumn: [
         { field: 'name', label: 'name' },
         { field: 'email', label: 'email' },
@@ -350,45 +362,33 @@ export default {
         { field: 'verification_status', label: 'verification status', align: 'center' },
         { field: 'status', label: 'status', align: 'center' },
       ],
-      longTableBody: [
-        {
-          name: 'Sheila',
-          email: 'sheila@gmail.com',
-          address: 'Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta',
-          phone_number: '0812-3309-1090',
-          role: 'Super Admin',
-          email2: 'sheila@rocketmail.co.id',
-          favorite_food: 'Ketela rebus dengan taburan wijen',
-          phone_number2: '0812-3309-1090',
-          verification_status: true,
-          status: true,
-        },
-        {
-          name: 'Kiara',
-          email: 'kiara@gmail.com',
-          address: 'Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta',
-          phone_number: '0812-3309-1090',
-          role: 'Super Admin',
-          email2: 'kiara@rocketmail.co.id',
-          favorite_food: 'Cumi goreng asam manis',
-          phone_number2: '0812-0849-6690',
-          verification_status: true,
-          status: false,
-        },
-        {
-          name: 'Alya',
-          email: 'alya@gmail.com',
-          address: 'Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta',
-          phone_number: '0812-2224-1590',
-          role: 'Admin',
-          email2: 'alya@rocketmail.co.id',
-          favorite_food: 'Ayam bakar madu',
-          phone_number2: '0813-3309-2090',
-          verification_status: false,
-          status: true,
-        },
-      ],
+      longTableBody: [],
+      parentPagination: {
+        totalRows: 0,
+        rowLimit: 10,
+        page: 1,
+      },
     };
+  },
+  methods: {
+    async getAdmins(pagination) {
+      const limit = pagination.rowLimit || 10;
+      const page = pagination.page || 1;
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/admin?_page=${page}&_limit=${limit}`,
+        );
+        this.longTableBody = response.data;
+        this.parentPagination.totalRows = +response.headers['x-total-count'];
+        this.parentPagination.rowLimit = pagination.rowLimit;
+        this.parentPagination.page = pagination.page;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.getAdmins(this.parentPagination);
   },
 };
 </script>

@@ -40,7 +40,13 @@
         </tbody>
       </table>
     </div>
-    <table-footer />
+    <table-footer
+      :firstRow="1"
+      :totalRows="pagination.totalRows"
+      :rowLimit="pagination.rowLimit"
+      :page="pagination.page"
+      @onChangePagination="onChangePagination"
+    />
   </div>
 </template>
 
@@ -67,19 +73,30 @@ export default {
         return [];
       },
     },
+    pagination: {
+      type: Object,
+      default() {
+        return {
+          totalRows: 10,
+          rowLimit: 10,
+          page: 1,
+        };
+      },
+    },
   },
   methods: {
     columnAlignment(columnName) {
       let alignment = '';
-      console.log(columnName);
       const filtered = this.columns.filter((el) => el.field === columnName)[0];
-      console.log(filtered, '🚀');
       if (filtered.align) {
         alignment = filtered.align;
       } else {
         alignment = 'left';
       }
       return alignment;
+    },
+    onChangePagination(newValue) {
+      this.$emit('onChangePagination', newValue);
     },
   },
 };
