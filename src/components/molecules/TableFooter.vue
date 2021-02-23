@@ -13,15 +13,19 @@
     <div class="flex items-center text-small">
       <span class="mr-2">Records per page</span>
       <div class="mr-2">
-        <help-select :options="[10, 25, 50, 100]" position="above" v-model="tableFooter.rowLimit" />
+        <help-select :options="[10, 25, 50, 100]" position="above" v-model="localRowLimit" />
       </div>
       <div class="flex bg-white rounded-md divide-x-2 border border-grey-4">
-        <div class="p-2 cursor-pointer" @click="previousPage">
+        <div
+          class="p-2 rounded-l-md"
+          :class="localPage <= 1 ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          @click="previousPage"
+        >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="currentColor"
+            :fill="localPage <= 1 ? '#C4C4C4' : 'currentColor'"
           >
             <path
               fillRule="evenodd"
@@ -30,12 +34,16 @@
             />
           </svg>
         </div>
-        <div class="p-2 cursor-pointer" @click="nextPage">
+        <div
+          class="p-2 rounded-r-md"
+          :class="lastRow === totalRows ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          @click="nextPage"
+        >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="currentColor"
+            :fill="lastRow === totalRows ? '#C4C4C4' : 'currentColor'"
           >
             <path
               fillRule="evenodd"
@@ -73,10 +81,8 @@ export default {
   },
   data() {
     return {
-      tableFooter: {
-        rowLimit: 10,
-        page: 1,
-      },
+      localRowLimit: 10,
+      localPage: 1,
     };
   },
   computed: {
@@ -84,28 +90,42 @@ export default {
       return this.page * this.rowLimit - this.rowLimit + 1;
     },
     lastRow() {
-      return this.page * this.rowLimit;
+      let lastRow = 0;
+      const ceiledRow = this.page * this.rowLimit;
+      if (ceiledRow > this.totalRows) {
+        lastRow = this.totalRows;
+      } else {
+        lastRow = ceiledRow;
+      }
+      return lastRow;
     },
   },
   watch: {
-    tableFooter: {
-      deep: true,
-      handler(newValue) {
-        this.$emit('onChangePagination', newValue);
-      },
+    localRowLimit(newValue) {
+      this.$emit('onChangePagination', {
+        rowLimit: newValue,
+        page: 1,
+      });
+      this.localPage = 1;
+    },
+    localPage(newValue) {
+      this.$emit('onChangePagination', {
+        rowLimit: this.localRowLimit,
+        page: newValue,
+      });
     },
   },
   methods: {
     nextPage() {
-      this.tableFooter.page += 1;
+      if (this.lastRow !== this.totalRows) this.localPage += 1;
     },
     previousPage() {
-      this.tableFooter.page -= 1;
+      if (this.localPage > 0) this.localPage -= 1;
     },
   },
   mounted() {
-    this.tableFooter.rowLimit = this.rowLimit;
-    this.tableFooter.page = this.page;
+    this.localRowLimit = this.rowLimit;
+    this.localPage = this.page;
   },
 };
 </script>

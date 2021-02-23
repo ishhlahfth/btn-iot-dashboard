@@ -41,7 +41,6 @@
       </table>
     </div>
     <table-footer
-      :firstRow="1"
       :totalRows="pagination.totalRows"
       :rowLimit="pagination.rowLimit"
       :page="pagination.page"
@@ -95,8 +94,8 @@ export default {
       }
       return alignment;
     },
-    onChangePagination(newValue) {
-      this.$emit('onChangePagination', newValue);
+    onChangePagination(updatedPagination) {
+      this.$emit('onChangePagination', updatedPagination);
     },
   },
 };

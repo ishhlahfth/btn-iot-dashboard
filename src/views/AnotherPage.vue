@@ -379,9 +379,11 @@ export default {
           `http://localhost:3000/admin?_page=${page}&_limit=${limit}`,
         );
         this.longTableBody = response.data;
-        this.parentPagination.totalRows = +response.headers['x-total-count'];
-        this.parentPagination.rowLimit = pagination.rowLimit;
-        this.parentPagination.page = pagination.page;
+        this.parentPagination = {
+          totalRows: +response.headers['x-total-count'],
+          rowLimit: pagination.rowLimit,
+          page: pagination.page,
+        };
       } catch (error) {
         console.log(error);
       }
