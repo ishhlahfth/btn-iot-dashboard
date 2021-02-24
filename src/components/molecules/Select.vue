@@ -38,13 +38,19 @@ export default {
       required: true,
     },
     position: {
-      type: String,
-      default: 'below',
+      type: Array,
+      default() {
+        return ['bottom', 'right'];
+      },
     },
   },
   data() {
     return {
-      selected: !this.modelValue ? (this.options.length > 0 ? this.options[0] : null) : this.modelValue,
+      selected: !this.modelValue
+        ? this.options.length > 0
+          ? this.options[0]
+          : null
+        : this.modelValue,
       opened: false,
     };
   },

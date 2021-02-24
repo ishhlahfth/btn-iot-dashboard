@@ -1,11 +1,8 @@
 <template>
   <p
-    v-if="selected"
-    class="rounded py-3 px-4 w-full min-w-max bg-midnight text-white cursor-pointer font-medium select-none"
+    class="rounded py-3 px-4 w-full min-w-max cursor-pointer font-medium select-none"
+    :class="selected ? 'bg-midnight text-white' : 'hover:bg-grey-6'"
   >
-    {{ label }}
-  </p>
-  <p v-else class="rounded py-3 px-4 w-full min-w-max hover:bg-grey-6 cursor-pointer font-medium select-none">
     {{ label }}
   </p>
 </template>
@@ -23,6 +20,11 @@ export default {
       default: '',
     },
   },
+  // methods: {
+  //   misalnya() {
+  //     console.log('📞', this.label);
+  //   },
+  // },
 };
 </script>
 

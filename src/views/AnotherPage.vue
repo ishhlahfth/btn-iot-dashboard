@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 grid grid-flow-row gap-6">
+  <div class="p-4 grid grid-flow-row gap-6 bg-grey-6">
     <p>
       This page is a temporary page used to store all components made adjusted to Buy and Sell Figma
       Prototype
@@ -73,7 +73,7 @@
         </div>
         <div class="w-44">
           <help-select
-            position="above"
+            :position="['top', 'right']"
             :options="[
               'I Write Sins Not Tragedies',
               'Brick By Boring Brick',
@@ -268,6 +268,11 @@
         </template>
       </help-table>
     </div>
+
+    <div class="grid grid-flow-row gap-1">
+      <p class="font-medium">Navbar</p>
+      <help-navbar />
+    </div>
   </div>
 </template>
 
@@ -278,6 +283,7 @@ import HelpCheckbox from '../components/atoms/Checkbox.vue';
 import HelpBadge from '../components/atoms/Badge.vue';
 import HelpButton from '../components/atoms/Button.vue';
 import HelpInput from '../components/atoms/Input.vue';
+import HelpNavbar from '../components/molecules/Navbar.vue';
 import HelpOptionItem from '../components/atoms/OptionItem.vue';
 import HelpSelect from '../components/molecules/Select.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
@@ -295,6 +301,7 @@ export default {
     HelpBadge,
     HelpButton,
     HelpInput,
+    HelpNavbar,
     HelpOptionItem,
     HelpSelect,
     HelpRadio,

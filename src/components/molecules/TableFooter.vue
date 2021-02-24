@@ -1,5 +1,5 @@
 <template>
-  <tfoot class="w-full px-6 py-2 flex items-center justify-between">
+  <tfoot class="w-full px-6 py-2 flex items-center justify-between bg-white">
     <p class="text-small">
       Showing
       <span class="font-medium">{{ firstRow }}</span>
@@ -13,7 +13,11 @@
     <div class="flex items-center text-small">
       <span class="mr-2">Records per page</span>
       <div class="mr-2">
-        <help-select :options="[10, 25, 50, 100]" position="above" v-model="localRowLimit" />
+        <help-select
+          :options="[10, 25, 50, 100]"
+          :position="['top', 'left']"
+          v-model="localRowLimit"
+        />
       </div>
       <div class="flex bg-white rounded-md divide-x-2 border border-grey-4">
         <div
