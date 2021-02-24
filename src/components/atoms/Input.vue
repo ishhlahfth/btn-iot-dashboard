@@ -3,7 +3,7 @@
     <label class="font-medium">{{ label }}</label>
     <div
       v-if="type === 'textarea'"
-      class="border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
+      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
       :class="[
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
@@ -25,7 +25,7 @@
     </div>
     <div
       v-else
-      class="border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
+      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
       :class="[
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },

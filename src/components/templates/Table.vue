@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-x-auto overflow-y-hidden rounded-lg border border-grey-4 divide-y-2">
     <div class="overflow-x-auto">
-      <table class="min-w-full">
+      <table class="min-w-full bg-white">
         <thead class="border-b border-grey-4 whitespace-nowrap min-w-full">
           <tr class="bg-white uppercase">
             <th
@@ -21,22 +21,29 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
-          <tr v-for="(row, i) in rows" :key="i" class="bg-white">
-            <td v-for="(data, i) in row" :key="i" class="py-3 px-6 text-small">
-              <div
-                class="w-full grid"
-                :class="[
-                  { 'place-items-center': columnAlignment(i) === 'center' },
-                  { 'place-items-end': columnAlignment(i) === 'right' },
-                ]"
-              >
-                <slot :column="i" :row="row" :data="data">
-                  <!-- default, when there is no slot -->
-                  <p>{{ data }}</p>
-                </slot>
-              </div>
-            </td>
-          </tr>
+          <template v-if="rows.length > 0">
+            <tr v-for="(row, i) in rows" :key="i" class="bg-white">
+              <td v-for="(data, i) in row" :key="i" class="py-3 px-6 text-small">
+                <div
+                  class="w-full grid"
+                  :class="[
+                    { 'place-items-center': columnAlignment(i) === 'center' },
+                    { 'place-items-end': columnAlignment(i) === 'right' },
+                  ]"
+                >
+                  <slot :column="i" :row="row" :data="data">
+                    <!-- default, when there is no slot -->
+                    <p>{{ data }}</p>
+                  </slot>
+                </div>
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <div class="bg-white py-3 px-6 text-small">
+              <p class="text-flame-dark font-medium">No data received</p>
+            </div>
+          </template>
         </tbody>
       </table>
     </div>

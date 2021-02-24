@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full outline-none" :tabindex="0" @blur="opened = false">
     <div
-      class="flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
+      class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
       :class="{ 'ring-2 ring-royal': opened }"
       @click="opened = !opened"
     >

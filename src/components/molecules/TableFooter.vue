@@ -91,7 +91,11 @@ export default {
   },
   computed: {
     firstRow() {
-      return this.page * this.rowLimit - this.rowLimit + 1;
+      let firstRow = 0;
+      if (this.totalRows !== 0) {
+        firstRow = this.page * this.rowLimit - this.rowLimit + 1;
+      }
+      return firstRow;
     },
     lastRow() {
       let lastRow = 0;
