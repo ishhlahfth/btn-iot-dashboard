@@ -274,7 +274,7 @@
       <help-navbar />
     </div>
 
-    <help-sidebar />
+    <!-- <help-sidebar /> -->
   </div>
 </template>
 
@@ -289,7 +289,7 @@ import HelpNavbar from '../components/molecules/Navbar.vue';
 import HelpOptionItem from '../components/atoms/OptionItem.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
 import HelpSelect from '../components/molecules/Select.vue';
-import HelpSidebar from '../components/molecules/Sidebar.vue';
+// import HelpSidebar from '../components/molecules/Sidebar.vue';
 import HelpTable from '../components/templates/Table.vue';
 import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
@@ -308,7 +308,7 @@ export default {
     HelpOptionItem,
     HelpRadio,
     HelpSelect,
-    HelpSidebar,
+    // HelpSidebar,
     HelpTable,
     HelpThumbnail,
     HelpToggle,
