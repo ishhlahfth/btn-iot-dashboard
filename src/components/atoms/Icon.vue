@@ -1,7 +1,7 @@
 <template>
   <svg
     v-if="name"
-    class="w-4 h-4"
+    :class="`w-${size} h-${size}`"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
@@ -173,6 +173,10 @@ export default {
     name: {
       type: String,
       default: '',
+    },
+    size: {
+      type: [String, Number],
+      default: 4,
     },
   },
 };

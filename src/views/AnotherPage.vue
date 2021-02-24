@@ -273,6 +273,8 @@
       <p class="font-medium">Navbar</p>
       <help-navbar />
     </div>
+
+    <help-sidebar />
   </div>
 </template>
 
@@ -285,13 +287,14 @@ import HelpButton from '../components/atoms/Button.vue';
 import HelpInput from '../components/atoms/Input.vue';
 import HelpNavbar from '../components/molecules/Navbar.vue';
 import HelpOptionItem from '../components/atoms/OptionItem.vue';
-import HelpSelect from '../components/molecules/Select.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
+import HelpSelect from '../components/molecules/Select.vue';
+import HelpSidebar from '../components/molecules/Sidebar.vue';
+import HelpTable from '../components/templates/Table.vue';
 import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
 import Icon from '../components/atoms/Icon.vue';
-import HelpTable from '../components/templates/Table.vue';
 
 export default {
   name: 'AnotherPage',
@@ -303,13 +306,14 @@ export default {
     HelpInput,
     HelpNavbar,
     HelpOptionItem,
-    HelpSelect,
     HelpRadio,
+    HelpSelect,
+    HelpSidebar,
+    HelpTable,
     HelpThumbnail,
     HelpToggle,
     HelpTooltip,
     Icon,
-    HelpTable,
   },
   data() {
     return {
