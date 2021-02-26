@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 grid grid-flow-row gap-6 bg-grey-6">
+  <div class="p-4 grid gap-6 bg-grey-6">
     <p>
       This page is a temporary page used to store all components made adjusted to Buy and Sell Figma
       Prototype
@@ -406,4 +406,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

@@ -1,14 +1,17 @@
 <template>
   <help-sidebar />
-  <router-view class="ml-14" />
+  <help-navbar />
+  <router-view class="ml-14 bg-grey-6" />
 </template>
 
 <script>
+import HelpNavbar from './components/molecules/Navbar.vue';
 import HelpSidebar from './components/molecules/Sidebar.vue';
 
 export default {
   name: 'App',
   components: {
+    HelpNavbar,
     HelpSidebar,
   },
 };
