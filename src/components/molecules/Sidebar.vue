@@ -6,22 +6,30 @@
     @mouseleave="mini = true"
   >
     <template v-for="link in links" :key="link.path">
-      <template v-if="!link.subMenu">
-        <div
-          class="h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-        >
-          <div class="flex items-center whitespace-nowrap select-none">
-            <div class="w-6 h-5 flex items-center justify-center mr-2">
-              <icon :name="link.icon" :size="5" />
-            </div>
-            <div>
-              <p class="font-medium">{{ link.label }}</p>
+      <nav-item v-if="!link.subMenu" :menu="link" />
+      <nav-expandable-item v-else :menu="link" />
+      <!-- <template v-if="!link.subMenu">
+        <router-link :to="link.path" custom v-slot="{ href, navigate, isActive }">
+          <div
+            :active="isActive"
+            :href="href"
+            @click="navigate"
+            class="h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
+            :class="{ 'bg-midnight-dark': isActive }"
+          >
+            <div class="flex items-center whitespace-nowrap select-none">
+              <div class="w-6 h-5 flex items-center justify-center mr-2">
+                <icon :name="link.icon" :size="5" />
+              </div>
+              <div>
+                <p class="font-medium">{{ link.label }}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </template>
+        </router-link>
+      </template> -->
 
-      <template v-else>
+      <!-- <template v-else>
         <div
           @click="collapsed = !collapsed"
           class="not-selected h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
@@ -31,7 +39,7 @@
               <icon name="photograph" :size="5" />
             </div>
             <div>
-              <p class="font-medium">Parent Menu</p>
+              <p class="font-medium">{{ link.label }}</p>
             </div>
           </div>
           <div class="w-5 h-5 grid place-items-center">
@@ -44,103 +52,47 @@
           </div>
         </div>
 
-        <transition v-for="subMenu in link.subMenu" :key="subMenu.path" name="slide-fade">
-          <div
-            v-if="!collapsed"
-            class="not-selected directly-selectable h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
+        <template v-for="subMenu in link.subMenu" :key="subMenu.path">
+          <router-link
+            :to="subMenu.path"
+            custom
+            v-slot="{ href, navigate, isActive }"
           >
-            <div class="flex items-center whitespace-nowrap select-none">
-              <div class="w-6 h-5 flex items-center justify-center mr-2">
-                <!-- <icon name="" :size="5" /> -->
-              </div>
-              <div>
-                <p class="font-medium">{{ subMenu.label }}</p>
+            <div
+              :active="isActive"
+              :href="href"
+              @click="navigate"
+              v-if="!collapsed"
+              class="not-selected directly-selectable h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
+              :class="{ 'bg-midnight-dark': isActive }"
+            >
+              <div class="flex items-center whitespace-nowrap select-none">
+                <div class="w-6 h-5 flex items-center justify-center mr-2">
+
+                </div>
+                <div>
+                  <p class="font-medium">{{ subMenu.label }}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </transition>
-      </template>
+          </router-link>
+        </template>
+      </template> -->
     </template>
-
-    <!-- <div
-      class="h-10 w-full rounded-md bg-midnight-dark text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-    >
-      <div class="flex items-center whitespace-nowrap select-none">
-        <div class="w-6 h-5 flex items-center justify-center mr-2">
-          <icon name="home" :size="5" />
-        </div>
-        <div>
-          <p class="font-medium">Selected</p>
-        </div>
-      </div>
-      <div class="w-5 h-5 grid place-items-center">
-        <icon name="chevron-down" :size="5" />
-      </div>
-    </div> -->
-
-    <!-- <div
-      @click="collapsed = !collapsed"
-      class="not-selected h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-    >
-      <div class="flex items-center whitespace-nowrap select-none">
-        <div class="w-6 h-5 flex items-center justify-center mr-2">
-          <icon name="photograph" :size="5" />
-        </div>
-        <div>
-          <p class="font-medium">Parent Menu</p>
-        </div>
-      </div>
-      <div class="w-5 h-5 grid place-items-center">
-        <icon
-          name="chevron-down"
-          :size="5"
-          class="transition-all"
-          :class="{ rotate: !collapsed }"
-        />
-      </div>
-    </div>
-
-    <transition name="slide-fade">
-      <div
-        v-if="!collapsed"
-        class="not-selected directly-selectable h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-      >
-        <div class="flex items-center whitespace-nowrap select-none">
-          <div class="w-6 h-5 flex items-center justify-center mr-2">
-            <icon name="" :size="5" />
-          </div>
-          <div>
-            <p class="font-medium">Child Menu</p>
-          </div>
-        </div>
-      </div>
-    </transition>
-
-    <transition name="slide-fade">
-      <div
-        v-if="!collapsed"
-        class="not-selected directly-selectable h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-      >
-        <div class="flex items-center whitespace-nowrap">
-          <div class="w-6 h-5 flex items-center justify-center mr-2">
-            <icon name="" :size="5" />
-          </div>
-          <div>
-            <p class="font-medium">Child Menu</p>
-          </div>
-        </div>
-      </div>
-    </transition> -->
   </nav>
 </template>
 
 <script>
-import Icon from '../atoms/Icon.vue';
+// import Icon from '../atoms/Icon.vue';
+import NavExpandableItem from '../atoms/NavExpandableItem.vue';
+import NavItem from '../atoms/NavItem.vue';
 
 export default {
   name: 'HelpSidebar',
   components: {
-    Icon,
+    NavExpandableItem,
+    NavItem,
+    // Icon,
   },
   data() {
     return {
@@ -156,9 +108,18 @@ export default {
             { path: '/uwu', label: 'Templates', icon: '' },
           ],
         },
-        { path: '/uwu', label: 'Dashboard', icon: 'user' },
+        { path: '/uwus', label: 'Dashboard', icon: 'user' },
         { path: '/nanana', label: 'Templates', icon: 'photograph' },
-        { path: '/hore', label: 'Molecules', icon: 'shield' },
+        {
+          path: '/s',
+          label: 'Router',
+          icon: 'filter',
+          subMenu: [
+            { path: '/hore2', label: 'Banner', icon: '' },
+            { path: '/uwu3', label: 'Inbox', icon: '' },
+          ],
+        },
+        { path: '/hores', label: 'Molecules', icon: 'shield' },
       ],
     };
   },
