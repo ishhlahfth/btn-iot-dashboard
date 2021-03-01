@@ -4,6 +4,23 @@
       <p class="text-heading2 font-semibold">The Dummy Page</p>
       <help-button label="filter" @click="clicked" />
     </div>
+    <div>
+      <div class="w-106 bg-snow p-6 grid auto-rows-max gap-4 rounded-lg shadow-custom">
+        <p class="font-medium text-subheading">Reset Password</p>
+        <p>
+          Please enter your email address. You will receive a link to create a new password via
+          email
+        </p>
+        <div class="flex items-center">
+          <div class="w-full mr-4">
+            <help-input placeholder="Type your email here" v-model="email" />
+          </div>
+          <div>
+            <help-button label="send link" @click="clicked" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="w-full">
       <p>Content 1</p>
     </div>
@@ -32,15 +49,19 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 // import { onMounted } from 'vue';
 import HelpButton from '../components/atoms/Button.vue';
+import HelpInput from '../components/atoms/Input.vue';
 
 export default {
   name: 'TheDummyPage',
   components: {
     HelpButton,
+    HelpInput,
   },
   setup() {
+    const email = ref('');
     const clicked = () => {
       console.log('click!');
     };
@@ -67,9 +88,13 @@ export default {
     //   user = JSON.parse(user);
     //   console.log('!!!P!#O!PO#!', user);
     // });
-    return { clicked };
+    return { email, clicked };
   },
 };
 </script>
 
-<style></style>
+<style>
+.shadow-custom {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+</style>
