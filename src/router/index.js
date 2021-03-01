@@ -1,4 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Base64 from 'crypto-js/enc-base64';
+import Utf8 from 'crypto-js/enc-utf8';
+
+const authenticate = (to, from, next) => {
+  const getCookie = (cookieName) => {
+    const name = `${cookieName}=`;
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i += 1) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  };
+
+  let user = getCookie('user');
+  user = Base64.parse(user);
+  user = Utf8.stringify(user);
+  if (user) user = JSON.parse(user);
+  console.log('🚀👉', user);
+  if (user) {
+    next();
+  } else {
+    next({ name: 'Login' });
+  }
+};
 
 const routes = [
   {
@@ -8,8 +39,10 @@ const routes = [
   },
   {
     path: '/bns',
+    redirect: '/bns/home',
     name: 'BNS',
     component: () => import('@/components/layouts/Main.vue'),
+    beforeEnter: authenticate,
     children: [
       {
         path: 'home',
@@ -42,10 +75,6 @@ const routes = [
         component: () => import('@/views/Home.vue'),
       },
     ],
-  },
-  {
-    path: '/bns',
-    redirect: '/bns/home',
   },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-row auto-rows-max gap-1">
+  <div class="grid grid-flow-row auto-rows-max gap-1 cursor-text">
     <label class="font-medium">{{ label }}</label>
     <div
       v-if="type === 'textarea'"
