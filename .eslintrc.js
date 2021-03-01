@@ -15,5 +15,6 @@ module.exports = {
     'no-nested-ternary': 'off',
     'no-obj-calls': 'off',
     'no-prototype-builtins': 'off',
+    'no-restricted-syntax': 'off'
   },
 };

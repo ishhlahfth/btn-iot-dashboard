@@ -22,6 +22,11 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import Base64 from 'crypto-js/enc-base64';
+import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '../components/atoms/Button.vue';
 import HelpInput from '../components/atoms/Input.vue';
 
@@ -31,16 +36,36 @@ export default {
     HelpButton,
     HelpInput,
   },
-  data() {
-    return {
-      email: '',
-      password: '',
+  setup() {
+    const router = useRouter();
+    const email = ref('');
+    const password = ref('');
+    const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
+      const date = new Date();
+      date.setTime(date.getTime() + expiresIn * 24 * 60 * 60 * 1000);
+      const expiredDate = `expires=${date.toUTCString()}`;
+      document.cookie = `${cookieName}=${cookieValue};${expiredDate};path=/`;
     };
-  },
-  methods: {
-    signIn() {
-      alert(`yahuuu ${this.email} & ${this.password}`);
-    },
+
+    const signIn = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:3000/login/0');
+        if (data) {
+          let user = Utf8.parse(JSON.stringify(data));
+          user = Base64.stringify(user);
+          setCookie({
+            cookieName: 'user',
+            cookieValue: user,
+            expiresIn: 3,
+          });
+          router.push('/bns');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return { email, password, signIn };
   },
 };
 </script>

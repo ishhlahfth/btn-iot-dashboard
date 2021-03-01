@@ -1,4 +1,19 @@
 {
+  "login": [
+    {
+      "id": 0,
+      "name": "Sheila",
+      "email": "sheila@gmail.com",
+      "address": "Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-3309-1090",
+      "role": "Super Admin",
+      "avatar": "https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg",
+      "token_type": "Bearer",
+      "token": "eygHkl19awjafn3iP!fava91m0agaRins2.Hslae8VbS==",
+      "refresh_token": "Wi9u51izrPcJrQgwiTGhZPO8hQhBxgyCofeUkzY6ybRJw0Au2B0Uadu4yHhtKwKCkOq4x3mSJELdfkOsjU5lu53BjqsEYZfRpSHMPj1uqysOTIbfKYnahz0FI0gGKckhNLh6bYIhlASMreTommBHCe3Klar3dDx1Wmedd4tJF9DVrTTTeLNP5EyxOZqIgUFkHsPV6e4zRguBBK2Sq0vhI2xjuS0GRiBhs8cJlvhLfjkf4q4ot4osdiAFPZsIQ4b",
+      "expired_date": "2021-03-01T06:19:03.024Z"
+    }
+  ],
   "admin": [
     {
       "name": "Sheila",
