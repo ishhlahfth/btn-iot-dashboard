@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute w-full min-w-max max-h-52 overflow-y-scroll z-10 p-1 bg-snow rounded-lg border border-grey-4 shadow-lg"
+    class="absolute w-full min-w-max max-h-52 overflow-y-auto z-10 p-1 bg-snow rounded-lg border border-grey-4 shadow-lg"
     :class="[
       { 'top-12': position[0] === 'bottom' },
       { 'bottom-12': position[0] === 'top' },

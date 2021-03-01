@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <template v-for="subMenu in menu.subMenu" :key="subMenu.path">
+  <template v-for="(subMenu, i) in menu.subMenu" :key="i">
     <router-link :to="subMenu.path" custom v-slot="{ href, navigate, isActive }">
       <div
         :active="isActive"

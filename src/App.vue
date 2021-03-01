@@ -1,10 +1,14 @@
 <template>
   <help-sidebar />
   <help-navbar />
-  <router-view class="ml-14 bg-grey-6" />
+  <div class="sm:ml-14 bg-grey-6">
+    <router-view />
+  </div>
 </template>
 
 <script>
+import { provide } from 'vue';
+import store from '@/composables';
 import HelpNavbar from './components/molecules/Navbar.vue';
 import HelpSidebar from './components/molecules/Sidebar.vue';
 
@@ -14,13 +18,16 @@ export default {
     HelpNavbar,
     HelpSidebar,
   },
+  setup() {
+    provide('store', store);
+  },
 };
 </script>
 
 <style lang="scss">
 body {
   font-size: 14px;
-  color: #303B4D;
+  color: #303b4d;
 }
 * {
   margin: 0;
@@ -30,11 +37,13 @@ body {
 table {
   border-collapse: collapse;
 }
-td, th {
+td,
+th {
   text-align: left;
   font-weight: inherit;
 }
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   outline: none;
 }
 #app {

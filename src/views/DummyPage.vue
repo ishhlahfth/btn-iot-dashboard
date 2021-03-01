@@ -39,6 +39,11 @@ export default {
   components: {
     HelpButton,
   },
+  methods: {
+    clicked() {
+      console.log('click!');
+    },
+  },
 };
 </script>
 
