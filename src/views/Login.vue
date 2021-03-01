@@ -1,17 +1,25 @@
 <template>
-  <div class="w-full sm:min-w-min p-8 pt-40 sm:p-24 sm:pb-10 sm:mb-5 bg-snow">
+  <div class="w-full sm:min-w-min p-8 sm:p-24 sm:pb-10 sm:mb-5 bg-snow absolute top-12">
     <div class="flex flex-col items-center mb-16">
       <img alt="logo" src="../assets/red-no-label.png" style="width: 83px;" />
-      <h5 class="m-0 font-semibold text-gray-600 text-center text-3xl">Sign in to continue</h5>
+      <h5 class="m-0 font-semibold text-gray-600 text-center text-heading3 sm:text-3xl">Sign in to continue</h5>
     </div>
 
     <div class="w-full flex justify-center">
       <form
         @submit.prevent="signIn"
-        class="bg-snow w-full sm:w-96 md:w-98 lg:w-100 grid grid-flow-row auto-rows-max gap-6 p-7 sm:shadow-lg sm:rounded-lg"
+        class="bg-snow w-full sm:w-96 md:w-98 grid grid-flow-row auto-rows-max gap-6 sm:p-7 sm:shadow-lg sm:rounded-lg"
       >
-        <help-input type="email" label="Email" placeholder="yourmail@email.com" v-model="email" />
-        <help-input type="password" label="Password" placeholder="password" v-model="password" />
+        <div class="grid auto-rows-max gap-2">
+          <help-input type="email" label="Email" placeholder="yourmail@email.com" v-model="email" />
+          <p class="text-xsmall text-flame font-medium" v-if="invalid.email">Your email is required</p>
+        </div>
+        <div class="grid auto-rows-max gap-2">
+          <help-input type="password" label="Password" placeholder="password" v-model="password" />
+          <p class="text-xsmall text-flame font-medium" v-if="invalid.password">
+            Your password is required
+          </p>
+        </div>
         <p class="cursor-pointer text-royal text-right font-medium">
           Forgot your password?
         </p>
@@ -22,7 +30,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import Base64 from 'crypto-js/enc-base64';
@@ -38,8 +46,14 @@ export default {
   },
   setup() {
     const router = useRouter();
+
     const email = ref('');
     const password = ref('');
+    const invalid = ref({
+      email: false,
+      password: false,
+    });
+
     const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
       const date = new Date();
       date.setTime(date.getTime() + expiresIn * 24 * 60 * 60 * 1000);
@@ -47,25 +61,50 @@ export default {
       document.cookie = `${cookieName}=${cookieValue};${expiredDate};path=/`;
     };
 
+    watch(email, () => {
+      if (email.value) {
+        invalid.value.email = false;
+      } else {
+        invalid.value.email = true;
+      }
+    });
+
+    watch(password, () => {
+      if (password.value) {
+        invalid.value.password = false;
+      } else {
+        invalid.value.password = true;
+      }
+    });
+
     const signIn = async () => {
-      try {
-        const { data } = await axios.get('http://localhost:3000/login/0');
-        if (data) {
-          let user = Utf8.parse(JSON.stringify(data));
-          user = Base64.stringify(user);
-          setCookie({
-            cookieName: 'user',
-            cookieValue: user,
-            expiresIn: 3,
-          });
-          router.push('/bns');
+      if (!email.value) invalid.value.email = true;
+      if (!password.value) invalid.value.password = true;
+      if (!invalid.value.email && !invalid.value.password) {
+        try {
+          const { data } = await axios.get('http://localhost:3000/login/0');
+          if (data) {
+            let user = Utf8.parse(JSON.stringify(data));
+            user = Base64.stringify(user);
+            setCookie({
+              cookieName: 'user',
+              cookieValue: user,
+              expiresIn: 3,
+            });
+            router.push('/bns');
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
     };
 
-    return { email, password, signIn };
+    return {
+      email,
+      password,
+      invalid,
+      signIn,
+    };
   },
 };
 </script>
