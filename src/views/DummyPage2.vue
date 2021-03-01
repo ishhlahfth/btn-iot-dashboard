@@ -1,10 +1,10 @@
 <template>
   <div class="p-6 grid gap-6">
     <div class="w-full bg-grey-4 flex justify-between">
-      <p class="text-heading2 font-semibold">Dummy Page 1</p>
+      <p class="text-heading2 font-semibold">Dummy Page 2</p>
       <help-button label="filter" @click="clicked" />
     </div>
-    <div class="w-full bg-mint">
+    <div class="w-full bg-gold">
       <p class="text-white">Content 1</p>
     </div>
     <div class="w-full bg-grey-2">
@@ -35,7 +35,7 @@
 import HelpButton from '../components/atoms/Button.vue';
 
 export default {
-  name: 'DummyPage',
+  name: 'DummyPage2',
   components: {
     HelpButton,
   },

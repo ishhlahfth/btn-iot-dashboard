@@ -33,27 +33,19 @@ export default {
     const store = inject('store');
     const collapsed = ref(true);
     const links = [
+      { path: '/bns/home', label: 'Home', icon: 'home' },
+      { path: '/bns/another-page', label: 'Components', icon: 'user' },
+      { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
       {
         path: '/',
-        label: 'Components',
+        label: 'Dummy Page',
         icon: 'cube',
         subMenu: [
-          { path: '/hore', label: 'Molecules', icon: '' },
-          { path: '/uwu', label: 'Templates', icon: '' },
+          { path: '/bns/dummy-page-1', label: 'First', icon: '' },
+          { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
+          { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
         ],
       },
-      { path: '/', label: 'Dashboard', icon: 'user' },
-      { path: '/nanana', label: 'Templates', icon: 'photograph' },
-      {
-        path: '/s',
-        label: 'Router',
-        icon: 'filter',
-        subMenu: [
-          { path: '/hore2', label: 'Banner', icon: '' },
-          { path: '/uwu3', label: 'Inbox', icon: '' },
-        ],
-      },
-      { path: '/hores', label: 'Molecules', icon: 'shield' },
     ];
     return {
       store,

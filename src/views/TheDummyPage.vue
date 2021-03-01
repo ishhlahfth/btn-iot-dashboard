@@ -1,23 +1,23 @@
 <template>
   <div class="p-6 grid gap-6">
-    <div class="w-full bg-grey-4 flex justify-between">
-      <p class="text-heading2 font-semibold">Dummy Page 1</p>
+    <div class="w-full flex justify-between">
+      <p class="text-heading2 font-semibold">The Dummy Page</p>
       <help-button label="filter" @click="clicked" />
     </div>
-    <div class="w-full bg-mint">
-      <p class="text-white">Content 1</p>
+    <div class="w-full">
+      <p>Content 1</p>
     </div>
-    <div class="w-full bg-grey-2">
-      <p class="text-white">Content 2</p>
+    <div class="w-full">
+      <p>Content 2</p>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum labore ab illum ipsam
         aliquid quos sapiente nesciunt illo ullam quae quam quisquam dicta quidem suscipit
         voluptatibus eveniet corporis, exercitationem quod?
       </p>
     </div>
-    <div class="w-full bg-grey-3">
-      <p class="text-white">Content 2</p>
-      <p class="text-white">
+    <div class="w-full">
+      <p>Content 2</p>
+      <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum labore ab illum ipsam
         aliquid quos sapiente nesciunt illo ullam quae quam quisquam dicta quidem suscipit
         voluptatibus eveniet corporis, exercitationem quod?
@@ -35,7 +35,7 @@
 import HelpButton from '../components/atoms/Button.vue';
 
 export default {
-  name: 'DummyPage',
+  name: 'TheDummyPage',
   components: {
     HelpButton,
   },
