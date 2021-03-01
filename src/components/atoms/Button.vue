@@ -1,28 +1,27 @@
 <template>
   <button
-    v-if="type === 'primary'"
-    class="flex items-center justify-center rounded-lg bg-midnight py-2 px-4 text-snow font-semibold hover:bg-royal"
+    class="flex self-start items-center justify-center rounded-lg py-2 px-4 font-semibold"
+    :class="[
+      {
+        'bg-midnight text-snow hover:bg-royal': type === 'primary',
+      },
+      {
+        'bg-snow border-2 border-grey-4 text-grey-1 hover:border-snow hover:ring-2 hover:ring-royal':
+          type === 'secondary',
+      },
+      {
+        'bg-flame text-snow hover:bg-flame-dark': type === 'danger',
+      },
+    ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
-      <div class="h-full w-full flex items-center justify-center">
-        <icon />
+      <div v-if="icon" class="h-full w-full flex items-center justify-center">
+        <icon :name="icon" />
       </div>
       <div class="h-full w-full flex items-center">
-        {{ buttonLabel }}
+        <p class="text-body">{{ buttonLabel }}</p>
       </div>
     </div>
-  </button>
-  <button
-    v-if="type === 'secondary'"
-    class="rounded-lg bg-snow border-2 border-grey-4 py-2 px-4 text-grey-1 font-semibold hover:border-snow hover:ring-2 hover:ring-royal"
-  >
-    {{ buttonLabel }}
-  </button>
-  <button
-    v-if="type === 'danger'"
-    class="rounded-lg bg-flame py-2 px-4 text-snow font-semibold hover:bg-flame-dark"
-  >
-    {{ buttonLabel }}
   </button>
 </template>
 
@@ -39,6 +38,10 @@ export default {
     label: {
       type: String,
       default: 'ok',
+    },
+    icon: {
+      type: String,
+      default: '',
     },
   },
   components: {
