@@ -7,7 +7,7 @@
       <span class="font-medium">{{ lastRow }}</span>
       of
       <span class="font-medium">{{ totalRows }}</span>
-      <span class="hidden sm:inline">result</span>
+      <span class="hidden sm:inline"> results</span>
     </p>
 
     <div class="flex items-center text-small">
