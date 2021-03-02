@@ -311,14 +311,14 @@
       "name": "Ketoprak Mbak Yati",
       "city": "Jakarta Selatan",
       "finished_orders": 14,
-      "verification_status": true,
+      "verification_status": false,
       "suspension_status": false
     },
     {
       "name": "Yusa Martabak",
       "city": "Jakarta Selatan",
       "finished_orders": 1500,
-      "verification_status": false,
+      "verification_status": true,
       "suspension_status": false
     },
     {

@@ -16,7 +16,9 @@
       >
         <template v-slot="{ column, row }">
           <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
-          <p v-if="column === 'operational_detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
+          <p v-if="column === 'operational_detail'" class="text-royal font-medium cursor-pointer">
+            See Detail
+          </p>
           <help-toggle v-if="column === 'suspension_status'" v-model="row.suspension_status" />
           <help-badge
             v-if="column === 'verification_status'"
@@ -30,7 +32,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
@@ -48,11 +50,12 @@ export default {
     HelpToggle,
   },
   setup() {
+    const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'store name' },
       { field: 'city', label: 'city' },
-      { field: 'finished_orders', label: 'finished orders' },
+      { field: 'finished_orders', label: 'finished orders', align: 'right' },
       { field: 'verification_status', label: 'verification status', align: 'center' },
       { field: 'detail', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
@@ -72,7 +75,10 @@ export default {
         const response = await axios.get(
           `http://localhost:3000/seller?_page=${page}&_limit=${limit}`,
         );
-        sellers.value = response.data;
+        sellers.value = response.data.map((el) => ({
+          ...el,
+          finished_orders: store.methods.groupDigit(el.finished_orders),
+        }));
         sellerPagination.value = {
           totalRows: +response.headers['x-total-count'],
           rowLimit: pagination.rowLimit,
