@@ -107,6 +107,7 @@ export default {
   },
   computed: {
     processedTableData() {
+      // columns' field should be the same as backend API response keys
       const columnLibrary = {};
 
       this.columns.forEach((el) => {

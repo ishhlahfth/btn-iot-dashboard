@@ -8,7 +8,23 @@
       <help-input v-model="searchValue" placeholder="Search seller name here" right-icon="search" />
     </div>
     <div>
-      <help-table :columns="columns" :rows="sellers" :pagination="sellerPagination"></help-table>
+      <help-table
+        :columns="columns"
+        :rows="sellers"
+        :pagination="sellerPagination"
+        @onChangePagination="getSellers($event)"
+      >
+        <template v-slot="{ column, row }">
+          <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
+          <p v-if="column === 'operational_detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
+          <help-toggle v-if="column === 'suspension_status'" v-model="row.suspension_status" />
+          <help-badge
+            v-if="column === 'verification_status'"
+            :label="row.verification_status ? 'Verified' : 'Not Verified'"
+            :color="row.verification_status ? 'positive' : 'negative'"
+          />
+        </template>
+      </help-table>
     </div>
   </div>
 </template>
@@ -16,26 +32,30 @@
 <script>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 
 export default {
   name: 'Seller',
   components: {
+    HelpBadge,
     HelpButton,
     HelpInput,
     HelpTable,
+    HelpToggle,
   },
   setup() {
     const searchValue = ref('');
     const columns = [
-      { field: 'nameelele', label: 'store name' },
+      { field: 'name', label: 'store name' },
       { field: 'city', label: 'city' },
       { field: 'finished_orders', label: 'finished orders' },
       { field: 'verification_status', label: 'verification status', align: 'center' },
-      { field: 'detail', label: 'seller detail' },
-      { field: 'operational_detail', label: 'operational time' },
+      { field: 'detail', label: 'seller detail', align: 'center' },
+      { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'suspension_status', label: 'status' },
     ];
     const sellers = ref([]);
