@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-row auto-rows-max gap-1 cursor-text">
+  <div class="grid grid-flow-row auto-rows-max cursor-text" :class="{ 'gap-1': label }">
     <label class="font-medium">{{ label }}</label>
     <div
       v-if="type === 'textarea'"
@@ -25,15 +25,19 @@
     </div>
     <div
       v-else
-      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
+      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2"
       :class="[
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
+        { 'grid-flow-col': !leftIcon && !rightIcon },
+        { 'with-left-and-right-icon': leftIcon && rightIcon },
+        { 'with-left-icon': leftIcon },
+        { 'with-right-icon': rightIcon },
       ]"
       @click="$refs.helpInput.focus()"
       @blur="$refs.helpInput.blur()"
     >
-      <slot name="prepend"></slot>
+      <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
       <input
         ref="helpInput"
         spellcheck="false"
@@ -44,7 +48,7 @@
         @focus="onFocus = true"
         @input="$emit('update:modelValue', $event.target.value)"
       />
-      <slot name="append"></slot>
+      <icon v-if="rightIcon" :name="rightIcon" class="justify-self-center self-center" />
     </div>
     <p v-if="hasError" class="font-medium text-xsmall text-flame mt-0.5">
       This is an error message
@@ -54,8 +58,13 @@
 </template>
 
 <script>
+import Icon from '@/components/atoms/Icon.vue';
+
 export default {
   name: 'HelpInput',
+  components: {
+    Icon,
+  },
   props: {
     modelValue: {
       type: String,
@@ -78,6 +87,14 @@ export default {
       type: Number,
       default: 3,
     },
+    leftIcon: {
+      type: String,
+      default: '',
+    },
+    rightIcon: {
+      type: String,
+      default: '',
+    },
     // hasError: {
     //   type: Boolean,
     //   default: false,
@@ -92,4 +109,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.with-left-icon {
+  grid-template-columns: 20px 1fr;
+}
+.with-right-icon {
+  grid-template-columns: 1fr 20px;
+}
+.with-left-and-right-icon {
+  grid-template-columns: 20px 1fr 20px;
+}
+</style>
