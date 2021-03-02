@@ -7,7 +7,7 @@
       </p>
       <div class="flex items-center">
         <div class="w-full mr-4">
-          <help-input placeholder="Type your email here" v-model="email" left-icon="search" right-icon="filter" />
+          <help-input placeholder="Type your email here" v-model="resetEmail" />
         </div>
         <div>
           <help-button label="send link" @click="sendResetPasswordLink" />
@@ -76,6 +76,7 @@ export default {
 
     const email = ref('');
     const password = ref('');
+    const resetEmail = ref('');
     const invalid = ref({
       email: false,
       password: false,
@@ -135,6 +136,7 @@ export default {
     return {
       email,
       password,
+      resetEmail,
       invalid,
       signIn,
       resetPasswordModal,

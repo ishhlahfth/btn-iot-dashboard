@@ -206,16 +206,8 @@
           placeholder="This is placeholder"
           type="text"
         />
-        <help-input v-model="inputValue" label="Search" placeholder="With a right icon" type="text">
-          <template v-slot:append>
-            <icon name="search" />
-          </template>
-        </help-input>
-        <help-input v-model="inputValue" label="Group" placeholder="With a left icon" type="text">
-          <template v-slot:prepend>
-            <icon name="user-group" />
-          </template>
-        </help-input>
+        <help-input v-model="inputValue" label="Search" placeholder="With a right icon" type="text" right-icon="search" />
+        <help-input v-model="inputValue" label="Group" placeholder="With a left icon" type="text" left-icon="user-group" />
       </div>
       <div class="grid grid-flow-col auto-cols-max gap-1">
         <help-input
