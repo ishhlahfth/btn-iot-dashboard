@@ -7,7 +7,7 @@
       </p>
       <div class="flex items-center">
         <div class="w-full mr-4">
-          <help-input placeholder="Type your email here" v-model="email" />
+          <help-input placeholder="Type your email here" v-model="email" left-icon="search" right-icon="filter" />
         </div>
         <div>
           <help-button label="send link" @click="sendResetPasswordLink" />
@@ -61,6 +61,7 @@ import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
+// import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'Login',
@@ -68,6 +69,7 @@ export default {
     HelpButton,
     HelpInput,
     HelpModal,
+    // Icon,
   },
   setup() {
     const router = useRouter();
