@@ -13,6 +13,7 @@
         :rows="sellers"
         :pagination="sellerPagination"
         @onChangePagination="getSellers($event)"
+        @sort="getSellers($event)"
       >
         <template v-slot="{ column, row }">
           <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
@@ -53,10 +54,20 @@ export default {
     const store = inject('store');
     const searchValue = ref('');
     const columns = [
-      { field: 'name', label: 'store name' },
-      { field: 'city', label: 'city' },
-      { field: 'finished_orders', label: 'finished orders', align: 'right' },
-      { field: 'verification_status', label: 'verification status', align: 'center' },
+      { field: 'name', label: 'store name', sortable: true },
+      { field: 'city', label: 'city', sortable: true },
+      {
+        field: 'finished_orders',
+        label: 'finished orders',
+        align: 'right',
+        sortable: true,
+      },
+      {
+        field: 'verification_status',
+        label: 'verification status',
+        align: 'center',
+        sortable: true,
+      },
       { field: 'detail', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'suspension_status', label: 'status' },
@@ -66,14 +77,18 @@ export default {
       totalRows: 0,
       rowLimit: 10,
       page: 1,
+      sortBy: 'name',
+      order: 'asc',
     });
 
     const getSellers = async (pagination) => {
       const limit = pagination.rowLimit || 10;
       const page = pagination.page || 1;
+      const sort = pagination.sortBy || 'name';
+      const order = pagination.order || 'asc;';
       try {
         const response = await axios.get(
-          `http://localhost:3000/seller?_page=${page}&_limit=${limit}`,
+          `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
         );
         sellers.value = response.data.map((el) => ({
           ...el,
@@ -83,6 +98,8 @@ export default {
           totalRows: +response.headers['x-total-count'],
           rowLimit: pagination.rowLimit,
           page: pagination.page,
+          sortBy: pagination.sortBy,
+          order: pagination.order,
         };
       } catch (error) {
         console.log(error);
