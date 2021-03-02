@@ -7,7 +7,7 @@
     <div>
       <help-input v-model="searchValue" placeholder="Search seller name here" right-icon="search" />
     </div>
-    <div>
+    <div class="overflow-hidden">
       <help-table
         :columns="columns"
         :rows="sellers"

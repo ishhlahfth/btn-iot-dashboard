@@ -1,17 +1,17 @@
 <template>
   <tfoot class="w-full px-6 py-2 flex items-center justify-between bg-white">
     <p class="text-small">
-      Showing
+      <span class="hidden sm:inline">Showing </span>
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
       of
       <span class="font-medium">{{ totalRows }}</span>
-      results
+      <span class="hidden sm:inline">result</span>
     </p>
 
     <div class="flex items-center text-small">
-      <span class="mr-2">Records per page</span>
+      <span class="hidden sm:inline mr-2">Records per page</span>
       <div class="mr-2">
         <help-select
           :options="[10, 25, 50, 100]"
