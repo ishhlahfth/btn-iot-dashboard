@@ -1,5 +1,20 @@
 <template>
-  <help-modal v-model="modalShown" />
+  <help-modal v-model="modalShown">
+    <div class="grid auto-rows-max gap-4">
+      <p class="font-medium text-subheading">Reset Password</p>
+      <p>
+        Please enter your email address. You will receive a link to create a new password via email
+      </p>
+      <div class="flex items-center">
+        <div class="w-full mr-4">
+          <help-input placeholder="Type your email here" v-model="email" />
+        </div>
+        <div>
+          <help-button label="send link" />
+        </div>
+      </div>
+    </div>
+  </help-modal>
   <div class="p-6 grid gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">The Dummy Page</p>
@@ -65,7 +80,7 @@ export default {
   },
   setup() {
     const modalShown = ref(false);
-    // const email = ref('');
+    const email = ref('');
     // const clicked = () => {
     //   console.log('click!');
     // };
@@ -92,7 +107,7 @@ export default {
     //   console.log('!!!P!#O!PO#!', user);
     // });
     // return { email, clicked };
-    return { modalShown };
+    return { modalShown, email };
   },
 };
 </script>

@@ -1,8 +1,26 @@
 <template>
+  <help-modal v-model="resetPasswordModal">
+    <div class="grid auto-rows-max gap-4">
+      <p class="font-medium text-subheading">Reset Password</p>
+      <p>
+        Please enter your email address. You will receive a link to create a new password via email
+      </p>
+      <div class="flex items-center">
+        <div class="w-full mr-4">
+          <help-input placeholder="Type your email here" v-model="email" />
+        </div>
+        <div>
+          <help-button label="send link" @click="sendResetPasswordLink" />
+        </div>
+      </div>
+    </div>
+  </help-modal>
   <div class="w-full sm:min-w-min p-8 sm:p-24 sm:pb-10 sm:mb-5 bg-snow absolute top-12">
     <div class="flex flex-col items-center mb-16">
       <img alt="logo" src="../assets/red-no-label.png" style="width: 83px;" />
-      <h5 class="m-0 font-semibold text-gray-600 text-center text-heading3 sm:text-3xl">Sign in to continue</h5>
+      <h5 class="m-0 font-semibold text-gray-600 text-center text-heading3 sm:text-3xl">
+        Sign in to continue
+      </h5>
     </div>
 
     <div class="w-full flex justify-center">
@@ -12,7 +30,9 @@
       >
         <div class="grid auto-rows-max gap-2">
           <help-input type="email" label="Email" placeholder="yourmail@email.com" v-model="email" />
-          <p class="text-xsmall text-flame font-medium" v-if="invalid.email">Your email is required</p>
+          <p class="text-xsmall text-flame font-medium" v-if="invalid.email">
+            Your email is required
+          </p>
         </div>
         <div class="grid auto-rows-max gap-2">
           <help-input type="password" label="Password" placeholder="password" v-model="password" />
@@ -20,7 +40,10 @@
             Your password is required
           </p>
         </div>
-        <p class="cursor-pointer text-royal text-right font-medium">
+        <p
+          class="cursor-pointer text-royal text-right font-medium"
+          @click="resetPasswordModal = true"
+        >
           Forgot your password?
         </p>
         <help-button label="sign in" />
@@ -35,14 +58,16 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
-import HelpButton from '../components/atoms/Button.vue';
-import HelpInput from '../components/atoms/Input.vue';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 
 export default {
   name: 'Login',
   components: {
     HelpButton,
     HelpInput,
+    HelpModal,
   },
   setup() {
     const router = useRouter();
@@ -53,6 +78,12 @@ export default {
       email: false,
       password: false,
     });
+    const resetPasswordModal = ref(false);
+
+    const sendResetPasswordLink = () => {
+      console.log(`Link has been sent to ${email.value}`);
+      resetPasswordModal.value = false;
+    };
 
     const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
       const date = new Date();
@@ -104,6 +135,8 @@ export default {
       password,
       invalid,
       signIn,
+      resetPasswordModal,
+      sendResetPasswordLink,
     };
   },
 };
