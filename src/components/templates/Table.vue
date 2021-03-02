@@ -21,8 +21,8 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
-          <template v-if="rows.length > 0">
-            <tr v-for="(row, i) in rows" :key="i" class="bg-white">
+          <template v-if="processedTableData.length > 0">
+            <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
               <td v-for="(data, i) in row" :key="i" class="py-3 px-6 text-small">
                 <div
                   class="w-full grid"
@@ -103,6 +103,35 @@ export default {
     },
     onChangePagination(updatedPagination) {
       this.$emit('onChangePagination', updatedPagination);
+    },
+  },
+  computed: {
+    processedTableData() {
+      const columnLibrary = {};
+
+      this.columns.forEach((el) => {
+        columnLibrary[el.field] = null;
+      });
+
+      const matchedByColumns = [];
+
+      this.rows.forEach((row) => {
+        const temporaryRow = { ...columnLibrary };
+        for (const rowKey in row) {
+          if (rowKey) {
+            for (const columnName in columnLibrary) {
+              if (columnName) {
+                if (rowKey === columnName) {
+                  temporaryRow[columnName] = row[rowKey];
+                }
+              }
+            }
+          }
+        }
+        matchedByColumns.push(temporaryRow);
+      });
+
+      return matchedByColumns;
     },
   },
 };

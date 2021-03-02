@@ -74,6 +74,11 @@ const routes = [
         name: 'LoremIpsum',
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: 'seller',
+        name: 'Seller',
+        component: () => import('@/views/Seller.vue'),
+      },
     ],
   },
 ];
