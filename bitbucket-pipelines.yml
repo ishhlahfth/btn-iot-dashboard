@@ -20,6 +20,8 @@ definitions:
         name: Deploy via SCP
         script:
           - source .env-ci-cd
+          - apt-get update && apt-get install -y gettext-base
+          - echo "$(cat scripts/deploy-${BITBUCKET_DEPLOYMENT_ENVIRONMENT}.sh | envsubst)" > scripts/deploy-${BITBUCKET_DEPLOYMENT_ENVIRONMENT}.sh
           - pipe: atlassian/ssh-run:0.3.0
             variables:
               SERVER: $SSH_SERVER
