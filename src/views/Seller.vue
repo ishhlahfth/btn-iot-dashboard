@@ -37,79 +37,42 @@
       </div>
 
       <div class="grid gap-y-4 overflow-auto auto-rows-max">
-        <div class="grid grid-flow-col gap-x-4" style="grid-template-columns: auto 1fr auto auto;">
-          <div class="w-28 h-28 bg-grey-4 rounded grid place-items-center">img</div>
-          <div class="flex flex-col justify-between">
-            <div class="grid gap-2">
-              <div class="grid gap-1">
-                <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
-                  <p class="font-medium">Nasi Ayam Kremes</p>
-                  <help-badge label="Available" color="positive" />
-                </div>
-                <p class="text-small text-grey-3">Minuman</p>
-              </div>
-              <p class="text-small text-grey-2 mb-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem.
-              </p>
-            </div>
-            <p class="text-small font-medium">Rp 30.000</p>
-          </div>
-          <div class="h-28 grid grid-flow-col place-items-center gap-2">
-            <help-toggle />
-            <icon name="chevron-down" class="cursor-pointer" />
-          </div>
-        </div>
-
-        <div class="grid grid-flow-col gap-x-4" style="grid-template-columns: auto 1fr auto auto;">
-          <div class="w-28 h-28 bg-grey-4 rounded grid place-items-center">img</div>
-          <div class="flex flex-col justify-between">
-            <div class="grid gap-2">
-              <div class="grid gap-1">
-                <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
-                  <p class="font-medium">Nasi Ayam Kremes</p>
-                  <help-badge label="Available" color="positive" />
-                </div>
-                <p class="text-small text-grey-3">Minuman</p>
-              </div>
-              <p class="text-small text-grey-2 mb-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem
-                reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit.
-              </p>
-            </div>
-            <p class="text-small font-medium">Rp 30.000</p>
-          </div>
-          <div class="h-28 grid grid-flow-col place-items-center gap-2">
-            <help-toggle />
-            <icon name="chevron-down" class="cursor-pointer" />
-          </div>
-        </div>
-
-        <div class="grid grid-flow-col gap-x-4" style="grid-template-columns: auto 1fr auto auto;">
-          <div class="w-28 h-28 bg-grey-4 rounded grid place-items-center">img</div>
-          <div class="flex flex-col justify-between">
-            <div class="grid gap-2">
-              <div class="grid gap-1">
-                <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
-                  <p class="font-medium">Nasi Ayam Kremes</p>
-                  <help-badge label="Available" color="positive" />
-                </div>
-                <p class="text-small text-grey-3">Minuman</p>
-              </div>
-              <p class="text-small text-grey-2 mb-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem
-                reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit. Laboriosam autem
-                reprehenderit blanditiis ipsum ea voluptate. Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Molestiae impedit ipsam quisquam ullam pariatur autem nisi aut est
-                vel velit, eveniet amet illum error quidem deserunt rem similique! Rem, nam?
-              </p>
-            </div>
-            <p class="text-small font-medium">Rp 30.000</p>
-          </div>
-          <div class="h-28 grid grid-flow-col place-items-center gap-2">
-            <help-toggle />
-            <icon name="chevron-down" class="cursor-pointer" />
-          </div>
-        </div>
+        <menu-card
+          image-url="https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg"
+          name="Aren Latte"
+          category="Minuman"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
+          :price="20000"
+          :availability-status="true"
+          :is-active="true"
+        />
+        <menu-card
+          image-url="https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg"
+          name="Aren Latte"
+          category="Minuman"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
+          :price="20000"
+          :availability-status="true"
+          :is-active="true"
+        />
+        <menu-card
+          image-url=""
+          name="Aren Latte"
+          category="Minuman"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
+          :price="20000"
+          :availability-status="true"
+          :is-active="true"
+        />
+        <menu-card
+          image-url="https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg"
+          name="White"
+          category="Minuman"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
+          :price="20000"
+          :availability-status="true"
+          :is-active="true"
+        />
       </div>
     </div>
   </help-modal>
@@ -161,7 +124,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-import Icon from '@/components/atoms/Icon.vue';
+import MenuCard from '@/components/molecules/MenuCard.vue';
 
 export default {
   name: 'Seller',
@@ -172,7 +135,7 @@ export default {
     HelpModal,
     HelpTable,
     HelpToggle,
-    Icon,
+    MenuCard,
   },
   setup() {
     const store = inject('store');
