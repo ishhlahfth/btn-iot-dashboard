@@ -296,128 +296,1602 @@
     {
       "name": "Couvee Tj. Duren",
       "city": "Jakarta Barat",
+      "image_url": "https://ik.imagekit.io/tvlk/cul-asset/guys1L+Yyer9kzI3sp-pb0CG1j2bhflZGFUZOoIf1YOBAm37kEUOKR41ieUZm7ZJ/tvlk-prod-cul-assets/culinary/asset/REST_cou-720x896-FIT_AND_TRIM-96d9f0c80d811b4a0ba431e816f8adad.jpeg?tr=q-40,c-at_max,w-1080,h-1920&_src=imagekit",
       "finished_orders": 9530,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "McDonald's",
       "city": "Jakarta Pusat",
+      "image_url": "",
       "finished_orders": 15203,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Ketoprak Mbak Yati",
       "city": "Jakarta Selatan",
+      "image_url": "",
       "finished_orders": 14,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": false,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Yusa Martabak",
       "city": "Jakarta Selatan",
+      "image_url": "",
       "finished_orders": 1500,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Nasi Uduk Janda",
       "city": "Jakarta Barat",
+      "image_url": "",
       "finished_orders": 4980,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-12-01 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Gudeg Bromo Bu Tekluk",
       "city": "Kota Yogyakarta",
+      "image_url": "",
       "finished_orders": 22,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": false,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Ayam Blenger PSP",
       "city": "Jakarta Barat",
+      "image_url": "",
       "finished_orders": 840,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Eatlah",
       "city": "Jakarta Barat",
+      "image_url": "",
       "finished_orders": 1440,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Secbowl",
       "city": "Jakarta Barat",
+      "image_url": "",
       "finished_orders": 900,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Nasi Goreng Republic",
       "city": "Jakarta Selatan",
+      "image_url": "",
       "finished_orders": 1510,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Donuthing",
       "city": "Jakarta Barat",
+      "image_url": "",
       "finished_orders": 338,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-11-25 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Fore Coffee",
       "city": "Jakarta Pusat",
+      "image_url": "",
       "finished_orders": 511,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-12-21 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Bukit Delight",
       "city": "Kota Malang",
+      "image_url": "",
       "finished_orders": 1104,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Tizi Cake Shop & Restaurant",
       "city": "Bandung",
+      "image_url": "",
       "finished_orders": 5184,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Mie Naripan",
       "city": "Bandung",
+      "image_url": "",
       "finished_orders": 90,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Sumber Hidangan",
       "city": "Bandung",
+      "image_url": "",
       "finished_orders": 4730,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Raja Thai Tea",
       "city": "Bandung",
+      "image_url": "",
       "finished_orders": 10349,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Fremilt",
       "city": "Kota Yogyakarta",
+      "image_url": "",
       "finished_orders": 9014,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
       "verification_status": true,
-      "suspension_status": false
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "lists": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "lists": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
