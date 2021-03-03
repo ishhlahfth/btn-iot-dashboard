@@ -9,20 +9,47 @@
               :key="i"
               class="py-3 px-6 text-small font-medium text-grey-2"
             >
-              <p
+              <div
+                class="w-full flex justify-between select-none"
                 :class="[
-                  { 'text-center': column.align === 'center' },
-                  { 'text-right': column.align === 'right' },
+                  { 'text-grey-1': pagination.sortBy === column.field },
+                  { 'hover:opacity-50 cursor-pointer': column.sortable },
                 ]"
+                @click="sort(column)"
               >
-                {{ column.label }}
-              </p>
+                <icon
+                  v-if="
+                    pagination.sortBy === column.field &&
+                      column.sortable &&
+                      column.align === 'right'
+                  "
+                  :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
+                  class="mr-1"
+                />
+                <p
+                  :class="[
+                    { 'text-center': column.align === 'center' },
+                    { 'text-right': column.align === 'right' },
+                  ]"
+                >
+                  {{ column.label }}
+                </p>
+                <icon
+                  v-if="
+                    pagination.sortBy === column.field &&
+                      column.sortable &&
+                      column.align !== 'right'
+                  "
+                  :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
+                  class="ml-1"
+                />
+              </div>
             </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
-          <template v-if="rows.length > 0">
-            <tr v-for="(row, i) in rows" :key="i" class="bg-white">
+          <template v-if="processedTableData.length > 0">
+            <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
               <td v-for="(data, i) in row" :key="i" class="py-3 px-6 text-small">
                 <div
                   class="w-full grid"
@@ -57,11 +84,13 @@
 </template>
 
 <script>
-import TableFooter from '../molecules/TableFooter.vue';
+import Icon from '@/components/atoms/Icon.vue';
+import TableFooter from '@/components/molecules/TableFooter.vue';
 
 export default {
   name: 'HelpTable',
   components: {
+    Icon,
     TableFooter,
   },
   props: {
@@ -86,6 +115,8 @@ export default {
           totalRows: 10,
           rowLimit: 10,
           page: 1,
+          sortBy: '',
+          order: 'asc',
         };
       },
     },
@@ -103,6 +134,57 @@ export default {
     },
     onChangePagination(updatedPagination) {
       this.$emit('onChangePagination', updatedPagination);
+    },
+    sort({ field: newField, sortable }) {
+      if (sortable) {
+        const { order, sortBy } = this.pagination;
+        let newOrder = order;
+        if (newField === sortBy) {
+          if (order === 'asc') {
+            newOrder = 'desc';
+          } else {
+            newOrder = 'asc';
+          }
+        } else {
+          newOrder = 'asc';
+        }
+        const updatedPagination = {
+          ...this.pagination,
+          sortBy: newField,
+          order: newOrder,
+        };
+        this.$emit('sort', updatedPagination);
+      }
+    },
+  },
+  computed: {
+    processedTableData() {
+      // columns' field should be the same as backend API response keys
+      const columnLibrary = {};
+
+      this.columns.forEach((el) => {
+        columnLibrary[el.field] = null;
+      });
+
+      const matchedByColumns = [];
+
+      this.rows.forEach((row) => {
+        const temporaryRow = { ...columnLibrary };
+        for (const rowKey in row) {
+          if (rowKey) {
+            for (const columnName in columnLibrary) {
+              if (columnName) {
+                if (rowKey === columnName) {
+                  temporaryRow[columnName] = row[rowKey];
+                }
+              }
+            }
+          }
+        }
+        matchedByColumns.push(temporaryRow);
+      });
+
+      return matchedByColumns;
     },
   },
 };

@@ -4,7 +4,7 @@
   >
     <div>
       <icon
-        name="reorder"
+        name="menu"
         :size="6"
         @click="store.methods.setMini(false)"
         class="block sm:hidden cursor-pointer"

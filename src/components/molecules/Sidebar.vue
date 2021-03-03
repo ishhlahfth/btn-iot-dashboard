@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="h-full fixed inset-y-0 left-0 sm:grid gap-2 auto-rows-max bg-midnight z-50 sm:p-2 transition-all duration-200"
+    class="h-full fixed inset-y-0 left-0 sm:grid gap-2 auto-rows-max bg-midnight overflow-hidden z-50 sm:p-2 transition-all duration-200"
     :class="store.state.mini ? 'w-0 sm:w-14' : 'p-2 w-64'"
     @mouseover="store.methods.setMini(false)"
     @mouseleave="store.methods.setMini(true)"
@@ -15,7 +15,11 @@
       />
     </template>
   </nav>
-  <div v-if="!store.state.mini" @click="store.methods.setMini(true)" class="sm:hidden absolute top-0 right-0 bg-black bg-opacity-40 h-full w-full z-20"></div>
+  <div
+    v-if="!store.state.mini"
+    @click="store.methods.setMini(true)"
+    class="sm:hidden absolute top-0 right-0 bg-black bg-opacity-40 h-full w-full z-20"
+  ></div>
 </template>
 
 <script>
@@ -34,7 +38,8 @@ export default {
     const collapsed = ref(true);
     const links = [
       { path: '/bns/home', label: 'Home', icon: 'home' },
-      { path: '/bns/another-page', label: 'Components', icon: 'user' },
+      { path: '/bns/another-page', label: 'Components', icon: 'user-group' },
+      { path: '/bns/seller', label: 'Seller', icon: 'user' },
       { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
       {
         path: '/',
