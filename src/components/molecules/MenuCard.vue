@@ -1,9 +1,9 @@
 <template>
   <div class="grid grid-flow-col gap-x-4 p-2" style="grid-template-columns: auto 1fr auto auto;">
-    <img v-if="imageUrl" :src="imageUrl" alt="menu" class="w-28 h-28 object-cover rounded" />
+    <img v-if="imageUrl" :src="imageUrl" alt="menu" class="w-26 h-26 object-cover rounded" />
     <div
       v-else
-      class="w-28 h-28 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
+      class="w-26 h-26 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
     >
       No Image
     </div>
@@ -25,7 +25,7 @@
       </div>
       <p class="text-small font-medium">{{ store.methods.convertToRp(price) }}</p>
     </div>
-    <div class="h-28 grid grid-flow-col place-items-center gap-2">
+    <div class="h-26 grid grid-flow-col place-items-center gap-2">
       <help-toggle />
       <icon name="chevron-down" class="cursor-pointer" />
     </div>

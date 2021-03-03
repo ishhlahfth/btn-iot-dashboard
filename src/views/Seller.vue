@@ -1,146 +1,6 @@
 <template>
   <help-modal v-model="detailModal">
-    <div
-      class="grid grid-flow-col gap-6"
-      style="width: 85vw; height: 87.5vh; grid-template-columns: auto 1fr;"
-    >
-      <div class="grid gap-4 auto-rows-max overflow-auto">
-        <div class="w-full grid place-items-center py-8">
-          <div class="w-44 h-44 rounded-full bg-grey-4 grid place-items-center">store_img</div>
-        </div>
-        <div class="grid grid-cols-2 gap-y-4 gap-x-14 font-medium">
-          <p class="text-grey-2">Name</p>
-          <p>Couvee Tj. Duren</p>
-          <p class="text-grey-2">Location</p>
-          <p>Jakarta Barat</p>
-          <p class="text-grey-2">Joined Since</p>
-          <p>3 Jan 2021</p>
-          <p class="text-grey-2">Bank</p>
-          <p>BCA</p>
-          <p class="text-grey-2">ID No. (KTP)</p>
-          <p>3510242312960003</p>
-          <p class="text-grey-2">Status</p>
-          <p class="text-mint">Verivied</p>
-        </div>
-        <div class="divide-y divide-grey-4">
-          <p></p>
-          <p></p>
-        </div>
-        <div class="grid grid-cols-2 gap-y-4 gap-x-14 font-medium">
-          <p>Finished Orders</p>
-          <p>12.031</p>
-          <p>On Going Orders</p>
-          <p>221</p>
-          <p>Cancelled Orders</p>
-          <p>457</p>
-        </div>
-      </div>
-
-      <div class="overflow-auto">
-        <div>
-          <p class="pl-2 py-1 font-medium">Coffee</p>
-          <div class="grid auto-rows-max divide-y divide-grey-4">
-            <menu-card
-              class="hover:bg-gold-soft"
-              image-url="https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg"
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url="https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg"
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url=""
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url="https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg"
-              name="White"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url="https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg"
-              name="White"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-          </div>
-        </div>
-        <div>
-          <p class="pl-2 py-1 font-medium">Non-Coffee</p>
-          <div class="grid auto-rows-max divide-y divide-grey-4">
-            <menu-card
-              class="hover:bg-gold-soft"
-              image-url="https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg"
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url="https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg"
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url=""
-              name="Aren Latte"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url=""
-              name="White"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-            <menu-card
-              image-url="https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg"
-              name="White"
-              category="Minuman"
-              description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam autem reprehenderit blanditiis ipsum ea voluptate. Loi adipisicing elit."
-              :price="20000"
-              :availability-status="true"
-              :is-active="true"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <seller-detail />
   </help-modal>
   <div class="p-6 grid gap-6">
     <div class="w-full flex justify-between">
@@ -190,7 +50,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-import MenuCard from '@/components/molecules/MenuCard.vue';
+import SellerDetail from '@/components/modals/SellerDetail.vue';
 
 export default {
   name: 'Seller',
@@ -201,7 +61,7 @@ export default {
     HelpModal,
     HelpTable,
     HelpToggle,
-    MenuCard,
+    SellerDetail,
   },
   setup() {
     const store = inject('store');

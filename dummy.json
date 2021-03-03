@@ -294,6 +294,7 @@
   ],
   "seller": [
     {
+      "id": 1,
       "name": "Couvee Tj. Duren",
       "city": "Jakarta Barat",
       "image_url": "https://ik.imagekit.io/tvlk/cul-asset/guys1L+Yyer9kzI3sp-pb0CG1j2bhflZGFUZOoIf1YOBAm37kEUOKR41ieUZm7ZJ/tvlk-prod-cul-assets/culinary/asset/REST_cou-720x896-FIT_AND_TRIM-96d9f0c80d811b4a0ba431e816f8adad.jpeg?tr=q-40,c-at_max,w-1080,h-1920&_src=imagekit",
@@ -309,7 +310,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -341,7 +342,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -383,6 +384,7 @@
       ]
     },
     {
+      "id": 2,
       "name": "McDonald's",
       "city": "Jakarta Pusat",
       "image_url": "",
@@ -398,7 +400,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -430,7 +432,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -472,6 +474,7 @@
       ]
     },
     {
+      "id": 3,
       "name": "Ketoprak Mbak Yati",
       "city": "Jakarta Selatan",
       "image_url": "",
@@ -487,7 +490,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -519,7 +522,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -561,6 +564,7 @@
       ]
     },
     {
+      "id": 4,
       "name": "Yusa Martabak",
       "city": "Jakarta Selatan",
       "image_url": "",
@@ -576,7 +580,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -608,7 +612,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -650,6 +654,7 @@
       ]
     },
     {
+      "id": 5,
       "name": "Nasi Uduk Janda",
       "city": "Jakarta Barat",
       "image_url": "",
@@ -665,7 +670,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -697,7 +702,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -739,6 +744,7 @@
       ]
     },
     {
+      "id": 6,
       "name": "Gudeg Bromo Bu Tekluk",
       "city": "Kota Yogyakarta",
       "image_url": "",
@@ -754,7 +760,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -786,7 +792,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -828,6 +834,7 @@
       ]
     },
     {
+      "id": 7,
       "name": "Ayam Blenger PSP",
       "city": "Jakarta Barat",
       "image_url": "",
@@ -841,7 +848,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -873,7 +880,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -915,6 +922,7 @@
       ]
     },
     {
+      "id": 8,
       "name": "Eatlah",
       "city": "Jakarta Barat",
       "image_url": "",
@@ -930,7 +938,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -962,7 +970,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1004,6 +1012,7 @@
       ]
     },
     {
+      "id": 9,
       "name": "Secbowl",
       "city": "Jakarta Barat",
       "image_url": "",
@@ -1019,7 +1028,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1051,7 +1060,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1093,6 +1102,7 @@
       ]
     },
     {
+      "id": 10,
       "name": "Nasi Goreng Republic",
       "city": "Jakarta Selatan",
       "image_url": "",
@@ -1108,7 +1118,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1140,7 +1150,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1182,6 +1192,7 @@
       ]
     },
     {
+      "id": 11,
       "name": "Donuthing",
       "city": "Jakarta Barat",
       "image_url": "",
@@ -1197,7 +1208,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1229,7 +1240,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1271,6 +1282,7 @@
       ]
     },
     {
+      "id": 12,
       "name": "Fore Coffee",
       "city": "Jakarta Pusat",
       "image_url": "",
@@ -1286,7 +1298,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1318,7 +1330,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1360,6 +1372,7 @@
       ]
     },
     {
+      "id": 13,
       "name": "Bukit Delight",
       "city": "Kota Malang",
       "image_url": "",
@@ -1375,7 +1388,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1407,7 +1420,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1449,6 +1462,7 @@
       ]
     },
     {
+      "id": 14,
       "name": "Tizi Cake Shop & Restaurant",
       "city": "Bandung",
       "image_url": "",
@@ -1464,7 +1478,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1496,7 +1510,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1538,6 +1552,7 @@
       ]
     },
     {
+      "id": 15,
       "name": "Mie Naripan",
       "city": "Bandung",
       "image_url": "",
@@ -1553,7 +1568,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1585,7 +1600,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1627,6 +1642,7 @@
       ]
     },
     {
+      "id": 16,
       "name": "Sumber Hidangan",
       "city": "Bandung",
       "image_url": "",
@@ -1642,7 +1658,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1674,7 +1690,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1716,6 +1732,7 @@
       ]
     },
     {
+      "id": 17,
       "name": "Raja Thai Tea",
       "city": "Bandung",
       "image_url": "",
@@ -1731,7 +1748,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1763,7 +1780,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
@@ -1805,6 +1822,7 @@
       ]
     },
     {
+      "id": 18,
       "name": "Fremilt",
       "city": "Kota Yogyakarta",
       "image_url": "",
@@ -1820,7 +1838,7 @@
       "menu": [
         {
           "catalog_name": "Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Java",
               "category": "Minuman",
@@ -1852,7 +1870,7 @@
         },
         {
           "catalog_name": "Non-Coffee",
-          "lists": [
+          "items": [
             {
               "name": "Cookie Crumble",
               "category": "Minuman",
