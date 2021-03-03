@@ -81,31 +81,32 @@ export default {
       order: 'asc',
     });
 
-    const getSellers = async (pagination) => {
-      return pagination;
-      // const limit = pagination.rowLimit || 10;
-      // const page = pagination.page || 1;
-      // const sort = pagination.sortBy || 'name';
-      // const order = pagination.order || 'asc;';
-      // try {
-      //   const response = await axios.get(
-      //     `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-      //   );
-      //   sellers.value = response.data.map((el) => ({
-      //     ...el,
-      //     finished_orders: store.methods.groupDigit(el.finished_orders),
-      //   }));
-      //   sellerPagination.value = {
-      //     totalRows: +response.headers['x-total-count'],
-      //     rowLimit: pagination.rowLimit,
-      //     page: pagination.page,
-      //     sortBy: pagination.sortBy,
-      //     order: pagination.order,
-      //   };
-      // } catch (error) {
-      //   console.log(error);
-      // }
-    };
+    const getSellers = (pagination) => pagination;
+
+    // const getSellers = async (pagination) => {
+    // const limit = pagination.rowLimit || 10;
+    // const page = pagination.page || 1;
+    // const sort = pagination.sortBy || 'name';
+    // const order = pagination.order || 'asc;';
+    // try {
+    //   const response = await axios.get(
+    //     `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+    //   );
+    //   sellers.value = response.data.map((el) => ({
+    //     ...el,
+    //     finished_orders: store.methods.groupDigit(el.finished_orders),
+    //   }));
+    //   sellerPagination.value = {
+    //     totalRows: +response.headers['x-total-count'],
+    //     rowLimit: pagination.rowLimit,
+    //     page: pagination.page,
+    //     sortBy: pagination.sortBy,
+    //     order: pagination.order,
+    //   };
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // };
 
     onMounted(() => {
       getSellers(sellerPagination.value);
