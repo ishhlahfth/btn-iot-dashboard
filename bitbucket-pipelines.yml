@@ -20,6 +20,12 @@ definitions:
         name: Deploy via SCP
         script:
           - source .env-ci-cd
+          - pipe: atlassian/ssh-run:0.3.0
+            variables:
+              SERVER: $SSH_SERVER
+              SSH_USER: $SSH_USER
+              SSH_KEY: $SSH_KEY
+              COMMAND: "mkdir -p /tmp/${BITBUCKET_REPO_SLUG}/${BITBUCKET_DEPLOYMENT_ENVIRONMENT}/"
           - pipe: atlassian/scp-deploy:1.0.0
             variables:
               SERVER: $SSH_SERVER
@@ -27,7 +33,6 @@ definitions:
               SSH_KEY: $SSH_KEY
               REMOTE_PATH: "/tmp/${BITBUCKET_REPO_SLUG}/${BITBUCKET_DEPLOYMENT_ENVIRONMENT}/"
               LOCAL_PATH: 'dist'
-              EXTRA_ARGS: ["-pqr"]
           - pipe: atlassian/ssh-run:0.3.0
             variables:
               SERVER: $SSH_SERVER
