@@ -10,10 +10,12 @@
               class="py-3 px-6 text-small font-medium text-grey-2"
             >
               <div
-                class="w-full flex justify-between select-none"
+                class="flex select-none"
                 :class="[
                   { 'text-grey-1': pagination.sortBy === column.field },
                   { 'hover:opacity-50 cursor-pointer': column.sortable },
+                  { 'justify-center': column.align === 'center' },
+                  { 'justify-end': column.align === 'right' },
                 ]"
                 @click="sort(column)"
               >
