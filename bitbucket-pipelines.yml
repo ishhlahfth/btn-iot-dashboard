@@ -25,8 +25,8 @@ definitions:
               SERVER: $SSH_SERVER
               USER: $SSH_USER
               SSH_KEY: $SSH_KEY
-              REMOTE_PATH: "/tmp/${BITBUCKET_REPO_SLUG}/${BITBUCKET_DEPLOYMENT_ENVIRONMENT}"
-              LOCAL_PATH: 'dist/*'
+              REMOTE_PATH: "/tmp/${BITBUCKET_REPO_SLUG}/${BITBUCKET_DEPLOYMENT_ENVIRONMENT}/"
+              LOCAL_PATH: 'dist'
               EXTRA_ARGS: ["-pqr"]
           - pipe: atlassian/ssh-run:0.3.0
             variables:
