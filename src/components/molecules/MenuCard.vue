@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-flow-col gap-x-4" style="grid-template-columns: auto 1fr auto auto;">
-    <img v-if="imageUrl" :src="imageUrl" alt="menu" class="w-28 h-28 bg-cover rounded" />
+  <div class="grid grid-flow-col gap-x-4 p-2" style="grid-template-columns: auto 1fr auto auto;">
+    <img v-if="imageUrl" :src="imageUrl" alt="menu" class="w-28 h-28 object-cover rounded" />
     <div
       v-else
       class="w-28 h-28 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
