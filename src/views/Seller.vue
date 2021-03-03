@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { onMounted, ref, inject } from 'vue';
-import axios from 'axios';
+import { onMounted, ref } from 'vue';
+// import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -51,7 +51,7 @@ export default {
     HelpToggle,
   },
   setup() {
-    const store = inject('store');
+    // const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'store name', sortable: true },
@@ -82,28 +82,29 @@ export default {
     });
 
     const getSellers = async (pagination) => {
-      const limit = pagination.rowLimit || 10;
-      const page = pagination.page || 1;
-      const sort = pagination.sortBy || 'name';
-      const order = pagination.order || 'asc;';
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        );
-        sellers.value = response.data.map((el) => ({
-          ...el,
-          finished_orders: store.methods.groupDigit(el.finished_orders),
-        }));
-        sellerPagination.value = {
-          totalRows: +response.headers['x-total-count'],
-          rowLimit: pagination.rowLimit,
-          page: pagination.page,
-          sortBy: pagination.sortBy,
-          order: pagination.order,
-        };
-      } catch (error) {
-        console.log(error);
-      }
+      return pagination;
+      // const limit = pagination.rowLimit || 10;
+      // const page = pagination.page || 1;
+      // const sort = pagination.sortBy || 'name';
+      // const order = pagination.order || 'asc;';
+      // try {
+      //   const response = await axios.get(
+      //     `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+      //   );
+      //   sellers.value = response.data.map((el) => ({
+      //     ...el,
+      //     finished_orders: store.methods.groupDigit(el.finished_orders),
+      //   }));
+      //   sellerPagination.value = {
+      //     totalRows: +response.headers['x-total-count'],
+      //     rowLimit: pagination.rowLimit,
+      //     page: pagination.page,
+      //     sortBy: pagination.sortBy,
+      //     order: pagination.order,
+      //   };
+      // } catch (error) {
+      //   console.log(error);
+      // }
     };
 
     onMounted(() => {
