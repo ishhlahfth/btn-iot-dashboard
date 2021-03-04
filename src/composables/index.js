@@ -2,11 +2,15 @@ import { reactive } from 'vue';
 
 const state = reactive({
   mini: true,
+  modalState: {},
 });
 
 const methods = {
-  setMini(value) {
-    state.mini = value;
+  setMini(payload) {
+    state.mini = payload;
+  },
+  setModalState(payload) {
+    state.modalState = payload;
   },
   groupDigit(value) {
     let grouped = value;

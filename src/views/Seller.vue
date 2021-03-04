@@ -1,4 +1,7 @@
 <template>
+  <help-modal v-model="detailModal">
+    <seller-detail />
+  </help-modal>
   <div class="p-6 grid gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Seller</p>
@@ -16,7 +19,13 @@
         @sort="getSellers($event)"
       >
         <template v-slot="{ column, row }">
-          <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">See Detail</p>
+          <p
+            v-if="column === 'menu'"
+            class="text-royal font-medium cursor-pointer"
+            @click="openSellerDetail(row.id)"
+          >
+            See Detail
+          </p>
           <p v-if="column === 'operational_detail'" class="text-royal font-medium cursor-pointer">
             See Detail
           </p>
@@ -33,13 +42,19 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 // import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
+import SellerDetail from '@/components/modals/SellerDetail.vue';
+
+// = = DUMMY = =
+import { seller as dummySeller } from '../../dummy.json';
+// = = DUMMY = =
 
 export default {
   name: 'Seller',
@@ -47,11 +62,13 @@ export default {
     HelpBadge,
     HelpButton,
     HelpInput,
+    HelpModal,
     HelpTable,
     HelpToggle,
+    SellerDetail,
   },
   setup() {
-    // const store = inject('store');
+    const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'store name', sortable: true },
@@ -68,9 +85,9 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'detail', label: 'seller detail', align: 'center' },
+      { field: 'menu', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
-      { field: 'suspension_status', label: 'status' },
+      { field: 'suspension_status', label: 'status', align: 'center' },
     ];
     const sellers = ref([]);
     const sellerPagination = ref({
@@ -80,33 +97,53 @@ export default {
       sortBy: 'name',
       order: 'asc',
     });
+    const detailModal = ref(false);
 
-    const getSellers = (pagination) => pagination;
+    const openSellerDetail = (id) => {
+      detailModal.value = true;
+      store.methods.setModalState({ id });
+    };
 
-    // const getSellers = async (pagination) => {
-    // const limit = pagination.rowLimit || 10;
-    // const page = pagination.page || 1;
-    // const sort = pagination.sortBy || 'name';
-    // const order = pagination.order || 'asc;';
-    // try {
-    //   const response = await axios.get(
-    //     `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-    //   );
-    //   sellers.value = response.data.map((el) => ({
-    //     ...el,
-    //     finished_orders: store.methods.groupDigit(el.finished_orders),
-    //   }));
-    //   sellerPagination.value = {
-    //     totalRows: +response.headers['x-total-count'],
-    //     rowLimit: pagination.rowLimit,
-    //     page: pagination.page,
-    //     sortBy: pagination.sortBy,
-    //     order: pagination.order,
-    //   };
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // };
+    const getSellers = async (pagination) => {
+      // = = REAL = =
+      // const limit = pagination.rowLimit || 10;
+      // const page = pagination.page || 1;
+      // const sort = pagination.sortBy || 'name';
+      // const order = pagination.order || 'asc;';
+      // = = REAL = =
+      try {
+        // = = REAL = =
+        // const response = await axios.get(
+        //   `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+        // );
+        // sellers.value = response.data.map((el) => ({
+        //   ...el,
+        //   finished_orders: store.methods.groupDigit(el.finished_orders),
+        // }));
+        // = = REAL = =
+
+        // = = DUMMY = =
+        sellers.value = dummySeller.map((el) => ({
+          ...el,
+          finished_orders: store.methods.groupDigit(el.finished_orders),
+        }));
+        // = = DUMMY = =
+        sellerPagination.value = {
+          // = = REAL = =
+          // totalRows: +response.headers['x-total-count'],
+          // = = REAL = =
+          // = = DUMMY = =
+          totalRows: dummySeller.length,
+          // = = DUMMY = =
+          rowLimit: pagination.rowLimit,
+          page: pagination.page,
+          sortBy: pagination.sortBy,
+          order: pagination.order,
+        };
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     onMounted(() => {
       getSellers(sellerPagination.value);
@@ -115,7 +152,9 @@ export default {
       columns,
       sellers,
       sellerPagination,
+      detailModal,
       searchValue,
+      openSellerDetail,
       getSellers,
     };
   },

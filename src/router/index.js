@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: '/bns',
-    redirect: '/bns/home',
+    redirect: '/bns/seller',
     name: 'BNS',
     component: () => import('@/components/layouts/Main.vue'),
     beforeEnter: authenticate,

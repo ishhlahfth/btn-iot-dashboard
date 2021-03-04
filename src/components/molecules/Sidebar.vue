@@ -37,9 +37,9 @@ export default {
     const store = inject('store');
     const collapsed = ref(true);
     const links = [
+      { path: '/bns/seller', label: 'Seller', icon: 'user' },
       { path: '/bns/home', label: 'Home', icon: 'home' },
       { path: '/bns/another-page', label: 'Components', icon: 'user-group' },
-      { path: '/bns/seller', label: 'Seller', icon: 'user' },
       { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
       {
         path: '/',
