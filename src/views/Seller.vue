@@ -20,9 +20,9 @@
       >
         <template v-slot="{ column, row }">
           <p
-            v-if="column === 'detail'"
+            v-if="column === 'menu'"
             class="text-royal font-medium cursor-pointer"
-            @click="detailModal = true"
+            @click="openSellerDetail(row.id)"
           >
             See Detail
           </p>
@@ -81,9 +81,9 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'detail', label: 'seller detail', align: 'center' },
+      { field: 'menu', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
-      { field: 'suspension_status', label: 'status' },
+      { field: 'suspension_status', label: 'status', align: 'center' },
     ];
     const sellers = ref([]);
     const sellerPagination = ref({
@@ -95,6 +95,11 @@ export default {
     });
     const detailModal = ref(false);
 
+    const openSellerDetail = (id) => {
+      detailModal.value = true;
+      store.methods.setModalState({ id });
+    };
+
     const getSellers = async (pagination) => {
       const limit = pagination.rowLimit || 10;
       const page = pagination.page || 1;
@@ -104,6 +109,7 @@ export default {
         const response = await axios.get(
           `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
         );
+        console.log(24150000, response);
         sellers.value = response.data.map((el) => ({
           ...el,
           finished_orders: store.methods.groupDigit(el.finished_orders),
@@ -129,6 +135,7 @@ export default {
       sellerPagination,
       detailModal,
       searchValue,
+      openSellerDetail,
       getSellers,
     };
   },

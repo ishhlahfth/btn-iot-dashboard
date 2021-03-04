@@ -16,6 +16,7 @@ module.exports = {
     'no-obj-calls': 'off',
     'no-prototype-builtins': 'off',
     'no-restricted-syntax': 'off',
-    'prefer-destructuring': 'off'
+    'prefer-destructuring': 'off',
+    'prefer-arrow-callback': 'off'
   },
 };

@@ -11,6 +11,7 @@
             >
               <div
                 class="flex select-none"
+                v-if="column.field !== 'id'"
                 :class="[
                   { 'text-grey-1': pagination.sortBy === column.field },
                   { 'hover:opacity-50 cursor-pointer': column.sortable },
@@ -52,20 +53,22 @@
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
           <template v-if="processedTableData.length > 0">
             <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
-              <td v-for="(data, i) in row" :key="i" class="py-3 px-6 text-small">
-                <div
-                  class="w-full grid"
-                  :class="[
-                    { 'place-items-center': columnAlignment(i) === 'center' },
-                    { 'place-items-end': columnAlignment(i) === 'right' },
-                  ]"
-                >
-                  <slot :column="i" :row="row" :data="data">
-                    <!-- default, when there is no slot -->
-                    <p>{{ data }}</p>
-                  </slot>
-                </div>
-              </td>
+              <template v-for="(data, i) in row" :key="i">
+                <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
+                  <div
+                    class="w-full grid"
+                    :class="[
+                      { 'place-items-center': columnAlignment(i) === 'center' },
+                      { 'place-items-end': columnAlignment(i) === 'right' },
+                    ]"
+                  >
+                    <slot :column="i" :row="row" :data="data">
+                      <!-- default, when there is no slot -->
+                      <p>{{ data }}</p>
+                    </slot>
+                  </div>
+                </td>
+              </template>
             </tr>
           </template>
           <template v-else>
@@ -126,11 +129,14 @@ export default {
   methods: {
     columnAlignment(columnName) {
       let alignment = '';
+
       const filtered = this.columns.filter((el) => el.field === columnName)[0];
-      if (filtered.align) {
-        alignment = filtered.align;
-      } else {
-        alignment = 'left';
+      if (filtered && filtered.hasOwnProperty('align')) {
+        if (filtered.align) {
+          alignment = filtered.align;
+        } else {
+          alignment = 'left';
+        }
       }
       return alignment;
     },
@@ -158,32 +164,27 @@ export default {
         this.$emit('sort', updatedPagination);
       }
     },
+    matchColumn(columnName) {
+      // match looped column with existing column name
+      const columnLibrary = this.columns.map((el) => el.field);
+      if (columnLibrary.includes(columnName)) {
+        return true;
+      }
+      return false;
+    },
   },
   computed: {
     processedTableData() {
-      // columns' field should be the same as backend API response keys
+      // add new keys based on column name with null value
       const columnLibrary = {};
-
       this.columns.forEach((el) => {
         columnLibrary[el.field] = null;
       });
 
+      // override value if key already exists
       const matchedByColumns = [];
-
       this.rows.forEach((row) => {
-        const temporaryRow = { ...columnLibrary };
-        for (const rowKey in row) {
-          if (rowKey) {
-            for (const columnName in columnLibrary) {
-              if (columnName) {
-                if (rowKey === columnName) {
-                  temporaryRow[columnName] = row[rowKey];
-                }
-              }
-            }
-          }
-        }
-        matchedByColumns.push(temporaryRow);
+        matchedByColumns.push({ ...columnLibrary, ...row });
       });
 
       return matchedByColumns;

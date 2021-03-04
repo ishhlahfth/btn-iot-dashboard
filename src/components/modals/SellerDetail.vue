@@ -40,15 +40,15 @@
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-14 font-medium">
         <p class="text-grey-2">Finished Orders</p>
-        <p>12.031</p>
+        <p>{{ seller.finishedOrders }}</p>
         <p class="text-grey-2">On Going Orders</p>
-        <p>221</p>
+        <p>{{ seller.ongoingOrders }}</p>
         <p class="text-grey-2">Cancelled Orders</p>
-        <p>457</p>
+        <p>{{ seller.cancelledOrders }}</p>
       </div>
     </div>
 
-    <div class="overflow-auto">
+    <div class="overflow-auto hide-scrollbar">
       <div v-for="(catalog, i) in seller.menu" :key="i">
         <p class="pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
         <menu-card
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import MenuCard from '@/components/molecules/MenuCard.vue';
@@ -79,6 +79,7 @@ export default {
     MenuCard,
   },
   setup() {
+    const store = inject('store');
     const seller = ref({
       imageUrl: '',
       name: '',
@@ -93,10 +94,10 @@ export default {
       menu: [],
     });
     const getSeller = async () => {
-      const id = 1;
-      console.log(dayjs().format('D MMM YYYY'));
       try {
-        const { data } = await axios.get(`http://localhost:3000/seller/${id}`);
+        const { data } = await axios.get(
+          `http://localhost:3000/seller/${store.state.modalState.id}`,
+        );
 
         const mapped = [data].map((el) => ({
           imageUrl: el.image_url,
@@ -113,7 +114,6 @@ export default {
         }));
 
         seller.value = mapped[0];
-        console.log('🔰', seller.value);
       } catch (error) {
         console.log(error);
       }
