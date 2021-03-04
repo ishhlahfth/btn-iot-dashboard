@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 // import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
@@ -51,6 +51,10 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
+
+// = = DUMMY = =
+import { seller as dummySeller } from '../../dummy.json';
+// = = DUMMY = =
 
 export default {
   name: 'Seller',
@@ -64,7 +68,7 @@ export default {
     SellerDetail,
   },
   setup() {
-    // const store = inject('store');
+    const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'store name', sortable: true },
@@ -101,20 +105,36 @@ export default {
     };
 
     const getSellers = async (pagination) => {
-      const limit = pagination.rowLimit || 10;
-      const page = pagination.page || 1;
-      const sort = pagination.sortBy || 'name';
-      const order = pagination.order || 'asc;';
+      // = = REAL = =
+      // const limit = pagination.rowLimit || 10;
+      // const page = pagination.page || 1;
+      // const sort = pagination.sortBy || 'name';
+      // const order = pagination.order || 'asc;';
+      // = = REAL = =
       try {
-        const response = await axios.get(
-          `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        );
-        sellers.value = response.data.map((el) => ({
+        // = = REAL = =
+        // const response = await axios.get(
+        //   `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+        // );
+        // sellers.value = response.data.map((el) => ({
+        //   ...el,
+        //   finished_orders: store.methods.groupDigit(el.finished_orders),
+        // }));
+        // = = REAL = =
+
+        // = = DUMMY = =
+        sellers.value = dummySeller.map((el) => ({
           ...el,
           finished_orders: store.methods.groupDigit(el.finished_orders),
         }));
+        // = = DUMMY = =
         sellerPagination.value = {
-          totalRows: +response.headers['x-total-count'],
+          // = = REAL = =
+          // totalRows: +response.headers['x-total-count'],
+          // = = REAL = =
+          // = = DUMMY = =
+          totalRows: dummySeller.length,
+          // = = DUMMY = =
           rowLimit: pagination.rowLimit,
           page: pagination.page,
           sortBy: pagination.sortBy,

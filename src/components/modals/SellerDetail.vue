@@ -69,10 +69,14 @@
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
-import axios from 'axios';
+import { onMounted, ref } from 'vue';
+// import axios from 'axios';
 import dayjs from 'dayjs';
 import MenuCard from '@/components/molecules/MenuCard.vue';
+
+// = = DUMMY = =
+import { seller as dummySeller } from '../../../dummy.json';
+// = = DUMMY = =
 
 export default {
   name: 'SellerDetail',
@@ -80,7 +84,7 @@ export default {
     MenuCard,
   },
   setup() {
-    const store = inject('store');
+    // const store = inject('store');
     const seller = ref({
       imageUrl: '',
       name: '',
@@ -96,11 +100,28 @@ export default {
     });
     const getSeller = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/seller/${store.state.modalState.id}`,
-        );
+        // const { data } = await axios.get(
+        //   `http://localhost:3000/seller/${store.state.modalState.id}`,
+        // );
 
-        const mapped = [data].map((el) => ({
+        // = = REAL = =
+        // const mapped = [data].map((el) => ({
+        //   imageUrl: el.image_url,
+        //   name: el.name,
+        //   city: el.city,
+        //   joinedDate: dayjs(el.created_at).format('D MMM YYYY'),
+        //   bank: el.bank,
+        //   idNumber: el.id_number,
+        //   verificationStatus: el.verification_status,
+        //   finishedOrders: el.finished_orders,
+        //   ongoingOrders: el.ongoing_orders,
+        //   cancelledOrders: el.cancelled_orders,
+        //   menu: el.menu,
+        // }));
+        // = = REAL = =
+
+        // = = DUMMY = =
+        const mapped = [dummySeller[0]].map((el) => ({
           imageUrl: el.image_url,
           name: el.name,
           city: el.city,
@@ -113,6 +134,7 @@ export default {
           cancelledOrders: el.cancelled_orders,
           menu: el.menu,
         }));
+        // = = DUMMY = =
 
         seller.value = mapped[0];
       } catch (error) {
