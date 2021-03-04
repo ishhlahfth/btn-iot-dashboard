@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import { onMounted, ref, inject } from 'vue';
-import axios from 'axios';
+import { onMounted, ref } from 'vue';
+// import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -64,7 +64,7 @@ export default {
     SellerDetail,
   },
   setup() {
-    const store = inject('store');
+    // const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'store name', sortable: true },
@@ -109,7 +109,6 @@ export default {
         const response = await axios.get(
           `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
         );
-        console.log(24150000, response);
         sellers.value = response.data.map((el) => ({
           ...el,
           finished_orders: store.methods.groupDigit(el.finished_orders),

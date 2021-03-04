@@ -55,7 +55,7 @@
 <script>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+// import axios from 'axios';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '@/components/atoms/Button.vue';
@@ -116,7 +116,9 @@ export default {
       if (!password.value) invalid.value.password = true;
       if (!invalid.value.email && !invalid.value.password) {
         try {
-          const { data } = await axios.get('http://localhost:3000/login/0');
+          // const { data } = await axios.get('http://localhost:3000/login/0');
+          const data = { email: email.value };
+
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
             user = Base64.stringify(user);
