@@ -9,7 +9,7 @@
   <transition name="fade" appear>
     <div
       v-if="modelValue"
-      class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-snow p-6 rounded-lg shadow-custom z-50"
+      class="fixed modal-style bg-snow p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
     >
       <slot></slot>
     </div>
@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .shadow-custom {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
 }
@@ -43,5 +43,25 @@ export default {
 .fade-enter-to,
 .fade-leave {
   opacity: 1;
+}
+.modal-style {
+  @apply bottom-0;
+  @apply inset-x-0;
+  @screen sm {
+    @apply bottom-auto;
+    @apply right-auto;
+    @apply top-1/2;
+    @apply left-1/2;
+    @apply transform;
+    @apply -translate-x-1/2;
+    @apply -translate-y-1/2;
+  }
+  & > div {
+    width: 85vw;
+    height: 85vh;
+    @screen sm {
+      height: 87.5vh;
+    }
+  }
 }
 </style>

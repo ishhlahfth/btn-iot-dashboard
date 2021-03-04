@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grid grid-flow-col gap-6"
-    style="width: 85vw; height: 87.5vh; grid-template-columns: 400px 1fr;"
-  >
+  <div class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content overflow-auto">
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
         <img
@@ -18,7 +15,7 @@
           No Image
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-y-4 gap-x-14 font-medium">
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <p class="text-grey-2">Name</p>
         <p>{{ seller.name }}</p>
         <p class="text-grey-2">Location</p>
@@ -38,7 +35,7 @@
         <p></p>
         <p></p>
       </div>
-      <div class="grid grid-cols-2 gap-y-4 gap-x-14 font-medium">
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <p class="text-grey-2">Finished Orders</p>
         <p>{{ seller.finishedOrders }}</p>
         <p class="text-grey-2">On Going Orders</p>
@@ -46,11 +43,15 @@
         <p class="text-grey-2">Cancelled Orders</p>
         <p>{{ seller.cancelledOrders }}</p>
       </div>
+      <div class="divide-y divide-grey-4 sm:hidden">
+        <p></p>
+        <p></p>
+      </div>
     </div>
 
     <div class="overflow-auto hide-scrollbar">
       <div v-for="(catalog, i) in seller.menu" :key="i">
-        <p class="pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
+        <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
         <menu-card
           v-for="(item, i) in catalog.items"
           :key="i"
@@ -129,4 +130,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.template-cols-auto-1fr {
+  grid-template-columns: auto 1fr;
+}
+.template-cols-fixed-1fr {
+  grid-template-columns: 400px 1fr;
+}
+.seller-modal-content {
+  @apply grid-flow-row;
+  @apply auto-rows-max;
+  @media screen and (min-width: 640px) {
+    grid-template-columns: 400px 1fr;
+    grid-auto-rows: initial;
+  }
+}
+</style>
