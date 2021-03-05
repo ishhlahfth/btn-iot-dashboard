@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content overflow-auto">
+  <div class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content inner-modal modal-xl overflow-auto">
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
         <img
