@@ -31,33 +31,43 @@
       <p class="text-small font-medium">{{ store.methods.convertToRp(price) }}</p>
     </div>
     <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
-      <help-toggle />
+      <help-toggle v-model="localIsActive" />
       <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
     </div>
   </div>
 
   <transition name="slide" appear>
     <template v-if="variantOpened">
-      <div class="grid text-small divide-y divide-grey-4">
-        <template v-for="(variant, i) in variants" :key="i">
-          <div class="p-2">
-            <p class="mb-2">{{ variant.variant_name }}</p>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
-              <template v-for="(variantItem, i) in variant.variant_items" :key="i">
-                <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
-                <help-radio v-else :label="variantItem" disabled />
-              </template>
+      <div class="pb-2 sm:pb-0">
+        <div class="grid text-small divide-y divide-grey-4">
+          <template v-for="(variant, i) in variants" :key="i">
+            <div class="p-2">
+              <p class="mb-2">{{ variant.variant_name }}</p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
+                <template v-for="(variantItem, i) in variant.variant_items" :key="i">
+                  <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
+                  <help-radio v-else :label="variantItem" disabled />
+                </template>
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </div>
+        <div class="grid">
+          <help-button
+            v-if="store.state.screenWidth < 640"
+            :label="localIsActive ? 'disable product' : 'enable product'"
+            type="secondary"
+          />
+        </div>
       </div>
     </template>
   </transition>
 </template>
 
 <script>
-import { inject, ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
+import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
@@ -67,6 +77,7 @@ export default {
   name: 'MenuCard',
   components: {
     HelpBadge,
+    HelpButton,
     HelpCheckbox,
     HelpRadio,
     HelpToggle,
@@ -106,9 +117,10 @@ export default {
       default: () => [],
     },
   },
-  setup() {
+  setup(props) {
     const store = inject('store');
     const variantOpened = ref(false);
+    const localIsActive = ref(true);
 
     const expandVariant = () => {
       if (store.state.screenWidth < 640) {
@@ -116,9 +128,14 @@ export default {
       }
     };
 
+    onMounted(() => {
+      localIsActive.value = props.isActive;
+    });
+
     return {
       store,
       variantOpened,
+      localIsActive,
       expandVariant,
     };
   },
