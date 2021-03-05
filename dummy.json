@@ -318,7 +318,12 @@
               "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
               "price": 20000,
               "avaliability_status": true,
-              "is_active": true
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"] },
+                { "variant_name": "Sugar", "variant_items": ["Regular", "Tall", "Extra Tall"] },
+                { "variant_name": "Ice", "variant_items": ["Regular", "Tall", "Extra Tall"] }
+              ]
             },
             {
               "name": "Melacca",

@@ -35,24 +35,26 @@
       <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
     </div>
   </div>
-  <div class="grid text-small divide-y divide-grey-4" v-if="variantOpened">
-    <div class="p-2">
-      <p class="mb-2">Size</p>
-      <div class="grid sm:grid-cols-4 text-grey-2">
-        <help-radio label="Regular" disabled />
-        <help-radio label="Tall" disabled />
-        <help-radio label="Extra Tall" disabled />
+  <transition name="slide" appear>
+    <div class="grid text-small divide-y divide-grey-4" v-if="variantOpened">
+      <div class="p-2">
+        <p class="mb-2">Size</p>
+        <div class="grid sm:grid-cols-4 text-grey-2">
+          <help-radio label="Regular" disabled />
+          <help-radio label="Tall" disabled />
+          <help-radio label="Extra Tall" disabled />
+        </div>
+      </div>
+      <div class="p-2">
+        <p class="mb-2">Topping</p>
+        <div class="grid sm:grid-cols-4 text-grey-2">
+          <help-checkbox label="Cocoa Powder" disabled />
+          <help-checkbox label="Cheese" disabled />
+          <help-checkbox label="Oreo" disabled />
+        </div>
       </div>
     </div>
-    <div class="p-2">
-      <p class="mb-2">Topping</p>
-      <div class="grid sm:grid-cols-4 text-grey-2">
-        <help-checkbox label="Cocoa Powder" disabled />
-        <help-checkbox label="Cheese" disabled />
-        <help-checkbox label="Oreo" disabled />
-      </div>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -124,5 +126,14 @@ export default {
   @media screen and (min-width: 640px) {
     grid-template-columns: auto 1fr auto auto;
   }
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 </style>
