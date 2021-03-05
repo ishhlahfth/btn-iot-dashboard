@@ -39,17 +39,17 @@
     <div class="p-2">
       <p class="mb-2">Size</p>
       <div class="grid sm:grid-cols-4 text-grey-2">
-        <help-radio label="Regular" group="size" />
-        <help-radio label="Tall" group="size" />
-        <help-radio label="Extra Tall" group="size" />
+        <help-radio label="Regular" disabled />
+        <help-radio label="Tall" disabled />
+        <help-radio label="Extra Tall" disabled />
       </div>
     </div>
     <div class="p-2">
       <p class="mb-2">Topping</p>
       <div class="grid sm:grid-cols-4 text-grey-2">
-        <help-checkbox label="Cocoa Powder" />
-        <help-checkbox label="Cheese" />
-        <help-checkbox label="Oreo" />
+        <help-checkbox label="Cocoa Powder" disabled />
+        <help-checkbox label="Cheese" disabled />
+        <help-checkbox label="Oreo" disabled />
       </div>
     </div>
   </div>
