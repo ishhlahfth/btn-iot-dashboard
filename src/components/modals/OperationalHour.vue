@@ -13,25 +13,38 @@
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
-import axios from 'axios';
+import { onMounted, ref } from 'vue';
+// import axios from 'axios';
+
+// = = DUMMY = =
+import { seller as dummySeller } from '../../../dummy.json';
+// = = DUMMY = =
 
 export default {
   name: 'OperationalHour',
   setup() {
-    const store = inject('store');
+    // const store = inject('store');
     const operationalHours = ref([]);
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     const getOperationalHours = async () => {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/seller/${store.state.modalState.id}`,
-        );
-        operationalHours.value = data.operational_hours.map((el, i) => ({
+        // = = REAL = =
+        // const { data } = await axios.get(
+        //   `http://localhost:3000/seller/${store.state.modalState.id}`,
+        // );
+        // operationalHours.value = data.operational_hours.map((el, i) => ({
+        //   ...el,
+        //   day: days[i],
+        // }));
+        // = = REAL = =
+
+        // = = DUMMY = =
+        operationalHours.value = dummySeller[0].operational_hours.map((el, i) => ({
           ...el,
           day: days[i],
         }));
+        // = = DUMMY = =
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +56,6 @@ export default {
 
     return {
       operationalHours,
-      days,
     };
   },
 };
