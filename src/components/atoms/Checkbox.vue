@@ -4,7 +4,9 @@
       @input="$emit('update:modelValue', !modelValue)"
       type="checkbox"
       :value="modelValue"
-      class="bg-white help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none cursor-pointer"
+      :disabled="disabled"
+      :class="{ 'cursor-pointer': !disabled }"
+      class="bg-white help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none"
     />
     <label v-if="label" class="font-medium">{{ label }}</label>
   </div>
@@ -21,6 +23,10 @@ export default {
     label: {
       type: String,
       default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };

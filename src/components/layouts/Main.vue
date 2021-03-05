@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import { provide } from 'vue';
-import store from '@/composables';
 import HelpNavbar from '@/components/molecules/Navbar.vue';
 import HelpSidebar from '@/components/molecules/Sidebar.vue';
 
@@ -17,9 +15,6 @@ export default {
   components: {
     HelpNavbar,
     HelpSidebar,
-  },
-  setup() {
-    provide('store', store);
   },
 };
 </script>

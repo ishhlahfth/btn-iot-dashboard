@@ -1,5 +1,7 @@
 <template>
-  <div class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content inner-modal modal-xl overflow-auto">
+  <div
+    class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content inner-modal modal-xl overflow-auto"
+  >
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
         <img
@@ -52,17 +54,20 @@
     <div class="overflow-auto hide-scrollbar">
       <div v-for="(catalog, i) in seller.menu" :key="i">
         <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
-        <menu-card
-          v-for="(item, i) in catalog.items"
-          :key="i"
-          :image-url="item.image_url"
-          :name="item.name"
-          :category="item.category"
-          :description="item.description"
-          :price="item.price"
-          :availability-status="item.availability_status"
-          :is-active="item.is_active"
-        />
+        <div class="divide-y divide-grey-4">
+          <menu-card
+            v-for="(item, i) in catalog.items"
+            :key="i"
+            :image-url="item.image_url"
+            :name="item.name"
+            :category="item.category"
+            :description="item.description"
+            :price="item.price"
+            :availability-status="item.availability_status"
+            :is-active="item.is_active"
+            :variants="item.variants"
+          />
+        </div>
       </div>
     </div>
   </div>

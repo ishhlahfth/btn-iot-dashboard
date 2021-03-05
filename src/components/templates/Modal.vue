@@ -9,7 +9,7 @@
   <transition name="fade" appear>
     <div
       v-if="modelValue"
-      class="fixed modal-style bg-snow p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
+      class="fixed modal-style bg-snow p-4 sm:p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
     >
       <slot></slot>
     </div>
@@ -57,11 +57,11 @@ export default {
     @apply -translate-y-1/2;
   }
   .inner-modal {
-    width: 85vw;
     height: 85vh;
   }
   .modal-xl {
     @screen sm {
+      width: 85vw;
       height: 87.5vh;
     }
   }

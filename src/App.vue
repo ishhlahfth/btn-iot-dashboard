@@ -3,8 +3,23 @@
 </template>
 
 <script>
+import { provide, onMounted } from 'vue';
+import store from '@/composables';
+
 export default {
   name: 'App',
+  setup() {
+    provide('store', store);
+
+    const handleResize = () => {
+      store.state.screenWidth = window.innerWidth;
+    };
+
+    onMounted(() => {
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    });
+  },
 };
 </script>
 
