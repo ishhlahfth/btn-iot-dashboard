@@ -76,8 +76,11 @@ export default {
     @apply left-1/2;
     transform: translate(-50%, -50%);
   }
-  .inner-modal {
+  .inner-modal-fixed {
     height: 85vh;
+  }
+  .inner-modal-auto {
+    height: auto;
   }
   .modal-xl {
     @screen sm {

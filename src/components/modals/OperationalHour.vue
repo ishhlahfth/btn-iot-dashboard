@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-flow-row sm:grid-flow-col gap-6 inner-modal modal-md overflow-auto">
-    <div class="grid grid-cols-2 gap-6 font-medium">
+  <div class="grid inner-modal-auto modal-md overflow-auto">
+    <div class="grid grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <template v-for="(schedule, i) in operationalHours" :key="i">
         <p class="text-grey-2">{{ schedule.day }}</p>
         <p class="place-self-end" v-if="schedule.open_hour && schedule.close_hour">
