@@ -1,27 +1,51 @@
 <template>
   <div class="grid grid-flow-row sm:grid-flow-col gap-6 inner-modal modal-md overflow-auto">
     <div class="grid grid-cols-2 gap-6 font-medium">
-      <p class="text-grey-2">Sunday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Monday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Tuesday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Wednesday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Thursday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Friday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
-      <p class="text-grey-2">Saturday</p>
-      <p class="place-self-end">08:00:00 - 21:00:00</p>
+      <template v-for="(schedule, i) in operationalHours" :key="i">
+        <p class="text-grey-2">{{ schedule.day }}</p>
+        <p class="place-self-end" v-if="schedule.open_hour && schedule.close_hour">
+          {{ `${schedule.open_hour} - ${schedule.close_hour}` }}
+        </p>
+        <p class="place-self-end" v-else>Off</p>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import { inject, onMounted, ref } from 'vue';
+import axios from 'axios';
+
 export default {
   name: 'OperationalHour',
+  setup() {
+    const store = inject('store');
+    const operationalHours = ref([]);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const getOperationalHours = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:3000/seller/${store.state.modalState.id}`,
+        );
+        operationalHours.value = data.operational_hours.map((el, i) => ({
+          ...el,
+          day: days[i],
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(() => {
+      getOperationalHours();
+    });
+
+    return {
+      operationalHours,
+      days,
+    };
+  },
 };
 </script>
 

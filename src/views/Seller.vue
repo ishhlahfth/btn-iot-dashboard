@@ -32,7 +32,7 @@
           <p
             v-if="column === 'operational_detail'"
             class="text-royal font-medium cursor-pointer"
-            @click="opHourModal = true"
+            @click="openOpHourDetail(row.id)"
           >
             See Detail
           </p>
@@ -113,6 +113,10 @@ export default {
       detailModal.value = true;
       store.methods.setModalState({ id });
     };
+    const openOpHourDetail = (id) => {
+      opHourModal.value = true;
+      store.methods.setModalState({ id });
+    };
 
     const getSellers = async (pagination) => {
       // = = REAL = =
@@ -166,6 +170,7 @@ export default {
       opHourModal,
       searchValue,
       openSellerDetail,
+      openOpHourDetail,
       getSellers,
     };
   },
