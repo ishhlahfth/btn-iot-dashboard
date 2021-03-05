@@ -62,6 +62,7 @@
           :price="item.price"
           :availability-status="item.availability_status"
           :is-active="item.is_active"
+          :variants="item.variants"
         />
       </div>
     </div>

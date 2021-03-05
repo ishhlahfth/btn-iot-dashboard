@@ -35,25 +35,23 @@
       <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
     </div>
   </div>
+
   <transition name="slide" appear>
-    <div class="grid text-small divide-y divide-grey-4" v-if="variantOpened">
-      <div class="p-2">
-        <p class="mb-2">Size</p>
-        <div class="grid sm:grid-cols-4 text-grey-2">
-          <help-radio label="Regular" disabled />
-          <help-radio label="Tall" disabled />
-          <help-radio label="Extra Tall" disabled />
-        </div>
+    <template v-if="variantOpened">
+      <div class="grid text-small divide-y divide-grey-4">
+        <template v-for="(variant, i) in variants" :key="i">
+          <div class="p-2">
+            <p class="mb-2">{{ variant.variant_name }}</p>
+            <div class="grid sm:grid-cols-4 text-grey-2">
+              <template v-for="(variantItem, i) in variant.variant_items" :key="i">
+                <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
+                <help-radio v-else :label="variantItem" disabled />
+              </template>
+            </div>
+          </div>
+        </template>
       </div>
-      <div class="p-2">
-        <p class="mb-2">Topping</p>
-        <div class="grid sm:grid-cols-4 text-grey-2">
-          <help-checkbox label="Cocoa Powder" disabled />
-          <help-checkbox label="Cheese" disabled />
-          <help-checkbox label="Oreo" disabled />
-        </div>
-      </div>
-    </div>
+    </template>
   </transition>
 </template>
 
@@ -102,6 +100,10 @@ export default {
     isActive: {
       type: Boolean,
       default: true,
+    },
+    variants: {
+      type: Array,
+      default: () => [],
     },
   },
   setup() {
