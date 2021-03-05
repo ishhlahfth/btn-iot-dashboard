@@ -5,7 +5,7 @@
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
-  <div class="p-6 grid gap-6">
+  <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Seller</p>
       <help-button label="filter" />

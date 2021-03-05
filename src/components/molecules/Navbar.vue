@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full bg-snow flex justify-between items-center py-4 px-6 sm:px-8 border-b border-grey-4"
+    class="w-full bg-snow flex justify-between items-center p-4 sm:px-6 border-b border-grey-4"
   >
     <div>
       <icon
