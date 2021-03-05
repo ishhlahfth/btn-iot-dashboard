@@ -56,11 +56,26 @@ export default {
     @apply -translate-x-1/2;
     @apply -translate-y-1/2;
   }
-  & > div {
+  .inner-modal {
     width: 85vw;
     height: 85vh;
+  }
+  .modal-xl {
     @screen sm {
       height: 87.5vh;
+    }
+  }
+  .modal-lg {
+    @screen sm {
+      width: 57.5vw;
+      height: 75vh;
+    }
+  }
+  .modal-md {
+    @screen sm {
+      width: 25vw;
+      height: auto;
+      max-height: 75.5vh;
     }
   }
 }

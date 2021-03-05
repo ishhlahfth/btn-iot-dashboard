@@ -381,6 +381,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" }
       ]
     },
     {
@@ -471,6 +480,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" }
       ]
     },
     {
@@ -561,6 +579,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -651,6 +678,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -741,6 +777,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -831,6 +876,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -919,6 +973,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -1000,6 +1063,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -1090,6 +1162,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -1180,6 +1261,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
       ]
     },
     {
@@ -1270,6 +1360,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1360,6 +1459,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1450,6 +1558,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1540,6 +1657,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1630,6 +1756,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1720,6 +1855,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1810,6 +1954,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     },
     {
@@ -1900,6 +2053,15 @@
             }
           ]
         }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     }
   ]

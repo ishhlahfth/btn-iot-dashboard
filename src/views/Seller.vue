@@ -2,6 +2,9 @@
   <help-modal v-model="detailModal">
     <seller-detail />
   </help-modal>
+  <help-modal v-model="opHourModal">
+    <operational-hour />
+  </help-modal>
   <div class="p-6 grid gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Seller</p>
@@ -26,7 +29,11 @@
           >
             See Detail
           </p>
-          <p v-if="column === 'operational_detail'" class="text-royal font-medium cursor-pointer">
+          <p
+            v-if="column === 'operational_detail'"
+            class="text-royal font-medium cursor-pointer"
+            @click="openOpHourDetail(row.id)"
+          >
             See Detail
           </p>
           <help-toggle v-if="column === 'suspension_status'" v-model="row.suspension_status" />
@@ -50,6 +57,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
+import OperationalHour from '@/components/modals/OperationalHour.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
 
 // = = DUMMY = =
@@ -65,6 +73,7 @@ export default {
     HelpModal,
     HelpTable,
     HelpToggle,
+    OperationalHour,
     SellerDetail,
   },
   setup() {
@@ -98,9 +107,14 @@ export default {
       order: 'asc',
     });
     const detailModal = ref(false);
+    const opHourModal = ref(false);
 
     const openSellerDetail = (id) => {
       detailModal.value = true;
+      store.methods.setModalState({ id });
+    };
+    const openOpHourDetail = (id) => {
+      opHourModal.value = true;
       store.methods.setModalState({ id });
     };
 
@@ -153,8 +167,10 @@ export default {
       sellers,
       sellerPagination,
       detailModal,
+      opHourModal,
       searchValue,
       openSellerDetail,
+      openOpHourDetail,
       getSellers,
     };
   },
