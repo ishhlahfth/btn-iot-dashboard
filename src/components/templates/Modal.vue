@@ -6,7 +6,7 @@
       @click="$emit('update:modelValue', false)"
     />
   </transition>
-  <transition name="fade" appear>
+  <transition :name="store.state.screenWidth < 640 ? 'mobile-slide-up' : 'slide-up'" appear>
     <div
       v-if="modelValue"
       class="fixed modal-style bg-snow p-4 sm:p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { inject } from 'vue';
+
 export default {
   name: 'HelpModal',
   props: {
@@ -25,6 +27,10 @@ export default {
       default: false,
     },
   },
+  setup() {
+    const store = inject('store');
+    return { store };
+  },
 };
 </script>
 
@@ -32,17 +38,33 @@ export default {
 .shadow-custom {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
 }
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
+
+.slide-up-enter-active,
+.slide-up-leave-active,
+.mobile-slide-up-enter-active,
+.mobile-slide-up-leave-active {
+  transition: all 0.25s ease-in-out;
 }
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  top: 100vh !important;
+  transform: translateY(100vh) !important;
+  transform: translateX(-50%) !important;
+}
+
+.mobile-slide-up-enter-from,
+.mobile-slide-up-leave-to {
+  transform: translateY(100vh) !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.2s;
+  transition: all 0.5s ease-in-out;
 }
-.fade-enter-to,
-.fade-leave {
-  opacity: 1;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 .modal-style {
   @apply bottom-0;
@@ -52,9 +74,7 @@ export default {
     @apply right-auto;
     @apply top-1/2;
     @apply left-1/2;
-    @apply transform;
-    @apply -translate-x-1/2;
-    @apply -translate-y-1/2;
+    transform: translate(-50%, -50%);
   }
   .inner-modal {
     height: 85vh;
