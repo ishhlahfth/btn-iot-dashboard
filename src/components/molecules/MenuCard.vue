@@ -1,6 +1,11 @@
 <template>
   <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card">
-    <img v-if="imageUrl" :src="imageUrl" alt="menu" class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded" />
+    <img
+      v-if="imageUrl"
+      :src="imageUrl"
+      alt="menu"
+      class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
+    />
     <div
       v-else
       class="w-20 h-20 sm:w-26 sm:h-26 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
@@ -27,14 +32,34 @@
     </div>
     <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
       <help-toggle />
-      <icon name="chevron-down" class="cursor-pointer" />
+      <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
+    </div>
+  </div>
+  <div class="grid text-small divide-y divide-grey-4" v-if="variantOpened">
+    <div class="p-2">
+      <p class="mb-2">Size</p>
+      <div class="grid sm:grid-cols-4 text-grey-2">
+        <help-radio label="Regular" group="size" />
+        <help-radio label="Tall" group="size" />
+        <help-radio label="Extra Tall" group="size" />
+      </div>
+    </div>
+    <div class="p-2">
+      <p class="mb-2">Topping</p>
+      <div class="grid sm:grid-cols-4 text-grey-2">
+        <help-checkbox label="Cocoa Powder" />
+        <help-checkbox label="Cheese" />
+        <help-checkbox label="Oreo" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
+import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import Icon from '@/components/atoms/Icon.vue';
 
@@ -42,6 +67,8 @@ export default {
   name: 'MenuCard',
   components: {
     HelpBadge,
+    HelpCheckbox,
+    HelpRadio,
     HelpToggle,
     Icon,
   },
@@ -77,7 +104,8 @@ export default {
   },
   setup() {
     const store = inject('store');
-    return { store };
+    const variantOpened = ref(false);
+    return { store, variantOpened };
   },
 };
 </script>
