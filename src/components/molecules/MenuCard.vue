@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card">
+  <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card" @click="expandVariant">
     <img
       v-if="imageUrl"
       :src="imageUrl"
@@ -42,7 +42,7 @@
         <template v-for="(variant, i) in variants" :key="i">
           <div class="p-2">
             <p class="mb-2">{{ variant.variant_name }}</p>
-            <div class="grid sm:grid-cols-4 text-grey-2">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
               <template v-for="(variantItem, i) in variant.variant_items" :key="i">
                 <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
                 <help-radio v-else :label="variantItem" disabled />
@@ -109,7 +109,18 @@ export default {
   setup() {
     const store = inject('store');
     const variantOpened = ref(false);
-    return { store, variantOpened };
+
+    const expandVariant = () => {
+      if (store.state.screenWidth < 640) {
+        variantOpened.value = !variantOpened.value;
+      }
+    };
+
+    return {
+      store,
+      variantOpened,
+      expandVariant,
+    };
   },
 };
 </script>
@@ -124,7 +135,7 @@ export default {
   }
 }
 .menu-card {
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 5rem 1fr;
   @media screen and (min-width: 640px) {
     grid-template-columns: auto 1fr auto auto;
   }

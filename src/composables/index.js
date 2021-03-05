@@ -3,6 +3,7 @@ import { reactive } from 'vue';
 const state = reactive({
   mini: true,
   modalState: {},
+  screenWidth: 0,
 });
 
 const methods = {
