@@ -80,6 +80,11 @@ const routes = [
         component: () => import('@/views/Seller.vue'),
       },
       {
+        path: 'admin',
+        name: 'Admin',
+        component: () => import('@/views/Admin.vue'),
+      },
+      {
         path: 'role',
         name: 'Role',
         component: () => import('@/views/Role.vue'),
