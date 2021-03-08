@@ -2526,5 +2526,194 @@
         { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     }
+  ],
+  "role": [
+    {
+      "name": "Super Admin",
+      "description": "The highest role. Has permission to access all menu and all possible privileges.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Sheila",
+          "img_url": ""
+        },
+        {
+          "name": "Kiara",
+          "img_url": ""
+        }
+      ],
+      "permissions": [
+        {
+          "id": 1,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 2,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 3,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 4,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Marketing",
+      "description": "Has permission to access all menu related with promo & marketing.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Kanina",
+          "img_url": ""
+        },
+        {
+          "name": "Alya",
+          "img_url": ""
+        },
+        {
+          "name": "Muklis",
+          "img_url": ""
+        }
+      ],
+      "permissions": [
+        {
+          "id": 5,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 6,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 7,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 8,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Visitor",
+      "description": "Has permission to access non-essential & insensitive data.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Ajeng",
+          "img_url": ""
+        },
+        {
+          "name": "Ana",
+          "img_url": ""
+        },
+        {
+          "name": "Naila",
+          "img_url": ""
+        },
+        {
+          "name": "Lila",
+          "img_url": ""
+        },
+        {
+          "name": "Rere",
+          "img_url": ""
+        }
+      ],
+      "permissions": [
+        {
+          "id": 9,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 10,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 11,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 12,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    }
   ]
 }
