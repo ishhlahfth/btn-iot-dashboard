@@ -2526,5 +2526,197 @@
         { "open_hour": "10:00:00", "close_hour": "21:00:00" }
       ]
     }
+  ],
+  "role": [
+    {
+      "id": 0,
+      "name": "Super Admin",
+      "description": "The highest role. Has permission to access all menu and all possible privileges.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Sheila",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e35/p1080x1080/128451476_402267484250014_3832408683591121759_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=vIZLY3bjy70AX-mb8BR&oh=da612e69efc7ea5a2b2ac0ff193d36e7&oe=6070D957"
+        },
+        {
+          "name": "Kiara",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e15/10727681_721108811291169_1125061761_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=FG_5179Z0s8AX8fk5Kb&oh=a577b23abc1385518db425546b6ccdd5&oe=606F1074"
+        }
+      ],
+      "permissions": [
+        {
+          "id": 1,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 2,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 3,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 4,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Marketing",
+      "description": "Has permission to access all menu related with promo & marketing.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Kanina",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/p1080x1080/152949669_2587407558226803_1228240072280431618_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=4R19BFSRGesAX-5qQxH&oh=a2cdf5597e2718e6ca3ac5a7264da74d&oe=60713B22"
+        },
+        {
+          "name": "Alya",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/s1080x1080/142987167_169110557977432_745135852807276361_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=NvWxYvB_oo0AX_QKwBl&oh=a00fdf351cffd8cf3f44098b9e45a507&oe=606E5F81"
+        },
+        {
+          "name": "Muklis",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e35/49833639_523911698093301_2892703999054577664_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=XtwTFm3AXaQAX9HGkZD&oh=a6f672c95d92b5bf7b4a7719938cf631&oe=60702FEF"
+        }
+      ],
+      "permissions": [
+        {
+          "id": 5,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 6,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 7,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 8,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Visitor",
+      "description": "Has permission to access non-essential & insensitive data.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Ajeng",
+          "img_url": ""
+        },
+        {
+          "name": "Ana",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/p1080x1080/131889244_432577377743964_8833856056873486578_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=mdoPTT7bgC4AX8NwdO4&oh=382ae766316933464b500dcf789a2d17&oe=606F76F3"
+        },
+        {
+          "name": "Lila",
+          "img_url": ""
+        },
+        {
+          "name": "Naila",
+          "img_url": ""
+        },
+        {
+          "name": "Rere",
+          "img_url": ""
+        }
+      ],
+      "permissions": [
+        {
+          "id": 9,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 10,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 11,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 12,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    }
   ]
 }

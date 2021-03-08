@@ -1,16 +1,12 @@
 <template>
-  <!-- <div class="relative inline-block tooltip-container">
-    <slot />
+  <div class="relative flex tooltip-container">
+    <slot class="hoheohe" />
     <div
-      class="tooltip bg-grey-2 text-white text-center w-auto opacity-0 rounded py-1 px-3 absolute bottom-full left-1/2 transform -translate-x-1/2 z-10 transition-opacity duration-200 delay-200"
+      class="tooltip bg-grey-2 text-white text-center opacity-0 w-auto rounded py-1 px-3 absolute left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-75"
+      style="bottom: 110%;"
     >
       <p class="text-xsmall">{{ text }}</p>
     </div>
-  </div> -->
-  <div
-    class="tooltip bg-grey-2 text-white text-center w-auto rounded py-1 px-3"
-  >
-    <p class="text-xsmall">{{ text }}</p>
   </div>
 </template>
 
@@ -27,9 +23,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .tooltip-container:hover {
-//   .tooltip {
-//     opacity: 100%;
-//   }
-// }
+.tooltip-container {
+  > :not(.tooltip):hover {
+    ~ .tooltip {
+      @apply opacity-100;
+    }
+  }
+}
 </style>
