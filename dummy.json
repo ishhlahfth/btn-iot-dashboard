@@ -2529,6 +2529,7 @@
   ],
   "role": [
     {
+      "id": 0,
       "name": "Super Admin",
       "description": "The highest role. Has permission to access all menu and all possible privileges.",
       "is_active": true,
@@ -2586,6 +2587,7 @@
       ]
     },
     {
+      "id": 1,
       "name": "Marketing",
       "description": "Has permission to access all menu related with promo & marketing.",
       "is_active": true,
@@ -2647,6 +2649,7 @@
       ]
     },
     {
+      "id": 2,
       "name": "Visitor",
       "description": "Has permission to access non-essential & insensitive data.",
       "is_active": true,

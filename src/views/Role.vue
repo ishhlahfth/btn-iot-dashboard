@@ -24,13 +24,15 @@
           </p>
 
           <div v-if="column === 'admins'" class="stacked-avatars">
-            <div
-              v-for="(admin, i) in row.admins.slice(0, 4)"
-              :key="i"
-              class="rounded-full ring-2 ring-white"
-            >
-              <help-avatar :src="admin.img_url" :size="32" :placeholder="admin.name" />
-            </div>
+            <help-tooltip :text="adminsTooltipText(row.admins)">
+              <div
+                v-for="(admin, i) in row.admins.slice(0, 4)"
+                :key="i"
+                class="rounded-full ring-2 ring-white"
+              >
+                <help-avatar :src="admin.img_url" :size="32" :placeholder="admin.name" />
+              </div>
+            </help-tooltip>
             <p v-if="row.admins.length > 4">{{ `+${row.admins.length - 4}` }}</p>
           </div>
 
@@ -50,6 +52,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
+import HelpTooltip from '@/components/atoms/Tooltip.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
 
 // = = DUMMY = =
@@ -65,6 +68,7 @@ export default {
     HelpModal,
     HelpTable,
     HelpToggle,
+    HelpTooltip,
     SellerDetail,
   },
   setup() {
@@ -78,7 +82,6 @@ export default {
         field: 'permissions',
         label: 'permission',
         align: 'center',
-        sortable: true,
       },
       { field: 'is_active', label: 'status', align: 'center' },
     ];
@@ -87,7 +90,7 @@ export default {
       totalRows: 0,
       rowLimit: 10,
       page: 1,
-      sortBy: 'name',
+      sortBy: 'id',
       order: 'asc',
     });
     const detailModal = ref(false);
@@ -133,6 +136,15 @@ export default {
       }
     };
 
+    const adminsTooltipText = (raw) => {
+      const names = raw.map((el) => el.name);
+      const hidden = names.length - 4;
+      if (names.length > 4) {
+        return `${names.slice(0, 4).join(', ')} and ${hidden} other${hidden > 1 ? 's' : ''}`;
+      }
+      return names.join(', ');
+    };
+
     onMounted(() => {
       getRoles(rolePagination.value);
     });
@@ -143,6 +155,7 @@ export default {
       detailModal,
       searchValue,
       getRoles,
+      adminsTooltipText,
     };
   },
 };
@@ -152,11 +165,10 @@ export default {
 .stacked-avatars {
   display: flex;
   align-items: center;
-  // flex-direction: row-reverse;
   div:not(:first-child) {
     margin-left: -10px;
   }
-  p {
+  > p {
     @apply font-medium;
     @apply text-grey-1;
     @apply text-body;
