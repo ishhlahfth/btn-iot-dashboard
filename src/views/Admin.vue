@@ -22,6 +22,9 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'status'" v-model="row.status" />
+          <div v-if="column === 'actions'">
+            <help-button icon-only icon="edit" />
+          </div>
         </template>
       </help-table>
     </div>
@@ -61,6 +64,7 @@ export default {
       { field: 'role', label: 'role' },
       { field: 'detail', label: 'detail' },
       { field: 'status', label: 'status', align: 'center' },
+      { field: 'actions', label: '', align: 'center' },
     ];
     const admins = ref([]);
     const adminPagination = ref({
