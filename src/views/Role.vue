@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import { onMounted, ref, inject } from 'vue';
-import axios from 'axios';
+import { onMounted, ref } from 'vue';
+// import axios from 'axios';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -56,7 +56,7 @@ import HelpTooltip from '@/components/atoms/Tooltip.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
 
 // = = DUMMY = =
-// import { role as dummyRole } from '../../dummy.json';
+import { role as dummyRole } from '../../dummy.json';
 // = = DUMMY = =
 
 export default {
@@ -72,7 +72,7 @@ export default {
     SellerDetail,
   },
   setup() {
-    const store = inject('store');
+    // const store = inject('store');
     const searchValue = ref('');
     const columns = [
       { field: 'name', label: 'role name', sortable: true },
@@ -97,34 +97,28 @@ export default {
 
     const getRoles = async (pagination) => {
       // = = REAL = =
-      const limit = pagination.rowLimit || 10;
-      const page = pagination.page || 1;
-      const sort = pagination.sortBy || 'name';
-      const order = pagination.order || 'asc;';
+      // const limit = pagination.rowLimit || 10;
+      // const page = pagination.page || 1;
+      // const sort = pagination.sortBy || 'name';
+      // const order = pagination.order || 'asc;';
       // = = REAL = =
       try {
         // = = REAL = =
-        const response = await axios.get(
-          `http://localhost:3000/role?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        );
-        roles.value = response.data.map((el) => ({
-          ...el,
-          finished_orders: store.methods.groupDigit(el.finished_orders),
-        }));
+        // const response = await axios.get(
+        //   `http://localhost:3000/role?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
+        // );
+        // roles.value = response.data
         // = = REAL = =
 
         // = = DUMMY = =
-        // roles.value = dummyRole.map((el) => ({
-        //   ...el,
-        //   finished_orders: store.methods.groupDigit(el.finished_orders),
-        // }));
+        roles.value = dummyRole;
         // = = DUMMY = =
         rolePagination.value = {
           // = = REAL = =
-          totalRows: +response.headers['x-total-count'],
+          // totalRows: +response.headers['x-total-count'],
           // = = REAL = =
           // = = DUMMY = =
-          // totalRows: dummyRole.length,
+          totalRows: dummyRole.length,
           // = = DUMMY = =
           rowLimit: pagination.rowLimit,
           page: pagination.page,
