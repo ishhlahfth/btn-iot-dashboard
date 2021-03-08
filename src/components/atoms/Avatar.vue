@@ -7,7 +7,7 @@
     <p class="text-white text-subheading font-medium">{{ placeholder[0] }}</p>
     <slot />
   </div>
-  <div v-else :style="avatarStyle" class="grid place-items-center">
+  <div v-else :style="avatarStyle" class="grid place-items-center rounded-full">
     <img :src="src" alt="avatar" :style="avatarStyle" class="rounded-full object-cover w-full" />
     <slot />
   </div>

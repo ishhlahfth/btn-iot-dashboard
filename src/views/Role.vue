@@ -19,12 +19,21 @@
         @sort="getRoles($event)"
       >
         <template v-slot="{ column, row }">
-          <p
-            v-if="column === 'permissions'"
-            class="text-royal font-medium cursor-pointer"
-          >
+          <p v-if="column === 'permissions'" class="text-royal font-medium cursor-pointer">
             See Detail
           </p>
+
+          <div v-if="column === 'admins'" class="stacked-avatars">
+            <div
+              v-for="(admin, i) in row.admins.slice(0, 4)"
+              :key="i"
+              class="rounded-full ring-2 ring-white"
+            >
+              <help-avatar :src="admin.img_url" :size="32" :placeholder="admin.name" />
+            </div>
+            <p v-if="row.admins.length > 4">{{ `+${row.admins.length - 4}` }}</p>
+          </div>
+
           <help-toggle v-if="column === 'is_active'" v-model="row.is_active" />
         </template>
       </help-table>
@@ -35,6 +44,7 @@
 <script>
 import { onMounted, ref, inject } from 'vue';
 import axios from 'axios';
+import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -49,6 +59,7 @@ import SellerDetail from '@/components/modals/SellerDetail.vue';
 export default {
   name: 'Role',
   components: {
+    HelpAvatar,
     HelpButton,
     HelpInput,
     HelpModal,
@@ -137,4 +148,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.stacked-avatars {
+  display: flex;
+  align-items: center;
+  // flex-direction: row-reverse;
+  div:not(:first-child) {
+    margin-left: -10px;
+  }
+  p {
+    @apply font-medium;
+    @apply text-grey-1;
+    @apply text-body;
+    @apply ml-1;
+  }
+}
+</style>
