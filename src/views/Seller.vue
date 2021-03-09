@@ -94,7 +94,7 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'comission_percentage', label: 'comission (%)', align: 'right' },
+      { field: 'commission_percentage', label: 'commission (%)', align: 'right' },
       { field: 'menu', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'suspension_status', label: 'status', align: 'center' },
