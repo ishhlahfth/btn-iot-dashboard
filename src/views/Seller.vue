@@ -37,11 +37,16 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'suspension_status'" v-model="row.suspension_status" />
-          <help-badge
+          <div
+            class="grid grid-flow-col auto-cols-max gap-2"
             v-if="column === 'verification_status'"
-            :label="row.verification_status ? 'Verified' : 'Not Verified'"
-            :color="row.verification_status ? 'positive' : 'negative'"
-          />
+          >
+            <help-badge
+              :label="row.verification_status ? 'Verified' : 'Not Verified'"
+              :color="row.verification_status ? 'positive' : 'negative'"
+            />
+            <help-button icon-only icon="dots-vertical" bg-color="grey-6" color="grey-1" v-if="!row.verification_status" />
+          </div>
         </template>
       </help-table>
     </div>
