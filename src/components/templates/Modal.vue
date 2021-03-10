@@ -96,7 +96,8 @@ export default {
   }
   .modal-md {
     @screen sm {
-      width: 25vw;
+      min-width: 440px;
+      max-width: 27.5vw;
       height: auto;
       max-height: 75.5vh;
     }

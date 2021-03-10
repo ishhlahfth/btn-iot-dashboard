@@ -5,6 +5,9 @@
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
+  <help-modal v-model="verificationModal">
+    <seller-verification @close="verificationModal = false" />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Seller</p>
@@ -45,7 +48,14 @@
               :label="row.verification_status ? 'Verified' : 'Not Verified'"
               :color="row.verification_status ? 'positive' : 'negative'"
             />
-            <help-button icon-only icon="dots-vertical" bg-color="grey-6" color="grey-1" v-if="!row.verification_status" />
+            <help-button
+              icon-only
+              icon="dots-vertical"
+              bg-color="grey-6"
+              color="grey-1"
+              v-if="!row.verification_status"
+              @click="verificationModal = true"
+            />
           </div>
         </template>
       </help-table>
@@ -64,6 +74,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
+import SellerVerification from '@/components/modals/SellerVerification.vue';
 
 // = = DUMMY = =
 import { seller as dummySeller } from '../../dummy.json';
@@ -80,6 +91,7 @@ export default {
     HelpToggle,
     OperationalHour,
     SellerDetail,
+    SellerVerification,
   },
   setup() {
     const store = inject('store');
@@ -114,6 +126,7 @@ export default {
     });
     const detailModal = ref(false);
     const opHourModal = ref(false);
+    const verificationModal = ref(false);
 
     const openSellerDetail = (id) => {
       detailModal.value = true;
@@ -174,6 +187,7 @@ export default {
       sellerPagination,
       detailModal,
       opHourModal,
+      verificationModal,
       searchValue,
       openSellerDetail,
       openOpHourDetail,
