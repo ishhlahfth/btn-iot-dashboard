@@ -22,8 +22,8 @@
         <p>{{ seller.name }}</p>
         <p class="text-grey-2">Location</p>
         <p>{{ seller.city }}</p>
-        <p class="text-grey-2">Joined Since</p>
-        <p>{{ seller.joinedDate }}</p>
+        <!-- <p class="text-grey-2">Joined Since</p>
+        <p>{{ seller.joinedDate }}</p> -->
         <p class="text-grey-2">Bank</p>
         <p>{{ seller.bank }}</p>
         <p class="text-grey-2">ID No. (KTP)</p>
@@ -74,14 +74,10 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-// import axios from 'axios';
-import dayjs from 'dayjs';
+import { onMounted, ref, inject } from 'vue';
+import axios from 'axios';
+// import dayjs from 'dayjs';
 import MenuCard from '@/components/molecules/MenuCard.vue';
-
-// = = DUMMY = =
-import { seller as dummySeller } from '../../../dummy.json';
-// = = DUMMY = =
 
 export default {
   name: 'SellerDetail',
@@ -89,7 +85,7 @@ export default {
     MenuCard,
   },
   setup() {
-    // const store = inject('store');
+    const store = inject('store');
     const seller = ref({
       imageUrl: '',
       name: '',
@@ -105,49 +101,92 @@ export default {
     });
     const getSeller = async () => {
       try {
-        // const { data } = await axios.get(
-        //   `http://localhost:3000/seller/${store.state.modalState.id}`,
-        // );
+        const {
+          data: { data },
+        } = await axios.get(
+          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants/${store.state.modalState.id}`,
+          {
+            headers: {
+              'x-api-key': 'secret-xApiKey-for-developer',
+              'x-device-type': 'LINUX',
+              'x-device-os-version': 'Ubuntu18.04',
+              'x-device-model': '4s-dk0115AU',
+              'x-app-version': 'v1.2',
+              'x-request-id': '1234',
+              'x-device-utc-offset': '+08:00',
+              'x-device-lang': 'en',
+              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+            },
+          },
+        );
+        console.log('SELLER DETAIL', data);
 
-        // = = REAL = =
-        // const mapped = [data].map((el) => ({
-        //   imageUrl: el.image_url,
-        //   name: el.name,
-        //   city: el.city,
-        //   joinedDate: dayjs(el.created_at).format('D MMM YYYY'),
-        //   bank: el.bank,
-        //   idNumber: el.id_number,
-        //   verificationStatus: el.verification_status,
-        //   finishedOrders: el.finished_orders,
-        //   ongoingOrders: el.ongoing_orders,
-        //   cancelledOrders: el.cancelled_orders,
-        //   menu: el.menu,
-        // }));
-        // = = REAL = =
+        const mapped = {
+          imageUrl: data.banners.length ? data.banners[0].url : '',
+          name: data.name,
+          city: data.address.city.name,
+          // joinedDate: dayjs(data.created_at).format('D MMM YYYY'),
+          bank: data.account.bank.name,
+          // idNumber: data.id_number,
+          verificationStatus: data.is_verified,
+          finishedOrders: 20300,
+          ongoingOrders: 20300,
+          cancelledOrders: 20300,
+          menu: [],
+        };
 
-        // = = DUMMY = =
-        const mapped = [dummySeller[0]].map((el) => ({
-          imageUrl: el.image_url,
-          name: el.name,
-          city: el.city,
-          joinedDate: dayjs(el.created_at).format('D MMM YYYY'),
-          bank: el.bank,
-          idNumber: el.id_number,
-          verificationStatus: el.verification_status,
-          finishedOrders: el.finished_orders,
-          ongoingOrders: el.ongoing_orders,
-          cancelledOrders: el.cancelled_orders,
-          menu: el.menu,
-        }));
-        // = = DUMMY = =
-
-        seller.value = mapped[0];
+        seller.value = mapped;
       } catch (error) {
         console.log(error);
       }
     };
+
+    const getMenu = async () => {
+      const {
+        data: { data: catalogs },
+      } = await axios.get(
+        `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants/${store.state.modalState.id}/catalogs`,
+        {
+          headers: {
+            'x-api-key': 'secret-xApiKey-for-developer',
+            'x-device-type': 'LINUX',
+            'x-device-os-version': 'Ubuntu18.04',
+            'x-device-model': '4s-dk0115AU',
+            'x-app-version': 'v1.2',
+            'x-request-id': '1234',
+            'x-device-utc-offset': '+08:00',
+            'x-device-lang': 'en',
+            'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+          },
+        },
+      );
+
+      catalogs.forEach(async (el) => {
+        const {
+          data: { data: items },
+        } = await axios.get(
+          `http://buynsell-dev.wehelpyou.xyz/api/v1/catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`,
+          {
+            headers: {
+              'x-api-key': 'secret-xApiKey-for-developer',
+              'x-device-type': 'LINUX',
+              'x-device-os-version': 'Ubuntu18.04',
+              'x-device-model': '4s-dk0115AU',
+              'x-app-version': 'v1.2',
+              'x-request-id': '1234',
+              'x-device-utc-offset': '+08:00',
+              'x-device-lang': 'en',
+              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+            },
+          },
+        );
+        seller.value.menu.push({ catalog_name: el.name, items });
+        console.log('ITEMS', items);
+      });
+    };
     onMounted(() => {
       getSeller();
+      getMenu();
     });
     return {
       seller,
