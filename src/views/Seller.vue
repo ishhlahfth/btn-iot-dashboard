@@ -36,11 +36,11 @@
           >
             See Detail
           </p>
-          <help-toggle v-if="column === 'suspension_status'" v-model="row.suspension_status" />
+          <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
           <help-badge
-            v-if="column === 'verification_status'"
-            :label="row.verification_status ? 'Verified' : 'Not Verified'"
-            :color="row.verification_status ? 'positive' : 'negative'"
+            v-if="column === 'is_verified'"
+            :label="row.is_verified ? 'Verified' : 'Not Verified'"
+            :color="row.is_verified ? 'positive' : 'negative'"
           />
         </template>
       </help-table>
@@ -50,7 +50,7 @@
 
 <script>
 import { onMounted, ref, inject } from 'vue';
-// import axios from 'axios';
+import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -59,10 +59,6 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
-
-// = = DUMMY = =
-import { seller as dummySeller } from '../../dummy.json';
-// = = DUMMY = =
 
 export default {
   name: 'Seller',
@@ -89,14 +85,14 @@ export default {
         sortable: true,
       },
       {
-        field: 'verification_status',
+        field: 'is_verified',
         label: 'verification status',
         align: 'center',
         sortable: true,
       },
       { field: 'menu', label: 'seller detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
-      { field: 'suspension_status', label: 'status', align: 'center' },
+      { field: 'is_hidden', label: 'status', align: 'center' },
     ];
     const sellers = ref([]);
     const sellerPagination = ref({
@@ -126,6 +122,32 @@ export default {
       // const order = pagination.order || 'asc;';
       // = = REAL = =
       try {
+        const {
+          data: { data },
+        } = await axios.get(
+          'http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=0&limit=10&sort=name&order=asc',
+          {
+            headers: {
+              'x-api-key': 'secret-xApiKey-for-developer',
+              'x-device-type': 'LINUX',
+              'x-device-os-version': 'Ubuntu18.04',
+              'x-device-model': '4s-dk0115AU',
+              'x-app-version': 'v1.2',
+              'x-request-id': '1234',
+              'x-device-utc-offset': '+08:00',
+              'x-device-lang': 'en',
+              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+            },
+          },
+        );
+        sellers.value = data.map((el) => ({
+          id: el.id,
+          name: el.name,
+          city: el.address.city.name,
+          is_verified: el.is_verified,
+          is_hidden: el.is_hidden,
+        }));
+        console.log('RESPONSE', data);
         // = = REAL = =
         // const response = await axios.get(
         //   `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
@@ -136,19 +158,11 @@ export default {
         // }));
         // = = REAL = =
 
-        // = = DUMMY = =
-        sellers.value = dummySeller.map((el) => ({
-          ...el,
-          finished_orders: store.methods.groupDigit(el.finished_orders),
-        }));
-        // = = DUMMY = =
         sellerPagination.value = {
+          totalRows: 100,
           // = = REAL = =
           // totalRows: +response.headers['x-total-count'],
           // = = REAL = =
-          // = = DUMMY = =
-          totalRows: dummySeller.length,
-          // = = DUMMY = =
           rowLimit: pagination.rowLimit,
           page: pagination.page,
           sortBy: pagination.sortBy,
