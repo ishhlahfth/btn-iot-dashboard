@@ -98,7 +98,7 @@ export default {
     const sellerPagination = ref({
       totalRows: 0,
       rowLimit: 10,
-      page: 1,
+      page: 0,
       sortBy: 'name',
       order: 'asc',
     });
@@ -115,17 +115,15 @@ export default {
     };
 
     const getSellers = async (pagination) => {
-      // = = REAL = =
-      // const limit = pagination.rowLimit || 10;
-      // const page = pagination.page || 1;
-      // const sort = pagination.sortBy || 'name';
-      // const order = pagination.order || 'asc;';
-      // = = REAL = =
+      const limit = pagination.rowLimit || 10;
+      const page = pagination.page || 0;
+      const sort = pagination.sortBy || 'name';
+      const order = pagination.order || 'asc';
       try {
         const {
           data: { data },
         } = await axios.get(
-          'http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=0&limit=10&sort=name&order=asc',
+          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=${page}&limit=${limit}&sort=${sort}&order=${order}`,
           {
             headers: {
               'x-api-key': 'secret-xApiKey-for-developer',
@@ -148,21 +146,9 @@ export default {
           is_hidden: el.is_hidden,
         }));
         console.log('RESPONSE', data);
-        // = = REAL = =
-        // const response = await axios.get(
-        //   `http://localhost:3000/seller?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        // );
-        // sellers.value = response.data.map((el) => ({
-        //   ...el,
-        //   finished_orders: store.methods.groupDigit(el.finished_orders),
-        // }));
-        // = = REAL = =
 
         sellerPagination.value = {
-          totalRows: 100,
-          // = = REAL = =
-          // totalRows: +response.headers['x-total-count'],
-          // = = REAL = =
+          totalRows: 100, // total row count is not provided
           rowLimit: pagination.rowLimit,
           page: pagination.page,
           sortBy: pagination.sortBy,
