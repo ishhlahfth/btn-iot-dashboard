@@ -22,14 +22,14 @@
       <div class="flex bg-white rounded-md divide-x-2 border border-grey-4">
         <div
           class="p-2 rounded-l-md"
-          :class="localPage <= 1 ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          :class="localPage <= 0 ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
           @click="previousPage"
         >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            :fill="localPage <= 1 ? '#C4C4C4' : 'currentColor'"
+            :fill="localPage <= 0 ? '#C4C4C4' : 'currentColor'"
           >
             <path
               fillRule="evenodd"
@@ -70,7 +70,7 @@ export default {
     HelpSelect,
   },
   props: {
-    page: {
+    offset: {
       type: Number,
       required: true,
     },
@@ -86,20 +86,20 @@ export default {
   data() {
     return {
       localRowLimit: 10,
-      localPage: 1,
+      localPage: 0,
     };
   },
   computed: {
     firstRow() {
       let firstRow = 0;
       if (this.totalRows !== 0) {
-        firstRow = this.page * this.rowLimit - this.rowLimit + 1;
+        firstRow = (this.offset + 1) * this.rowLimit - this.rowLimit + 1;
       }
       return firstRow;
     },
     lastRow() {
       let lastRow = 0;
-      const ceiledRow = this.page * this.rowLimit;
+      const ceiledRow = (this.offset + 1) * this.rowLimit;
       if (ceiledRow > this.totalRows) {
         lastRow = this.totalRows;
       } else {
@@ -112,14 +112,14 @@ export default {
     localRowLimit(newValue) {
       this.$emit('onChangePagination', {
         rowLimit: newValue,
-        page: 1,
+        offset: 0,
       });
-      this.localPage = 1;
+      this.localPage = 0;
     },
     localPage(newValue) {
       this.$emit('onChangePagination', {
         rowLimit: this.localRowLimit,
-        page: newValue,
+        offset: newValue,
       });
     },
   },
@@ -128,12 +128,12 @@ export default {
       if (this.lastRow !== this.totalRows) this.localPage += 1;
     },
     previousPage() {
-      if (this.localPage > 0) this.localPage -= 1;
+      if (this.localPage >= 0) this.localPage -= 1;
     },
   },
   mounted() {
     this.localRowLimit = this.rowLimit;
-    this.localPage = this.page;
+    this.localPage = this.offset;
   },
 };
 </script>

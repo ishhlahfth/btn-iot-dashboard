@@ -82,7 +82,7 @@
     <table-footer
       :totalRows="pagination.totalRows"
       :rowLimit="pagination.rowLimit"
-      :page="pagination.page"
+      :offset="pagination.offset"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -119,7 +119,7 @@ export default {
         return {
           totalRows: 10,
           rowLimit: 10,
-          page: 1,
+          offset: 0,
           sortBy: '',
           order: 'asc',
         };

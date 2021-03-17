@@ -95,7 +95,7 @@ export default {
     const sellerPagination = ref({
       totalRows: 0,
       rowLimit: 10,
-      page: 0,
+      offset: 0,
       sortBy: 'name',
       order: 'asc',
     });
@@ -113,14 +113,14 @@ export default {
 
     const getSellers = async (pagination) => {
       const limit = pagination.rowLimit || 10;
-      const page = pagination.page || 0;
+      const offset = pagination.offset || 0;
       const sort = pagination.sortBy || 'name';
       const order = pagination.order || 'asc';
       try {
         const {
           data: { data },
         } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=${page}&limit=${limit}&sort=${sort}&order=${order}`,
+          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
           {
             headers: {
               'x-api-key': 'secret-xApiKey-for-developer',
@@ -147,7 +147,7 @@ export default {
         sellerPagination.value = {
           totalRows: 100, // total row count is not provided
           rowLimit: pagination.rowLimit,
-          page: pagination.page,
+          offset: pagination.offset,
           sortBy: pagination.sortBy,
           order: pagination.order,
         };
