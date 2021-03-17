@@ -36,7 +36,10 @@
           >
             See Detail
           </p>
-          <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
+          <help-toggle
+            v-if="column === 'is_hidden'"
+            v-model="row.is_hidden"
+          />
           <help-badge
             v-if="column === 'is_verified'"
             :label="row.is_verified ? 'Verified' : 'Not Verified'"
@@ -78,12 +81,6 @@ export default {
     const columns = [
       { field: 'name', label: 'store name', sortable: true },
       { field: 'city', label: 'city', sortable: true },
-      {
-        field: 'finished_orders',
-        label: 'finished orders',
-        align: 'right',
-        sortable: true,
-      },
       {
         field: 'is_verified',
         label: 'verification status',
@@ -143,7 +140,7 @@ export default {
           name: el.name,
           city: el.address.city.name,
           is_verified: el.is_verified,
-          is_hidden: el.is_hidden,
+          is_hidden: !el.is_hidden,
         }));
         console.log('RESPONSE', data);
 
