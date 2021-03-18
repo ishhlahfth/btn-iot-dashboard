@@ -91,6 +91,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/invoice/:id',
+    name: 'Invoice',
+    component: () => import('@/views/Invoice.vue'),
+  },
 ];
 
 const router = createRouter({
