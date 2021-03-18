@@ -36,10 +36,7 @@
           >
             See Detail
           </p>
-          <help-toggle
-            v-if="column === 'is_hidden'"
-            v-model="row.is_hidden"
-          />
+          <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
           <help-badge
             v-if="column === 'is_verified'"
             :label="row.is_verified ? 'Verified' : 'Not Verified'"
@@ -53,7 +50,6 @@
 
 <script>
 import { onMounted, ref, inject } from 'vue';
-import axios from 'axios';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -62,6 +58,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import SellerDetail from '@/components/modals/SellerDetail.vue';
+import API from '@/apis';
 
 export default {
   name: 'Seller',
@@ -119,22 +116,7 @@ export default {
       try {
         const {
           data: { data },
-        } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
-          {
-            headers: {
-              'x-api-key': 'secret-xApiKey-for-developer',
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+08:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-            },
-          },
-        );
+        } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
         sellers.value = data.map((el) => ({
           id: el.id,
           name: el.name,

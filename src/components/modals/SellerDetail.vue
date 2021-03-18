@@ -75,9 +75,9 @@
 
 <script>
 import { onMounted, ref, inject } from 'vue';
-import axios from 'axios';
-// import dayjs from 'dayjs';
 import MenuCard from '@/components/molecules/MenuCard.vue';
+import API from '@/apis';
+// import dayjs from 'dayjs';
 
 export default {
   name: 'SellerDetail',
@@ -86,6 +86,7 @@ export default {
   },
   setup() {
     const store = inject('store');
+    const merchantId = store.state.modalState.id;
     const seller = ref({
       imageUrl: '',
       name: '',
@@ -103,23 +104,25 @@ export default {
       try {
         const {
           data: { data },
-        } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants/${store.state.modalState.id}`,
-          {
-            headers: {
-              'x-api-key': 'secret-xApiKey-for-developer',
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+08:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-            },
-          },
-        );
+        } = await API.get(`merchants/${merchantId}`);
         console.log('SELLER DETAIL', data);
+
+        // const {
+        //   data: { data: img },
+        // } = await axios.get(data.banners[0].url, {
+        //   headers: {
+        //     'x-api-key': 'secret-xApiKey-for-developer',
+        //     'x-device-type': 'LINUX',
+        //     'x-device-os-version': 'Ubuntu18.04',
+        //     'x-device-model': '4s-dk0115AU',
+        //     'x-app-version': 'v1.2',
+        //     'x-request-id': '1234',
+        //     'x-device-utc-offset': '+08:00',
+        //     'x-device-lang': 'en',
+        //     'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+        //   },
+        // });
+        // console.log('IMG', img);
 
         const mapped = {
           imageUrl: data.banners.length ? data.banners[0].url : '',
@@ -144,50 +147,21 @@ export default {
     const getMenu = async () => {
       const {
         data: { data: catalogs },
-      } = await axios.get(
-        `http://buynsell-dev.wehelpyou.xyz/api/v1/merchants/${store.state.modalState.id}/catalogs`,
-        {
-          headers: {
-            'x-api-key': 'secret-xApiKey-for-developer',
-            'x-device-type': 'LINUX',
-            'x-device-os-version': 'Ubuntu18.04',
-            'x-device-model': '4s-dk0115AU',
-            'x-app-version': 'v1.2',
-            'x-request-id': '1234',
-            'x-device-utc-offset': '+08:00',
-            'x-device-lang': 'en',
-            'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-          },
-        },
-      );
+      } = await API.get(`merchants/${merchantId}/catalogs`);
 
       catalogs.forEach(async (el) => {
         const {
           data: { data: items },
-        } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`,
-          {
-            headers: {
-              'x-api-key': 'secret-xApiKey-for-developer',
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+08:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-            },
-          },
-        );
+        } = await API.get(`catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`);
         seller.value.menu.push({ catalog_name: el.name, items });
-        console.log('ITEMS', items);
       });
     };
+
     onMounted(() => {
       getSeller();
       getMenu();
     });
+
     return {
       seller,
       getSeller,
