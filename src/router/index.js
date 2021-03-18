@@ -92,7 +92,7 @@ const routes = [
     ],
   },
   {
-    path: '/invoice',
+    path: '/invoice/:id',
     name: 'Invoice',
     component: () => import('@/views/Invoice.vue'),
   },

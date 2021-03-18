@@ -84,11 +84,13 @@
 <script>
 import { inject, onMounted, ref } from 'vue';
 import API from '@/apis';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'Invoice',
   setup() {
     const store = inject('store');
+    const route = useRoute();
 
     const poNumber = ref('');
     const merchantName = ref('');
@@ -108,7 +110,7 @@ export default {
       try {
         const {
           data: { data },
-        } = await API.get('orders/356');
+        } = await API.get(`orders/${route.params.id}`);
 
         poNumber.value = data.delivery_code || '-';
         merchantName.value = data.merchant.name || '-';
