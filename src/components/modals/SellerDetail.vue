@@ -18,32 +18,40 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
-        <p class="text-grey-2">Name</p>
-        <p>{{ seller.name }}</p>
-        <p class="text-grey-2">Location</p>
-        <p>{{ seller.city }}</p>
-        <!-- <p class="text-grey-2">Joined Since</p>
-        <p>{{ seller.joinedDate }}</p> -->
-        <p class="text-grey-2">Bank</p>
-        <p>{{ seller.bank }}</p>
-        <p class="text-grey-2">ID No. (KTP)</p>
-        <p>{{ seller.idNumber }}</p>
-        <p class="text-grey-2">Status</p>
-        <p :class="seller.verification_status ? 'text-mint' : 'text-flame'">
-          {{ seller.verification_status ? 'Verified' : 'Not Verified' }}
-        </p>
+        <template v-if="!loading">
+          <p class="text-grey-2">Name</p>
+          <p>{{ seller.name }}</p>
+          <p class="text-grey-2">Location</p>
+          <p>{{ seller.city }}</p>
+          <p class="text-grey-2">Bank</p>
+          <p>{{ seller.bank }}</p>
+          <p class="text-grey-2">ID No. (KTP)</p>
+          <p>{{ seller.idNumber }}</p>
+          <p class="text-grey-2">Status</p>
+          <p :class="seller.verification_status ? 'text-mint' : 'text-flame'">
+            {{ seller.verification_status ? 'Verified' : 'Not Verified' }}
+          </p>
+        </template>
+        <template v-else>
+          <div v-for="i in 10" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
+        </template>
       </div>
       <div class="divide-y divide-grey-4">
         <p></p>
         <p></p>
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
-        <p class="text-grey-2">Finished Orders</p>
-        <p>{{ seller.finishedOrders }}</p>
-        <p class="text-grey-2">On Going Orders</p>
-        <p>{{ seller.ongoingOrders }}</p>
-        <p class="text-grey-2">Cancelled Orders</p>
-        <p>{{ seller.cancelledOrders }}</p>
+        <template v-if="!loading">
+          <p class="text-grey-2">Finished Orders</p>
+          <p>{{ seller.finishedOrders }}</p>
+          <p class="text-grey-2">On Going Orders</p>
+          <p>{{ seller.ongoingOrders }}</p>
+          <p class="text-grey-2">Cancelled Orders</p>
+          <p>{{ seller.cancelledOrders }}</p>
+        </template>
+        <template v-else>
+          <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
+        </template>
       </div>
       <div class="divide-y divide-grey-4 sm:hidden">
         <p></p>
@@ -52,36 +60,48 @@
     </div>
 
     <div class="overflow-auto hide-scrollbar">
-      <template v-if="seller.menu.length">
-        <div v-for="(catalog, i) in seller.menu" :key="i">
-          <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
-          <div class="divide-y divide-grey-4">
-            <template v-if="catalog.items.length">
-              <menu-card
-                v-for="(item, i) in catalog.items"
-                :key="i"
-                :image-url="item.image_url"
-                :name="item.name"
-                :category="item.category"
-                :description="item.description"
-                :price="item.price"
-                :availability-status="item.availability_status"
-                :is-active="item.is_active"
-                :variants="item.variants"
-              />
-            </template>
-            <template v-else>
-              <p class="sm:px-2 sm:ml-2 py-1 text-gold-dark bg-gold-soft rounded-md inline">
-                No items found in this catalog
-              </p>
-            </template>
+      <template v-if="!loading">
+        <template v-if="seller.menu.length">
+          <div v-for="(catalog, i) in seller.menu" :key="i">
+            <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
+            <div class="divide-y divide-grey-4">
+              <template v-if="catalog.items.length">
+                <menu-card
+                  v-for="(item, i) in catalog.items"
+                  :key="i"
+                  :image-url="item.image_url"
+                  :name="item.name"
+                  :category="item.category"
+                  :description="item.description"
+                  :price="item.price"
+                  :availability-status="item.availability_status"
+                  :is-active="item.is_active"
+                  :variants="item.variants"
+                />
+              </template>
+              <template v-else>
+                <p class="sm:px-2 sm:ml-2 py-1 text-gold-dark bg-gold-soft rounded-md inline">
+                  No items found in this catalog
+                </p>
+              </template>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <p class="sm:px-2 sm:ml-2 py-8 text-center text-gold-dark bg-gold-soft rounded-md">
+            No catalogs found in this merchant
+          </p>
+        </template>
       </template>
       <template v-else>
-        <p class="sm:px-2 sm:ml-2 py-8 text-center text-gold-dark bg-gold-soft rounded-md">
-          No catalogs found in this merchant
-        </p>
+        <div>
+          <div class="sm:pl-2 py-1">
+            <div class="rounded bg-grey-4 h-4 w-32 animate-pulse"></div>
+          </div>
+          <div class="divide-y divide-grey-4">
+            <menu-card v-for="i in 5" :key="i" :loading="loading" />
+          </div>
+        </div>
       </template>
     </div>
   </div>
@@ -100,6 +120,7 @@ export default {
   },
   setup() {
     const store = inject('store');
+    const loading = ref(false);
     const merchantId = store.state.modalState.id;
     const seller = ref({
       imageUrl: '',
@@ -116,6 +137,7 @@ export default {
     });
     const getSeller = async () => {
       try {
+        loading.value = true;
         const {
           data: { data },
         } = await API.get(`merchants/${merchantId}`);
@@ -155,6 +177,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      loading.value = false;
     };
 
     const getMenu = async () => {
@@ -177,6 +200,7 @@ export default {
 
     return {
       seller,
+      loading,
       getSeller,
     };
   },
