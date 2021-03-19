@@ -142,22 +142,11 @@ export default {
           data: { data },
         } = await API.get(`merchants/${merchantId}`);
 
-        // const {
-        //   data: { data: img },
-        // } = await axios.get(data.banners[0].url, {
-        //   headers: {
-        //     'x-api-key': 'secret-xApiKey-for-developer',
-        //     'x-device-type': 'LINUX',
-        //     'x-device-os-version': 'Ubuntu18.04',
-        //     'x-device-model': '4s-dk0115AU',
-        //     'x-app-version': 'v1.2',
-        //     'x-request-id': '1234',
-        //     'x-device-utc-offset': '+08:00',
-        //     'x-device-lang': 'en',
-        //     'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-        //   },
-        // });
-        // console.log('IMG', img);
+        const {
+          data: { data: img },
+        } = await API.get(data.banners[0].url);
+
+        console.log('IMG', img); // < < ISSUE
 
         const mapped = {
           imageUrl: data.banners.length ? data.banners[0].url : '',
