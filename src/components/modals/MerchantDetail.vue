@@ -1,12 +1,12 @@
 <template>
   <div
-    class="grid grid-flow-row sm:grid-flow-col gap-6 seller-modal-content inner-modal-fixed modal-xl overflow-auto"
+    class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
   >
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
         <img
-          v-if="seller.imageUrl"
-          :src="seller.imageUrl"
+          v-if="merchant.imageUrl"
+          :src="merchant.imageUrl"
           alt="menu"
           class="w-44 h-44 object-cover rounded-full"
         />
@@ -20,16 +20,16 @@
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Name</p>
-          <p>{{ seller.name }}</p>
+          <p>{{ merchant.name }}</p>
           <p class="text-grey-2">Location</p>
-          <p>{{ seller.city }}</p>
+          <p>{{ merchant.city }}</p>
           <p class="text-grey-2">Bank</p>
-          <p>{{ seller.bank }}</p>
+          <p>{{ merchant.bank }}</p>
           <p class="text-grey-2">ID No. (KTP)</p>
-          <p>{{ seller.idNumber }}</p>
+          <p>{{ merchant.idNumber }}</p>
           <p class="text-grey-2">Status</p>
-          <p :class="seller.verification_status ? 'text-mint' : 'text-flame'">
-            {{ seller.verification_status ? 'Verified' : 'Not Verified' }}
+          <p :class="merchant.verification_status ? 'text-mint' : 'text-flame'">
+            {{ merchant.verification_status ? 'Verified' : 'Not Verified' }}
           </p>
         </template>
         <template v-else>
@@ -43,11 +43,11 @@
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Finished Orders</p>
-          <p>{{ seller.finishedOrders }}</p>
+          <p>{{ merchant.finishedOrders }}</p>
           <p class="text-grey-2">On Going Orders</p>
-          <p>{{ seller.ongoingOrders }}</p>
+          <p>{{ merchant.ongoingOrders }}</p>
           <p class="text-grey-2">Cancelled Orders</p>
-          <p>{{ seller.cancelledOrders }}</p>
+          <p>{{ merchant.cancelledOrders }}</p>
         </template>
         <template v-else>
           <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
@@ -61,8 +61,8 @@
 
     <div class="overflow-auto hide-scrollbar">
       <template v-if="!loading">
-        <template v-if="seller.menu.length">
-          <div v-for="(catalog, i) in seller.menu" :key="i">
+        <template v-if="merchant.menu.length">
+          <div v-for="(catalog, i) in merchant.menu" :key="i">
             <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
             <div class="divide-y divide-grey-4">
               <template v-if="catalog.items.length">
@@ -114,7 +114,7 @@ import API from '@/apis';
 // import dayjs from 'dayjs';
 
 export default {
-  name: 'SellerDetail',
+  name: 'MerchantDetail',
   components: {
     MenuCard,
   },
@@ -122,7 +122,7 @@ export default {
     const store = inject('store');
     const loading = ref(false);
     const merchantId = store.state.modalState.id;
-    const seller = ref({
+    const merchant = ref({
       imageUrl: '',
       name: '',
       city: '',
@@ -135,7 +135,7 @@ export default {
       cancelledOrders: 0,
       menu: [],
     });
-    const getSeller = async () => {
+    const getMerchant = async () => {
       try {
         loading.value = true;
         const {
@@ -163,7 +163,7 @@ export default {
           menu: [],
         };
 
-        seller.value = mapped;
+        merchant.value = mapped;
       } catch (error) {
         console.log(error);
       }
@@ -179,19 +179,19 @@ export default {
         const {
           data: { data: items },
         } = await API.get(`catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`);
-        seller.value.menu.push({ catalog_name: el.name, items });
+        merchant.value.menu.push({ catalog_name: el.name, items });
       });
     };
 
     onMounted(() => {
-      getSeller();
+      getMerchant();
       getMenu();
     });
 
     return {
-      seller,
+      merchant,
       loading,
-      getSeller,
+      getMerchant,
     };
   },
 };
@@ -204,7 +204,7 @@ export default {
 .template-cols-fixed-1fr {
   grid-template-columns: 400px 1fr;
 }
-.seller-modal-content {
+.merchant-modal-content {
   @apply grid-flow-row;
   @apply auto-rows-max;
   @media screen and (min-width: 640px) {

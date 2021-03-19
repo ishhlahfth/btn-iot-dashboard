@@ -1,33 +1,33 @@
 <template>
   <help-modal v-model="detailModal">
-    <seller-detail />
+    <merchant-detail />
   </help-modal>
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
-      <p class="text-heading2 font-semibold">Seller</p>
+      <p class="text-heading2 font-semibold">Merchant</p>
       <help-button label="filter" />
     </div>
     <div>
-      <help-input v-model="searchValue" placeholder="Search seller name here" right-icon="search" />
+      <help-input v-model="searchValue" placeholder="Search merchant name here" right-icon="search" />
     </div>
     <div class="overflow-hidden">
       <help-table
         path="merchants"
         :columns="columns"
         :loading="loading"
-        :rows="sellers"
-        :pagination="sellerPagination"
-        @onChangePagination="getSellers($event)"
-        @sort="getSellers($event)"
+        :rows="merchants"
+        :pagination="merchantPagination"
+        @onChangePagination="getMerchants($event)"
+        @sort="getMerchants($event)"
       >
         <template v-slot="{ column, row }">
           <p
             v-if="column === 'menu'"
             class="text-royal font-medium cursor-pointer"
-            @click="openSellerDetail(row.id)"
+            @click="openMerchantDetail(row.id)"
           >
             See Detail
           </p>
@@ -59,11 +59,11 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
-import SellerDetail from '@/components/modals/SellerDetail.vue';
+import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import API from '@/apis';
 
 export default {
-  name: 'Seller',
+  name: 'Merchant',
   components: {
     HelpBadge,
     HelpButton,
@@ -72,7 +72,7 @@ export default {
     HelpTable,
     HelpToggle,
     OperationalHour,
-    SellerDetail,
+    MerchantDetail,
   },
   setup() {
     const store = inject('store');
@@ -86,12 +86,12 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'menu', label: 'seller detail', align: 'center' },
+      { field: 'menu', label: 'merchant detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'is_hidden', label: 'status', align: 'center' },
     ];
-    const sellers = ref([]);
-    const sellerPagination = ref({
+    const merchants = ref([]);
+    const merchantPagination = ref({
       limit: 10,
       offset: 0,
       sort: 'name',
@@ -101,7 +101,7 @@ export default {
     const detailModal = ref(false);
     const opHourModal = ref(false);
 
-    const openSellerDetail = (id) => {
+    const openMerchantDetail = (id) => {
       detailModal.value = true;
       store.methods.setModalState({ id });
     };
@@ -110,7 +110,7 @@ export default {
       store.methods.setModalState({ id });
     };
 
-    const getSellers = async (pagination) => {
+    const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'name';
@@ -118,10 +118,10 @@ export default {
       try {
         loading.value = true;
         const {
-          data: { data: currentSellers },
+          data: { data: currentMerchants },
         } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
 
-        sellers.value = currentSellers.map((el) => ({
+        merchants.value = currentMerchants.map((el) => ({
           id: el.id,
           name: el.name,
           city: el.address.city.name,
@@ -129,7 +129,7 @@ export default {
           is_hidden: !el.is_hidden,
         }));
 
-        sellerPagination.value = {
+        merchantPagination.value = {
           limit: pagination.limit,
           offset: pagination.offset,
           sort: pagination.sort,
@@ -142,19 +142,19 @@ export default {
     };
 
     onMounted(() => {
-      getSellers(sellerPagination.value);
+      getMerchants(merchantPagination.value);
     });
     return {
       columns,
-      sellers,
-      sellerPagination,
+      merchants,
+      merchantPagination,
       detailModal,
       loading,
       opHourModal,
       searchValue,
-      openSellerDetail,
+      openMerchantDetail,
       openOpHourDetail,
-      getSellers,
+      getMerchants,
     };
   },
 };
