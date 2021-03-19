@@ -5,9 +5,9 @@
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
-      of
+      <!-- of
       <span class="font-medium">{{ totalRows }}</span>
-      <span class="hidden sm:inline"> results</span>
+      <span class="hidden sm:inline"> results</span> -->
     </p>
 
     <div class="flex items-center text-small">
@@ -40,14 +40,14 @@
         </div>
         <div
           class="p-2 rounded-r-md"
-          :class="lastRow === totalRows ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          :class="moreDataAvailable ? 'cursor-pointer' : 'bg-grey-5 cursor-not-allowed'"
           @click="nextPage"
         >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            :fill="lastRow === totalRows ? '#C4C4C4' : 'currentColor'"
+            :fill="moreDataAvailable ? 'currentColor' : '#C4C4C4'"
           >
             <path
               fillRule="evenodd"
@@ -80,6 +80,10 @@ export default {
     },
     totalRows: {
       type: Number,
+      required: true,
+    },
+    moreDataAvailable: {
+      type: Boolean,
       required: true,
     },
   },

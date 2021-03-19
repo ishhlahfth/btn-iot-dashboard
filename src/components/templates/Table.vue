@@ -80,9 +80,10 @@
       </table>
     </div>
     <table-footer
-      :totalRows="pagination.totalRows"
-      :rowLimit="pagination.rowLimit"
+      :total-rows="pagination.totalRows"
+      :row-limit="pagination.rowLimit"
       :offset="pagination.offset"
+      :more-data-available="moreDataAvailable"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -188,6 +189,12 @@ export default {
       });
 
       return matchedByColumns;
+    },
+    moreDataAvailable() {
+      if (this.rows.length < this.pagination.rowLimit) {
+        return false;
+      }
+      return true;
     },
   },
 };
