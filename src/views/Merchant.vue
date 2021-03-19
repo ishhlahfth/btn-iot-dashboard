@@ -11,7 +11,13 @@
       <help-button label="filter" />
     </div>
     <div>
-      <help-input v-model="searchValue" placeholder="Search merchant name here" right-icon="search" />
+      <form @submit.prevent="getMerchants(merchantPagination)">
+        <help-input
+          v-model="searchValue"
+          placeholder="Search merchant name here"
+          right-icon="search"
+        />
+      </form>
     </div>
     <div class="overflow-hidden">
       <help-table
@@ -115,11 +121,12 @@ export default {
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'name';
       const order = pagination.order || 'asc';
+      const search = searchValue.value || '';
       try {
         loading.value = true;
         const {
           data: { data: currentMerchants },
-        } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
+        } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`);
 
         merchants.value = currentMerchants.map((el) => ({
           id: el.id,

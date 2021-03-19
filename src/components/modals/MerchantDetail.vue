@@ -142,13 +142,6 @@ export default {
           data: { data },
         } = await API.get(`merchants/${merchantId}`);
 
-        if (data.banners.length) {
-          const {
-            data: { data: img },
-          } = await API.get(data.banners[0].url);
-          console.log('IMG', img); // < < ISSUE
-        }
-
         const mapped = {
           imageUrl: data.banners.length ? data.banners[0].url : '',
           name: data.name,
@@ -157,13 +150,19 @@ export default {
           bank: data.account.bank.name,
           // idNumber: data.id_number,
           verificationStatus: data.is_verified,
-          finishedOrders: 20300,
-          ongoingOrders: 20300,
-          cancelledOrders: 20300,
+          finishedOrders: 0,
+          ongoingOrders: 0,
+          cancelledOrders: 0,
           menu: [],
         };
-
         merchant.value = mapped;
+
+        if (data.banners.length) {
+          const {
+            data: { data: img },
+          } = await API.get(data.banners[0].url);
+          console.log('IMG', img); // < < ISSUE
+        }
       } catch (error) {
         console.log(error);
       }
