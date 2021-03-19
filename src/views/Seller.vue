@@ -15,6 +15,7 @@
     </div>
     <div class="overflow-hidden">
       <help-table
+        path="merchants"
         :columns="columns"
         :rows="sellers"
         :pagination="sellerPagination"
@@ -96,6 +97,7 @@ export default {
       sortBy: 'name',
       order: 'asc',
     });
+    // const noMoreDataAvailable = ref(false);
     const detailModal = ref(false);
     const opHourModal = ref(false);
 
@@ -115,16 +117,16 @@ export default {
       const order = pagination.order || 'asc';
       try {
         const {
-          data: { data },
+          data: { data: currentSellers },
         } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
-        sellers.value = data.map((el) => ({
+
+        sellers.value = currentSellers.map((el) => ({
           id: el.id,
           name: el.name,
           city: el.address.city.name,
           is_verified: el.is_verified,
           is_hidden: !el.is_hidden,
         }));
-        console.log('RESPONSE', data);
 
         sellerPagination.value = {
           totalRows: 100, // total row count is not provided
@@ -155,5 +157,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -129,19 +129,10 @@ export default {
   },
   methods: {
     nextPage() {
-      console.log(this.lastRow);
-      console.log(this.totalRows);
-      if (this.lastRow !== this.totalRows) {
-        console.log('IF');
-      } else {
-        console.log('ELSE');
-      }
-      console.log(this.localOffset);
-      if (this.lastRow !== this.totalRows) this.localOffset += this.rowLimit;
-      console.log(this.localOffset);
+      if (this.moreDataAvailable) this.localOffset += this.rowLimit;
     },
     previousPage() {
-      if (this.localOffset >= 0) this.localOffset -= this.rowLimit;
+      if (this.localOffset > 0) this.localOffset -= this.rowLimit;
     },
   },
   mounted() {

@@ -92,6 +92,7 @@
 <script>
 import Icon from '@/components/atoms/Icon.vue';
 import TableFooter from '@/components/molecules/TableFooter.vue';
+import API from '@/apis';
 
 export default {
   name: 'HelpTable',
@@ -126,6 +127,15 @@ export default {
         };
       },
     },
+    path: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      nextArrayIsEmpty: false,
+    };
   },
   methods: {
     columnAlignment(columnName) {
@@ -191,11 +201,30 @@ export default {
       return matchedByColumns;
     },
     moreDataAvailable() {
-      if (this.rows.length < this.pagination.rowLimit) {
+      if (this.rows.length < this.pagination.rowLimit || this.nextArrayIsEmpty) {
         return false;
       }
       return true;
     },
+  },
+  async updated() {
+    // fetch next page to define whether there is more row or not
+    const limit = this.pagination.rowLimit || 10;
+    const offset = this.pagination.offset || 0;
+
+    try {
+      const {
+        data: { data },
+      } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
+
+      if (data.length === 0) {
+        this.nextArrayIsEmpty = true;
+      } else {
+        this.nextArrayIsEmpty = false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
