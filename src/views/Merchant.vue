@@ -78,7 +78,7 @@ export default {
     const store = inject('store');
     const searchValue = ref('');
     const columns = [
-      { field: 'name', label: 'store name', sortable: true },
+      { field: 'name', label: 'name', sortable: true },
       { field: 'city', label: 'city', sortable: true },
       {
         field: 'is_verified',
