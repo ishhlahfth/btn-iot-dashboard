@@ -5,9 +5,6 @@
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
-      <!-- of
-      <span class="font-medium">{{ totalRows }}</span>
-      <span class="hidden sm:inline"> results</span> -->
     </p>
 
     <div class="flex items-center text-small">
@@ -16,7 +13,7 @@
         <help-select
           :options="[10, 25, 50, 100]"
           :position="['top', 'left']"
-          v-model="localRowLimit"
+          v-model="localLimit"
         />
       </div>
       <div class="flex bg-white rounded-md divide-x-2 border border-grey-4">
@@ -74,11 +71,7 @@ export default {
       type: Number,
       required: true,
     },
-    rowLimit: {
-      type: Number,
-      required: true,
-    },
-    totalRows: {
+    limit: {
       type: Number,
       required: true,
     },
@@ -86,26 +79,30 @@ export default {
       type: Boolean,
       required: true,
     },
+    currentRowCount: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
-      localRowLimit: 10,
+      localLimit: 10,
       localOffset: 0,
     };
   },
   computed: {
     firstRow() {
-      let firstRow = 0;
-      if (this.totalRows !== 0) {
+      let firstRow = 1;
+      if (this.offset !== 0) {
         firstRow = this.offset + 1;
       }
       return firstRow;
     },
     lastRow() {
       let lastRow = 0;
-      const ceiledRow = this.offset + this.rowLimit;
-      if (ceiledRow > this.totalRows) {
-        lastRow = this.totalRows;
+      const ceiledRow = this.offset + this.limit;
+      if (!this.moreDataAvailable) {
+        lastRow = ceiledRow - (this.limit - this.currentRowCount);
       } else {
         lastRow = ceiledRow;
       }
@@ -113,30 +110,30 @@ export default {
     },
   },
   watch: {
-    localRowLimit(newValue) {
+    localLimit(newValue) {
       this.$emit('onChangePagination', {
-        rowLimit: newValue,
+        limit: newValue,
         offset: 0,
       });
       this.localOffset = 0;
     },
     localOffset(newValue) {
       this.$emit('onChangePagination', {
-        rowLimit: this.localRowLimit,
+        limit: this.localLimit,
         offset: newValue,
       });
     },
   },
   methods: {
     nextPage() {
-      if (this.moreDataAvailable) this.localOffset += this.rowLimit;
+      if (this.moreDataAvailable) this.localOffset += this.limit;
     },
     previousPage() {
-      if (this.localOffset > 0) this.localOffset -= this.rowLimit;
+      if (this.localOffset > 0) this.localOffset -= this.limit;
     },
   },
   mounted() {
-    this.localRowLimit = this.rowLimit;
+    this.localLimit = this.limit;
     this.localOffset = this.offset;
   },
 };

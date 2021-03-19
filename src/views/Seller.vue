@@ -92,10 +92,9 @@ export default {
     ];
     const sellers = ref([]);
     const sellerPagination = ref({
-      totalRows: 0,
-      rowLimit: 10,
+      limit: 10,
       offset: 0,
-      sortBy: 'name',
+      sort: 'name',
       order: 'asc',
     });
     const loading = ref(false);
@@ -112,9 +111,9 @@ export default {
     };
 
     const getSellers = async (pagination) => {
-      const limit = pagination.rowLimit || 10;
+      const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
-      const sort = pagination.sortBy || 'name';
+      const sort = pagination.sort || 'name';
       const order = pagination.order || 'asc';
       try {
         loading.value = true;
@@ -131,10 +130,9 @@ export default {
         }));
 
         sellerPagination.value = {
-          totalRows: 100, // total row count is not provided
-          rowLimit: pagination.rowLimit,
+          limit: pagination.limit,
           offset: pagination.offset,
-          sortBy: pagination.sortBy,
+          sort: pagination.sort,
           order: pagination.order,
         };
       } catch (error) {

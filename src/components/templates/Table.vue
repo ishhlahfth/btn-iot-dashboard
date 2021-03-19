@@ -13,7 +13,7 @@
                 class="flex select-none"
                 v-if="column.field !== 'id'"
                 :class="[
-                  { 'text-grey-1': pagination.sortBy === column.field },
+                  { 'text-grey-1': pagination.sort === column.field },
                   { 'hover:opacity-50 cursor-pointer': column.sortable },
                   { 'justify-center': column.align === 'center' },
                   { 'justify-end': column.align === 'right' },
@@ -22,7 +22,7 @@
               >
                 <icon
                   v-if="
-                    pagination.sortBy === column.field &&
+                    pagination.sort === column.field &&
                       column.sortable &&
                       column.align === 'right'
                   "
@@ -39,7 +39,7 @@
                 </p>
                 <icon
                   v-if="
-                    pagination.sortBy === column.field &&
+                    pagination.sort === column.field &&
                       column.sortable &&
                       column.align !== 'right'
                   "
@@ -91,10 +91,10 @@
       </table>
     </div>
     <table-footer
-      :total-rows="pagination.totalRows"
-      :row-limit="pagination.rowLimit"
+      :limit="pagination.limit"
       :offset="pagination.offset"
       :more-data-available="moreDataAvailable"
+      :current-row-count="rows.length"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -130,10 +130,9 @@ export default {
       type: Object,
       default() {
         return {
-          totalRows: 10,
-          rowLimit: 10,
+          limit: 10,
           offset: 0,
-          sortBy: '',
+          sort: '',
           order: 'asc',
         };
       },
@@ -171,9 +170,9 @@ export default {
     },
     sort({ field: newField, sortable }) {
       if (sortable) {
-        const { order, sortBy } = this.pagination;
+        const { order, sort } = this.pagination;
         let newOrder = order;
-        if (newField === sortBy) {
+        if (newField === sort) {
           if (order === 'asc') {
             newOrder = 'desc';
           } else {
@@ -184,7 +183,7 @@ export default {
         }
         const updatedPagination = {
           ...this.pagination,
-          sortBy: newField,
+          sort: newField,
           order: newOrder,
         };
         this.$emit('sort', updatedPagination);
@@ -216,30 +215,32 @@ export default {
       return matchedByColumns;
     },
     moreDataAvailable() {
-      if (this.rows.length < this.pagination.rowLimit || this.nextArrayIsEmpty) {
+      if (this.rows.length < this.pagination.limit || this.nextArrayIsEmpty) {
         return false;
       }
       return true;
     },
   },
-  async updated() {
-    // fetch next page to define whether there is more row or not
-    const limit = this.pagination.rowLimit || 10;
-    const offset = this.pagination.offset || 0;
+  watch: {
+    async rows() {
+      // fetch next page to define whether there is more row or not
+      const limit = this.pagination.limit || 10;
+      const offset = this.pagination.offset || 0;
 
-    try {
-      const {
-        data: { data },
-      } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
+      try {
+        const {
+          data: { data },
+        } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
 
-      if (data.length === 0) {
-        this.nextArrayIsEmpty = true;
-      } else {
-        this.nextArrayIsEmpty = false;
+        if (data.length === 0) {
+          this.nextArrayIsEmpty = true;
+        } else {
+          this.nextArrayIsEmpty = false;
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    },
   },
 };
 </script>
