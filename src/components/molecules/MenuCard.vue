@@ -56,16 +56,23 @@
     <template v-if="variantOpened">
       <div class="pb-2 sm:pb-0">
         <div class="grid text-small divide-y divide-grey-4">
-          <template v-for="(variant, i) in variants" :key="i">
-            <div class="p-2">
-              <p class="mb-2">{{ variant.variant_name }}</p>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
-                <template v-for="(variantItem, i) in variant.variant_items" :key="i">
-                  <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
-                  <help-radio v-else :label="variantItem" disabled />
-                </template>
+          <template v-if="variants.length">
+            <template v-for="(variant, i) in variants" :key="i">
+              <div class="p-2">
+                <p class="mb-2">{{ variant.name }}</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
+                  <template v-for="(option, i) in variant.options" :key="i">
+                    <help-radio v-if="variant.is_mandatory" :label="option.name" disabled />
+                    <help-checkbox v-else :label="option.name" disabled />
+                  </template>
+                </div>
               </div>
-            </div>
+            </template>
+          </template>
+          <template v-else>
+            <p class="sm:px-2 sm:ml-2 py-4 text-center text-gold-dark bg-gold-soft rounded-md">
+              No variations available for this item
+            </p>
           </template>
         </div>
         <div class="grid">

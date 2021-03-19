@@ -71,12 +71,12 @@
                   :key="i"
                   :image-url="item.image_url"
                   :name="item.name"
-                  :category="item.category"
+                  :category="item.group.name"
                   :description="item.description"
                   :price="item.price"
                   :availability-status="item.availability_status"
                   :is-active="item.is_active"
-                  :variants="item.variants"
+                  :variants="item.variations"
                 />
               </template>
               <template v-else>
@@ -142,11 +142,12 @@ export default {
           data: { data },
         } = await API.get(`merchants/${merchantId}`);
 
-        const {
-          data: { data: img },
-        } = await API.get(data.banners[0].url);
-
-        console.log('IMG', img); // < < ISSUE
+        if (data.banners.length) {
+          const {
+            data: { data: img },
+          } = await API.get(data.banners[0].url);
+          console.log('IMG', img); // < < ISSUE
+        }
 
         const mapped = {
           imageUrl: data.banners.length ? data.banners[0].url : '',
