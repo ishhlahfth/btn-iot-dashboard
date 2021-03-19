@@ -55,18 +55,23 @@
       <div v-for="(catalog, i) in seller.menu" :key="i">
         <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
         <div class="divide-y divide-grey-4">
-          <menu-card
-            v-for="(item, i) in catalog.items"
-            :key="i"
-            :image-url="item.image_url"
-            :name="item.name"
-            :category="item.category"
-            :description="item.description"
-            :price="item.price"
-            :availability-status="item.availability_status"
-            :is-active="item.is_active"
-            :variants="item.variants"
-          />
+          <template v-if="catalog.items.length">
+            <menu-card
+              v-for="(item, i) in catalog.items"
+              :key="i"
+              :image-url="item.image_url"
+              :name="item.name"
+              :category="item.category"
+              :description="item.description"
+              :price="item.price"
+              :availability-status="item.availability_status"
+              :is-active="item.is_active"
+              :variants="item.variants"
+            />
+          </template>
+          <template v-else>
+            <p class="sm:px-2 sm:ml-2 py-1 text-gold-dark bg-gold-soft rounded-md inline">No items found in this catalog</p>
+          </template>
         </div>
       </div>
     </div>
