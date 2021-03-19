@@ -51,30 +51,41 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
-          <template v-if="processedTableData.length > 0">
-            <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
-              <template v-for="(data, i) in row" :key="i">
-                <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
-                  <div
-                    class="w-full grid"
-                    :class="[
-                      { 'place-items-center': columnAlignment(i) === 'center' },
-                      { 'place-items-end': columnAlignment(i) === 'right' },
-                    ]"
-                  >
-                    <slot :column="i" :row="row" :data="data">
-                      <!-- default, when there is no slot -->
-                      <p>{{ data }}</p>
-                    </slot>
-                  </div>
+          <template v-if="!loading">
+            <template v-if="processedTableData.length > 0">
+              <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
+                <template v-for="(data, i) in row" :key="i">
+                  <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
+                    <div
+                      class="w-full grid"
+                      :class="[
+                        { 'place-items-center': columnAlignment(i) === 'center' },
+                        { 'place-items-end': columnAlignment(i) === 'right' },
+                      ]"
+                    >
+                      <slot :column="i" :row="row" :data="data">
+                        <!-- default, when there is no slot -->
+                        <p>{{ data }}</p>
+                      </slot>
+                    </div>
+                  </td>
+                </template>
+              </tr>
+            </template>
+            <template v-else>
+              <div class="bg-white py-3 px-6 text-small">
+                <p class="text-flame-dark font-medium">No data received</p>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <tr v-for="i in 10" :key="i">
+              <template v-for="(column, i) in columns" :key="i">
+                <td class="py-3 px-6">
+                  <div class="rounded h-4 bg-grey-4 animate-pulse"></div>
                 </td>
               </template>
             </tr>
-          </template>
-          <template v-else>
-            <div class="bg-white py-3 px-6 text-small">
-              <p class="text-flame-dark font-medium">No data received</p>
-            </div>
           </template>
         </tbody>
       </table>
@@ -130,6 +141,10 @@ export default {
     path: {
       type: String,
       required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

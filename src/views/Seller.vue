@@ -17,6 +17,7 @@
       <help-table
         path="merchants"
         :columns="columns"
+        :loading="loading"
         :rows="sellers"
         :pagination="sellerPagination"
         @onChangePagination="getSellers($event)"
@@ -97,7 +98,7 @@ export default {
       sortBy: 'name',
       order: 'asc',
     });
-    // const noMoreDataAvailable = ref(false);
+    const loading = ref(false);
     const detailModal = ref(false);
     const opHourModal = ref(false);
 
@@ -116,6 +117,7 @@ export default {
       const sort = pagination.sortBy || 'name';
       const order = pagination.order || 'asc';
       try {
+        loading.value = true;
         const {
           data: { data: currentSellers },
         } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
@@ -138,6 +140,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      loading.value = false;
     };
 
     onMounted(() => {
@@ -148,6 +151,7 @@ export default {
       sellers,
       sellerPagination,
       detailModal,
+      loading,
       opHourModal,
       searchValue,
       openSellerDetail,
