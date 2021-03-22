@@ -29,7 +29,7 @@
             {{ description }}
           </p>
         </div>
-        <p class="text-small font-medium">{{ store.methods.convertToRp(price) }}</p>
+        <p class="text-small font-medium">{{ methods.convertToRp(price) }}</p>
       </div>
       <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
         <help-toggle v-model="localIsActive" />
@@ -60,10 +60,18 @@
             <template v-for="(variant, i) in variants" :key="i">
               <div class="p-2">
                 <p class="mb-2">{{ variant.name }}</p>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
+                <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 text-grey-2">
                   <template v-for="(option, i) in variant.options" :key="i">
-                    <help-radio v-if="variant.is_mandatory" :label="option.name" disabled />
-                    <help-checkbox v-else :label="option.name" disabled />
+                    <help-radio
+                      v-if="variant.is_mandatory"
+                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      disabled
+                    />
+                    <help-checkbox
+                      v-else
+                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      disabled
+                    />
                   </template>
                 </div>
               </div>
@@ -77,7 +85,7 @@
         </div>
         <div class="grid">
           <help-button
-            v-if="store.state.screenWidth < 640"
+            v-if="state.screenWidth < 640"
             :label="localIsActive ? 'disable product' : 'enable product'"
             type="secondary"
           />
@@ -145,12 +153,12 @@ export default {
     },
   },
   setup(props) {
-    const store = inject('store');
+    const { state, methods } = inject('store');
     const variantOpened = ref(false);
     const localIsActive = ref(true);
 
     const expandVariant = () => {
-      if (store.state.screenWidth < 640) {
+      if (state.screenWidth < 640) {
         variantOpened.value = !variantOpened.value;
       }
     };
@@ -160,7 +168,8 @@ export default {
     });
 
     return {
-      store,
+      state,
+      methods,
       variantOpened,
       localIsActive,
       expandVariant,
