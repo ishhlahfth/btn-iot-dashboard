@@ -13,7 +13,7 @@
                 class="flex select-none"
                 v-if="column.field !== 'id'"
                 :class="[
-                  { 'text-grey-1': pagination.sortBy === column.field },
+                  { 'text-grey-1': pagination.sort === column.field },
                   { 'hover:opacity-50 cursor-pointer': column.sortable },
                   { 'justify-center': column.align === 'center' },
                   { 'justify-end': column.align === 'right' },
@@ -22,7 +22,7 @@
               >
                 <icon
                   v-if="
-                    pagination.sortBy === column.field &&
+                    pagination.sort === column.field &&
                       column.sortable &&
                       column.align === 'right'
                   "
@@ -39,7 +39,7 @@
                 </p>
                 <icon
                   v-if="
-                    pagination.sortBy === column.field &&
+                    pagination.sort === column.field &&
                       column.sortable &&
                       column.align !== 'right'
                   "
@@ -51,38 +51,50 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-grey-4 whitespace-nowrap">
-          <template v-if="processedTableData.length > 0">
-            <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
-              <template v-for="(data, i) in row" :key="i">
-                <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
-                  <div
-                    class="w-full grid"
-                    :class="[
-                      { 'place-items-center': columnAlignment(i) === 'center' },
-                      { 'place-items-end': columnAlignment(i) === 'right' },
-                    ]"
-                  >
-                    <slot :column="i" :row="row" :data="data">
-                      <!-- default, when there is no slot -->
-                      <p>{{ data }}</p>
-                    </slot>
-                  </div>
+          <template v-if="!loading">
+            <template v-if="processedTableData.length > 0">
+              <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
+                <template v-for="(data, i) in row" :key="i">
+                  <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
+                    <div
+                      class="w-full grid"
+                      :class="[
+                        { 'place-items-center': columnAlignment(i) === 'center' },
+                        { 'place-items-end': columnAlignment(i) === 'right' },
+                      ]"
+                    >
+                      <slot :column="i" :row="row" :data="data">
+                        <!-- default, when there is no slot -->
+                        <p>{{ data }}</p>
+                      </slot>
+                    </div>
+                  </td>
+                </template>
+              </tr>
+            </template>
+            <template v-else>
+              <div class="bg-white py-3 px-6 text-small">
+                <p class="text-flame-dark font-medium">No data received</p>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <tr v-for="i in 10" :key="i">
+              <template v-for="(column, i) in columns" :key="i">
+                <td class="py-3 px-6">
+                  <div class="rounded h-4 bg-grey-4 animate-pulse"></div>
                 </td>
               </template>
             </tr>
-          </template>
-          <template v-else>
-            <div class="bg-white py-3 px-6 text-small">
-              <p class="text-flame-dark font-medium">No data received</p>
-            </div>
           </template>
         </tbody>
       </table>
     </div>
     <table-footer
-      :totalRows="pagination.totalRows"
-      :rowLimit="pagination.rowLimit"
-      :page="pagination.page"
+      :limit="pagination.limit"
+      :offset="pagination.offset"
+      :more-data-available="moreDataAvailable"
+      :current-row-count="rows.length"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -91,6 +103,7 @@
 <script>
 import Icon from '@/components/atoms/Icon.vue';
 import TableFooter from '@/components/molecules/TableFooter.vue';
+import API from '@/apis';
 
 export default {
   name: 'HelpTable',
@@ -117,14 +130,26 @@ export default {
       type: Object,
       default() {
         return {
-          totalRows: 10,
-          rowLimit: 10,
-          page: 1,
-          sortBy: '',
+          limit: 10,
+          offset: 0,
+          sort: '',
           order: 'asc',
         };
       },
     },
+    path: {
+      type: String,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      nextArrayIsEmpty: false,
+    };
   },
   methods: {
     columnAlignment(columnName) {
@@ -145,9 +170,9 @@ export default {
     },
     sort({ field: newField, sortable }) {
       if (sortable) {
-        const { order, sortBy } = this.pagination;
+        const { order, sort } = this.pagination;
         let newOrder = order;
-        if (newField === sortBy) {
+        if (newField === sort) {
           if (order === 'asc') {
             newOrder = 'desc';
           } else {
@@ -158,7 +183,7 @@ export default {
         }
         const updatedPagination = {
           ...this.pagination,
-          sortBy: newField,
+          sort: newField,
           order: newOrder,
         };
         this.$emit('sort', updatedPagination);
@@ -188,6 +213,33 @@ export default {
       });
 
       return matchedByColumns;
+    },
+    moreDataAvailable() {
+      if (this.rows.length < this.pagination.limit || this.nextArrayIsEmpty) {
+        return false;
+      }
+      return true;
+    },
+  },
+  watch: {
+    async rows() {
+      // fetch next page to define whether there is more row or not
+      const limit = this.pagination.limit || 10;
+      const offset = this.pagination.offset || 0;
+
+      try {
+        const {
+          data: { data },
+        } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
+
+        if (data.length === 0) {
+          this.nextArrayIsEmpty = true;
+        } else {
+          this.nextArrayIsEmpty = false;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

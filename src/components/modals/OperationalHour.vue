@@ -3,8 +3,8 @@
     <div class="grid grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <template v-for="(schedule, i) in operationalHours" :key="i">
         <p class="text-grey-2">{{ schedule.day }}</p>
-        <p class="place-self-end" v-if="schedule.open_hour && schedule.close_hour">
-          {{ `${schedule.open_hour} - ${schedule.close_hour}` }}
+        <p class="place-self-end" v-if="schedule.openHour && schedule.closeHour">
+          {{ `${beautify(schedule.openHour)} - ${beautify(schedule.closeHour)}` }}
         </p>
         <p class="place-self-end" v-else>Off</p>
       </template>
@@ -13,49 +13,44 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-// import axios from 'axios';
-
-// = = DUMMY = =
-import { seller as dummySeller } from '../../../dummy.json';
-// = = DUMMY = =
+import { inject } from 'vue';
 
 export default {
   name: 'OperationalHour',
   setup() {
-    // const store = inject('store');
-    const operationalHours = ref([]);
+    const store = inject('store');
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const operationalHours = store.state.modalState.operationalHours;
 
-    const getOperationalHours = async () => {
-      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      try {
-        // = = REAL = =
-        // const { data } = await axios.get(
-        //   `http://localhost:3000/seller/${store.state.modalState.id}`,
-        // );
-        // operationalHours.value = data.operational_hours.map((el, i) => ({
-        //   ...el,
-        //   day: days[i],
-        // }));
-        // = = REAL = =
+    for (let i = 0; i < 7; i += 1) {
+      let hasDayProperty = false;
 
-        // = = DUMMY = =
-        operationalHours.value = dummySeller[0].operational_hours.map((el, i) => ({
-          ...el,
-          day: days[i],
-        }));
-        // = = DUMMY = =
-      } catch (error) {
-        console.log(error);
+      operationalHours.forEach((el) => {
+        if (i === el.dayOfWeek) hasDayProperty = true;
+      });
+
+      if (!hasDayProperty) {
+        operationalHours.push({
+          openHour: null,
+          closeHour: null,
+          dayOfWeek: i,
+        });
       }
+    }
+
+    const beautify = (raw) => {
+      let beautified = '';
+      if (raw) {
+        beautified = `${raw.substring(0, 2)}:${raw.substring(2, 4)}`;
+      }
+      return beautified;
     };
 
-    onMounted(() => {
-      getOperationalHours();
-    });
-
     return {
-      operationalHours,
+      operationalHours: operationalHours
+        .map((el) => ({ ...el, day: days[el.dayOfWeek] }))
+        .sort((a, b) => a.dayOfWeek - b.dayOfWeek),
+      beautify,
     };
   },
 };

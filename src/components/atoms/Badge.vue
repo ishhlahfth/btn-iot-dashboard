@@ -12,7 +12,7 @@
         <icon :name="icon" />
       </div>
       <div class="h-full w-full flex items-center">
-        <p>{{ label }}</p>
+        <p class="capitalize">{{ label }}</p>
       </div>
     </div>
   </div>

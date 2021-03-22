@@ -5,9 +5,6 @@
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
-      of
-      <span class="font-medium">{{ totalRows }}</span>
-      <span class="hidden sm:inline"> results</span>
     </p>
 
     <div class="flex items-center text-small">
@@ -16,20 +13,20 @@
         <help-select
           :options="[10, 25, 50, 100]"
           :position="['top', 'left']"
-          v-model="localRowLimit"
+          v-model="localLimit"
         />
       </div>
       <div class="flex bg-white rounded-md divide-x-2 border border-grey-4">
         <div
           class="p-2 rounded-l-md"
-          :class="localPage <= 1 ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          :class="localOffset <= 0 ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
           @click="previousPage"
         >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            :fill="localPage <= 1 ? '#C4C4C4' : 'currentColor'"
+            :fill="localOffset <= 0 ? '#C4C4C4' : 'currentColor'"
           >
             <path
               fillRule="evenodd"
@@ -40,14 +37,14 @@
         </div>
         <div
           class="p-2 rounded-r-md"
-          :class="lastRow === totalRows ? 'bg-grey-5 cursor-not-allowed' : 'cursor-pointer'"
+          :class="moreDataAvailable ? 'cursor-pointer' : 'bg-grey-5 cursor-not-allowed'"
           @click="nextPage"
         >
           <svg
             class="w-5 h-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            :fill="lastRow === totalRows ? '#C4C4C4' : 'currentColor'"
+            :fill="moreDataAvailable ? 'currentColor' : '#C4C4C4'"
           >
             <path
               fillRule="evenodd"
@@ -70,38 +67,42 @@ export default {
     HelpSelect,
   },
   props: {
-    page: {
+    offset: {
       type: Number,
       required: true,
     },
-    rowLimit: {
+    limit: {
       type: Number,
       required: true,
     },
-    totalRows: {
+    moreDataAvailable: {
+      type: Boolean,
+      required: true,
+    },
+    currentRowCount: {
       type: Number,
       required: true,
     },
   },
   data() {
     return {
-      localRowLimit: 10,
-      localPage: 1,
+      localLimit: 10,
+      localOffset: 0,
     };
   },
   computed: {
     firstRow() {
-      let firstRow = 0;
-      if (this.totalRows !== 0) {
-        firstRow = this.page * this.rowLimit - this.rowLimit + 1;
+      let firstRow = 1;
+      if (this.offset !== 0) {
+        firstRow = this.offset + 1;
       }
       return firstRow;
     },
     lastRow() {
       let lastRow = 0;
-      const ceiledRow = this.page * this.rowLimit;
-      if (ceiledRow > this.totalRows) {
-        lastRow = this.totalRows;
+      const ceiledRow = this.offset + this.limit;
+      if (!this.moreDataAvailable) {
+        lastRow = ceiledRow - (this.limit - this.currentRowCount);
       } else {
         lastRow = ceiledRow;
       }
@@ -109,31 +110,31 @@ export default {
     },
   },
   watch: {
-    localRowLimit(newValue) {
+    localLimit(newValue) {
       this.$emit('onChangePagination', {
-        rowLimit: newValue,
-        page: 1,
+        limit: newValue,
+        offset: 0,
       });
-      this.localPage = 1;
+      this.localOffset = 0;
     },
-    localPage(newValue) {
+    localOffset(newValue) {
       this.$emit('onChangePagination', {
-        rowLimit: this.localRowLimit,
-        page: newValue,
+        limit: this.localLimit,
+        offset: newValue,
       });
     },
   },
   methods: {
     nextPage() {
-      if (this.lastRow !== this.totalRows) this.localPage += 1;
+      if (this.moreDataAvailable) this.localOffset += this.limit;
     },
     previousPage() {
-      if (this.localPage > 0) this.localPage -= 1;
+      if (this.localOffset > 0) this.localOffset -= this.limit;
     },
   },
   mounted() {
-    this.localRowLimit = this.rowLimit;
-    this.localPage = this.page;
+    this.localLimit = this.limit;
+    this.localOffset = this.offset;
   },
 };
 </script>

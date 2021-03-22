@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="detailModal">
-    <seller-detail />
+    <merchant-detail />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -53,7 +53,7 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpTooltip from '@/components/atoms/Tooltip.vue';
-import SellerDetail from '@/components/modals/SellerDetail.vue';
+import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 
 // = = DUMMY = =
 import { role as dummyRole } from '../../dummy.json';
@@ -69,7 +69,7 @@ export default {
     HelpTable,
     HelpToggle,
     HelpTooltip,
-    SellerDetail,
+    MerchantDetail,
   },
   setup() {
     // const store = inject('store');
