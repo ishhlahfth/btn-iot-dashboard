@@ -28,8 +28,8 @@
           <p class="text-grey-2">ID No. (KTP)</p>
           <p>{{ merchant.idNumber }}</p>
           <p class="text-grey-2">Status</p>
-          <p :class="merchant.verification_status ? 'text-mint' : 'text-flame'">
-            {{ merchant.verification_status ? 'Verified' : 'Not Verified' }}
+          <p :class="merchant.verificationStatus === 'SUCCESS' ? 'text-mint' : 'text-flame'">
+            {{ merchant.verificationStatus }}
           </p>
         </template>
         <template v-else>
@@ -42,12 +42,22 @@
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
-          <p class="text-grey-2">Finished Orders</p>
-          <p>{{ merchant.finishedOrders }}</p>
-          <p class="text-grey-2">On Going Orders</p>
-          <p>{{ merchant.ongoingOrders }}</p>
-          <p class="text-grey-2">Cancelled Orders</p>
-          <p>{{ merchant.cancelledOrders }}</p>
+          <p class="text-grey-2">Canceled</p>
+          <p>{{ merchant.summary.canceled }}</p>
+          <p class="text-grey-2">Completed</p>
+          <p>{{ merchant.summary.completed }}</p>
+          <p class="text-grey-2">Delivery Failed</p>
+          <p>{{ merchant.summary.deliveryFailed }}</p>
+          <p class="text-grey-2">Payment Expired</p>
+          <p>{{ merchant.summary.paymentExpired }}</p>
+          <p class="text-grey-2">Payment Failure</p>
+          <p>{{ merchant.summary.paymentFailure }}</p>
+          <p class="text-grey-2">Refunded</p>
+          <p>{{ merchant.summary.refunded }}</p>
+          <p class="text-grey-2">Rejected</p>
+          <p>{{ merchant.summary.rejected }}</p>
+          <p class="text-grey-2">Sold</p>
+          <p>{{ merchant.summary.sold }}</p>
         </template>
         <template v-else>
           <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
@@ -74,7 +84,7 @@
                   :category="item.group.name"
                   :description="item.description"
                   :price="item.price"
-                  :availability-status="item.availability_status"
+                  :availability-status="item.status"
                   :is-active="item.is_active"
                   :variants="item.variations"
                 />
@@ -129,10 +139,17 @@ export default {
       joinedDate: '',
       bank: '',
       idNumber: '',
-      verificationStatus: false,
-      finishedOrders: 0,
-      ongoingOrders: 0,
-      cancelledOrders: 0,
+      verificationStatus: '',
+      summary: {
+        canceled: 0,
+        completed: 0,
+        deliveryFailed: 0,
+        paymentExpired: 0,
+        paymentFailure: 0,
+        refunded: 0,
+        rejected: 0,
+        sold: 0,
+      },
       menu: [],
     });
     const getMerchant = async () => {
@@ -149,10 +166,17 @@ export default {
           // joinedDate: dayjs(data.created_at).format('D MMM YYYY'),
           bank: data.account.bank.name,
           // idNumber: data.id_number,
-          verificationStatus: data.is_verified,
-          finishedOrders: 0,
-          ongoingOrders: 0,
-          cancelledOrders: 0,
+          verificationStatus: data.verify_status,
+          summary: {
+            canceled: store.methods.groupDigit(data.total_summary.canceled_order),
+            completed: store.methods.groupDigit(data.total_summary.completed),
+            deliveryFailed: store.methods.groupDigit(data.total_summary.delivery_failed),
+            paymentExpired: store.methods.groupDigit(data.total_summary.payment_expired),
+            paymentFailure: store.methods.groupDigit(data.total_summary.payment_failure),
+            refunded: store.methods.groupDigit(data.total_summary.refunded_order),
+            rejected: store.methods.groupDigit(data.total_summary.rejected_order),
+            sold: store.methods.groupDigit(data.total_summary.sold_items),
+          },
           menu: [],
         };
         merchant.value = mapped;

@@ -19,8 +19,8 @@
             <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
               <p class="font-medium">{{ name }}</p>
               <help-badge
-                :label="availabilityStatus ? 'Available' : 'Unavailable'"
-                :color="availabilityStatus ? 'positive' : 'negative'"
+                :label="availabilityStatus === 'AVAILABLE' ? 'Available' : availabilityStatus.toLowerCase()"
+                :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
               />
             </div>
             <p class="text-small text-grey-3">{{ category }}</p>
@@ -136,8 +136,8 @@ export default {
       default: 0,
     },
     availabilityStatus: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: 'AVAILABLE',
     },
     isActive: {
       type: Boolean,
