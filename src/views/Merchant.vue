@@ -11,7 +11,7 @@
       <help-button label="filter" />
     </div>
     <div>
-      <form @submit.prevent="getMerchants(merchantPagination)">
+      <form @submit.prevent="getMerchants">
         <help-input
           v-model="searchValue"
           placeholder="Search merchant name here"
@@ -130,7 +130,7 @@ export default {
           `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
         );
 
-        console.log(currentMerchants[2].operational_hours);
+        console.log(currentMerchants);
 
         merchants.value = currentMerchants.map((el) => ({
           id: el.id,
@@ -148,10 +148,10 @@ export default {
         }));
 
         merchantPagination.value = {
-          limit: pagination.limit,
-          offset: pagination.offset,
-          sort: pagination.sort,
-          order: pagination.order,
+          limit,
+          offset,
+          sort,
+          order,
         };
       } catch (error) {
         console.log(error);
