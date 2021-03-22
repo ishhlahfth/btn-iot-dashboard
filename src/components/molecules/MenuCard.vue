@@ -1,60 +1,91 @@
 <template>
   <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card" @click="expandVariant">
-    <img
-      v-if="imageUrl"
-      :src="imageUrl"
-      alt="menu"
-      class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
-    />
-    <div
-      v-else
-      class="w-20 h-20 sm:w-26 sm:h-26 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
-    >
-      No Image
-    </div>
-    <div class="flex flex-col justify-between">
-      <div class="grid gap-1 sm:gap-2">
-        <div class="grid sm:gap-1">
-          <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
-            <p class="font-medium">{{ name }}</p>
-            <help-badge
-              :label="availabilityStatus ? 'Available' : 'Unavailable'"
-              :color="availabilityStatus ? 'positive' : 'negative'"
-            />
-          </div>
-          <p class="text-small text-grey-3">{{ category }}</p>
-        </div>
-        <p class="text-small text-grey-2 mb-2 sm-truncate">
-          {{ description }}
-        </p>
+    <template v-if="!loading">
+      <img
+        v-if="imageUrl"
+        :src="imageUrl"
+        alt="menu"
+        class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
+      />
+      <div
+        v-else
+        class="w-20 h-20 sm:w-26 sm:h-26 border-2 border-dashed border-grey-4 rounded grid place-items-center text-small"
+      >
+        No Image
       </div>
-      <p class="text-small font-medium">{{ store.methods.convertToRp(price) }}</p>
-    </div>
-    <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
-      <help-toggle v-model="localIsActive" />
-      <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
-    </div>
+      <div class="flex flex-col justify-between">
+        <div class="grid gap-1 sm:gap-2">
+          <div class="grid sm:gap-1">
+            <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
+              <p class="font-medium">{{ name }}</p>
+              <help-badge
+                :label="availabilityStatus === 'AVAILABLE' ? 'Available' : availabilityStatus.toLowerCase()"
+                :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
+              />
+            </div>
+            <p class="text-small text-grey-3">{{ category }}</p>
+          </div>
+          <p class="text-small text-grey-2 mb-2 sm-truncate">
+            {{ description }}
+          </p>
+        </div>
+        <p class="text-small font-medium">{{ methods.convertToRp(price) }}</p>
+      </div>
+      <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
+        <help-toggle v-model="localIsActive" />
+        <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="w-20 h-20 sm:w-26 sm:h-26 bg-grey-4 rounded animate-pulse"></div>
+      <div class="flex flex-col justify-between">
+        <div class="grid gap-1 sm:gap-2">
+          <div class="grid gap-1">
+            <div class="rounded bg-grey-4 h-4 w-32 animate-pulse"></div>
+            <div class="rounded bg-grey-4 h-3 w-16 animate-pulse"></div>
+          </div>
+          <div class="rounded bg-grey-4 h-4 mb-2 animate-pulse"></div>
+        </div>
+        <div class="rounded bg-grey-4 h-4 w-16 animate-pulse"></div>
+      </div>
+    </template>
   </div>
 
   <transition name="slide" appear>
     <template v-if="variantOpened">
       <div class="pb-2 sm:pb-0">
         <div class="grid text-small divide-y divide-grey-4">
-          <template v-for="(variant, i) in variants" :key="i">
-            <div class="p-2">
-              <p class="mb-2">{{ variant.variant_name }}</p>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 text-grey-2">
-                <template v-for="(variantItem, i) in variant.variant_items" :key="i">
-                  <help-checkbox v-if="variant.multiple_choice" :label="variantItem" disabled />
-                  <help-radio v-else :label="variantItem" disabled />
-                </template>
+          <template v-if="variants.length">
+            <template v-for="(variant, i) in variants" :key="i">
+              <div class="p-2">
+                <p class="mb-2">{{ variant.name }}</p>
+                <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 text-grey-2">
+                  <template v-for="(option, i) in variant.options" :key="i">
+                    <help-radio
+                      v-if="variant.is_mandatory"
+                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      disabled
+                    />
+                    <help-checkbox
+                      v-else
+                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      disabled
+                    />
+                  </template>
+                </div>
               </div>
-            </div>
+            </template>
+          </template>
+          <template v-else>
+            <p class="sm:px-2 sm:ml-2 py-4 text-center text-gold-dark bg-gold-soft rounded-md">
+              No variations available for this item
+            </p>
           </template>
         </div>
         <div class="grid">
           <help-button
-            v-if="store.state.screenWidth < 640"
+            v-if="state.screenWidth < 640"
             :label="localIsActive ? 'disable product' : 'enable product'"
             bg-color="transparent"
             color="flame-dark"
@@ -106,8 +137,8 @@ export default {
       default: 0,
     },
     availabilityStatus: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: 'AVAILABLE',
     },
     isActive: {
       type: Boolean,
@@ -117,14 +148,18 @@ export default {
       type: Array,
       default: () => [],
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
-    const store = inject('store');
+    const { state, methods } = inject('store');
     const variantOpened = ref(false);
     const localIsActive = ref(true);
 
     const expandVariant = () => {
-      if (store.state.screenWidth < 640) {
+      if (state.screenWidth < 640) {
         variantOpened.value = !variantOpened.value;
       }
     };
@@ -134,7 +169,8 @@ export default {
     });
 
     return {
-      store,
+      state,
+      methods,
       variantOpened,
       localIsActive,
       expandVariant,

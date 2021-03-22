@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: '/bns',
-    redirect: '/bns/seller',
+    redirect: '/bns/merchant',
     name: 'BNS',
     component: () => import('@/components/layouts/Main.vue'),
     beforeEnter: authenticate,
@@ -75,9 +75,9 @@ const routes = [
         component: () => import('@/views/Home.vue'),
       },
       {
-        path: 'seller',
-        name: 'Seller',
-        component: () => import('@/views/Seller.vue'),
+        path: 'merchant',
+        name: 'Merchant',
+        component: () => import('@/views/Merchant.vue'),
       },
       {
         path: 'admin',
@@ -90,6 +90,11 @@ const routes = [
         component: () => import('@/views/Role.vue'),
       },
     ],
+  },
+  {
+    path: '/invoice/:id',
+    name: 'Invoice',
+    component: () => import('@/views/Invoice.vue'),
   },
 ];
 
