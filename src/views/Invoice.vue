@@ -87,7 +87,7 @@
 
 <script>
 import { inject, onMounted, ref } from 'vue';
-import API from '@/apis';
+import axios from 'axios';
 import { useRoute } from 'vue-router';
 
 export default {
@@ -117,7 +117,19 @@ export default {
         loading.value = true;
         const {
           data: { data },
-        } = await API.get(`orders/${route.params.id}`);
+        } = await axios.get(`http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${route.params.id}`, {
+          headers: {
+            'x-api-key': `${route.query.key}`,
+            'x-device-type': 'LINUX',
+            'x-device-os-version': 'Ubuntu18.04',
+            'x-device-model': '4s-dk0115AU',
+            'x-app-version': 'v1.2',
+            'x-request-id': '1234',
+            'x-device-utc-offset': '+08:00',
+            'x-device-lang': 'en',
+            'x-device-notification-code': `${route.query.code}`,
+          },
+        });
 
         poNumber.value = data.delivery_code || '-';
         merchantName.value = data.merchant.name || '-';
@@ -162,10 +174,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-#invoice {
-  // @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
-  // font-family: 'Nunito', 'serif';
-}
-</style>
