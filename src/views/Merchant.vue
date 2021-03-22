@@ -46,9 +46,9 @@
           </p>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
           <help-badge
-            v-if="column === 'is_verified'"
-            :label="row.is_verified ? 'Verified' : 'Not Verified'"
-            :color="row.is_verified ? 'positive' : 'negative'"
+            v-if="column === 'verify_status'"
+            :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
+            :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
           />
         </template>
       </help-table>
@@ -87,7 +87,7 @@ export default {
       { field: 'name', label: 'name', sortable: true },
       { field: 'city', label: 'city', sortable: true },
       {
-        field: 'is_verified',
+        field: 'verify_status',
         label: 'verification status',
         align: 'center',
         sortable: true,
@@ -136,7 +136,7 @@ export default {
           id: el.id,
           name: el.name,
           city: el.address.city.name,
-          is_verified: el.is_verified,
+          verify_status: el.verify_status,
           is_hidden: !el.is_hidden,
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
