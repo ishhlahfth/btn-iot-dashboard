@@ -40,7 +40,7 @@
           <p
             v-if="column === 'operational_detail'"
             class="text-royal font-medium cursor-pointer"
-            @click="openOpHourDetail(row.id)"
+            @click="openOpHourDetail(row.operational_hours)"
           >
             See Detail
           </p>
@@ -111,9 +111,9 @@ export default {
       detailModal.value = true;
       store.methods.setModalState({ id });
     };
-    const openOpHourDetail = (id) => {
+    const openOpHourDetail = (operationalHours) => {
       opHourModal.value = true;
-      store.methods.setModalState({ id });
+      store.methods.setModalState({ operationalHours });
     };
 
     const getMerchants = async (pagination) => {
@@ -126,7 +126,11 @@ export default {
         loading.value = true;
         const {
           data: { data: currentMerchants },
-        } = await API.get(`merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`);
+        } = await API.get(
+          `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
+        );
+
+        console.log(currentMerchants[2].operational_hours);
 
         merchants.value = currentMerchants.map((el) => ({
           id: el.id,
@@ -134,6 +138,13 @@ export default {
           city: el.address.city.name,
           is_verified: el.is_verified,
           is_hidden: !el.is_hidden,
+          operational_hours: el.operational_hours.map(
+            ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
+              openHour,
+              closeHour,
+              dayOfWeek,
+            }),
+          ),
         }));
 
         merchantPagination.value = {
