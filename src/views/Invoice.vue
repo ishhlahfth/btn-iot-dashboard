@@ -1,25 +1,29 @@
 <template>
-  <div class="p-4 grid gap-4 relative" :class="{ 'animate-pulse': loading }" id="invoice">
-    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-      <img src="../assets/sudah-bayar.png" alt="sudah-lunas" style="width: 75vw; max-width: none !important;">
+  <div
+    id="invoice"
+    style="padding: 1rem; display: grid; gap: 1rem; position: relative; font-family: Nunito, 'serif';"
+    :style="{ 'animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;': loading }"
+  >
+    <div style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%)">
+      <img src="../assets/sudah-bayar.png" alt="sudah-bayar" style="width: 75vw; max-width: none !important;">
     </div>
 
-    <div class="w-full flex justify-center">
+    <div style="width: 100%; display: flex; justify-content: center;">
       <img src="../assets/logo-lowres.png" alt="logo" style="width: 128px;">
     </div>
 
-    <div class="w-full grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 text-small">
-      <p class="font-bold">Nomor PO</p>
-      <p class="text-royal text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ poNumber }}</p>
-      <p class="font-bold">Nama Penjual</p>
-      <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ merchantName }}</p>
-      <p class="font-bold">Tanggal Pembelian</p>
-      <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ orderDate }}</p>
-      <p class="font-bold">Nama Pembeli</p>
-      <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ buyerName }}</p>
-      <div class="col-span-2 grid gap-y-2">
-        <p class="font-bold">Tujuan Pengiriman</p>
-        <div class="grid gap-y-1" :class="{ 'bg-grey-4 rounded h-4': loading }">
+    <div style="width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1rem; column-gap: 1.5rem; font-size: 12px;" class="sm:gap-x-14">
+      <p style="font-weight: 700;">Nomor PO</p>
+      <p style="color: rgb(41, 120, 212); text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ poNumber }}</p>
+      <p style="font-weight: 700;">Nama Penjual</p>
+      <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ merchantName }}</p>
+      <p style="font-weight: 700;">Tanggal Pembelian</p>
+      <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ orderDate }}</p>
+      <p style="font-weight: 700;">Nama Pembeli</p>
+      <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ buyerName }}</p>
+      <div style="grid-column: span 2 / span 2; display: grid; row-gap: 0.5rem;">
+        <p style="font-weight: 700;">Tujuan Pengiriman</p>
+        <div style="display: grid; row-gap: 0.25rem;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem; height: 1rem': loading }">
           <p>{{ addressShort }}</p>
           <p>{{ addressFull }}</p>
           <p>{{ phoneNumber }}</p>
@@ -29,52 +33,52 @@
 
     <div class="divide-y divide-grey-1"><p></p><p></p></div>
 
-    <div class="w-full">
-      <p class="text-small font-bold">Detail Pembelian</p>
+    <div style="width: 100%;">
+      <p style="font-size: 12px; font-weight: 700px;">Detail Pembelian</p>
     </div>
 
-    <div class="w-full">
-      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
-        <div class="p-3 grid grid-cols-8 gap-1 font-bold">
-          <p class="col-span-3">Nama Produk</p>
-          <p class="col-span-1 text-right">Jumlah</p>
-          <p class="col-span-2 text-right">Harga Barang</p>
-          <p class="col-span-2 text-right">Subtotal</p>
+    <div style="width: 100%;">
+      <div style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;" class="divide-y divide-grey-1">
+        <div style="padding: 0.75rem; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;">
+          <p style="grid-column: span 3 / span 3;">Nama Produk</p>
+          <p style="grid-column: span 1 / span 1; text-align: right;">Jumlah</p>
+          <p style="grid-column: span 2 / span 2; text-align: right;">Harga Barang</p>
+          <p style="grid-column: span 2 / span 2; text-align: right;">Subtotal</p>
         </div>
-        <div v-for="item in items" :key="item.id" class="p-3 grid grid-cols-8 gap-1">
-          <div class="col-span-3 grid gap-1">
-            <p class="font-bold" :class="{ 'bg-grey-4 rounded': loading }">{{ item.name }}</p>
-            <p :class="{ 'bg-grey-4 rounded': loading }">{{ item.variations.map((el) => el.options[0].name).join(', ') }}</p>
+        <div v-for="item in items" :key="item.id" style="padding: 0.75rem; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.25rem;">
+          <div style="grid-column: span 3 / span 3; display: grid; gap: 0.25rem;">
+            <p style="font-weight: 700;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ item.name }}</p>
+            <p :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ item.variations.map((el) => el.options[0].name).join(', ') }}</p>
           </div>
-          <p class="col-span-1 text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ store.methods.groupDigit(item.qty) }}</p>
-          <p class="col-span-2 text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ store.methods.convertToRp(item.price) }}</p>
-          <p class="col-span-2 text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ store.methods.convertToRp(item.subtotal_price) }}</p>
+          <p style="grid-column: span 1 / span 1; text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ methods.groupDigit(item.qty) }}</p>
+          <p style="grid-column: span 2 / span 2; text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ methods.convertToRp(item.price) }}</p>
+          <p style="grid-column: span 2 / span 2; text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ methods.convertToRp(item.subtotal_price) }}</p>
         </div>
-        <div class="p-3 grid grid-cols-4 gap-1 font-bold">
-          <p class="col-span-3 text-right">Subtotal Harga Barang</p>
-          <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ subtotalItem }}</p>
+        <div style="padding: 0.75rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;">
+          <p style="grid-column: span 3 / span 3; text-align: right;">Subtotal Harga Barang</p>
+          <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ subtotalItem }}</p>
         </div>
       </div>
     </div>
 
-    <div class="w-full">
-      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
-        <div class="p-3 grid grid-cols-2 gap-1">
+    <div style="width: 100%;">
+      <div style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;" class="divide-y divide-grey-1">
+        <div style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem;">
           <p>{{ deliveryName }}</p>
-          <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ deliveryPrice }}</p>
+          <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ deliveryPrice }}</p>
         </div>
-        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
+        <div style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;">
           <p>Subtotal Pengiriman</p>
-          <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ subtotalDelivery }}</p>
+          <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ subtotalDelivery }}</p>
         </div>
       </div>
     </div>
 
-    <div class="w-full">
-      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
-        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
+    <div style="width: 100%;">
+      <div style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;" class="divide-y divide-grey-1">
+        <div style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;">
           <p>Total Pembayaran</p>
-          <p class="text-right" :class="{ 'bg-grey-4 rounded': loading }">{{ totalPrice }}</p>
+          <p style="text-align: right;" :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;' : loading }">{{ totalPrice }}</p>
         </div>
       </div>
     </div>
@@ -83,13 +87,13 @@
 
 <script>
 import { inject, onMounted, ref } from 'vue';
-import API from '@/apis';
+import axios from 'axios';
 import { useRoute } from 'vue-router';
 
 export default {
   name: 'Invoice',
   setup() {
-    const store = inject('store');
+    const { methods } = inject('store');
     const route = useRoute();
 
     const poNumber = ref('');
@@ -113,7 +117,19 @@ export default {
         loading.value = true;
         const {
           data: { data },
-        } = await API.get(`orders/${route.params.id}`);
+        } = await axios.get(`http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${route.params.id}`, {
+          headers: {
+            'x-api-key': `${route.query.key}`,
+            'x-device-type': 'LINUX',
+            'x-device-os-version': 'Ubuntu18.04',
+            'x-device-model': '4s-dk0115AU',
+            'x-app-version': 'v1.2',
+            'x-request-id': '1234',
+            'x-device-utc-offset': '+08:00',
+            'x-device-lang': 'en',
+            'x-device-notification-code': `${route.query.code}`,
+          },
+        });
 
         poNumber.value = data.delivery_code || '-';
         merchantName.value = data.merchant.name || '-';
@@ -123,11 +139,11 @@ export default {
         addressFull.value = data.order_type_details.shipping_address.line_address || '-';
         phoneNumber.value = data.order_type_details.shipping_address.contact_person_hp || '-';
         items.value = data.items || [];
-        subtotalItem.value = store.methods.convertToRp(data.subtotal_price) || 'Rp 0';
+        subtotalItem.value = methods.convertToRp(data.subtotal_price) || 'Rp 0';
         deliveryName.value = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
-        deliveryPrice.value = store.methods.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
+        deliveryPrice.value = methods.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
         subtotalDelivery.value = deliveryPrice.value;
-        totalPrice.value = store.methods.convertToRp(data.total_price) || 'Rp 0';
+        totalPrice.value = methods.convertToRp(data.total_price) || 'Rp 0';
       } catch (error) {
         console.log(error);
       }
@@ -139,7 +155,7 @@ export default {
     });
 
     return {
-      store,
+      methods,
       poNumber,
       merchantName,
       orderDate,
@@ -158,10 +174,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-#invoice {
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
-  font-family: 'Nunito', 'serif';
-}
-</style>
