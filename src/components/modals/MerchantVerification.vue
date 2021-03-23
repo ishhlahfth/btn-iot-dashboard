@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
     <div class="flex justify-between items-center">
-      <p class="text-heading4 font-semibold">Header</p>
+      <p class="text-heading4 font-semibold">Verification Status</p>
       <help-button
         icon-only
         icon="close"
@@ -16,7 +16,7 @@
         <p>{{ verificationDetail.name }}</p>
       </div>
       <div>
-        <p class="text-grey-2">Verification Status</p>
+        <p class="text-grey-2">Status</p>
         <p>{{ verificationDetail.verify_status }}</p>
       </div>
       <div>
