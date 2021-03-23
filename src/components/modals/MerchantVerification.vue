@@ -21,7 +21,7 @@
       </div>
       <div>
         <p class="text-grey-2">ID No. (KTP)</p>
-        <p>-</p>
+        <p>{{ idNumber }}</p>
       </div>
       <div>
         <p class="text-grey-2">Cause of Failure</p>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import API from '@/apis';
@@ -58,6 +58,9 @@ export default {
         modalState: { verificationDetail },
       },
     } = inject('store');
+
+    const idNumber = ref('');
+    // const idImage = ref('');
 
     const confirmation = ref(false);
 
@@ -84,9 +87,33 @@ export default {
       }
     };
 
+    const getKTP = async () => {
+      try {
+        const {
+          data: { data },
+        } = await API.get(`merchants/${verificationDetail.id}/sellers`);
+
+        idNumber.value = data[0].profile.identity_number || '-';
+        console.log('-- -- --', data[0]);
+        if (data[0].banners.length) {
+          const {
+            data: { data: img },
+          } = await API.get(data.banners[0].url);
+          console.log('IMG', img); // < < ISSUE
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    onMounted(() => {
+      getKTP();
+    });
+
     return {
       screenWidth,
       verificationDetail,
+      idNumber,
       confirmation,
       selectedStatus,
       failureReason,
