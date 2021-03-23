@@ -159,13 +159,12 @@ export default {
           data: { data },
         } = await API.get(`merchants/${merchantId}`);
 
-        const mapped = {
+        merchant.value = {
+          ...merchant.value,
           imageUrl: data.banners.length ? data.banners[0].url : '',
           name: data.name,
           city: data.address.city.name,
-          // joinedDate: dayjs(data.created_at).format('D MMM YYYY'),
           bank: data.account.bank.name,
-          // idNumber: data.id_number,
           verificationStatus: data.verify_status,
           summary: {
             canceled: store.methods.groupDigit(data.total_summary.canceled_order),
@@ -179,7 +178,6 @@ export default {
           },
           menu: [],
         };
-        merchant.value = mapped;
 
         if (data.banners.length) {
           const {
@@ -191,6 +189,19 @@ export default {
         console.log(error);
       }
       loading.value = false;
+    };
+
+    const getKTP = async () => {
+      try {
+        console.log('GET KTP');
+        const {
+          data: { data },
+        } = await API.get(`merchants/${merchantId}/sellers`);
+
+        merchant.value = { ...merchant.value, idNumber: data[0].profile.identity_number };
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const getMenu = async () => {
@@ -208,6 +219,7 @@ export default {
 
     onMounted(() => {
       getMerchant();
+      getKTP();
       getMenu();
     });
 
