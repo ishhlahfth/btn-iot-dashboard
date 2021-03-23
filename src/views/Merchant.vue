@@ -6,7 +6,7 @@
     <operational-hour />
   </help-modal>
   <help-modal v-model="verificationModal">
-    <merchant-verification @close="verificationModal = false" />
+    <merchant-verification @close="closeMerchantVerification" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -48,10 +48,7 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
-          <div
-            class="grid grid-flow-col auto-cols-max gap-2"
-            v-if="column === 'verify_status'"
-          >
+          <div class="grid grid-flow-col auto-cols-max gap-2" v-if="column === 'verify_status'">
             <help-badge
               :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
               :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
@@ -126,19 +123,6 @@ export default {
     const opHourModal = ref(false);
     const verificationModal = ref(false);
 
-    const openMerchantDetail = (id) => {
-      detailModal.value = true;
-      store.methods.setModalState({ id });
-    };
-    const openOpHourDetail = (operationalHours) => {
-      opHourModal.value = true;
-      store.methods.setModalState({ operationalHours });
-    };
-    const openMerchantVerivication = (verificationDetail) => {
-      verificationModal.value = true;
-      store.methods.setModalState({ verificationDetail });
-    };
-
     const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
@@ -183,6 +167,31 @@ export default {
       loading.value = false;
     };
 
+    const openMerchantDetail = (id) => {
+      detailModal.value = true;
+      store.methods.setModalState({ id });
+    };
+    const openOpHourDetail = (operationalHours) => {
+      opHourModal.value = true;
+      store.methods.setModalState({ operationalHours });
+    };
+    const openMerchantVerivication = (verificationDetail) => {
+      verificationModal.value = true;
+      store.methods.setModalState({ verificationDetail });
+    };
+    const closeMerchantVerification = (refetch) => {
+      let refetchMerchant = refetch;
+
+      if (refetch === undefined) {
+        refetchMerchant = false;
+      }
+
+      if (refetchMerchant) {
+        getMerchants(merchantPagination);
+      }
+      verificationModal.value = false;
+    };
+
     onMounted(() => {
       getMerchants(merchantPagination.value);
     });
@@ -198,6 +207,7 @@ export default {
       openMerchantDetail,
       openOpHourDetail,
       openMerchantVerivication,
+      closeMerchantVerification,
       getMerchants,
     };
   },

@@ -2,7 +2,7 @@
   <help-modal v-model="confirmation">
     <div class="grid gap-6 p-1 inner-modal-auto modal-md">
       <p class="text-heading4 font-semibold">Verify a merchant</p>
-      <form @submit.prevent="$emit('close')" class="grid gap-4">
+      <form @submit.prevent="proceed" class="grid gap-4">
         <div class="w-full">
           <help-select
             label="Verify status to"
@@ -66,6 +66,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import API from '@/apis';
 
 export default {
   name: 'MerchantVerification',
@@ -76,7 +77,8 @@ export default {
     HelpSelect,
     HelpThumbnail,
   },
-  setup() {
+  emits: ['close'],
+  setup(_, { emit }) {
     const {
       state: {
         screenWidth,
@@ -89,12 +91,33 @@ export default {
     const selectedStatus = ref('SUCCESS');
     const failureReason = ref('');
 
+    const proceed = async () => {
+      const payload = {
+        verify_status: selectedStatus.value,
+        verify_reason:
+          selectedStatus.value === 'SUSPEND'
+            ? 'Harap menghubungi customer service'
+            : failureReason.value,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`merchants/${verificationDetail.id}`, payload);
+
+        emit('close', true);
+        console.log('AFTER VERIFY', data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return {
       screenWidth,
       verificationDetail,
       confirmation,
       selectedStatus,
       failureReason,
+      proceed,
     };
   },
 };
