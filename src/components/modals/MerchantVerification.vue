@@ -1,25 +1,4 @@
 <template>
-  <help-modal v-model="confirmation">
-    <div class="grid gap-6 p-1 inner-modal-auto modal-md">
-      <p class="text-heading4 font-semibold">Verify a merchant</p>
-      <form @submit.prevent="proceed" class="grid gap-4">
-        <div class="w-full">
-          <help-select
-            label="Verify status to"
-            :options="['SUCCESS', 'FAIL', 'SUSPEND']"
-            v-model="selectedStatus"
-          />
-        </div>
-        <help-input
-          label="Reason"
-          v-if="selectedStatus === 'FAIL'"
-          v-model="failureReason"
-          placeholder="Type failure reason here"
-        />
-        <help-button label="proceed" />
-      </form>
-    </div>
-  </help-modal>
   <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Verification Status</p>
@@ -54,7 +33,7 @@
       </div>
     </div>
     <div class="flex flex-col sm:flex-row-reverse">
-      <help-button @click="confirmation = true" label="verify" class="mb-2 sm:mb-0" />
+      <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
     </div>
   </div>
 </template>
@@ -62,9 +41,6 @@
 <script>
 import { inject, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
-import HelpModal from '@/components/templates/Modal.vue';
-import HelpSelect from '@/components/molecules/Select.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import API from '@/apis';
 
@@ -72,12 +48,9 @@ export default {
   name: 'MerchantVerification',
   components: {
     HelpButton,
-    HelpInput,
-    HelpModal,
-    HelpSelect,
     HelpThumbnail,
   },
-  emits: ['close'],
+  emits: ['close', 'openOption'],
   setup(_, { emit }) {
     const {
       state: {

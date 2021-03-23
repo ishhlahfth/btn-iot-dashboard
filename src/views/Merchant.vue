@@ -6,7 +6,13 @@
     <operational-hour />
   </help-modal>
   <help-modal v-model="verificationModal">
-    <merchant-verification @close="closeMerchantVerification" />
+    <merchant-verification
+      @openOption="verificationOptionModal = true"
+      @close="verificationModal = false"
+    />
+  </help-modal>
+  <help-modal v-model="verificationOptionModal">
+    <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -79,6 +85,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
+import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import API from '@/apis';
 
 export default {
@@ -93,6 +100,7 @@ export default {
     OperationalHour,
     MerchantDetail,
     MerchantVerification,
+    MerchantVerificationOption,
   },
   setup() {
     const store = inject('store');
@@ -122,6 +130,7 @@ export default {
     const detailModal = ref(false);
     const opHourModal = ref(false);
     const verificationModal = ref(false);
+    const verificationOptionModal = ref(false);
 
     const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
@@ -179,16 +188,9 @@ export default {
       verificationModal.value = true;
       store.methods.setModalState({ verificationDetail });
     };
-    const closeMerchantVerification = (refetch) => {
-      let refetchMerchant = refetch;
-
-      if (refetch === undefined) {
-        refetchMerchant = false;
-      }
-
-      if (refetchMerchant) {
-        getMerchants(merchantPagination);
-      }
+    const closeAndRefetch = () => {
+      getMerchants(merchantPagination);
+      verificationOptionModal.value = false;
       verificationModal.value = false;
     };
 
@@ -203,11 +205,12 @@ export default {
       loading,
       opHourModal,
       verificationModal,
+      verificationOptionModal,
       searchValue,
       openMerchantDetail,
       openOpHourDetail,
       openMerchantVerivication,
-      closeMerchantVerification,
+      closeAndRefetch,
       getMerchants,
     };
   },
