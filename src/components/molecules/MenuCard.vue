@@ -87,7 +87,8 @@
           <help-button
             v-if="state.screenWidth < 640"
             :label="localIsActive ? 'disable product' : 'enable product'"
-            type="secondary"
+            bg-color="transparent"
+            color="flame-dark"
           />
         </div>
       </div>

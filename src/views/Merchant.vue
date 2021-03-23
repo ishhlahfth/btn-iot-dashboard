@@ -5,6 +5,9 @@
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
+  <help-modal v-model="verificationModal">
+    <merchant-verification @close="verificationModal = false" />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
@@ -45,11 +48,23 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
-          <help-badge
+          <div
+            class="grid grid-flow-col auto-cols-max gap-2"
             v-if="column === 'verify_status'"
-            :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
-            :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
-          />
+          >
+            <help-badge
+              :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
+              :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
+            />
+            <help-button
+              icon-only
+              icon="dots-vertical"
+              bg-color="grey-6"
+              color="grey-1"
+              v-if="row.verify_status !== 'SUCCESS'"
+              @click="openMerchantVerivication(row)"
+            />
+          </div>
         </template>
       </help-table>
     </div>
@@ -66,6 +81,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
+import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import API from '@/apis';
 
 export default {
@@ -79,6 +95,7 @@ export default {
     HelpToggle,
     OperationalHour,
     MerchantDetail,
+    MerchantVerification,
   },
   setup() {
     const store = inject('store');
@@ -92,6 +109,7 @@ export default {
         align: 'center',
         sortable: true,
       },
+      { field: 'commission_percentage', label: 'commission (%)', align: 'right' },
       { field: 'menu', label: 'merchant detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'is_hidden', label: 'status', align: 'center' },
@@ -106,6 +124,7 @@ export default {
     const loading = ref(false);
     const detailModal = ref(false);
     const opHourModal = ref(false);
+    const verificationModal = ref(false);
 
     const openMerchantDetail = (id) => {
       detailModal.value = true;
@@ -114,6 +133,10 @@ export default {
     const openOpHourDetail = (operationalHours) => {
       opHourModal.value = true;
       store.methods.setModalState({ operationalHours });
+    };
+    const openMerchantVerivication = (verificationDetail) => {
+      verificationModal.value = true;
+      store.methods.setModalState({ verificationDetail });
     };
 
     const getMerchants = async (pagination) => {
@@ -137,6 +160,7 @@ export default {
           name: el.name,
           city: el.address.city.name,
           verify_status: el.verify_status,
+          verify_reason: el.verify_reason,
           is_hidden: !el.is_hidden,
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
@@ -169,9 +193,11 @@ export default {
       detailModal,
       loading,
       opHourModal,
+      verificationModal,
       searchValue,
       openMerchantDetail,
       openOpHourDetail,
+      openMerchantVerivication,
       getMerchants,
     };
   },

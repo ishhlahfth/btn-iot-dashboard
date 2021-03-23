@@ -2,17 +2,12 @@
   <button
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
-      {
-        'bg-midnight text-snow hover:ring-2 hover:ring-midnight hover:ring-offset-1 hover:ring-opacity-75': type === 'primary',
-      },
-      {
-        'bg-snow border-2 border-grey-4 text-grey-1 hover:border-snow hover:ring-2 hover:ring-royal':
-          type === 'secondary',
-      },
-      {
-        'bg-flame text-snow hover:bg-flame-dark': type === 'danger',
-      },
+      `bg-${bgColor} text-${color} hover:ring-${bgColor}`,
+      { bordered: outlined },
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
+      bgColor === 'transparent'
+        ? 'hover:bg-grey-4 hover:bg-opacity-70'
+        : 'hover:ring-2 hover:ring-offset-1 hover:ring-opacity-75',
     ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
@@ -32,9 +27,17 @@ import Icon from './Icon.vue';
 export default {
   name: 'HelpButton',
   props: {
-    type: {
+    bgColor: {
       type: String,
-      default: 'primary',
+      default: 'midnight',
+    },
+    color: {
+      type: String,
+      default: 'white',
+    },
+    outlined: {
+      type: Boolean,
+      default: false,
     },
     label: {
       type: String,

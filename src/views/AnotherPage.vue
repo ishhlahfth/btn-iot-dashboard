@@ -15,7 +15,7 @@
           <help-button label="yes i'm sure" />
         </div>
         <div>
-          <help-button label="save as draft" type="secondary" icon="download" />
+          <help-button label="save as draft" icon="download" bg-color=transparent color="grey-1" />
         </div>
       </div>
     </div>

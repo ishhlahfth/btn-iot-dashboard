@@ -22,11 +22,11 @@ export default {
   },
   props: {
     width: {
-      type: Number,
+      type: [Number, String],
       default: 160,
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 90,
     },
     src: {
@@ -37,8 +37,8 @@ export default {
   computed: {
     bannerStyle() {
       return {
-        width: `${this.width.toString()}px`,
-        height: `${this.height.toString()}px`,
+        width: this.width.toString().includes('%') ? this.width : `${this.width.toString()}px`,
+        height: this.height.toString().includes('%') ? this.height : `${this.height.toString()}px`,
       };
     },
   },
