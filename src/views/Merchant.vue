@@ -6,7 +6,13 @@
     <operational-hour />
   </help-modal>
   <help-modal v-model="verificationModal">
-    <merchant-verification @close="verificationModal = false" />
+    <merchant-verification
+      @openOption="verificationOptionModal = true"
+      @close="verificationModal = false"
+    />
+  </help-modal>
+  <help-modal v-model="verificationOptionModal">
+    <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -48,10 +54,7 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
-          <div
-            class="grid grid-flow-col auto-cols-max gap-2"
-            v-if="column === 'verify_status'"
-          >
+          <div class="grid grid-flow-col auto-cols-max gap-2" v-if="column === 'verify_status'">
             <help-badge
               :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
               :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
@@ -82,6 +85,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
+import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import API from '@/apis';
 
 export default {
@@ -96,6 +100,7 @@ export default {
     OperationalHour,
     MerchantDetail,
     MerchantVerification,
+    MerchantVerificationOption,
   },
   setup() {
     const store = inject('store');
@@ -125,19 +130,7 @@ export default {
     const detailModal = ref(false);
     const opHourModal = ref(false);
     const verificationModal = ref(false);
-
-    const openMerchantDetail = (id) => {
-      detailModal.value = true;
-      store.methods.setModalState({ id });
-    };
-    const openOpHourDetail = (operationalHours) => {
-      opHourModal.value = true;
-      store.methods.setModalState({ operationalHours });
-    };
-    const openMerchantVerivication = (verificationDetail) => {
-      verificationModal.value = true;
-      store.methods.setModalState({ verificationDetail });
-    };
+    const verificationOptionModal = ref(false);
 
     const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
@@ -183,6 +176,24 @@ export default {
       loading.value = false;
     };
 
+    const openMerchantDetail = (id) => {
+      detailModal.value = true;
+      store.methods.setModalState({ id });
+    };
+    const openOpHourDetail = (operationalHours) => {
+      opHourModal.value = true;
+      store.methods.setModalState({ operationalHours });
+    };
+    const openMerchantVerivication = (verificationDetail) => {
+      verificationModal.value = true;
+      store.methods.setModalState({ verificationDetail });
+    };
+    const closeAndRefetch = () => {
+      getMerchants(merchantPagination);
+      verificationOptionModal.value = false;
+      verificationModal.value = false;
+    };
+
     onMounted(() => {
       getMerchants(merchantPagination.value);
     });
@@ -194,10 +205,12 @@ export default {
       loading,
       opHourModal,
       verificationModal,
+      verificationOptionModal,
       searchValue,
       openMerchantDetail,
       openOpHourDetail,
       openMerchantVerivication,
+      closeAndRefetch,
       getMerchants,
     };
   },

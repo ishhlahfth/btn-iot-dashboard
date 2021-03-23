@@ -125,7 +125,7 @@ export default {
             'x-device-model': '4s-dk0115AU',
             'x-app-version': 'v1.2',
             'x-request-id': '1234',
-            'x-device-utc-offset': '+08:00',
+            'x-device-utc-offset': '+07:00',
             'x-device-lang': 'en',
             'x-device-notification-code': `${route.query.code}`,
           },

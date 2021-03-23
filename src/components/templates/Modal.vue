@@ -102,5 +102,13 @@ export default {
       max-height: 75.5vh;
     }
   }
+  .modal-sm {
+    @screen sm {
+      min-width: 320px;
+      max-width: 27.5vw;
+      height: auto;
+      max-height: 75.5vh;
+    }
+  }
 }
 </style>

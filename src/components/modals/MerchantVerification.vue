@@ -33,15 +33,16 @@
       </div>
     </div>
     <div class="flex flex-col sm:flex-row-reverse">
-      <help-button label="verify" class="mb-2 sm:mb-0" />
+      <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
     </div>
   </div>
 </template>
 
 <script>
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import API from '@/apis';
 
 export default {
   name: 'MerchantVerification',
@@ -49,7 +50,8 @@ export default {
     HelpButton,
     HelpThumbnail,
   },
-  setup() {
+  emits: ['close', 'openOption'],
+  setup(_, { emit }) {
     const {
       state: {
         screenWidth,
@@ -57,7 +59,39 @@ export default {
       },
     } = inject('store');
 
-    return { screenWidth, verificationDetail };
+    const confirmation = ref(false);
+
+    const selectedStatus = ref('SUCCESS');
+    const failureReason = ref('');
+
+    const proceed = async () => {
+      const payload = {
+        verify_status: selectedStatus.value,
+        verify_reason:
+          selectedStatus.value === 'SUSPEND'
+            ? 'Harap menghubungi customer service'
+            : failureReason.value,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`merchants/${verificationDetail.id}`, payload);
+
+        emit('close', true);
+        console.log('AFTER VERIFY', data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return {
+      screenWidth,
+      verificationDetail,
+      confirmation,
+      selectedStatus,
+      failureReason,
+      proceed,
+    };
   },
 };
 </script>
