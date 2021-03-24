@@ -114,7 +114,7 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'commission_percentage', label: 'commission (%)', align: 'right' },
+      { field: 'commission', label: 'commission (%)', align: 'right' },
       { field: 'menu', label: 'merchant detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'is_hidden', label: 'status', align: 'center' },
@@ -131,6 +131,26 @@ export default {
     const opHourModal = ref(false);
     const verificationModal = ref(false);
     const verificationOptionModal = ref(false);
+
+    const getCommission = async (merchantId) => {
+      let commission = null;
+      try {
+        const {
+          data: { data },
+        } = await API.get(`merchants/${merchantId}/bill-formulas`);
+        if (data) {
+          if (data.length) {
+            const {
+              formula: { value },
+            } = data.filter((el) => el.order_type_id === 4)[0];
+            commission = value;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      return commission;
+    };
 
     const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
@@ -163,6 +183,12 @@ export default {
             }),
           ),
         }));
+
+        merchants.value.forEach(async (merchant) => {
+          const clone = merchant;
+          const commission = await getCommission(merchant.id);
+          clone.commission = commission || '-';
+        });
 
         merchantPagination.value = {
           limit,
