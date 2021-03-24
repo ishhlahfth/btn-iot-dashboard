@@ -29,6 +29,29 @@ const methods = {
   convertToRp(value) {
     return `Rp ${this.groupDigit(value)}`;
   },
+  translateStatus(value) {
+    let translated = '';
+    if (value) {
+      switch (value) {
+        case 'PENDING':
+          translated = 'Pending Verifikasi';
+          break;
+        case 'FAIL':
+          translated = 'Verifikasi Gagal';
+          break;
+        case 'SUCCESS':
+          translated = 'Terverifikasi';
+          break;
+        case 'SUSPEND':
+          translated = 'Akun Disabled';
+          break;
+        default:
+          translated = '';
+          break;
+      }
+    }
+    return translated;
+  },
 };
 
 export default {

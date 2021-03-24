@@ -27,8 +27,16 @@
           <p>{{ merchant.bank }}</p>
           <p class="text-grey-2">ID No. (KTP)</p>
           <p>{{ merchant.idNumber }}</p>
-          <p class="text-grey-2">Status</p>
-          <p :class="merchant.verificationStatus === 'SUCCESS' ? 'text-mint' : 'text-flame'">
+          <p class="text-grey-2">Verification Status</p>
+          <p
+            :class="
+              merchant.verificationStatus === 'Terverifikasi'
+                ? 'text-mint'
+                : merchant.verificationStatus === 'Pending Verifikasi'
+                ? 'text-gold'
+                : 'text-flame'
+            "
+          >
             {{ merchant.verificationStatus }}
           </p>
         </template>
@@ -176,7 +184,7 @@ export default {
           name: data.name,
           city: data.address.city.name,
           bank: data.account.bank.name,
-          verificationStatus: data.verify_status,
+          verificationStatus: store.methods.translateStatus(data.verify_status),
           summary: {
             canceled: store.methods.groupDigit(data.total_summary.canceled_order),
             completed: store.methods.groupDigit(data.total_summary.completed),

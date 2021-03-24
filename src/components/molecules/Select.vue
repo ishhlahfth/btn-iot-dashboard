@@ -1,17 +1,13 @@
 <template>
   <div class="w-full outline-none grid" :class="{ 'gap-1': label }">
     <label class="font-medium">{{ label }}</label>
-    <div
-      class="relative w-full outline-none"
-      :tabindex="0"
-      @blur="opened = false"
-    >
+    <div class="relative w-full outline-none" :tabindex="0" @blur="opened = false">
       <div
         class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
         :class="{ 'ring-2 ring-royal': opened }"
         @click="opened = !opened"
       >
-        <p class="mr-2 truncate">{{ selected }}</p>
+        <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
         <icon name="selector" />
       </div>
       <help-option
@@ -41,7 +37,7 @@ export default {
       default: '',
     },
     modelValue: {
-      type: [String, Number],
+      type: [String, Number, Object],
       required: true,
     },
     options: {
@@ -67,9 +63,17 @@ export default {
   },
   methods: {
     changeSelected(newItem) {
+      console.log(9999, newItem);
       this.selected = newItem;
       this.opened = false;
       this.$emit('update:modelValue', newItem);
+    },
+    checkSelected(selected) {
+      let result = selected;
+      if (typeof selected === 'object') {
+        result = selected.label;
+      }
+      return result;
     },
   },
 };

@@ -48,8 +48,6 @@ export default {
     const commissionDetail = ref({
       formula: { value: 0 },
     });
-
-    const selectedStatus = ref('SUCCESS');
     const newCommission = ref('');
 
     const getCommission = async () => {
@@ -96,7 +94,6 @@ export default {
     return {
       merchantName,
       commissionDetail,
-      selectedStatus,
       newCommission,
       updateCommission,
     };
