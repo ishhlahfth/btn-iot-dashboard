@@ -42,7 +42,10 @@
         <help-thumbnail width="100%" :height="screenWidth < 640 ? 196 : 248" />
       </div>
     </div>
-    <div class="flex flex-col sm:flex-row-reverse">
+    <div
+      v-if="verificationDetail.verify_status !== 'Terverifikasi'"
+      class="flex flex-col sm:flex-row-reverse"
+    >
       <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
     </div>
   </div>
