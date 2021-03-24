@@ -1,19 +1,26 @@
 <template>
-  <div class="grid gap-6 p-1 inner-modal-auto modal-sm">
+  <div class="grid gap-6 p-1 inner-modal-auto modal-md">
     <p class="text-heading4 font-semibold">Edit Commission</p>
-    <form @submit.prevent="proceed" class="grid gap-4">
+    <div class="grid sm:grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
+      <div>
+        <p class="text-grey-2">Merchant Name</p>
+        <p>{{ merchantName }}</p>
+      </div>
       <div>
         <p class="text-grey-2">Current Commission</p>
-        <p>{{ verificationDetail.name }}%</p>
+        <p>{{ commissionDetail.formula.value }} %</p>
       </div>
-      <help-input
-        label="Reason"
-        v-if="selectedStatus === 'FAIL'"
-        v-model="failureReason"
-        placeholder="Type failure reason here"
-      />
-      <help-button label="proceed" />
-    </form>
+      <div class="sm:col-span-2">
+        <form @submit.prevent="proceed" class="grid gap-4">
+          <help-input
+            label="New Commission"
+            v-model="newCommission"
+            placeholder="Type new commission value here"
+          />
+          <help-button label="save changes" @click="updateCommission" />
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,7 +28,6 @@
 import { inject, onMounted, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
-// import HelpSelect from '@/components/molecules/Select.vue';
 import API from '@/apis';
 
 export default {
@@ -29,28 +35,29 @@ export default {
   components: {
     HelpButton,
     HelpInput,
-    // HelpSelect,
   },
   emits: ['closeAndRefetch'],
-  setup() {
+  setup(_, { emit }) {
     const {
       state: {
-        modalState: { id },
+        modalState: { merchantId, merchantName },
       },
     } = inject('store');
 
-    const commissionDetail = ref(null);
+    const commissionDetail = ref({
+      formula: { value: 0 },
+    });
 
     const selectedStatus = ref('SUCCESS');
-    const failureReason = ref('');
+    const newCommission = ref('');
 
     const getCommission = async () => {
-      let commission = null;
       try {
         const {
           data: { data },
-        } = await API.get(`merchants/${id}/bill-formulas`);
+        } = await API.get(`merchants/${merchantId}/bill-formulas`);
         if (data) {
+          console.log('RESPONSE', data);
           if (data.length) {
             commissionDetail.value = data.filter((el) => el.order_type_id === 4)[0];
           }
@@ -58,36 +65,39 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      return commission;
+    };
+
+    const updateCommission = async () => {
+      const payload = {
+        merchant_id: commissionDetail.value.merchant_id,
+        order_type_id: commissionDetail.value.order_type_id,
+        seq_no: commissionDetail.value.seq_no,
+        label: commissionDetail.value.label,
+        formula: { type: 'PERCENT', value: +newCommission.value },
+        formula_type: commissionDetail.value.formula_type,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`bill-formulas/${commissionDetail.value.id}`, payload);
+
+        emit('closeAndRefetch');
+        console.log('UPDATED', data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     onMounted(() => {
       getCommission();
     });
 
-    // const proceed = async () => {
-    //   const payload = {
-    //     verify_status: selectedStatus.value,
-    //     verify_reason:
-    //       selectedStatus.value === 'SUSPEND'
-    //         ? 'Harap menghubungi customer service'
-    //         : failureReason.value,
-    //   };
-    //   try {
-    //     const {
-    //       data: { data },
-    //     } = await API.patch(`merchants/${verificationDetail.id}`, payload);
-
-    //     emit('closeAndRefetch');
-    //     console.log('AFTER VERIFY', data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
     return {
+      merchantName,
+      commissionDetail,
       selectedStatus,
-      failureReason,
+      newCommission,
+      updateCommission,
     };
   },
 };

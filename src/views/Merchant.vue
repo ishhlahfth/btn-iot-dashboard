@@ -2,18 +2,26 @@
   <help-modal v-model="detailModal">
     <merchant-detail />
   </help-modal>
+
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
+
   <help-modal v-model="verificationModal">
     <merchant-verification
       @openOption="verificationOptionModal = true"
       @close="verificationModal = false"
     />
   </help-modal>
+
   <help-modal v-model="verificationOptionModal">
     <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
   </help-modal>
+
+  <help-modal v-model="commissionModal">
+    <commission @closeAndRefetch="closeAndRefetch" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
@@ -53,6 +61,7 @@
               icon="dots-vertical"
               bg-color="grey-6"
               color="grey-1"
+              @click="openCommissionModal({ merchantId: row.id, merchantName: row.name })"
             />
           </div>
           <p
@@ -85,6 +94,7 @@
 
 <script>
 import { onMounted, ref, inject } from 'vue';
+import Commission from '@/components/modals/Commission.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -100,6 +110,7 @@ import API from '@/apis';
 export default {
   name: 'Merchant',
   components: {
+    Commission,
     HelpBadge,
     HelpButton,
     HelpInput,
@@ -140,6 +151,7 @@ export default {
     const opHourModal = ref(false);
     const verificationModal = ref(false);
     const verificationOptionModal = ref(false);
+    const commissionModal = ref(false);
 
     const getCommission = async (merchantId) => {
       let commission = null;
@@ -227,25 +239,39 @@ export default {
       getMerchants(merchantPagination);
       verificationOptionModal.value = false;
       verificationModal.value = false;
+      commissionModal.value = false;
+    };
+    const openCommissionModal = ({ merchantId, merchantName }) => {
+      console.log(merchantId, merchantName);
+      commissionModal.value = true;
+      store.methods.setModalState({ merchantId, merchantName });
     };
 
     onMounted(() => {
       getMerchants(merchantPagination.value);
     });
+
     return {
+      store,
       columns,
       merchants,
       merchantPagination,
-      detailModal,
+      searchValue,
       loading,
+
+      detailModal,
       opHourModal,
       verificationModal,
       verificationOptionModal,
-      searchValue,
+      commissionModal,
+
       openMerchantDetail,
       openOpHourDetail,
       openMerchantVerivication,
+      openCommissionModal,
+
       closeAndRefetch,
+
       getMerchants,
     };
   },
