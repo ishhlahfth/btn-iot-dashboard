@@ -74,15 +74,15 @@
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
           <div class="grid grid-flow-col auto-cols-max gap-2" v-if="column === 'verify_status'">
             <help-badge
-              :label="row.verify_status === 'SUCCESS' ? 'Verified' : 'Not Verified'"
-              :color="row.verify_status === 'SUCCESS' ? 'positive' : 'negative'"
-            />
-            <help-button
-              icon-only
-              icon="dots-vertical"
-              bg-color="grey-6"
-              color="grey-1"
-              v-if="row.verify_status !== 'SUCCESS'"
+              class="cursor-pointer"
+              :label="row.verify_status"
+              :color="
+                row.verify_status === 'Terverifikasi'
+                  ? 'positive'
+                  : row.verify_status === 'Pending Verifikasi'
+                  ? 'waring'
+                  : 'negative'
+              "
               @click="openMerchantVerivication(row)"
             />
           </div>
@@ -193,7 +193,7 @@ export default {
           id: el.id,
           name: el.name,
           city: el.address.city.name,
-          verify_status: el.verify_status,
+          verify_status: store.methods.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
           is_hidden: !el.is_hidden,
           operational_hours: el.operational_hours.map(

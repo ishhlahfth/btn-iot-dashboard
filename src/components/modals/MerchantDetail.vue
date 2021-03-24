@@ -28,7 +28,15 @@
           <p class="text-grey-2">ID No. (KTP)</p>
           <p>{{ merchant.idNumber }}</p>
           <p class="text-grey-2">Verification Status</p>
-          <p :class="merchant.verificationStatus === 'Terverifikasi' ? 'text-mint' : 'text-flame'">
+          <p
+            :class="
+              merchant.verificationStatus === 'Terverifikasi'
+                ? 'text-mint'
+                : merchant.verificationStatus === 'Pending Verifikasi'
+                ? 'text-gold'
+                : 'text-flame'
+            "
+          >
             {{ merchant.verificationStatus }}
           </p>
         </template>

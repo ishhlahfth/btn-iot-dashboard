@@ -17,13 +17,23 @@
       </div>
       <div>
         <p class="text-grey-2">Status</p>
-        <p>{{ verificationDetail.verify_status }}</p>
+        <p
+          :class="
+            verificationDetail.verify_status === 'Terverifikasi'
+              ? 'text-mint'
+              : verificationDetail.verify_status === 'Pending Verifikasi'
+              ? 'text-gold'
+              : 'text-flame'
+          "
+        >
+          {{ verificationDetail.verify_status }}
+        </p>
       </div>
       <div>
         <p class="text-grey-2">ID No. (KTP)</p>
         <p>{{ idNumber }}</p>
       </div>
-      <div>
+      <div v-show="verificationDetail.verify_status !== 'Terverifikasi'">
         <p class="text-grey-2">Cause of Failure</p>
         <p>{{ verificationDetail.verify_reason || '-' }}</p>
       </div>
