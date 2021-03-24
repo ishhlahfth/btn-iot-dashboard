@@ -27,8 +27,16 @@
           <p>{{ merchant.bank }}</p>
           <p class="text-grey-2">ID No. (KTP)</p>
           <p>{{ merchant.idNumber }}</p>
-          <p class="text-grey-2">Status</p>
-          <p :class="merchant.verificationStatus === 'SUCCESS' ? 'text-mint' : 'text-flame'">
+          <p class="text-grey-2">Verification Status</p>
+          <p
+            :class="
+              merchant.verificationStatus === 'Terverifikasi'
+                ? 'text-mint'
+                : merchant.verificationStatus === 'Pending Verifikasi'
+                ? 'text-gold'
+                : 'text-flame'
+            "
+          >
             {{ merchant.verificationStatus }}
           </p>
         </template>
@@ -42,25 +50,36 @@
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
-          <p class="text-grey-2">Canceled</p>
-          <p>{{ merchant.summary.canceled }}</p>
-          <p class="text-grey-2">Completed</p>
+          <p class="text-grey-2">Order Completed</p>
           <p>{{ merchant.summary.completed }}</p>
-          <p class="text-grey-2">Delivery Failed</p>
-          <p>{{ merchant.summary.deliveryFailed }}</p>
+          <p class="text-grey-2">Order Canceled</p>
+          <p>{{ merchant.summary.canceled }}</p>
+          <p class="text-grey-2">Order Rejected</p>
+          <p>{{ merchant.summary.rejected }}</p>
           <p class="text-grey-2">Payment Expired</p>
           <p>{{ merchant.summary.paymentExpired }}</p>
           <p class="text-grey-2">Payment Failure</p>
           <p>{{ merchant.summary.paymentFailure }}</p>
-          <p class="text-grey-2">Refunded</p>
+          <p class="text-grey-2">Delivery Failed</p>
+          <p>{{ merchant.summary.deliveryFailed }}</p>
+          <p class="text-grey-2">Order Refunded</p>
           <p>{{ merchant.summary.refunded }}</p>
-          <p class="text-grey-2">Rejected</p>
-          <p>{{ merchant.summary.rejected }}</p>
-          <p class="text-grey-2">Sold</p>
-          <p>{{ merchant.summary.sold }}</p>
         </template>
         <template v-else>
           <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
+        </template>
+      </div>
+      <div class="divide-y divide-grey-4">
+        <p></p>
+        <p></p>
+      </div>
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+        <template v-if="!loading">
+          <p class="text-grey-2">Items Sold</p>
+          <p>{{ merchant.summary.sold }}</p>
+        </template>
+        <template v-else>
+          <div class="rounded bg-grey-4 h-4 animate-pulse"></div>
         </template>
       </div>
       <div class="divide-y divide-grey-4 sm:hidden">
@@ -165,7 +184,7 @@ export default {
           name: data.name,
           city: data.address.city.name,
           bank: data.account.bank.name,
-          verificationStatus: data.verify_status,
+          verificationStatus: store.methods.translateStatus(data.verify_status),
           summary: {
             canceled: store.methods.groupDigit(data.total_summary.canceled_order),
             completed: store.methods.groupDigit(data.total_summary.completed),

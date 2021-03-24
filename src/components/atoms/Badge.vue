@@ -5,6 +5,7 @@
       { 'px-4': !icon },
       { 'text-mint-dark bg-mint-soft': color === 'positive' },
       { 'text-flame-dark bg-flame-soft': color === 'negative' },
+      { 'text-gold-dark bg-gold-soft': color === 'warning' },
     ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-1">

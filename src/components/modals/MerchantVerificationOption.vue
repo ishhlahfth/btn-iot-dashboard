@@ -3,15 +3,11 @@
     <p class="text-heading4 font-semibold">Verify a merchant</p>
     <form @submit.prevent="proceed" class="grid gap-4">
       <div class="w-full">
-        <help-select
-          label="Verify status to"
-          :options="['SUCCESS', 'FAIL', 'SUSPEND']"
-          v-model="selectedStatus"
-        />
+        <help-select label="Verify status to" :options="statuses" v-model="selectedStatus" />
       </div>
       <help-input
         label="Reason"
-        v-if="selectedStatus === 'FAIL'"
+        v-if="selectedStatus.value === 'FAIL'"
         v-model="failureReason"
         placeholder="Type failure reason here"
       />
@@ -42,14 +38,19 @@ export default {
       },
     } = inject('store');
 
-    const selectedStatus = ref('SUCCESS');
+    const statuses = [
+      { value: 'SUCCESS', label: 'Terverifikasi' },
+      { value: 'FAIL', label: 'Verifikasi Gagal' },
+      { value: 'SUSPEND', label: 'Akun Disabled' },
+    ];
+    const selectedStatus = ref({ value: 'SUCCESS', label: 'Terverifikasi' });
     const failureReason = ref('');
 
     const proceed = async () => {
       const payload = {
-        verify_status: selectedStatus.value,
+        verify_status: selectedStatus.value.value,
         verify_reason:
-          selectedStatus.value === 'SUSPEND'
+          selectedStatus.value.value === 'SUSPEND'
             ? 'Harap menghubungi customer service'
             : failureReason.value,
       };
@@ -67,6 +68,7 @@ export default {
 
     return {
       verificationDetail,
+      statuses,
       selectedStatus,
       failureReason,
       proceed,

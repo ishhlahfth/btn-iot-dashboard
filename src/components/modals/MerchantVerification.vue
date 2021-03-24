@@ -17,13 +17,23 @@
       </div>
       <div>
         <p class="text-grey-2">Status</p>
-        <p>{{ verificationDetail.verify_status }}</p>
+        <p
+          :class="
+            verificationDetail.verify_status === 'Terverifikasi'
+              ? 'text-mint'
+              : verificationDetail.verify_status === 'Pending Verifikasi'
+              ? 'text-gold'
+              : 'text-flame'
+          "
+        >
+          {{ verificationDetail.verify_status }}
+        </p>
       </div>
       <div>
         <p class="text-grey-2">ID No. (KTP)</p>
         <p>{{ idNumber }}</p>
       </div>
-      <div>
+      <div v-show="verificationDetail.verify_status !== 'Terverifikasi'">
         <p class="text-grey-2">Cause of Failure</p>
         <p>{{ verificationDetail.verify_reason || '-' }}</p>
       </div>
@@ -32,7 +42,10 @@
         <help-thumbnail width="100%" :height="screenWidth < 640 ? 196 : 248" />
       </div>
     </div>
-    <div class="flex flex-col sm:flex-row-reverse">
+    <div
+      v-if="verificationDetail.verify_status !== 'Terverifikasi'"
+      class="flex flex-col sm:flex-row-reverse"
+    >
       <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
     </div>
   </div>
@@ -51,7 +64,7 @@ export default {
     HelpThumbnail,
   },
   emits: ['close', 'openOption'],
-  setup(_, { emit }) {
+  setup() {
     const {
       state: {
         screenWidth,
@@ -63,29 +76,6 @@ export default {
     // const idImage = ref('');
 
     const confirmation = ref(false);
-
-    const selectedStatus = ref('SUCCESS');
-    const failureReason = ref('');
-
-    const proceed = async () => {
-      const payload = {
-        verify_status: selectedStatus.value,
-        verify_reason:
-          selectedStatus.value === 'SUSPEND'
-            ? 'Harap menghubungi customer service'
-            : failureReason.value,
-      };
-      try {
-        const {
-          data: { data },
-        } = await API.patch(`merchants/${verificationDetail.id}`, payload);
-
-        emit('close', true);
-        console.log('AFTER VERIFY', data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     const getKTP = async () => {
       try {
@@ -115,9 +105,6 @@ export default {
       verificationDetail,
       idNumber,
       confirmation,
-      selectedStatus,
-      failureReason,
-      proceed,
     };
   },
 };
