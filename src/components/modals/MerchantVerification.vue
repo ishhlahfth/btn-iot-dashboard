@@ -64,7 +64,7 @@ export default {
     HelpThumbnail,
   },
   emits: ['close', 'openOption'],
-  setup(_, { emit }) {
+  setup() {
     const {
       state: {
         screenWidth,
@@ -76,29 +76,6 @@ export default {
     // const idImage = ref('');
 
     const confirmation = ref(false);
-
-    const selectedStatus = ref('SUCCESS');
-    const failureReason = ref('');
-
-    const proceed = async () => {
-      const payload = {
-        verify_status: selectedStatus.value,
-        verify_reason:
-          selectedStatus.value === 'SUSPEND'
-            ? 'Harap menghubungi customer service'
-            : failureReason.value,
-      };
-      try {
-        const {
-          data: { data },
-        } = await API.patch(`merchants/${verificationDetail.id}`, payload);
-
-        emit('close', true);
-        console.log('AFTER VERIFY', data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     const getKTP = async () => {
       try {
@@ -128,9 +105,6 @@ export default {
       verificationDetail,
       idNumber,
       confirmation,
-      selectedStatus,
-      failureReason,
-      proceed,
     };
   },
 };

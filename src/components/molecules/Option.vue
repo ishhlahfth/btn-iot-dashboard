@@ -12,8 +12,8 @@
     <help-option-item
       v-for="(option, i) in options"
       :key="i"
-      :label="option"
-      :selected="selected === option"
+      :label="checkLabel(option)"
+      :selected="selected === checkValue(option)"
       @click="$emit('changeSelected', option)"
     />
   </div>
@@ -37,7 +37,7 @@ export default {
       default: '',
     },
     selected: {
-      type: [String, Number],
+      type: [String, Number, Object],
       default: '',
     },
     position: {
@@ -45,6 +45,22 @@ export default {
       default() {
         return ['bottom', 'right'];
       },
+    },
+  },
+  methods: {
+    checkLabel(option) {
+      let result = option;
+      if (typeof option === 'object') {
+        result = option.label;
+      }
+      return result;
+    },
+    checkValue(option) {
+      let result = option;
+      if (typeof option === 'object') {
+        result = option.value;
+      }
+      return result;
     },
   },
 };
