@@ -14,6 +14,7 @@
         <form @submit.prevent="proceed" class="grid gap-4">
           <help-input
             label="New Commission"
+            label-class="text-grey-2"
             v-model="newCommission"
             placeholder="Type new commission value here"
           />
