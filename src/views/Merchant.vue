@@ -46,6 +46,15 @@
           >
             See Detail
           </p>
+          <div v-if="column === 'commission'" class="grid grid-flow-col gap-2 place-items-center">
+            <p>{{ row.commission }}</p>
+            <help-button
+              icon-only
+              icon="dots-vertical"
+              bg-color="grey-6"
+              color="grey-1"
+            />
+          </div>
           <p
             v-if="column === 'operational_detail'"
             class="text-royal font-medium cursor-pointer"
