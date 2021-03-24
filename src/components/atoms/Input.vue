@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-flow-row auto-rows-max cursor-text" :class="{ 'gap-1': label }">
-    <label class="font-medium">{{ label }}</label>
+    <label :class="`font-medium ${labelClass}`">{{ label }}</label>
     <div
       v-if="type === 'textarea'"
       class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid grid-flow-col auto-cols-max gap-2 place-items-center"
@@ -71,6 +71,10 @@ export default {
       default: '',
     },
     label: {
+      type: String,
+      default: '',
+    },
+    labelClass: {
       type: String,
       default: '',
     },

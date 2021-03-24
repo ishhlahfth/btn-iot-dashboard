@@ -2,18 +2,26 @@
   <help-modal v-model="detailModal">
     <merchant-detail />
   </help-modal>
+
   <help-modal v-model="opHourModal">
     <operational-hour />
   </help-modal>
+
   <help-modal v-model="verificationModal">
     <merchant-verification
       @openOption="verificationOptionModal = true"
       @close="verificationModal = false"
     />
   </help-modal>
+
   <help-modal v-model="verificationOptionModal">
     <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
   </help-modal>
+
+  <help-modal v-model="commissionModal">
+    <commission @closeAndRefetch="closeAndRefetch" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
@@ -46,6 +54,16 @@
           >
             See Detail
           </p>
+          <div v-if="column === 'commission'" class="grid grid-flow-col gap-2 place-items-center">
+            <p>{{ row.commission }}</p>
+            <help-button
+              icon-only
+              icon="dots-vertical"
+              bg-color="grey-6"
+              color="grey-1"
+              @click="openCommissionModal({ merchantId: row.id, merchantName: row.name })"
+            />
+          </div>
           <p
             v-if="column === 'operational_detail'"
             class="text-royal font-medium cursor-pointer"
@@ -76,6 +94,7 @@
 
 <script>
 import { onMounted, ref, inject } from 'vue';
+import Commission from '@/components/modals/Commission.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -91,6 +110,7 @@ import API from '@/apis';
 export default {
   name: 'Merchant',
   components: {
+    Commission,
     HelpBadge,
     HelpButton,
     HelpInput,
@@ -114,7 +134,7 @@ export default {
         align: 'center',
         sortable: true,
       },
-      { field: 'commission_percentage', label: 'commission (%)', align: 'right' },
+      { field: 'commission', label: 'commission (%)', align: 'right' },
       { field: 'menu', label: 'merchant detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
       { field: 'is_hidden', label: 'status', align: 'center' },
@@ -131,6 +151,27 @@ export default {
     const opHourModal = ref(false);
     const verificationModal = ref(false);
     const verificationOptionModal = ref(false);
+    const commissionModal = ref(false);
+
+    const getCommission = async (merchantId) => {
+      let commission = null;
+      try {
+        const {
+          data: { data },
+        } = await API.get(`merchants/${merchantId}/bill-formulas`);
+        if (data) {
+          if (data.length) {
+            const {
+              formula: { value },
+            } = data.filter((el) => el.order_type_id === 4)[0];
+            commission = value;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      return commission;
+    };
 
     const getMerchants = async (pagination) => {
       const limit = pagination.limit || 10;
@@ -164,6 +205,12 @@ export default {
           ),
         }));
 
+        merchants.value.forEach(async (merchant) => {
+          const clone = merchant;
+          const commission = await getCommission(merchant.id);
+          clone.commission = commission || '-';
+        });
+
         merchantPagination.value = {
           limit,
           offset,
@@ -192,25 +239,39 @@ export default {
       getMerchants(merchantPagination);
       verificationOptionModal.value = false;
       verificationModal.value = false;
+      commissionModal.value = false;
+    };
+    const openCommissionModal = ({ merchantId, merchantName }) => {
+      console.log(merchantId, merchantName);
+      commissionModal.value = true;
+      store.methods.setModalState({ merchantId, merchantName });
     };
 
     onMounted(() => {
       getMerchants(merchantPagination.value);
     });
+
     return {
+      store,
       columns,
       merchants,
       merchantPagination,
-      detailModal,
+      searchValue,
       loading,
+
+      detailModal,
       opHourModal,
       verificationModal,
       verificationOptionModal,
-      searchValue,
+      commissionModal,
+
       openMerchantDetail,
       openOpHourDetail,
       openMerchantVerivication,
+      openCommissionModal,
+
       closeAndRefetch,
+
       getMerchants,
     };
   },
