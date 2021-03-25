@@ -1,4 +1,21 @@
 <template>
+  <help-modal v-model="notification">
+    <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
+      <div class="flex justify-between items-center">
+        <p class="text-heading4 font-semibold">Notification</p>
+        <help-button
+          icon-only
+          icon="close"
+          bg-color="transparent"
+          color="grey-1"
+          @click="notification = false"
+        />
+      </div>
+      <div>
+        <p>Invoice {{ poNumber }} has been downloaded successfully. Please kindly check your downloads folder to open the invoice.</p>
+      </div>
+    </div>
+  </help-modal>
   <div
     id="invoice"
     style="padding: 1rem 1rem 4rem 1rem; display: grid; gap: 1rem; position: relative; font-family: Nunito, 'serif';"
@@ -201,11 +218,17 @@
 import { inject, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 import dayjs from 'dayjs';
 import html2pdf from 'html2pdf.js';
 
 export default {
   name: 'Invoice',
+  components: {
+    HelpButton,
+    HelpModal,
+  },
   setup() {
     const { methods } = inject('store');
     const route = useRoute();
@@ -224,6 +247,7 @@ export default {
     const subtotalDelivery = ref('');
     const totalPrice = ref('');
 
+    const notification = ref(false);
     const loading = ref(false);
 
     const getInvoice = async () => {
@@ -275,7 +299,15 @@ export default {
         html2pdf: { scale: 2, height: 812, width: 375 },
         jsPDF: { format: 'legal', orientation: 'portrait' },
       };
-      html2pdf().set(options).from(element).save();
+      html2pdf()
+        .set(options)
+        .from(element)
+        .save()
+        .then(() => {
+          console.log('DOWNLOADED 🔰');
+          notification.value = true;
+          // alert('Successfully downloaded invoice. Please check your downloads folder.');
+        });
     };
 
     return {
@@ -294,6 +326,7 @@ export default {
       subtotalDelivery,
       totalPrice,
       loading,
+      notification,
       generatePDF,
     };
   },
