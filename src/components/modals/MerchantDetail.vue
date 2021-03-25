@@ -140,7 +140,6 @@
 import { onMounted, ref, inject } from 'vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import API from '@/apis';
-// import dayjs from 'dayjs';
 
 export default {
   name: 'MerchantDetail',
