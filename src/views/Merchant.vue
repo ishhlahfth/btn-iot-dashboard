@@ -25,6 +25,7 @@
       message="Are you sure you want to suspend this merchant?"
       @close="confirmSuspendModal = false"
       @cancel="confirmSuspendModal = false"
+      @confirm="suspendMerchant"
     />
   </help-modal>
 
@@ -236,6 +237,25 @@ export default {
       loading.value = false;
     };
 
+    const suspendMerchant = async () => {
+      console.log('SUSPEND ME SENPAI');
+      const payload = {
+        verify_status: 'SUSPEND',
+        verify_reason: 'Harap menghubungi customer service',
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`merchants/${store.state.modalState.verificationDetail.id}`, payload);
+        console.log('SUSPEND OK', data);
+        confirmSuspendModal.value = false;
+        verificationModal.value = false;
+        getMerchants(merchantPagination);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const openMerchantDetail = (id) => {
       detailModal.value = true;
       store.methods.setModalState({ id });
@@ -287,6 +307,7 @@ export default {
       closeAndRefetch,
 
       getMerchants,
+      suspendMerchant,
     };
   },
 };
