@@ -1,14 +1,14 @@
 <template>
   <div
     id="invoice"
-    style="padding: 1rem; display: grid; gap: 1rem; position: relative; font-family: Nunito, 'serif';"
+    style="padding: 1rem 1rem 4rem 1rem; display: grid; gap: 1rem; position: relative; font-family: Nunito, 'serif';"
     :style="{ 'animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;': loading }"
   >
-    <div style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%)">
+    <div style="position: absolute; bottom: 5rem; left: 50%; transform: translateX(-50%);">
       <img
         src="../assets/sudah-bayar.png"
         alt="sudah-bayar"
-        style="width: 75vw; max-width: none !important;"
+        style="width: 16rem; max-width: none !important;"
       />
     </div>
 
@@ -69,7 +69,7 @@
     </div>
 
     <div style="width: 100%;">
-      <p style="font-size: 12px; font-weight: 700px;">Detail Pembelian</p>
+      <p style="font-size: 12px; font-weight: 700;">Detail Pembelian</p>
     </div>
 
     <div style="width: 100%;">
@@ -185,6 +185,16 @@
       </div>
     </div>
   </div>
+  <div class="p-4">
+    <button
+      class="hidden w-full py-2 px-4 bg-flame text-white font-semibold rounded-full"
+      @click="generatePDF"
+      id="exportButton"
+    >
+      Export PDF
+    </button>
+  </div>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -192,6 +202,7 @@ import { inject, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
+import html2pdf from 'html2pdf.js';
 
 export default {
   name: 'Invoice',
@@ -274,6 +285,17 @@ export default {
       totalPrice,
       loading,
     };
+  },
+  methods: {
+    generatePDF() {
+      const element = document.getElementById('invoice');
+      const options = {
+        filename: 'wehelpyou-invoice.pdf',
+        // html2pdf: { scale: 2, height: '2048px', width: '640px' },
+        jsPDF: { format: 'legal', orientation: 'portrait' },
+      };
+      html2pdf().set(options).from(element).save();
+    },
   },
 };
 </script>
