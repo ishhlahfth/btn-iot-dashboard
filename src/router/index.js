@@ -92,9 +92,16 @@ const routes = [
     ],
   },
   {
-    path: '/invoice/:id',
+    path: '/invoice/:id/',
     name: 'Invoice',
     component: () => import('@/views/Invoice.vue'),
+    children: [
+      {
+        path: 'download',
+        name: 'InvoiceDownload',
+        component: () => import('@/views/InvoiceDownload.vue'),
+      },
+    ],
   },
 ];
 
