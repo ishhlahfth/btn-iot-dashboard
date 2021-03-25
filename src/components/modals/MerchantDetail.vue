@@ -140,7 +140,6 @@
 import { onMounted, ref, inject } from 'vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import API from '@/apis';
-// import dayjs from 'dayjs';
 
 export default {
   name: 'MerchantDetail',
@@ -180,7 +179,6 @@ export default {
 
         merchant.value = {
           ...merchant.value,
-          imageUrl: data.banners.length ? data.banners[0].url : '',
           name: data.name,
           city: data.address.city.name,
           bank: data.account.bank.name,
@@ -200,9 +198,13 @@ export default {
 
         if (data.banners.length) {
           const {
-            data: { data: img },
+            request: { responseURL },
           } = await API.get(data.banners[0].url);
-          console.log('IMG', img); // < < ISSUE
+
+          merchant.value = {
+            ...merchant.value,
+            imageUrl: responseURL,
+          };
         }
       } catch (error) {
         console.log(error);
