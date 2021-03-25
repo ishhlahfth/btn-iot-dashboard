@@ -304,9 +304,7 @@ export default {
         .from(element)
         .save()
         .then(() => {
-          console.log('DOWNLOADED 🔰');
           notification.value = true;
-          // alert('Successfully downloaded invoice. Please check your downloads folder.');
         });
     };
 
