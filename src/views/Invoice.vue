@@ -13,7 +13,7 @@
     </div>
 
     <div style="width: 100%; display: flex; justify-content: center;">
-      <img src="../assets/logo-lowres.png" alt="logo" style="width: 128px;" />
+      <img src="../assets/logo-lowres.png" alt="logo" style="width: 128px; height: 37.69px;" />
     </div>
 
     <div
@@ -268,6 +268,16 @@ export default {
       getInvoice();
     });
 
+    const generatePDF = () => {
+      const element = document.getElementById('invoice');
+      const options = {
+        filename: `wehelpyou-invoice-${poNumber.value}.pdf`,
+        html2pdf: { scale: 2, height: 812, width: 375 },
+        jsPDF: { format: 'legal', orientation: 'portrait' },
+      };
+      html2pdf().set(options).from(element).save();
+    };
+
     return {
       methods,
       poNumber,
@@ -284,18 +294,8 @@ export default {
       subtotalDelivery,
       totalPrice,
       loading,
+      generatePDF,
     };
-  },
-  methods: {
-    generatePDF() {
-      const element = document.getElementById('invoice');
-      const options = {
-        filename: 'wehelpyou-invoice.pdf',
-        // html2pdf: { scale: 2, height: '2048px', width: '640px' },
-        jsPDF: { format: 'legal', orientation: 'portrait' },
-      };
-      html2pdf().set(options).from(element).save();
-    },
   },
 };
 </script>
