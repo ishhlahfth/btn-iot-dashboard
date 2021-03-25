@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
+  <div class="grid gap-6 sm:p-1 inner-modal-auto modal-md overflow-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Verification Status</p>
       <help-button
@@ -48,6 +48,9 @@
     >
       <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
     </div>
+    <div v-else class="flex flex-col sm:flex-row-reverse">
+      <help-button @click="$emit('openConfirmSuspend')" label="suspend merchant" class="mb-2 sm:mb-0" bg-color="flame" />
+    </div>
   </div>
 </template>
 
@@ -63,7 +66,7 @@ export default {
     HelpButton,
     HelpThumbnail,
   },
-  emits: ['close', 'openOption'],
+  emits: ['close', 'openOption', 'openConfirmSuspend'],
   setup() {
     const {
       state: {
