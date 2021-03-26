@@ -26,6 +26,7 @@
                 "
                 :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
               />
+              <help-button icon-only icon="dots-vertical" bg-color="transparent" color="grey-1" />
             </div>
             <p class="text-small text-grey-3">{{ category }}</p>
           </div>
@@ -36,8 +37,15 @@
         <p class="text-small font-medium">{{ methods.convertToRp(price) }}</p>
       </div>
       <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
-        <help-toggle v-model="localIsActive" />
-        <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" />
+        <!-- <help-toggle v-model="localIsActive" /> -->
+        <!-- <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" /> -->
+        <help-button
+          icon-only
+          icon="chevron-down"
+          bg-color="transparent"
+          color="grey-1"
+          @click="variantOpened = !variantOpened"
+        />
       </div>
     </template>
 
@@ -106,8 +114,8 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
-import HelpToggle from '@/components/atoms/Toggle.vue';
-import Icon from '@/components/atoms/Icon.vue';
+// import HelpToggle from '@/components/atoms/Toggle.vue';
+// import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'MenuCard',
@@ -116,8 +124,8 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpRadio,
-    HelpToggle,
-    Icon,
+    // HelpToggle,
+    // Icon,
   },
   props: {
     imageUrl: {

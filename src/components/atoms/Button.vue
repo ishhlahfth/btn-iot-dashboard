@@ -2,7 +2,7 @@
   <button
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
-      `bg-${bgColor} text-${color} hover:ring-${bgColor}`,
+      `bg-${bgColor} text-${color}`,
       { bordered: outlined },
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
       bgColor === 'transparent'
