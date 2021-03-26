@@ -98,7 +98,7 @@
                 <menu-card
                   v-for="(item, i) in catalog.items"
                   :key="i"
-                  :image-url="item.image_url"
+                  :image-url="item.banners.length ? item.banners[0].url : ''"
                   :name="item.name"
                   :category="item.group.name"
                   :description="item.description"
@@ -170,6 +170,21 @@ export default {
       },
       menu: [],
     });
+
+    const getImage = async (bnsURL) => {
+      let imageURL = '';
+      try {
+        const {
+          request: { responseURL },
+        } = await API.get(bnsURL);
+        imageURL = responseURL;
+      } catch (error) {
+        console.log(error);
+      }
+      console.log('🌶️', imageURL);
+      return imageURL;
+    };
+
     const getMerchant = async () => {
       try {
         loading.value = true;
@@ -197,13 +212,9 @@ export default {
         };
 
         if (data.banners.length) {
-          const {
-            request: { responseURL },
-          } = await API.get(data.banners[0].url);
-
           merchant.value = {
             ...merchant.value,
-            imageUrl: responseURL,
+            imageUrl: await getImage(data.banners[0].url),
           };
         }
       } catch (error) {
