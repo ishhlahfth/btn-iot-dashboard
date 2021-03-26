@@ -91,7 +91,7 @@
                 row.verify_status === 'Terverifikasi'
                   ? 'positive'
                   : row.verify_status === 'Pending Verifikasi'
-                  ? 'waring'
+                  ? 'warning'
                   : 'negative'
               "
               @click="openMerchantVerivication(row)"

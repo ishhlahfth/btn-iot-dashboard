@@ -39,7 +39,18 @@
       </div>
       <div class="col-span-2">
         <p class="text-grey-2">ID Card</p>
-        <help-thumbnail width="100%" :height="screenWidth < 640 ? 196 : 248" />
+        <help-thumbnail
+          v-if="!loading"
+          width="100%"
+          use-bg
+          :src="idImage"
+          :height="screenWidth < 640 ? 196 : 248"
+        />
+        <div
+          v-else
+          class="rounded w-full bg-grey-4 animate-pulse"
+          :style="screenWidth < 640 ? 'height: 196px;' : 'height: 248px;'"
+        ></div>
       </div>
     </div>
     <div
@@ -73,30 +84,32 @@ export default {
         screenWidth,
         modalState: { verificationDetail },
       },
+      methods,
     } = inject('store');
 
     const idNumber = ref('');
-    // const idImage = ref('');
+    const idImage = ref('');
+
+    const loading = ref(false);
 
     const confirmation = ref(false);
 
     const getKTP = async () => {
+      loading.value = true;
       try {
         const {
           data: { data },
         } = await API.get(`merchants/${verificationDetail.id}/sellers`);
 
         idNumber.value = data[0].profile.identity_number || '-';
-        console.log('-- -- --', data[0]);
+
         if (data[0].banners.length) {
-          const {
-            data: { data: img },
-          } = await API.get(data.banners[0].url);
-          console.log('IMG', img); // < < ISSUE
+          idImage.value = await methods.loadImage(data[0].banners[0].url);
         }
       } catch (error) {
         console.log(error);
       }
+      loading.value = false;
     };
 
     onMounted(() => {
@@ -107,6 +120,8 @@ export default {
       screenWidth,
       verificationDetail,
       idNumber,
+      idImage,
+      loading,
       confirmation,
     };
   },

@@ -98,7 +98,7 @@
                 <menu-card
                   v-for="(item, i) in catalog.items"
                   :key="i"
-                  :image-url="item.image_url"
+                  :image-url="item.banners.length ? item.banners[0].url : ''"
                   :name="item.name"
                   :category="item.group.name"
                   :description="item.description"
@@ -140,7 +140,6 @@
 import { onMounted, ref, inject } from 'vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import API from '@/apis';
-// import dayjs from 'dayjs';
 
 export default {
   name: 'MerchantDetail',
@@ -171,6 +170,7 @@ export default {
       },
       menu: [],
     });
+
     const getMerchant = async () => {
       try {
         loading.value = true;
@@ -180,7 +180,6 @@ export default {
 
         merchant.value = {
           ...merchant.value,
-          imageUrl: data.banners.length ? data.banners[0].url : '',
           name: data.name,
           city: data.address.city.name,
           bank: data.account.bank.name,
@@ -199,10 +198,10 @@ export default {
         };
 
         if (data.banners.length) {
-          const {
-            data: { data: img },
-          } = await API.get(data.banners[0].url);
-          console.log('IMG', img); // < < ISSUE
+          merchant.value = {
+            ...merchant.value,
+            imageUrl: await store.methods.loadImage(data.banners[0].url),
+          };
         }
       } catch (error) {
         console.log(error);
