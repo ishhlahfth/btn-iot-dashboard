@@ -108,7 +108,6 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import Icon from '@/components/atoms/Icon.vue';
-import API from '@/apis';
 
 export default {
   name: 'MenuCard',
@@ -164,20 +163,6 @@ export default {
     const localIsActive = ref(true);
     const localImageUrl = ref('');
 
-    const getImage = async (bnsURL) => {
-      let imageURL = '';
-      try {
-        const {
-          request: { responseURL },
-        } = await API.get(bnsURL);
-        imageURL = responseURL;
-      } catch (error) {
-        console.log(error);
-      }
-      console.log('🌶️', imageURL);
-      return imageURL;
-    };
-
     const expandVariant = () => {
       if (state.screenWidth < 640) {
         variantOpened.value = !variantOpened.value;
@@ -186,7 +171,7 @@ export default {
 
     onMounted(async () => {
       localIsActive.value = props.isActive;
-      localImageUrl.value = await getImage(props.imageUrl);
+      localImageUrl.value = await methods.loadImage(props.imageUrl);
     });
 
     return {

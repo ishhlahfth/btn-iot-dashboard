@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import API from '@/apis';
 
 const state = reactive({
   mini: true,
@@ -51,6 +52,18 @@ const methods = {
       }
     }
     return translated;
+  },
+  async loadImage(bnsURL) {
+    let imageURL = '';
+    try {
+      const {
+        request: { responseURL },
+      } = await API.get(bnsURL);
+      imageURL = responseURL;
+    } catch (error) {
+      console.log(error);
+    }
+    return imageURL;
   },
 };
 

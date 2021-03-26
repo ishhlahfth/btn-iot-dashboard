@@ -171,20 +171,6 @@ export default {
       menu: [],
     });
 
-    const getImage = async (bnsURL) => {
-      let imageURL = '';
-      try {
-        const {
-          request: { responseURL },
-        } = await API.get(bnsURL);
-        imageURL = responseURL;
-      } catch (error) {
-        console.log(error);
-      }
-      console.log('🌶️', imageURL);
-      return imageURL;
-    };
-
     const getMerchant = async () => {
       try {
         loading.value = true;
@@ -214,7 +200,7 @@ export default {
         if (data.banners.length) {
           merchant.value = {
             ...merchant.value,
-            imageUrl: await getImage(data.banners[0].url),
+            imageUrl: await store.methods.loadImage(data.banners[0].url),
           };
         }
       } catch (error) {
