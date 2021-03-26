@@ -10,12 +10,23 @@
   <help-modal v-model="verificationModal">
     <merchant-verification
       @openOption="verificationOptionModal = true"
+      @openConfirmSuspend="confirmSuspendModal = true"
       @close="verificationModal = false"
     />
   </help-modal>
 
   <help-modal v-model="verificationOptionModal">
     <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
+  </help-modal>
+
+  <help-modal v-model="confirmSuspendModal">
+    <confirmation
+      title="Changes confirmation"
+      message="Are you sure you want to suspend this merchant?"
+      @close="confirmSuspendModal = false"
+      @cancel="confirmSuspendModal = false"
+      @confirm="suspendMerchant"
+    />
   </help-modal>
 
   <help-modal v-model="commissionModal">
@@ -95,6 +106,7 @@
 <script>
 import { onMounted, ref, inject } from 'vue';
 import Commission from '@/components/modals/Commission.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -111,6 +123,7 @@ export default {
   name: 'Merchant',
   components: {
     Commission,
+    Confirmation,
     HelpBadge,
     HelpButton,
     HelpInput,
@@ -137,7 +150,7 @@ export default {
       { field: 'commission', label: 'commission (%)', align: 'right' },
       { field: 'menu', label: 'merchant detail', align: 'center' },
       { field: 'operational_detail', label: 'operational time', align: 'center' },
-      { field: 'is_hidden', label: 'status', align: 'center' },
+      // { field: 'is_hidden', label: 'status', align: 'center' },
     ];
     const merchants = ref([]);
     const merchantPagination = ref({
@@ -152,6 +165,7 @@ export default {
     const verificationModal = ref(false);
     const verificationOptionModal = ref(false);
     const commissionModal = ref(false);
+    const confirmSuspendModal = ref(false);
 
     const getCommission = async (merchantId) => {
       let commission = null;
@@ -195,7 +209,7 @@ export default {
           city: el.address.city.name,
           verify_status: store.methods.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
-          is_hidden: !el.is_hidden,
+          // is_hidden: !el.is_hidden,
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
               openHour,
@@ -221,6 +235,25 @@ export default {
         console.log(error);
       }
       loading.value = false;
+    };
+
+    const suspendMerchant = async () => {
+      console.log('SUSPEND ME SENPAI');
+      const payload = {
+        verify_status: 'SUSPEND',
+        verify_reason: 'Harap menghubungi customer service',
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`merchants/${store.state.modalState.verificationDetail.id}`, payload);
+        console.log('SUSPEND OK', data);
+        confirmSuspendModal.value = false;
+        verificationModal.value = false;
+        getMerchants(merchantPagination);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const openMerchantDetail = (id) => {
@@ -264,6 +297,7 @@ export default {
       verificationModal,
       verificationOptionModal,
       commissionModal,
+      confirmSuspendModal,
 
       openMerchantDetail,
       openOpHourDetail,
@@ -273,6 +307,7 @@ export default {
       closeAndRefetch,
 
       getMerchants,
+      suspendMerchant,
     };
   },
 };
