@@ -26,7 +26,13 @@
                 "
                 :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
               />
-              <help-button icon-only icon="dots-vertical" bg-color="transparent" color="grey-1" />
+              <help-button
+                icon-only
+                icon="dots-vertical"
+                bg-color="transparent"
+                color="grey-1"
+                @click="openItemStatusModal"
+              />
             </div>
             <p class="text-small text-grey-3">{{ category }}</p>
           </div>
@@ -37,8 +43,6 @@
         <p class="text-small font-medium">{{ methods.convertToRp(price) }}</p>
       </div>
       <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
-        <!-- <help-toggle v-model="localIsActive" /> -->
-        <!-- <icon name="chevron-down" class="cursor-pointer" @click="variantOpened = !variantOpened" /> -->
         <help-button
           icon-only
           icon="chevron-down"
@@ -114,8 +118,6 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
-// import HelpToggle from '@/components/atoms/Toggle.vue';
-// import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'MenuCard',
@@ -124,10 +126,12 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpRadio,
-    // HelpToggle,
-    // Icon,
   },
+  emits: ['openItemStatusModal'],
   props: {
+    raw: {
+      type: Object,
+    },
     imageUrl: {
       type: String,
       default: '',
@@ -165,7 +169,7 @@ export default {
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { state, methods } = inject('store');
     const variantOpened = ref(false);
     const localIsActive = ref(true);
@@ -177,7 +181,13 @@ export default {
       }
     };
 
+    const openItemStatusModal = () => {
+      emit('openItemStatusModal');
+      methods.setModalState({ itemDetail: props.raw });
+    };
+
     onMounted(async () => {
+      console.log('🚀🚀🚀🚀🚀', props.raw);
       localIsActive.value = props.isActive;
       localImageUrl.value = await methods.loadImage(props.imageUrl);
     });
@@ -189,6 +199,7 @@ export default {
       localIsActive,
       localImageUrl,
       expandVariant,
+      openItemStatusModal,
     };
   },
 };

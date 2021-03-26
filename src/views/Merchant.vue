@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="detailModal">
-    <merchant-detail />
+    <merchant-detail @openItemStatusModal="itemStatusModal = true" />
   </help-modal>
 
   <help-modal v-model="opHourModal">
@@ -31,6 +31,10 @@
 
   <help-modal v-model="commissionModal">
     <commission @closeAndRefetch="closeAndRefetch" />
+  </help-modal>
+
+  <help-modal v-model="itemStatusModal">
+    <item-status />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -113,6 +117,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
+import ItemStatus from '@/components/modals/ItemStatus.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
@@ -130,6 +135,7 @@ export default {
     HelpModal,
     HelpTable,
     HelpToggle,
+    ItemStatus,
     OperationalHour,
     MerchantDetail,
     MerchantVerification,
@@ -166,6 +172,7 @@ export default {
     const verificationOptionModal = ref(false);
     const commissionModal = ref(false);
     const confirmSuspendModal = ref(false);
+    const itemStatusModal = ref(false);
 
     const getCommission = async (merchantId) => {
       let commission = null;
@@ -298,6 +305,7 @@ export default {
       verificationOptionModal,
       commissionModal,
       confirmSuspendModal,
+      itemStatusModal,
 
       openMerchantDetail,
       openOpHourDetail,

@@ -53,6 +53,32 @@ const methods = {
     }
     return translated;
   },
+  translateItemStatus(value) {
+    let translated = '';
+    if (value) {
+      switch (value) {
+        case 'AVAILABLE':
+          translated = 'Available';
+          break;
+        case 'UNAVAILABLE':
+          translated = 'Unavailable';
+          break;
+        case 'HIDDEN':
+          translated = 'Hidden';
+          break;
+        case 'OUT_OF_STOCK':
+          translated = 'Out of Stock';
+          break;
+        case 'SUSPEND':
+          translated = 'Suspend';
+          break;
+        default:
+          translated = '';
+          break;
+      }
+    }
+    return translated;
+  },
   async loadImage(bnsURL) {
     let imageURL = '';
     try {

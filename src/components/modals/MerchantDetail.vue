@@ -98,14 +98,16 @@
                 <menu-card
                   v-for="(item, i) in catalog.items"
                   :key="i"
+                  :raw="item"
                   :image-url="item.banners.length ? item.banners[0].url : ''"
                   :name="item.name"
                   :category="item.group.name"
                   :description="item.description"
                   :price="item.price"
-                  :availability-status="item.status"
+                  :availability-status="store.methods.translateItemStatus(item.status)"
                   :is-active="item.is_active"
                   :variants="item.variations"
+                  @openItemStatusModal="$emit('openItemStatusModal')"
                 />
               </template>
               <template v-else>
@@ -146,6 +148,7 @@ export default {
   components: {
     MenuCard,
   },
+  emits: ['openItemStatusModal'],
   setup() {
     const store = inject('store');
     const loading = ref(false);
@@ -242,6 +245,7 @@ export default {
     });
 
     return {
+      store,
       merchant,
       loading,
       getMerchant,
