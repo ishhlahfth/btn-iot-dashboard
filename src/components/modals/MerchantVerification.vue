@@ -42,6 +42,7 @@
         <help-thumbnail
           v-if="!loading"
           width="100%"
+          use-bg
           :src="idImage"
           :height="screenWidth < 640 ? 196 : 248"
         />
