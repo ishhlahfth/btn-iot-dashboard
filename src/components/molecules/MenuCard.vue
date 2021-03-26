@@ -2,8 +2,8 @@
   <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card" @click="expandVariant">
     <template v-if="!loading">
       <img
-        v-if="imageUrl"
-        :src="imageUrl"
+        v-if="localImageUrl"
+        :src="localImageUrl"
         alt="menu"
         class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
       />
@@ -19,7 +19,11 @@
             <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
               <p class="font-medium">{{ name }}</p>
               <help-badge
-                :label="availabilityStatus === 'AVAILABLE' ? 'Available' : availabilityStatus.toLowerCase()"
+                :label="
+                  availabilityStatus === 'AVAILABLE'
+                    ? 'Available'
+                    : availabilityStatus.toLowerCase()
+                "
                 :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
               />
             </div>
@@ -157,6 +161,7 @@ export default {
     const { state, methods } = inject('store');
     const variantOpened = ref(false);
     const localIsActive = ref(true);
+    const localImageUrl = ref('');
 
     const expandVariant = () => {
       if (state.screenWidth < 640) {
@@ -164,8 +169,9 @@ export default {
       }
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       localIsActive.value = props.isActive;
+      localImageUrl.value = await methods.loadImage(props.imageUrl);
     });
 
     return {
@@ -173,6 +179,7 @@ export default {
       methods,
       variantOpened,
       localIsActive,
+      localImageUrl,
       expandVariant,
     };
   },
