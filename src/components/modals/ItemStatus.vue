@@ -23,7 +23,7 @@ export default {
     HelpSelect,
   },
   emits: ['closeAndRefetch'],
-  setup() {
+  setup(props, { emit }) {
     const {
       state: {
         modalState: { itemDetail },
@@ -65,7 +65,7 @@ export default {
           data: { data },
         } = await API.patch(`items/${itemDetail.id}`, payload);
 
-        // emit('closeAndRefetch');
+        emit('closeAndRefetch');
         console.log('AFTER EDIT', data);
       } catch (error) {
         console.log(error);

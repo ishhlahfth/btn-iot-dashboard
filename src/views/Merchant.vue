@@ -34,7 +34,7 @@
   </help-modal>
 
   <help-modal v-model="itemStatusModal">
-    <item-status />
+    <item-status @closeAndRefetch="closeAndRefetch" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -280,6 +280,8 @@ export default {
       verificationOptionModal.value = false;
       verificationModal.value = false;
       commissionModal.value = false;
+      itemStatusModal.value = false;
+      detailModal.value = false;
     };
     const openCommissionModal = ({ merchantId, merchantName }) => {
       console.log(merchantId, merchantName);
