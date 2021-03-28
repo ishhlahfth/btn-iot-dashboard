@@ -230,12 +230,20 @@ export default {
         data: { data: catalogs },
       } = await API.get(`merchants/${merchantId}/catalogs`);
 
-      catalogs.forEach(async (el) => {
+      for (let i = 0; i < catalogs.length; i += 1) {
         const {
           data: { data: items },
-        } = await API.get(`catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`);
-        merchant.value.menu.push({ catalog_name: el.name, items });
-      });
+        } = await API.get(
+          `catalogs/${catalogs[i].id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK,SUSPEND`,
+        );
+        merchant.value.menu.push({ catalog_name: catalogs[i].name, items });
+      }
+      // catalogs.forEach(async (el) => {
+      //   const {
+      //     data: { data: items },
+      //   } = await API.get(`catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`);
+      //   merchant.value.menu.push({ catalog_name: el.name, items });
+      // });
     };
 
     onMounted(() => {
