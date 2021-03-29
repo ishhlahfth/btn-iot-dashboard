@@ -10,6 +10,9 @@ export default createStore({
     opHour: [],
     verifDetail: {},
     commissionDetail: {},
+    loading: {
+      merchant: false,
+    },
   },
   mutations: {
     SET_SCREEN_WIDTH(state, payload) {
@@ -33,10 +36,14 @@ export default createStore({
     SET_COMMISSION_DETAIL(state, payload) {
       state.commissionDetail = payload;
     },
+    SET_LOADING(state, { type, payload }) {
+      state.loading[type] = payload;
+    },
   },
   actions: {
     async loadMerchant({ commit, dispatch }, merchantId) {
       console.log('🌆', 'LOAD MERCHANT');
+      commit('SET_LOADING', { type: 'merchant', payload: true });
       let merchant = {};
       try {
         const {
@@ -68,7 +75,9 @@ export default createStore({
           data: { data: KTP },
         } = await API.get(`merchants/${merchantId}/sellers`);
 
-        merchant.idNumber = KTP[0].profile.identity_number || '-';
+        if (KTP.length) {
+          merchant.idNumber = KTP[0].profile.identity_number || '-';
+        }
 
         const {
           data: { data: catalogs },
@@ -87,6 +96,7 @@ export default createStore({
       } catch (error) {
         console.log(error);
       }
+      commit('SET_LOADING', { type: 'merchant', payload: false });
     },
     async loadImage(_, bnsURL) {
       let imageURL = '';

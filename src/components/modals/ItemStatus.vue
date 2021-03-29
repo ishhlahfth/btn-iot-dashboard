@@ -60,13 +60,12 @@ export default {
         })),
       };
 
-      console.log('= = PAYLOAD = =', payload);
       try {
         const {
           data: { data },
         } = await API.patch(`items/${this.item.id}`, payload);
 
-        console.log('AFTER EDIT', data);
+        console.log('SUCCESSFULLY EDITED', data);
         this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
         this.$emit('close');
       } catch (error) {

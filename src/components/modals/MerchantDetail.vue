@@ -154,20 +154,16 @@ export default {
   components: {
     MenuCard,
   },
-  data() {
-    return {
-      loading: false,
-    };
-  },
   computed: {
     merchant() {
       return this.$store.state.merchant;
     },
+    loading() {
+      return this.$store.state.loading.merchant;
+    },
   },
   async mounted() {
-    this.loading = true;
     await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
-    this.loading = false;
   },
 };
 </script>
