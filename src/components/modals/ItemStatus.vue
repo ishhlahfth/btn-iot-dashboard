@@ -12,7 +12,12 @@
     </div>
     <form @submit.prevent="proceed" class="grid gap-4">
       <div class="w-full">
-        <help-select label="Change status to" :options="statuses" v-model="selectedStatus" />
+        <help-select
+          label="Change status to"
+          :options="statuses"
+          v-model="selectedStatus"
+          :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
+        />
       </div>
       <help-button label="proceed" />
     </form>
@@ -46,6 +51,9 @@ export default {
   computed: {
     item() {
       return this.$store.state.item;
+    },
+    screenWidth() {
+      return this.$store.state.screenWidth;
     },
   },
   methods: {

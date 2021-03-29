@@ -1,7 +1,11 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-sm">
     <div class="flex justify-between items-center">
-      <p class="text-heading4 font-semibold">Verify a merchant</p>
+      <p class="text-heading4 font-semibold">
+        {{
+          verifDetail.verify_status === 'Pending Verifikasi' ? 'Verify a merchant' : 'Edit status'
+        }}
+      </p>
       <help-button
         icon-only
         icon="close"
@@ -12,7 +16,16 @@
     </div>
     <form @submit.prevent="proceed" class="grid gap-4">
       <div class="w-full">
-        <help-select label="Verify status to" :options="statuses" v-model="selectedStatus" />
+        <help-select
+          v-model="selectedStatus"
+          :label="
+            verifDetail.verify_status === 'Pending Verifikasi'
+              ? 'Verify status to'
+              : 'Edit status to'
+          "
+          :options="statuses"
+          :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
+        />
       </div>
       <help-input
         label="Reason"

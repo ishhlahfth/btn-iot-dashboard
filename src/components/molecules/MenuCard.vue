@@ -95,14 +95,6 @@
             </p>
           </template>
         </div>
-        <div class="grid">
-          <help-button
-            v-if="$store.state.screenWidth < 640"
-            :label="localIsActive ? 'disable product' : 'enable product'"
-            bg-color="transparent"
-            color="flame-dark"
-          />
-        </div>
       </div>
     </template>
   </transition>

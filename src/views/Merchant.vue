@@ -271,7 +271,6 @@ export default {
       this.detailModal = false;
     },
     async suspendMerchant() {
-      console.log('SUSPEND ME SENPAI');
       const payload = {
         verify_status: 'SUSPEND',
         verify_reason: 'Harap menghubungi customer service',

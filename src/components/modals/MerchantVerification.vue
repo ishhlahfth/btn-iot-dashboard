@@ -58,7 +58,11 @@
       v-if="verifDetail.verify_status !== 'Terverifikasi'"
       class="flex flex-col sm:flex-row-reverse"
     >
-      <help-button @click="$emit('openOption')" label="verify" class="mb-2 sm:mb-0" />
+      <help-button
+        @click="$emit('openOption')"
+        :label="verifDetail.verify_status === 'Pending Verifikasi' ? 'verify' : 'edit status'"
+        class="mb-2 sm:mb-0"
+      />
     </div>
     <div v-else class="flex flex-col sm:flex-row-reverse">
       <help-button
