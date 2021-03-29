@@ -7,7 +7,7 @@
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
       bgColor === 'transparent'
         ? 'hover:bg-grey-4 hover:bg-opacity-70'
-        : 'hover:ring-2 hover:ring-offset-1 hover:ring-opacity-75',
+        : 'hover:bg-opacity-80',
     ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">

@@ -1,6 +1,15 @@
 <template>
-  <div class="grid gap-6 p-1 inner-modal-auto modal-sm">
-    <p class="text-heading4 font-semibold">Verify a merchant</p>
+  <div class="grid gap-6 inner-modal-auto modal-sm">
+    <div class="flex justify-between items-center">
+      <p class="text-heading4 font-semibold">Verify a merchant</p>
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
+    </div>
     <form @submit.prevent="proceed" class="grid gap-4">
       <div class="w-full">
         <help-select label="Verify status to" :options="statuses" v-model="selectedStatus" />
@@ -29,7 +38,7 @@ export default {
     HelpInput,
     HelpSelect,
   },
-  emits: ['closeAndRefetch'],
+  emits: ['close', 'closeAndRefetch'],
   data() {
     return {
       selectedStatus: { value: 'SUCCESS', label: 'Terverifikasi' },

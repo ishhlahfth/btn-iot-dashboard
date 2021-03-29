@@ -11,7 +11,7 @@
       />
     </div>
     <div class="flex justify-end items-center">
-      <p class="font-medium">Name</p>
+      <p class="font-medium">Admin</p>
       <help-avatar
         src="https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"
         :size="32"

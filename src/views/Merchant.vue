@@ -16,7 +16,10 @@
   </help-modal>
 
   <help-modal v-model="verificationOptionModal">
-    <merchant-verification-option @closeAndRefetch="closeAndRefetch" />
+    <merchant-verification-option
+      @close="verificationOptionModal = false"
+      @closeAndRefetch="closeAndRefetch"
+    />
   </help-modal>
 
   <help-modal v-model="confirmSuspendModal">
@@ -40,7 +43,7 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
-      <help-button label="filter" />
+      <!-- <help-button label="filter" /> -->
     </div>
     <div>
       <form @submit.prevent="getMerchants">

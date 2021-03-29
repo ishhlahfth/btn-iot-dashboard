@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-6 p-1 inner-modal-auto modal-sm">
+  <div class="grid gap-6 inner-modal-auto modal-sm">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">{{ title }}</p>
       <help-button

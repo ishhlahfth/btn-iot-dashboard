@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-6 p-1 inner-modal-auto modal-md">
+  <div class="grid gap-6 inner-modal-auto modal-md">
     <p class="text-heading4 font-semibold">Edit Commission</p>
     <div class="grid sm:grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <div>

@@ -1,6 +1,15 @@
 <template>
-  <div class="grid gap-6 p-1 inner-modal-auto modal-sm">
-    <p class="text-heading4 font-semibold">Edit Item Status</p>
+  <div class="grid gap-6 inner-modal-auto modal-sm">
+    <div class="flex justify-between items-center">
+      <p class="text-heading4 font-semibold">Edit Item Status</p>
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
+    </div>
     <form @submit.prevent="proceed" class="grid gap-4">
       <div class="w-full">
         <help-select label="Change status to" :options="statuses" v-model="selectedStatus" />

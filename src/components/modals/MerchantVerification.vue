@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-6 sm:p-1 inner-modal-auto modal-md overflow-auto">
+  <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Verification Status</p>
       <help-button
@@ -114,11 +114,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      this.loading = false
-    }
+      this.loading = false;
+    },
   },
   mounted() {
-    this.getKTP()
+    this.getKTP();
   },
 };
 </script>
