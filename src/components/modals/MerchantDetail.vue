@@ -4,18 +4,23 @@
   >
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
-        <img
-          v-if="merchant.imageUrl"
-          :src="merchant.imageUrl"
-          alt="menu"
-          class="w-44 h-44 object-cover rounded-full"
-        />
-        <div
-          v-else
-          class="w-44 h-44 border-2 border-dashed border-grey-4 rounded-full grid place-items-center text-small"
-        >
-          No Image
-        </div>
+        <template v-if="!loading">
+          <img
+            v-if="merchant.imageUrl"
+            :src="merchant.imageUrl"
+            alt="menu"
+            class="w-44 h-44 object-cover rounded-full"
+          />
+          <div
+            v-else
+            class="w-44 h-44 border-2 border-dashed border-grey-4 rounded-full grid place-items-center text-small"
+          >
+            No Image
+          </div>
+        </template>
+        <template v-else>
+          <div class="w-44 h-44 rounded-full bg-grey-4 animate-pulse"></div>
+        </template>
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
