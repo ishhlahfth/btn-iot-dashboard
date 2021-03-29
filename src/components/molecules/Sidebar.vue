@@ -1,29 +1,23 @@
 <template>
   <nav
     class="h-full fixed inset-y-0 left-0 sm:grid gap-2 auto-rows-max bg-midnight overflow-hidden z-50 sm:p-2 transition-all duration-200"
-    :class="store.state.mini ? 'w-0 sm:w-14' : 'p-2 w-64'"
-    @mouseover="store.methods.setMini(false)"
-    @mouseleave="store.methods.setMini(true)"
+    :class="mini ? 'w-0 sm:w-14' : 'p-2 w-64'"
+    @mouseover="$store.commit('SET_MINI', false)"
+    @mouseleave="$store.commit('SET_MINI', true)"
   >
     <template v-for="(link, i) in links" :key="i">
       <nav-item v-if="!link.subMenu" :menu="link" />
-      <nav-expandable-item
-        v-else
-        :menu="link"
-        ref="expandableItem"
-        :miniSidebar="store.state.mini"
-      />
+      <nav-expandable-item v-else :menu="link" ref="expandableItem" :miniSidebar="mini" />
     </template>
   </nav>
   <div
-    v-if="!store.state.mini"
-    @click="store.methods.setMini(true)"
+    v-if="!mini"
+    @click="$store.commit('SET_MINI', true)"
     class="sm:hidden absolute top-0 right-0 bg-black bg-opacity-40 h-full w-full z-20"
   ></div>
 </template>
 
 <script>
-import { ref, inject } from 'vue';
 import NavExpandableItem from '../atoms/NavExpandableItem.vue';
 import NavItem from '../atoms/NavItem.vue';
 
@@ -33,32 +27,33 @@ export default {
     NavExpandableItem,
     NavItem,
   },
-  setup() {
-    const store = inject('store');
-    const collapsed = ref(true);
-    const links = [
-      { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
-      // { path: '/bns/admin', label: 'Admin', icon: 'shield' },
-      // { path: '/bns/role', label: 'Role', icon: 'user-group' },
-      { path: '/bns/home', label: 'Home', icon: 'home' },
-      { path: '/bns/another-page', label: 'Components', icon: 'user-group' },
-      { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
-      {
-        path: '/',
-        label: 'Dummy Page',
-        icon: 'cube',
-        subMenu: [
-          { path: '/bns/dummy-page-1', label: 'First', icon: '' },
-          { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
-          { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
-        ],
-      },
-    ];
+  data() {
     return {
-      store,
-      collapsed,
-      links,
+      collapsed: true,
+      links: [
+        { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
+        // { path: '/bns/admin', label: 'Admin', icon: 'shield' },
+        // { path: '/bns/role', label: 'Role', icon: 'user-group' },
+        { path: '/bns/home', label: 'Home', icon: 'home' },
+        { path: '/bns/another-page', label: 'Components', icon: 'user-group' },
+        { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
+        {
+          path: '/',
+          label: 'Dummy Page',
+          icon: 'cube',
+          subMenu: [
+            { path: '/bns/dummy-page-1', label: 'First', icon: '' },
+            { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
+            { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
+          ],
+        },
+      ],
     };
+  },
+  computed: {
+    mini() {
+      return this.$store.state.mini;
+    },
   },
 };
 </script>

@@ -1,12 +1,10 @@
 <template>
-  <div
-    class="w-full bg-snow flex justify-between items-center p-4 sm:px-6 border-b border-grey-4"
-  >
+  <div class="w-full bg-snow flex justify-between items-center p-4 sm:px-6 border-b border-grey-4">
     <div>
       <icon
         name="menu"
         :size="6"
-        @click="store.methods.setMini(false)"
+        @click="$store.commit('SET_MINI', false)"
         class="block sm:hidden cursor-pointer"
       />
     </div>
@@ -32,7 +30,6 @@
 </template>
 
 <script>
-import { ref, inject } from 'vue';
 import HelpAvatar from '../atoms/Avatar.vue';
 import HelpOption from './Option.vue';
 import Icon from '../atoms/Icon.vue';
@@ -44,13 +41,15 @@ export default {
     HelpOption,
     Icon,
   },
-  setup() {
-    const store = inject('store');
-    const opened = ref(false);
+  data() {
     return {
-      store,
-      opened,
+      opened: false,
     };
+  },
+  computed: {
+    mini() {
+      return this.$store.state.mini;
+    },
   },
   methods: {
     navigate(menu) {
