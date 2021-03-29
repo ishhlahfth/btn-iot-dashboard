@@ -46,7 +46,6 @@ export default createStore({
   },
   actions: {
     async loadMerchant({ commit, dispatch }, merchantId) {
-      console.log('🌆', 'LOAD MERCHANT');
       commit('SET_LOADING', { type: 'merchant', payload: true });
       let merchant = {};
       try {
@@ -114,6 +113,7 @@ export default createStore({
       }
       return imageURL;
     },
+    // async loadKTP(_, )
     translateItemStatus(_, value) {
       console.log('TRANSLATE', value);
       let translated = '';

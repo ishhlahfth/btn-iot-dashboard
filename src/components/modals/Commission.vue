@@ -1,6 +1,15 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-md">
-    <p class="text-heading4 font-semibold">Edit Commission</p>
+    <div class="flex justify-between items-center">
+      <p class="text-heading4 font-semibold">Edit Commission</p>
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
+    </div>
     <div class="grid sm:grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <div>
         <p class="text-grey-2">Merchant Name</p>
@@ -36,7 +45,7 @@ export default {
     HelpButton,
     HelpInput,
   },
-  emits: ['closeAndRefetch'],
+  emits: ['closeAndRefetch', 'close'],
   data() {
     return {
       commissionDetail: {

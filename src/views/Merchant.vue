@@ -33,7 +33,7 @@
   </help-modal>
 
   <help-modal v-model="commissionModal">
-    <commission @closeAndRefetch="closeAndRefetch" />
+    <commission @close="commissionModal = false" @closeAndRefetch="closeAndRefetch" />
   </help-modal>
 
   <help-modal v-model="itemStatusModal">
@@ -77,7 +77,7 @@
             <help-button
               icon-only
               icon="dots-vertical"
-              bg-color="grey-6"
+              bg-color="transparent"
               color="grey-1"
               @click="openCommissionModal({ merchantId: row.id, merchantName: row.name })"
             />
@@ -258,6 +258,10 @@ export default {
       this.verificationModal = true;
       this.$store.commit('SET_VERIF_DETAIL', verifDetail);
     },
+    // openMerchantVerivication(merchantId {
+    //   this.verificationModal = true;
+    //   this.$store.commit('SET_MERCHANT_ID', merchantId);
+    // },
     openCommissionModal(commissionDetail) {
       this.commissionModal = true;
       this.$store.commit('SET_COMMISSION_DETAIL', commissionDetail);
