@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import API from '@/apis';
@@ -38,65 +37,61 @@ export default {
     HelpInput,
   },
   emits: ['closeAndRefetch'],
-  setup(_, { emit }) {
-    const {
-      state: {
-        modalState: { merchantId, merchantName },
+  data() {
+    return {
+      commissionDetail: {
+        formula: { value: 0 },
       },
-    } = inject('store');
-
-    const commissionDetail = ref({
-      formula: { value: 0 },
-    });
-    const newCommission = ref('');
-
-    const getCommission = async () => {
+      newCommission: '',
+    };
+  },
+  computed: {
+    merchantId() {
+      return this.$store.state.commissionDetail.merchantId;
+    },
+    merchantName() {
+      return this.$store.state.commissionDetail.merchantName;
+    },
+  },
+  methods: {
+    async getCommission() {
       try {
         const {
           data: { data },
-        } = await API.get(`merchants/${merchantId}/bill-formulas`);
+        } = await API.get(`merchants/${this.merchantId}/bill-formulas`);
         if (data) {
           console.log('RESPONSE', data);
           if (data.length) {
-            commissionDetail.value = data.filter((el) => el.order_type_id === 4)[0];
+            this.commissionDetail = data.filter((el) => el.order_type_id === 4)[0];
           }
         }
       } catch (error) {
         console.log(error);
       }
-    };
-
-    const updateCommission = async () => {
+    },
+    async updateCommission() {
       const payload = {
-        merchant_id: commissionDetail.value.merchant_id,
-        order_type_id: commissionDetail.value.order_type_id,
-        seq_no: commissionDetail.value.seq_no,
-        label: commissionDetail.value.label,
-        formula: { type: 'PERCENT', value: +newCommission.value },
-        formula_type: commissionDetail.value.formula_type,
+        merchant_id: this.commissionDetail.merchant_id,
+        order_type_id: this.commissionDetail.order_type_id,
+        seq_no: this.commissionDetail.seq_no,
+        label: this.commissionDetail.label,
+        formula: { type: 'PERCENT', value: +this.newCommission },
+        formula_type: this.commissionDetail.formula_type,
       };
       try {
         const {
           data: { data },
-        } = await API.patch(`bill-formulas/${commissionDetail.value.id}`, payload);
+        } = await API.patch(`bill-formulas/${this.commissionDetail.id}`, payload);
 
-        emit('closeAndRefetch');
+        this.$emit('closeAndRefetch');
         console.log('UPDATED', data);
       } catch (error) {
         console.log(error);
       }
-    };
-
-    onMounted(() => {
-      getCommission();
-    });
-
-    return {
-      merchantName,
-      commissionDetail,
-      newCommission,
-      updateCommission,
-    };
+    },
+  },
+  mounted() {
+    this.getCommission();
   },
 };
 </script>

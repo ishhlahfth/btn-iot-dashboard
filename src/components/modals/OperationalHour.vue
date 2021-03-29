@@ -13,14 +13,25 @@
 </template>
 
 <script>
-import { inject } from 'vue';
-
 export default {
   name: 'OperationalHour',
-  setup() {
-    const store = inject('store');
+  data() {
+    return {
+      operationalHours: [],
+    };
+  },
+  methods: {
+    beautify(raw) {
+      let beautified = '';
+      if (raw) {
+        beautified = `${raw.substring(0, 2)}:${raw.substring(2, 4)}`;
+      }
+      return beautified;
+    },
+  },
+  mounted() {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const operationalHours = store.state.modalState.operationalHours;
+    const operationalHours = this.$store.state.opHour;
 
     for (let i = 0; i < 7; i += 1) {
       let hasDayProperty = false;
@@ -38,20 +49,9 @@ export default {
       }
     }
 
-    const beautify = (raw) => {
-      let beautified = '';
-      if (raw) {
-        beautified = `${raw.substring(0, 2)}:${raw.substring(2, 4)}`;
-      }
-      return beautified;
-    };
-
-    return {
-      operationalHours: operationalHours
-        .map((el) => ({ ...el, day: days[el.dayOfWeek] }))
-        .sort((a, b) => a.dayOfWeek - b.dayOfWeek),
-      beautify,
-    };
+    this.operationalHours = operationalHours
+      .map((el) => ({ ...el, day: days[el.dayOfWeek] }))
+      .sort((a, b) => a.dayOfWeek - b.dayOfWeek);
   },
 };
 </script>

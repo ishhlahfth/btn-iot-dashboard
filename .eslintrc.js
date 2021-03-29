@@ -17,6 +17,7 @@ module.exports = {
     'no-prototype-builtins': 'off',
     'no-restricted-syntax': 'off',
     'prefer-destructuring': 'off',
-    'prefer-arrow-callback': 'off'
+    'prefer-arrow-callback': 'off',
+    'no-await-in-loop': 'off'
   },
 };

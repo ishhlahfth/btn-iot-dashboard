@@ -34,7 +34,7 @@
   </help-modal>
 
   <help-modal v-model="itemStatusModal">
-    <item-status @closeAndRefetch="closeAndRefetch" />
+    <item-status @close="itemStatusModal = false" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -108,7 +108,6 @@
 </template>
 
 <script>
-import { onMounted, ref, inject } from 'vue';
 import Commission from '@/components/modals/Commission.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
@@ -122,10 +121,12 @@ import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
+import mixin from '@/mixin';
 import API from '@/apis';
 
 export default {
   name: 'Merchant',
+  mixins: [mixin],
   components: {
     Commission,
     Confirmation,
@@ -141,40 +142,41 @@ export default {
     MerchantVerification,
     MerchantVerificationOption,
   },
-  setup() {
-    const store = inject('store');
-    const searchValue = ref('');
-    const columns = [
-      { field: 'name', label: 'name', sortable: true },
-      { field: 'city', label: 'city', sortable: true },
-      {
-        field: 'verify_status',
-        label: 'verification status',
-        align: 'center',
-        sortable: true,
+  data() {
+    return {
+      searchValue: '',
+      columns: [
+        { field: 'name', label: 'name', sortable: true },
+        { field: 'city', label: 'city', sortable: true },
+        {
+          field: 'verify_status',
+          label: 'verification status',
+          align: 'center',
+          sortable: true,
+        },
+        { field: 'commission', label: 'commission (%)', align: 'right' },
+        { field: 'menu', label: 'merchant detail', align: 'center' },
+        { field: 'operational_detail', label: 'operational time', align: 'center' },
+      ],
+      merchants: [],
+      merchantPagination: {
+        limit: 10,
+        offset: 0,
+        sort: 'name',
+        order: 'asc',
       },
-      { field: 'commission', label: 'commission (%)', align: 'right' },
-      { field: 'menu', label: 'merchant detail', align: 'center' },
-      { field: 'operational_detail', label: 'operational time', align: 'center' },
-      // { field: 'is_hidden', label: 'status', align: 'center' },
-    ];
-    const merchants = ref([]);
-    const merchantPagination = ref({
-      limit: 10,
-      offset: 0,
-      sort: 'name',
-      order: 'asc',
-    });
-    const loading = ref(false);
-    const detailModal = ref(false);
-    const opHourModal = ref(false);
-    const verificationModal = ref(false);
-    const verificationOptionModal = ref(false);
-    const commissionModal = ref(false);
-    const confirmSuspendModal = ref(false);
-    const itemStatusModal = ref(false);
-
-    const getCommission = async (merchantId) => {
+      loading: false,
+      detailModal: false,
+      opHourModal: false,
+      verificationModal: false,
+      verificationOptionModal: false,
+      commissionModal: false,
+      confirmSuspendModal: false,
+      itemStatusModal: false,
+    };
+  },
+  methods: {
+    async getCommission(merchantId) {
       let commission = null;
       try {
         const {
@@ -192,16 +194,15 @@ export default {
         console.log(error);
       }
       return commission;
-    };
-
-    const getMerchants = async (pagination) => {
+    },
+    async getMerchants(pagination) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'name';
       const order = pagination.order || 'asc';
-      const search = searchValue.value || '';
+      const search = this.searchValue || '';
       try {
-        loading.value = true;
+        this.loading = true;
         const {
           data: { data: currentMerchants },
         } = await API.get(
@@ -210,13 +211,12 @@ export default {
 
         console.log(currentMerchants);
 
-        merchants.value = currentMerchants.map((el) => ({
+        this.merchants = currentMerchants.map((el) => ({
           id: el.id,
           name: el.name,
           city: el.address.city.name,
-          verify_status: store.methods.translateStatus(el.verify_status),
+          verify_status: this.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
-          // is_hidden: !el.is_hidden,
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
               openHour,
@@ -226,13 +226,13 @@ export default {
           ),
         }));
 
-        merchants.value.forEach(async (merchant) => {
+        this.merchants.forEach(async (merchant) => {
           const clone = merchant;
-          const commission = await getCommission(merchant.id);
+          const commission = await this.getCommission(merchant.id);
           clone.commission = commission || '-';
         });
 
-        merchantPagination.value = {
+        this.merchantPagination = {
           limit,
           offset,
           sort,
@@ -241,10 +241,33 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      loading.value = false;
-    };
-
-    const suspendMerchant = async () => {
+      this.loading = false;
+    },
+    openMerchantDetail(merchantId) {
+      this.detailModal = true;
+      this.$store.commit('SET_MERCHANT_ID', merchantId);
+    },
+    openOpHourDetail(operationalHours) {
+      this.opHourModal = true;
+      this.$store.commit('SET_OP_HOUR', operationalHours);
+    },
+    openMerchantVerivication(verifDetail) {
+      this.verificationModal = true;
+      this.$store.commit('SET_VERIF_DETAIL', verifDetail);
+    },
+    openCommissionModal(commissionDetail) {
+      this.commissionModal = true;
+      this.$store.commit('SET_COMMISSION_DETAIL', commissionDetail);
+    },
+    closeAndRefetch() {
+      this.getMerchants(this.merchantPagination);
+      this.verificationOptionModal = false;
+      this.verificationModal = false;
+      this.commissionModal = false;
+      this.itemStatusModal = false;
+      this.detailModal = false;
+    },
+    async suspendMerchant() {
       console.log('SUSPEND ME SENPAI');
       const payload = {
         verify_status: 'SUSPEND',
@@ -253,72 +276,18 @@ export default {
       try {
         const {
           data: { data },
-        } = await API.patch(`merchants/${store.state.modalState.verificationDetail.id}`, payload);
+        } = await API.patch(`merchants/${this.$store.verifDetail.id}`, payload);
         console.log('SUSPEND OK', data);
-        confirmSuspendModal.value = false;
-        verificationModal.value = false;
-        getMerchants(merchantPagination);
+        this.confirmSuspendModal = false;
+        this.verificationModal = false;
+        this.getMerchants(this.merchantPagination);
       } catch (error) {
         console.log(error);
       }
-    };
-
-    const openMerchantDetail = (id) => {
-      detailModal.value = true;
-      store.methods.setModalState({ id });
-    };
-    const openOpHourDetail = (operationalHours) => {
-      opHourModal.value = true;
-      store.methods.setModalState({ operationalHours });
-    };
-    const openMerchantVerivication = (verificationDetail) => {
-      verificationModal.value = true;
-      store.methods.setModalState({ verificationDetail });
-    };
-    const closeAndRefetch = () => {
-      getMerchants(merchantPagination);
-      verificationOptionModal.value = false;
-      verificationModal.value = false;
-      commissionModal.value = false;
-      itemStatusModal.value = false;
-      detailModal.value = false;
-    };
-    const openCommissionModal = ({ merchantId, merchantName }) => {
-      console.log(merchantId, merchantName);
-      commissionModal.value = true;
-      store.methods.setModalState({ merchantId, merchantName });
-    };
-
-    onMounted(() => {
-      getMerchants(merchantPagination.value);
-    });
-
-    return {
-      store,
-      columns,
-      merchants,
-      merchantPagination,
-      searchValue,
-      loading,
-
-      detailModal,
-      opHourModal,
-      verificationModal,
-      verificationOptionModal,
-      commissionModal,
-      confirmSuspendModal,
-      itemStatusModal,
-
-      openMerchantDetail,
-      openOpHourDetail,
-      openMerchantVerivication,
-      openCommissionModal,
-
-      closeAndRefetch,
-
-      getMerchants,
-      suspendMerchant,
-    };
+    },
+  },
+  async mounted() {
+    await this.getMerchants(this.merchantPagination);
   },
 };
 </script>

@@ -30,14 +30,14 @@
           <p class="text-grey-2">Verification Status</p>
           <p
             :class="
-              merchant.verificationStatus === 'Terverifikasi'
+              translateStatus(merchant.verificationStatus) === 'Terverifikasi'
                 ? 'text-mint'
-                : merchant.verificationStatus === 'Pending Verifikasi'
+                : translateStatus(merchant.verificationStatus) === 'Pending Verifikasi'
                 ? 'text-gold'
                 : 'text-flame'
             "
           >
-            {{ merchant.verificationStatus }}
+            {{ translateStatus(merchant.verificationStatus) }}
           </p>
         </template>
         <template v-else>
@@ -51,19 +51,19 @@
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Order Completed</p>
-          <p>{{ merchant.summary.completed }}</p>
+          <p>{{ merchant.summary?.completed }}</p>
           <p class="text-grey-2">Order Canceled</p>
-          <p>{{ merchant.summary.canceled }}</p>
+          <p>{{ merchant.summary?.canceled }}</p>
           <p class="text-grey-2">Order Rejected</p>
-          <p>{{ merchant.summary.rejected }}</p>
+          <p>{{ merchant.summary?.rejected }}</p>
           <p class="text-grey-2">Payment Expired</p>
-          <p>{{ merchant.summary.paymentExpired }}</p>
+          <p>{{ merchant.summary?.paymentExpired }}</p>
           <p class="text-grey-2">Payment Failure</p>
-          <p>{{ merchant.summary.paymentFailure }}</p>
+          <p>{{ merchant.summary?.paymentFailure }}</p>
           <p class="text-grey-2">Delivery Failed</p>
-          <p>{{ merchant.summary.deliveryFailed }}</p>
+          <p>{{ merchant.summary?.deliveryFailed }}</p>
           <p class="text-grey-2">Order Refunded</p>
-          <p>{{ merchant.summary.refunded }}</p>
+          <p>{{ merchant.summary?.refunded }}</p>
         </template>
         <template v-else>
           <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
@@ -76,7 +76,7 @@
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Items Sold</p>
-          <p>{{ merchant.summary.sold }}</p>
+          <p>{{ merchant.summary?.sold }}</p>
         </template>
         <template v-else>
           <div class="rounded bg-grey-4 h-4 animate-pulse"></div>
@@ -90,7 +90,7 @@
 
     <div class="overflow-auto hide-scrollbar">
       <template v-if="!loading">
-        <template v-if="merchant.menu.length">
+        <template v-if="merchant.menu?.length">
           <div v-for="(catalog, i) in merchant.menu" :key="i">
             <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
             <div class="divide-y divide-grey-4">
@@ -104,7 +104,7 @@
                   :category="item.group.name"
                   :description="item.description"
                   :price="item.price"
-                  :availability-status="store.methods.translateItemStatus(item.status)"
+                  :availability-status="translateItemStatus(item.status)"
                   :is-active="item.is_active"
                   :variants="item.variations"
                   @openItemStatusModal="$emit('openItemStatusModal')"
@@ -139,125 +139,30 @@
 </template>
 
 <script>
-import { onMounted, ref, inject } from 'vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
-import API from '@/apis';
+import mixin from '@/mixin';
 
 export default {
   name: 'MerchantDetail',
+  mixins: [mixin],
+  emits: ['openItemStatusModal'],
   components: {
     MenuCard,
   },
-  emits: ['openItemStatusModal'],
-  setup() {
-    const store = inject('store');
-    const loading = ref(false);
-    const merchantId = store.state.modalState.id;
-    const merchant = ref({
-      imageUrl: '',
-      name: '',
-      city: '',
-      joinedDate: '',
-      bank: '',
-      idNumber: '',
-      verificationStatus: '',
-      summary: {
-        canceled: 0,
-        completed: 0,
-        deliveryFailed: 0,
-        paymentExpired: 0,
-        paymentFailure: 0,
-        refunded: 0,
-        rejected: 0,
-        sold: 0,
-      },
-      menu: [],
-    });
-
-    const getMerchant = async () => {
-      try {
-        loading.value = true;
-        const {
-          data: { data },
-        } = await API.get(`merchants/${merchantId}`);
-
-        merchant.value = {
-          ...merchant.value,
-          name: data.name,
-          city: data.address.city.name,
-          bank: data.account.bank.name,
-          verificationStatus: store.methods.translateStatus(data.verify_status),
-          summary: {
-            canceled: store.methods.groupDigit(data.total_summary.canceled_order),
-            completed: store.methods.groupDigit(data.total_summary.completed),
-            deliveryFailed: store.methods.groupDigit(data.total_summary.delivery_failed),
-            paymentExpired: store.methods.groupDigit(data.total_summary.payment_expired),
-            paymentFailure: store.methods.groupDigit(data.total_summary.payment_failure),
-            refunded: store.methods.groupDigit(data.total_summary.refunded_order),
-            rejected: store.methods.groupDigit(data.total_summary.rejected_order),
-            sold: store.methods.groupDigit(data.total_summary.sold_items),
-          },
-          menu: [],
-        };
-
-        if (data.banners.length) {
-          merchant.value = {
-            ...merchant.value,
-            imageUrl: await store.methods.loadImage(data.banners[0].url),
-          };
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      loading.value = false;
-    };
-
-    const getKTP = async () => {
-      try {
-        console.log('GET KTP');
-        const {
-          data: { data },
-        } = await API.get(`merchants/${merchantId}/sellers`);
-
-        merchant.value = { ...merchant.value, idNumber: data[0].profile.identity_number };
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getMenu = async () => {
-      const {
-        data: { data: catalogs },
-      } = await API.get(`merchants/${merchantId}/catalogs`);
-
-      for (let i = 0; i < catalogs.length; i += 1) {
-        const {
-          data: { data: items },
-        } = await API.get(
-          `catalogs/${catalogs[i].id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK,SUSPEND`,
-        );
-        merchant.value.menu.push({ catalog_name: catalogs[i].name, items });
-      }
-      // catalogs.forEach(async (el) => {
-      //   const {
-      //     data: { data: items },
-      //   } = await API.get(`catalogs/${el.id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK`);
-      //   merchant.value.menu.push({ catalog_name: el.name, items });
-      // });
-    };
-
-    onMounted(() => {
-      getMerchant();
-      getKTP();
-      getMenu();
-    });
-
+  data() {
     return {
-      store,
-      merchant,
-      loading,
-      getMerchant,
+      loading: false,
     };
+  },
+  computed: {
+    merchant() {
+      return this.$store.state.merchant;
+    },
+  },
+  async mounted() {
+    this.loading = true;
+    await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+    this.loading = false;
   },
 };
 </script>

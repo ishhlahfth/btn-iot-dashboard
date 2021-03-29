@@ -20,6 +20,15 @@ export default {
       handleResize();
     });
   },
+  methods: {
+    handleResize() {
+      this.$store.commit('SET_SCREEN_WIDTH', window.innerWidth);
+    },
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
 };
 </script>
 

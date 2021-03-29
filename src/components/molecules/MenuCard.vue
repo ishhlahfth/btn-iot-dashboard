@@ -19,12 +19,8 @@
             <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
               <p class="font-medium">{{ name }}</p>
               <help-badge
-                :label="
-                  availabilityStatus === 'AVAILABLE'
-                    ? 'Available'
-                    : availabilityStatus.toLowerCase()
-                "
-                :color="availabilityStatus === 'AVAILABLE' ? 'positive' : 'negative'"
+                :label="availabilityStatus"
+                :color="availabilityStatus === 'Available' ? 'positive' : 'negative'"
               />
               <help-button
                 icon-only
@@ -40,7 +36,7 @@
             {{ description }}
           </p>
         </div>
-        <p class="text-small font-medium">{{ methods.convertToRp(price) }}</p>
+        <p class="text-small font-medium">{{ convertToRp(price) }}</p>
       </div>
       <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
         <help-button
@@ -80,12 +76,12 @@
                   <template v-for="(option, i) in variant.options" :key="i">
                     <help-radio
                       v-if="variant.is_mandatory"
-                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      :label="`${option.name} (${convertToRp(option.price)})`"
                       disabled
                     />
                     <help-checkbox
                       v-else
-                      :label="`${option.name} (${methods.convertToRp(option.price)})`"
+                      :label="`${option.name} (${convertToRp(option.price)})`"
                       disabled
                     />
                   </template>
@@ -101,7 +97,7 @@
         </div>
         <div class="grid">
           <help-button
-            v-if="state.screenWidth < 640"
+            v-if="$store.state.screenWidth < 640"
             :label="localIsActive ? 'disable product' : 'enable product'"
             bg-color="transparent"
             color="flame-dark"
@@ -113,14 +109,15 @@
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
+import mixin from '@/mixin';
 
 export default {
   name: 'MenuCard',
+  mixins: [mixin],
   components: {
     HelpBadge,
     HelpButton,
@@ -169,38 +166,32 @@ export default {
       default: false,
     },
   },
-  setup(props, { emit }) {
-    const { state, methods } = inject('store');
-    const variantOpened = ref(false);
-    const localIsActive = ref(true);
-    const localImageUrl = ref('');
-
-    const expandVariant = () => {
-      if (state.screenWidth < 640) {
-        variantOpened.value = !variantOpened.value;
-      }
-    };
-
-    const openItemStatusModal = () => {
-      emit('openItemStatusModal');
-      methods.setModalState({ itemDetail: props.raw });
-    };
-
-    onMounted(async () => {
-      console.log('🚀🚀🚀🚀🚀', props.raw);
-      localIsActive.value = props.isActive;
-      localImageUrl.value = await methods.loadImage(props.imageUrl);
-    });
-
+  data() {
     return {
-      state,
-      methods,
-      variantOpened,
-      localIsActive,
-      localImageUrl,
-      expandVariant,
-      openItemStatusModal,
+      variantOpened: false,
+      localIsActive: false,
+      localImageUrl: '',
     };
+  },
+  computed: {
+    screenWidth() {
+      return this.$store.state.screenWidth;
+    },
+  },
+  methods: {
+    expandVariant() {
+      if (this.screenWidth < 640) {
+        this.variantOpened = !this.variantOpened;
+      }
+    },
+    openItemStatusModal() {
+      this.$emit('openItemStatusModal');
+      this.$store.commit('SET_ITEM', this.raw);
+    },
+  },
+  async mounted() {
+    this.localIsActive = this.isActive;
+    this.localImageUrl = await this.$store.dispatch('loadImage', this.imageUrl);
   },
 };
 </script>

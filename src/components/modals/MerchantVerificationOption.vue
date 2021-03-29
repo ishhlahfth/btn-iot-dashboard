@@ -17,63 +17,63 @@
 </template>
 
 <script>
-import { inject, ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import API from '@/apis';
 
 export default {
-  name: 'MerchantVerification',
+  name: 'MerchantVerificationOption',
   components: {
     HelpButton,
     HelpInput,
     HelpSelect,
   },
   emits: ['closeAndRefetch'],
-  setup(_, { emit }) {
-    const {
-      state: {
-        modalState: { verificationDetail },
-      },
-    } = inject('store');
-
-    const statuses = [
-      { value: 'SUCCESS', label: 'Terverifikasi' },
-      { value: 'FAIL', label: 'Verifikasi Gagal' },
-      { value: 'SUSPEND', label: 'Akun Disabled' },
-    ];
-    const selectedStatus = ref({ value: 'SUCCESS', label: 'Terverifikasi' });
-    const failureReason = ref('');
-
-    const proceed = async () => {
+  data() {
+    return {
+      selectedStatus: { value: 'SUCCESS', label: 'Terverifikasi' },
+      statuses: [
+        { value: 'SUCCESS', label: 'Terverifikasi' },
+        { value: 'FAIL', label: 'Verifikasi Gagal' },
+        { value: 'SUSPEND', label: 'Akun Disabled' },
+      ],
+      failureReason: '',
+    };
+  },
+  computed: {
+    screenWidth() {
+      return this.$store.state.screenWidth;
+    },
+    verifDetail() {
+      return this.$store.state.verifDetail;
+    },
+  },
+  methods: {
+    async proceed() {
       const payload = {
-        verify_status: selectedStatus.value.value,
+        verify_status: this.selectedStatus.value,
         verify_reason:
-          selectedStatus.value.value === 'SUSPEND'
+          this.selectedStatus.value === 'SUSPEND'
             ? 'Harap menghubungi customer service'
-            : failureReason.value,
+            : this.failureReason,
       };
       try {
         const {
           data: { data },
-        } = await API.patch(`merchants/${verificationDetail.id}`, payload);
+        } = await API.patch(`merchants/${this.verifDetail.id}`, payload);
 
-        emit('closeAndRefetch');
+        this.$emit('closeAndRefetch');
         console.log('AFTER VERIFY', data);
       } catch (error) {
         console.log(error);
       }
-    };
-
-    return {
-      verificationDetail,
-      statuses,
-      selectedStatus,
-      failureReason,
-      proceed,
-    };
+    },
   },
+  // mounted() {
+  //   console.log('🌛', this.verifDetail);
+  //   this.selectedStatus = this.statuses.filter((el) => el.label === this.verifDetail.verify_status)[0];
+  // },
 };
 </script>
 
