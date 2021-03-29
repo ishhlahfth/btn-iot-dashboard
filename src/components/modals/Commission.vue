@@ -1,6 +1,15 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-md">
-    <p class="text-heading4 font-semibold">Edit Commission</p>
+    <div class="flex justify-between items-center">
+      <p class="text-heading4 font-semibold">Edit Commission</p>
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
+    </div>
     <div class="grid sm:grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <div>
         <p class="text-grey-2">Merchant Name</p>
@@ -8,7 +17,8 @@
       </div>
       <div>
         <p class="text-grey-2">Current Commission</p>
-        <p>{{ commissionDetail.formula.value }} %</p>
+        <p v-if="!loading">{{ commissionDetail.formula.value }} %</p>
+        <div v-else class="rounded bg-grey-4 h-4 animate-pulse"></div>
       </div>
       <div class="sm:col-span-2">
         <form @submit.prevent="proceed" class="grid gap-4">
@@ -36,12 +46,13 @@ export default {
     HelpButton,
     HelpInput,
   },
-  emits: ['closeAndRefetch'],
+  emits: ['closeAndRefetch', 'close'],
   data() {
     return {
       commissionDetail: {
         formula: { value: 0 },
       },
+      loading: false,
       newCommission: '',
     };
   },
@@ -55,12 +66,12 @@ export default {
   },
   methods: {
     async getCommission() {
+      this.loading = true;
       try {
         const {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/bill-formulas`);
         if (data) {
-          console.log('RESPONSE', data);
           if (data.length) {
             this.commissionDetail = data.filter((el) => el.order_type_id === 4)[0];
           }
@@ -68,6 +79,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.loading = false;
     },
     async updateCommission() {
       const payload = {
@@ -78,16 +90,18 @@ export default {
         formula: { type: 'PERCENT', value: +this.newCommission },
         formula_type: this.commissionDetail.formula_type,
       };
+      this.loading = true;
       try {
         const {
           data: { data },
         } = await API.patch(`bill-formulas/${this.commissionDetail.id}`, payload);
 
-        this.$emit('closeAndRefetch');
+        this.getCommission();
         console.log('UPDATED', data);
       } catch (error) {
         console.log(error);
       }
+      this.loading = false;
     },
   },
   mounted() {

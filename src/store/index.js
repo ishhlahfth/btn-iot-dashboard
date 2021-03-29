@@ -4,6 +4,7 @@ import API from '@/apis';
 export default createStore({
   state: {
     screenWidth: 0,
+    mini: true,
     merchantId: 0,
     merchant: {},
     item: {},
@@ -17,6 +18,9 @@ export default createStore({
   mutations: {
     SET_SCREEN_WIDTH(state, payload) {
       state.screenWidth = payload;
+    },
+    SET_MINI(state, payload) {
+      state.mini = payload;
     },
     SET_MERCHANT_ID(state, payload) {
       state.merchantId = payload;
@@ -42,7 +46,6 @@ export default createStore({
   },
   actions: {
     async loadMerchant({ commit, dispatch }, merchantId) {
-      console.log('🌆', 'LOAD MERCHANT');
       commit('SET_LOADING', { type: 'merchant', payload: true });
       let merchant = {};
       try {
@@ -110,6 +113,7 @@ export default createStore({
       }
       return imageURL;
     },
+    // async loadKTP(_, )
     translateItemStatus(_, value) {
       console.log('TRANSLATE', value);
       let translated = '';

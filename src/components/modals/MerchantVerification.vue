@@ -31,7 +31,8 @@
       </div>
       <div>
         <p class="text-grey-2">ID No. (KTP)</p>
-        <p>{{ idNumber }}</p>
+        <p v-if="!loading">{{ idNumber }}</p>
+        <div v-else class="rounded bg-grey-4 h-4 animate-pulse"></div>
       </div>
       <div v-show="verifDetail.verify_status !== 'Terverifikasi'">
         <p class="text-grey-2">Cause of Failure</p>
@@ -97,6 +98,9 @@ export default {
     verifDetail() {
       return this.$store.state.verifDetail;
     },
+    merchantId() {
+      return this.$store.state.merchantId;
+    },
   },
   methods: {
     async getKTP() {
@@ -105,6 +109,8 @@ export default {
         const {
           data: { data },
         } = await API.get(`merchants/${this.verifDetail.id}/sellers`);
+
+        console.log('K T P', data);
 
         this.idNumber = data[0].profile.identity_number || '-';
 

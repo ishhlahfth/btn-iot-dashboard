@@ -33,7 +33,7 @@
   </help-modal>
 
   <help-modal v-model="commissionModal">
-    <commission @closeAndRefetch="closeAndRefetch" />
+    <commission @close="commissionModal = false" />
   </help-modal>
 
   <help-modal v-model="itemStatusModal">
@@ -77,7 +77,7 @@
             <help-button
               icon-only
               icon="dots-vertical"
-              bg-color="grey-6"
+              bg-color="transparent"
               color="grey-1"
               @click="openCommissionModal({ merchantId: row.id, merchantName: row.name })"
             />

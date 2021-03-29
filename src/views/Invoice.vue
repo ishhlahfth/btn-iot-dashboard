@@ -12,7 +12,10 @@
         />
       </div>
       <div>
-        <p>Invoice {{ poNumber }} has been downloaded successfully. Please kindly check your downloads folder to open the invoice.</p>
+        <p>
+          Invoice {{ poNumber }} has been downloaded successfully. Please kindly check your
+          downloads folder to open the invoice.
+        </p>
       </div>
     </div>
   </help-modal>
@@ -124,19 +127,19 @@
             style="grid-column: span 1 / span 1; text-align: right;"
             :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
           >
-            {{ methods.groupDigit(item.qty) }}
+            {{ groupDigit(item.qty) }}
           </p>
           <p
             style="grid-column: span 2 / span 2; text-align: right;"
             :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
           >
-            {{ methods.convertToRp(item.price) }}
+            {{ convertToRp(item.price) }}
           </p>
           <p
             style="grid-column: span 2 / span 2; text-align: right;"
             :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
           >
-            {{ methods.convertToRp(item.subtotal_price) }}
+            {{ convertToRp(item.subtotal_price) }}
           </p>
         </div>
         <div
@@ -215,87 +218,85 @@
 </template>
 
 <script>
-import { inject, onMounted, ref } from 'vue';
 import axios from 'axios';
-import { useRoute } from 'vue-router';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
+import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import html2pdf from 'html2pdf.js';
 
 export default {
   name: 'Invoice',
+  mixins: [mixin],
   components: {
     HelpButton,
     HelpModal,
   },
-  setup() {
-    const { methods } = inject('store');
-    const route = useRoute();
+  data() {
+    return {
+      poNumber: '',
+      merchantName: '',
+      orderDate: '',
+      buyerName: '',
+      addressShort: '',
+      addressFull: '',
+      phoneNumber: '',
+      items: [],
+      subtotalItem: '',
+      deliveryName: '',
+      deliveryPrice: '',
+      subtotalDelivery: '',
+      totalPrice: '',
 
-    const poNumber = ref('');
-    const merchantName = ref('');
-    const orderDate = ref('');
-    const buyerName = ref('');
-    const addressShort = ref('');
-    const addressFull = ref('');
-    const phoneNumber = ref('');
-    const items = ref([]);
-    const subtotalItem = ref('');
-    const deliveryName = ref('');
-    const deliveryPrice = ref('');
-    const subtotalDelivery = ref('');
-    const totalPrice = ref('');
-
-    const notification = ref(false);
-    const loading = ref(false);
-
-    const getInvoice = async () => {
+      notification: false,
+      loading: false,
+    };
+  },
+  methods: {
+    async getInvoice() {
       try {
-        loading.value = true;
+        this.loading = true;
         const {
           data: { data },
-        } = await axios.get(`http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${route.params.id}`, {
-          headers: {
-            'x-api-key': `${route.query.key}`,
-            'x-device-type': 'LINUX',
-            'x-device-os-version': 'Ubuntu18.04',
-            'x-device-model': '4s-dk0115AU',
-            'x-app-version': 'v1.2',
-            'x-request-id': '1234',
-            'x-device-utc-offset': '+07:00',
-            'x-device-lang': 'en',
-            'x-device-notification-code': `${route.query.code}`,
+        } = await axios.get(
+          `http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
+          {
+            headers: {
+              'x-api-key': `${this.$route.query.key}`,
+              'x-device-type': 'LINUX',
+              'x-device-os-version': 'Ubuntu18.04',
+              'x-device-model': '4s-dk0115AU',
+              'x-app-version': 'v1.2',
+              'x-request-id': '1234',
+              'x-device-utc-offset': '+07:00',
+              'x-device-lang': 'en',
+              'x-device-notification-code': `${this.$route.query.code}`,
+            },
           },
-        });
+        );
 
-        poNumber.value = data.code || '-';
-        merchantName.value = data.merchant.name || '-';
-        orderDate.value = dayjs(data.date).format('DD-MM-YYYY HH:mm:ss') || '-';
-        buyerName.value = data.customer.profile.name || '-';
-        addressShort.value = data.order_type_details.shipping_address.name || '-';
-        addressFull.value = data.order_type_details.shipping_address.line_address || '-';
-        phoneNumber.value = data.order_type_details.shipping_address.contact_person_hp || '-';
-        items.value = data.items || [];
-        subtotalItem.value = methods.convertToRp(data.subtotal_price) || 'Rp 0';
-        deliveryName.value = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
-        deliveryPrice.value = methods.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
-        subtotalDelivery.value = deliveryPrice.value;
-        totalPrice.value = methods.convertToRp(data.total_price) || 'Rp 0';
+        this.poNumber = data.code || '-';
+        this.merchantName = data.merchant.name || '-';
+        this.orderDate = dayjs(data.date).format('DD-MM-YYYY HH:mm:ss') || '-';
+        this.buyerName = data.customer.profile.name || '-';
+        this.addressShort = data.order_type_details.shipping_address.name || '-';
+        this.addressFull = data.order_type_details.shipping_address.line_address || '-';
+        this.phoneNumber = data.order_type_details.shipping_address.contact_person_hp || '-';
+        this.items = data.items || [];
+        this.subtotalItem = this.convertToRp(data.subtotal_price) || 'Rp 0';
+        this.deliveryName = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
+        this.deliveryPrice = this.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
+        this.subtotalDelivery = this.deliveryPrice;
+        this.totalPrice = this.convertToRp(data.total_price) || 'Rp 0';
       } catch (error) {
         console.log(error);
       }
-      loading.value = false;
-    };
-
-    onMounted(() => {
-      getInvoice();
-    });
-
-    const generatePDF = () => {
+      this.loading = false;
+    },
+    generatePDF() {
       const element = document.getElementById('invoice');
       const options = {
-        filename: `wehelpyou-invoice-${poNumber.value}.pdf`,
+        filename: `wehelpyou-invoice-${this.poNumber}.pdf`,
         html2pdf: { scale: 2, height: 812, width: 375 },
         jsPDF: { format: 'legal', orientation: 'portrait' },
       };
@@ -304,29 +305,12 @@ export default {
         .from(element)
         .save()
         .then(() => {
-          notification.value = true;
+          this.notification = true;
         });
-    };
-
-    return {
-      methods,
-      poNumber,
-      merchantName,
-      orderDate,
-      buyerName,
-      addressShort,
-      addressFull,
-      phoneNumber,
-      items,
-      subtotalItem,
-      deliveryName,
-      deliveryPrice,
-      subtotalDelivery,
-      totalPrice,
-      loading,
-      notification,
-      generatePDF,
-    };
+    },
+  },
+  mounted() {
+    this.getInvoice();
   },
 };
 </script>

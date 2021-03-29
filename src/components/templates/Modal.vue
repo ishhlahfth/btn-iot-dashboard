@@ -6,7 +6,7 @@
       @click="$emit('update:modelValue', false)"
     />
   </transition>
-  <transition :name="store.state.screenWidth < 640 ? 'mobile-slide-up' : 'slide-up'" appear>
+  <transition :name="screenWidth < 640 ? 'mobile-slide-up' : 'slide-up'" appear>
     <div
       v-if="modelValue"
       class="fixed modal-style bg-snow p-4 sm:p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
@@ -17,8 +17,6 @@
 </template>
 
 <script>
-import { inject } from 'vue';
-
 export default {
   name: 'HelpModal',
   props: {
@@ -27,9 +25,10 @@ export default {
       default: false,
     },
   },
-  setup() {
-    const store = inject('store');
-    return { store };
+  computed: {
+    screenWidth() {
+      return this.$store.state.screenWidth;
+    },
   },
 };
 </script>

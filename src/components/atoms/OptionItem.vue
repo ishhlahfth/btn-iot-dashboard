@@ -20,11 +20,6 @@ export default {
       default: '',
     },
   },
-  // methods: {
-  //   misalnya() {
-  //     console.log('📞', this.label);
-  //   },
-  // },
 };
 </script>
 

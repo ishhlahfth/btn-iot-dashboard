@@ -3,23 +3,23 @@
 </template>
 
 <script>
-import { provide, onMounted } from 'vue';
-import store from '@/composables';
+// import { provide, onMounted } from 'vue';
+// import store from '@/composables';
 
 export default {
   name: 'App',
-  setup() {
-    provide('store', store);
+  // setup() {
+  //   provide('store', store);
 
-    const handleResize = () => {
-      store.state.screenWidth = window.innerWidth;
-    };
+  //   const handleResize = () => {
+  //     store.state.screenWidth = window.innerWidth;
+  //   };
 
-    onMounted(() => {
-      window.addEventListener('resize', handleResize);
-      handleResize();
-    });
-  },
+  //   onMounted(() => {
+  //     window.addEventListener('resize', handleResize);
+  //     handleResize();
+  //   });
+  // },
   methods: {
     handleResize() {
       this.$store.commit('SET_SCREEN_WIDTH', window.innerWidth);
