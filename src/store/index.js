@@ -90,7 +90,7 @@ export default createStore({
           const {
             data: { data: items },
           } = await API.get(
-            `catalogs/${catalogs[i].id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK,SUSPEND`,
+            `catalogs/${catalogs[i].id}/items?status=AVAILABLE,UNAVAILABLE,OUT_OF_STOCK,SUSPEND,HIDDEN`,
           );
           merchant.menu.push({ catalog_name: catalogs[i].name, items });
         }
