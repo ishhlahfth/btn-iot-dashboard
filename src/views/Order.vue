@@ -39,20 +39,19 @@
         </template> -->
         <template v-slot:body="{ column, row }">
           <!-- <help-checkbox v-if="column === 'checkbox'" /> -->
-          <div class="grid grid-flow-col auto-cols-max gap-2" v-if="column === 'current_step'">
-            <help-badge
-              :label="row.current_step"
-              :color="
-                row.current_step === 'Pesanan Selesai'
-                  ? 'positive'
-                  : row.current_step === 'Sedang Dikirim' ||
-                    row.current_step === 'Menunggu Konfirmasi'
-                  ? 'warning'
-                  : 'negative'
-              "
-              @click="openMerchantVerivication(row)"
-            />
-          </div>
+          <help-badge
+            v-if="column === 'current_step'"
+            :label="row.current_step"
+            :color="
+              row.current_step === 'Pesanan Selesai'
+                ? 'positive'
+                : row.current_step === 'Sedang Dikirim' ||
+                  row.current_step === 'Menunggu Konfirmasi'
+                ? 'warning'
+                : 'negative'
+            "
+            @click="openMerchantVerivication(row)"
+          />
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
@@ -95,6 +94,7 @@ export default {
         { field: 'current_step', label: 'status', align: 'center' },
         { field: 'merchant_name', label: 'merchant name' },
         { field: 'customer_name', label: 'buyer name' },
+        { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
         { field: 'delivery_price', label: 'delivery price' },
         { field: 'payment_method', label: 'payment method' },
@@ -142,6 +142,7 @@ export default {
       const order = pagination.order || 'asc';
       const search = this.searchValue || '';
       try {
+        this.loading = true;
         const {
           data: { data },
         } = await API.get(
@@ -167,10 +168,10 @@ export default {
           sort,
           order,
         };
-        console.log('ORDERS:', data);
       } catch (error) {
         console.log(error);
       }
+      this.loading = false;
     },
     openOrderDetail() {
       console.log('OPEN ORDER DETAIL');
