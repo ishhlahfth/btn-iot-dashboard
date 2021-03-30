@@ -33,7 +33,7 @@
   </help-modal>
 
   <help-modal v-model="commissionModal">
-    <commission @close="commissionModal = false" />
+    <commission @close="commissionModal = false" @refetch="getMerchants(merchantPagination)" />
   </help-modal>
 
   <help-modal v-model="itemStatusModal">
@@ -178,6 +178,11 @@ export default {
       itemStatusModal: false,
     };
   },
+  computed: {
+    verifDetail() {
+      return this.$store.state.verifDetail;
+    },
+  },
   methods: {
     async getCommission(merchantId) {
       let commission = null;
@@ -278,7 +283,7 @@ export default {
       try {
         const {
           data: { data },
-        } = await API.patch(`merchants/${this.$store.verifDetail.id}`, payload);
+        } = await API.patch(`merchants/${this.verifDetail.id}`, payload);
         console.log('SUSPEND OK', data);
         this.confirmSuspendModal = false;
         this.verificationModal = false;

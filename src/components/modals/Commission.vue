@@ -46,7 +46,7 @@ export default {
     HelpButton,
     HelpInput,
   },
-  emits: ['closeAndRefetch', 'close'],
+  emits: ['closeAndRefetch', 'close', 'refetch'],
   data() {
     return {
       commissionDetail: {
@@ -97,6 +97,7 @@ export default {
         } = await API.patch(`bill-formulas/${this.commissionDetail.id}`, payload);
 
         this.getCommission();
+        this.$emit('refetch');
         console.log('UPDATED', data);
       } catch (error) {
         console.log(error);
