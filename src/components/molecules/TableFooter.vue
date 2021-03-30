@@ -8,7 +8,7 @@
     </p>
 
     <div class="flex items-center text-small">
-      <span class="hidden sm:inline mr-2">Records per page</span>
+      <span class="hidden sm:inline mr-2 select-none">Records per page</span>
       <div class="mr-2">
         <help-select
           :options="[10, 25, 50, 100]"
