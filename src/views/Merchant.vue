@@ -64,7 +64,7 @@
         @onChangePagination="getMerchants($event)"
         @sort="getMerchants($event)"
       >
-        <template v-slot="{ column, row }">
+        <template v-slot:body="{ column, row }">
           <p
             v-if="column === 'menu'"
             class="text-royal font-medium cursor-pointer"

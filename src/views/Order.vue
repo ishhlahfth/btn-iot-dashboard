@@ -2,9 +2,20 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <help-button label="transfer" icon="switch-horizontal" />
+      <div class="grid grid-flow-col gap-4">
+        <help-button
+          v-if="!transferMode"
+          label="transfer"
+          icon="switch-horizontal"
+          @click="transferMode = true"
+        />
+        <template v-else>
+          <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
+          <help-button label="transfer" bg-color="mint" @click="transferMode = !transferMode" />
+        </template>
+      </div>
     </div>
-    <div>
+    <!-- <div>
       <form @submit.prevent="getOrders">
         <help-input
           v-model="searchValue"
@@ -12,7 +23,7 @@
           right-icon="search"
         />
       </form>
-    </div>
+    </div> -->
     <div class="overflow-hidden">
       <help-table
         path="orders"
@@ -23,7 +34,11 @@
         @onChangePagination="getOrders($event)"
         @sort="getOrders($event)"
       >
-        <template v-slot="{ column, row }">
+        <template v-slot:header="{ column: { field } }">
+          <help-checkbox v-if="field === 'checkbox'" />
+        </template>
+        <template v-slot:body="{ column, row }">
+          <help-checkbox v-if="column === 'checkbox'" />
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
@@ -39,7 +54,8 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
+import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+// import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -50,14 +66,28 @@ export default {
   mixins: [mixin],
   components: {
     HelpButton,
-    HelpInput,
+    HelpCheckbox,
+    // HelpInput,
     HelpTable,
   },
   data() {
     return {
       searchValue: '',
+      transferMode: false,
       date: '',
-      columns: [
+      orders: [],
+      orderPagination: {
+        limit: 10,
+        offset: 0,
+        sort: 'date',
+        order: 'asc',
+      },
+      loading: false,
+    };
+  },
+  computed: {
+    columns() {
+      const columns = [
         { field: 'date', label: 'order date', sortable: true },
         { field: 'code', label: 'PO Number', sortable: true },
         { field: 'merchant_name', label: 'merchant name', sortable: true },
@@ -77,16 +107,12 @@ export default {
         { field: 'updated_by', label: 'updated by', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
         // { field: 'actions', label: ' ' },
-      ],
-      orders: [],
-      orderPagination: {
-        limit: 10,
-        offset: 0,
-        sort: 'date',
-        order: 'asc',
-      },
-      loading: false,
-    };
+      ];
+      if (this.transferMode) {
+        columns.unshift({ field: 'checkbox', label: 'checkbox', align: 'center' });
+      }
+      return columns;
+    },
   },
   methods: {
     async getOrders(pagination) {
@@ -113,6 +139,9 @@ export default {
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
         }));
+
+        const whwhwhw = await API.get(`transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`);
+        console.log('🍌', whwhwhw);
 
         this.orderPagination = {
           limit,

@@ -20,32 +20,35 @@
                 ]"
                 @click="sort(column)"
               >
-                <icon
-                  v-if="
-                    pagination.sort === column.field &&
-                      column.sortable &&
-                      column.align === 'right'
-                  "
-                  :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
-                  class="mr-1"
-                />
-                <p
-                  :class="[
-                    { 'text-center': column.align === 'center' },
-                    { 'text-right': column.align === 'right' },
-                  ]"
-                >
-                  {{ column.label }}
-                </p>
-                <icon
-                  v-if="
-                    pagination.sort === column.field &&
-                      column.sortable &&
-                      column.align !== 'right'
-                  "
-                  :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
-                  class="ml-1"
-                />
+                <slot name="header" :column="column">
+                  <!-- default, when there is no slot -->
+                  <icon
+                    v-if="
+                      pagination.sort === column.field &&
+                        column.sortable &&
+                        column.align === 'right'
+                    "
+                    :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
+                    class="mr-1"
+                  />
+                  <p
+                    :class="[
+                      { 'text-center': column.align === 'center' },
+                      { 'text-right': column.align === 'right' },
+                    ]"
+                  >
+                    {{ column.label }}
+                  </p>
+                  <icon
+                    v-if="
+                      pagination.sort === column.field &&
+                        column.sortable &&
+                        column.align !== 'right'
+                    "
+                    :name="pagination.order === 'asc' ? 'chevron-up' : 'chevron-down'"
+                    class="ml-1"
+                  />
+                </slot>
               </div>
             </th>
           </tr>
@@ -63,7 +66,7 @@
                         { 'place-items-end': columnAlignment(i) === 'right' },
                       ]"
                     >
-                      <slot :column="i" :row="row" :data="data">
+                      <slot name="body" :column="i" :row="row" :data="data">
                         <!-- default, when there is no slot -->
                         <p>{{ data }}</p>
                       </slot>
