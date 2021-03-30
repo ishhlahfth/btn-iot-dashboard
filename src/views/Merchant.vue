@@ -64,7 +64,7 @@
         @onChangePagination="getMerchants($event)"
         @sort="getMerchants($event)"
       >
-        <template v-slot="{ column, row }">
+        <template v-slot:body="{ column, row }">
           <p
             v-if="column === 'menu'"
             class="text-royal font-medium cursor-pointer"
@@ -90,20 +90,19 @@
             See Detail
           </p>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
-          <div class="grid grid-flow-col auto-cols-max gap-2" v-if="column === 'verify_status'">
-            <help-badge
-              class="cursor-pointer"
-              :label="row.verify_status"
-              :color="
-                row.verify_status === 'Terverifikasi'
-                  ? 'positive'
-                  : row.verify_status === 'Pending Verifikasi'
-                  ? 'warning'
-                  : 'negative'
-              "
-              @click="openMerchantVerivication(row)"
-            />
-          </div>
+          <help-badge
+            v-if="column === 'verify_status'"
+            class="cursor-pointer"
+            :label="row.verify_status"
+            :color="
+              row.verify_status === 'Terverifikasi'
+                ? 'positive'
+                : row.verify_status === 'Pending Verifikasi'
+                ? 'warning'
+                : 'negative'
+            "
+            @click="openMerchantVerivication(row)"
+          />
         </template>
       </help-table>
     </div>

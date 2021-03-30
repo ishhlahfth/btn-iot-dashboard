@@ -2,9 +2,20 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <help-button label="transfer" icon="switch-horizontal" />
+      <!-- <div class="grid grid-flow-col gap-4">
+        <help-button
+          v-if="!transferMode"
+          label="transfer"
+          icon="switch-horizontal"
+          @click="transferMode = true"
+        />
+        <template v-else>
+          <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
+          <help-button label="transfer" bg-color="mint" @click="transferMode = !transferMode" />
+        </template>
+      </div> -->
     </div>
-    <div>
+    <!-- <div>
       <form @submit.prevent="getOrders">
         <help-input
           v-model="searchValue"
@@ -12,7 +23,7 @@
           right-icon="search"
         />
       </form>
-    </div>
+    </div> -->
     <div class="overflow-hidden">
       <help-table
         path="orders"
@@ -23,7 +34,24 @@
         @onChangePagination="getOrders($event)"
         @sort="getOrders($event)"
       >
-        <template v-slot="{ column, row }">
+        <!-- <template v-slot:header="{ column: { field } }">
+          <help-checkbox v-if="field === 'checkbox'" />
+        </template> -->
+        <template v-slot:body="{ column, row }">
+          <!-- <help-checkbox v-if="column === 'checkbox'" /> -->
+          <help-badge
+            v-if="column === 'current_step'"
+            :label="row.current_step"
+            :color="
+              row.current_step === 'Pesanan Selesai'
+                ? 'positive'
+                : row.current_step === 'Sedang Dikirim' ||
+                  row.current_step === 'Menunggu Konfirmasi'
+                ? 'warning'
+                : 'negative'
+            "
+            @click="openMerchantVerivication(row)"
+          />
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
@@ -38,8 +66,10 @@
 </template>
 
 <script>
-import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
+import HelpBadge from '@/components/atoms/Badge.vue';
+// import HelpButton from '@/components/atoms/Button.vue';
+// import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+// import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -49,35 +79,29 @@ export default {
   name: 'Order',
   mixins: [mixin],
   components: {
-    HelpButton,
-    HelpInput,
+    HelpBadge,
+    // HelpButton,
+    // HelpCheckbox,
+    // HelpInput,
     HelpTable,
   },
   data() {
     return {
       searchValue: '',
-      date: '',
       columns: [
-        { field: 'date', label: 'order date', sortable: true },
-        { field: 'code', label: 'PO Number', sortable: true },
-        { field: 'merchant_name', label: 'merchant name', sortable: true },
-        { field: 'customer_name', label: 'buyer name', sortable: true },
-        {
-          field: 'transfer_status',
-          label: 'transfer status',
-          align: 'center',
-          sortable: true,
-        },
-        { field: 'failure_reason', label: 'failure reason' },
-        { field: 'subtotal_price', label: 'item price', sortable: true },
-        { field: 'commission_fee', label: 'commission', sortable: true },
-        { field: 'delivery_price', label: 'delivery price', sortable: true },
-        { field: 'payment_method', label: 'payment method', sortable: true },
-        { field: 'updated_at', label: 'last updated', sortable: true },
-        { field: 'updated_by', label: 'updated by', sortable: true },
+        { field: 'date', label: 'order date' },
+        { field: 'code', label: 'PO Number' },
+        { field: 'current_step', label: 'status', align: 'center' },
+        { field: 'merchant_name', label: 'merchant name' },
+        { field: 'customer_name', label: 'buyer name' },
+        { field: 'subtotal_price', label: 'item price' },
+        { field: 'commission_fee', label: 'commission' },
+        { field: 'delivery_price', label: 'delivery price' },
+        { field: 'payment_method', label: 'payment method' },
         { field: 'detail', label: 'detail', align: 'center' },
-        // { field: 'actions', label: ' ' },
       ],
+      transferMode: false,
+      date: '',
       orders: [],
       orderPagination: {
         limit: 10,
@@ -88,6 +112,28 @@ export default {
       loading: false,
     };
   },
+  // computed: {
+  //   columns() {
+  //     const columns = [
+  //       { field: 'date', label: 'order date' },
+  //       { field: 'code', label: 'PO Number' },
+  //       { field: 'current_step', label: 'status', align: 'center' },
+  //       { field: 'merchant_name', label: 'merchant name' },
+  //       { field: 'customer_name', label: 'buyer name' },
+  //       // { field: 'failure_reason', label: 'failure reason' },
+  //       // { field: 'subtotal_price', label: 'item price' },
+  //       { field: 'commission_fee', label: 'commission' },
+  //       { field: 'delivery_price', label: 'delivery price' },
+  //       { field: 'payment_method', label: 'payment method' },
+  //       { field: 'detail', label: 'detail', align: 'center' },
+  //       // { field: 'actions', label: ' ' },
+  //     ];
+  //     // if (this.transferMode) {
+  //     //   columns.unshift({ field: 'checkbox', label: 'checkbox', align: 'center' });
+  //     // }
+  //     return columns;
+  //   },
+  // },
   methods: {
     async getOrders(pagination) {
       const limit = pagination.limit || 10;
@@ -96,6 +142,7 @@ export default {
       const order = pagination.order || 'asc';
       const search = this.searchValue || '';
       try {
+        this.loading = true;
         const {
           data: { data },
         } = await API.get(
@@ -106,6 +153,7 @@ export default {
           id: el.id,
           code: el.code,
           date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
+          current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
           commission_fee: this.convertToRp(el.commission_fee),
@@ -120,10 +168,10 @@ export default {
           sort,
           order,
         };
-        console.log('ORDERS:', data);
       } catch (error) {
         console.log(error);
       }
+      this.loading = false;
     },
     openOrderDetail() {
       console.log('OPEN ORDER DETAIL');
