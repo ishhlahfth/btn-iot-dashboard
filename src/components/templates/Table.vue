@@ -55,7 +55,7 @@
             <template v-if="processedTableData.length > 0">
               <tr v-for="(row, i) in processedTableData" :key="i" class="bg-white">
                 <template v-for="(data, i) in row" :key="i">
-                  <td v-if="matchColumn(i)" class="py-3 px-6 text-small">
+                  <td v-if="matchColumn(i)" class="py-3 px-6 text-small text-grey-2">
                     <div
                       class="w-full grid"
                       :class="[

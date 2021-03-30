@@ -3,23 +3,9 @@
 </template>
 
 <script>
-// import { provide, onMounted } from 'vue';
-// import store from '@/composables';
 
 export default {
   name: 'App',
-  // setup() {
-  //   provide('store', store);
-
-  //   const handleResize = () => {
-  //     store.state.screenWidth = window.innerWidth;
-  //   };
-
-  //   onMounted(() => {
-  //     window.addEventListener('resize', handleResize);
-  //     handleResize();
-  //   });
-  // },
   methods: {
     handleResize() {
       this.$store.commit('SET_SCREEN_WIDTH', window.innerWidth);
@@ -33,6 +19,9 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  @apply bg-grey-6;
+}
 body {
   font-size: 14px;
   color: #303b4d;
