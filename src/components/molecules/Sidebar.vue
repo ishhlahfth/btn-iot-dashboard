@@ -32,6 +32,7 @@ export default {
       collapsed: true,
       links: [
         { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
+        { path: '/bns/order', label: 'Order', icon: 'cube' },
         // { path: '/bns/admin', label: 'Admin', icon: 'shield' },
         // { path: '/bns/role', label: 'Role', icon: 'user-group' },
         { path: '/bns/home', label: 'Home', icon: 'home' },
