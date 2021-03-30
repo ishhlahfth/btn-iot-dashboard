@@ -2,7 +2,7 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <!-- <help-button label="transfer" /> -->
+      <help-button label="transfer" icon="switch-horizontal" />
     </div>
     <div>
       <form @submit.prevent="getOrders">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import mixin from '@/mixin';
@@ -48,12 +49,14 @@ export default {
   name: 'Order',
   mixins: [mixin],
   components: {
+    HelpButton,
     HelpInput,
     HelpTable,
   },
   data() {
     return {
       searchValue: '',
+      date: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
         { field: 'code', label: 'PO Number', sortable: true },
