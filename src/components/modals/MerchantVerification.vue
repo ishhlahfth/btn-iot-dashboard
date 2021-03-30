@@ -116,9 +116,9 @@ export default {
 
         console.log('K T P', data);
 
-        this.idNumber = data[0].profile.identity_number || '-';
+        this.idNumber = data[0]?.profile.identity_number || '-';
 
-        if (data[0].banners.length) {
+        if (data[0]?.banners.length) {
           this.idImage = await this.$store.dispatch('loadImage', data[0].banners[0].url);
         }
       } catch (error) {
