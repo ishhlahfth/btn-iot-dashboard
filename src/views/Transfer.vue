@@ -1,4 +1,14 @@
 <template>
+  <help-modal v-model="confirmTransferModal">
+    <confirmation
+      title="Transfer confirmation"
+      message="Are you sure you want to transfer the selected orders? This action cannot be undone"
+      @close="confirmTransferModal = false"
+      @cancel="confirmTransferModal = false"
+      @confirm="conductTransfer"
+    />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Transfer</p>
@@ -11,7 +21,7 @@
         />
         <template v-else>
           <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
-          <help-button label="transfer" bg-color="mint" @click="transferMode = !transferMode" />
+          <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
         </template>
       </div>
     </div>
@@ -35,10 +45,11 @@
         @sort="getTransferData($event)"
       >
         <template v-slot:header="{ column: { field } }">
-          <help-checkbox v-if="field === 'checkbox'" />
+          <help-checkbox v-if="field === 'is_checked'" />
         </template>
         <template v-slot:body="{ column, row }">
-          <help-checkbox v-if="column === 'checkbox'" />
+          <help-checkbox v-if="column === 'is_checked'" v-model:checked="row.is_checked.val" />
+          <p v-if="column === 'is_checked'" class="text-purple-600">{{ row.is_checked }}</p>
           <help-badge
             v-if="column === 'transfer_status'"
             :label="row.transfer_status"
@@ -58,9 +69,11 @@
 </template>
 
 <script>
+import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 // import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import mixin from '@/mixin';
@@ -71,9 +84,11 @@ export default {
   name: 'Transfer',
   mixins: [mixin],
   components: {
+    Confirmation,
     HelpBadge,
     HelpButton,
     HelpCheckbox,
+    HelpModal,
     // HelpInput,
     HelpTable,
   },
@@ -87,6 +102,7 @@ export default {
         offset: 0,
       },
       loading: false,
+      confirmTransferModal: false,
     };
   },
   computed: {
@@ -107,7 +123,7 @@ export default {
         // { field: 'detail', label: 'detail', align: 'center' },
       ];
       if (this.transferMode) {
-        columns.unshift({ field: 'checkbox', label: 'checkbox', align: 'center' });
+        columns.unshift({ field: 'is_checked', label: 'checkbox', align: 'center' });
       }
       return columns;
     },
@@ -129,7 +145,6 @@ export default {
           order_date: dayjs(el.order.date).format('DD-MM-YYYY HH:mm:ss'),
           code: el.order?.code,
           transfer_status: el.order?.transfer_status,
-          // result_logs: 'LOGS',
           result_logs: JSON.stringify(el.result_logs, null, 2),
           merchant_name: el.order?.merchant.name,
           customer_name: el.customer?.name,
@@ -139,6 +154,7 @@ export default {
           payment_method: el.order?.payment_method,
           transfer_date: dayjs(el.transfer_date).format('DD-MM-YYYY HH:mm:ss'),
           transfer_by: el.transfer_by,
+          is_checked: { val: false },
         }));
 
         this.transferPagination = {
@@ -149,6 +165,10 @@ export default {
         console.log(error);
       }
       this.loading = false;
+    },
+    conductTransfer() {
+      console.log(this.transfers);
+      alert('TRANSFER SUCCESS');
     },
   },
   async mounted() {
