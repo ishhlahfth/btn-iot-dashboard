@@ -94,6 +94,11 @@ const routes = [
         name: 'Order',
         component: () => import('@/views/Order.vue'),
       },
+      {
+        path: 'transfer',
+        name: 'Transfer',
+        component: () => import('@/views/Transfer.vue'),
+      },
     ],
   },
   {
