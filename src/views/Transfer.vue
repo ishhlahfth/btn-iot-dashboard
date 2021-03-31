@@ -50,6 +50,7 @@
                 : 'negative'
             "
           />
+          <code class="bg-grey-6" v-if="column === 'result_logs'">{{ row.result_logs }}</code>
         </template>
       </help-table>
     </div>
@@ -63,7 +64,7 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 // import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import mixin from '@/mixin';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import API from '@/apis';
 
 export default {
@@ -91,19 +92,19 @@ export default {
   computed: {
     columns() {
       const columns = [
-        { field: 'date', label: 'order date' },
+        { field: 'order_date', label: 'order date' },
         { field: 'code', label: 'po number' },
+        { field: 'transfer_date', label: 'transfer date' },
         { field: 'transfer_status', label: 'transfer status', align: 'center' },
         { field: 'merchant_name', label: 'merchant name' },
         { field: 'customer_name', label: 'buyer name' },
-        { field: 'failure_reason', label: 'failure reason' },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
         { field: 'delivery_price', label: 'delivery price' },
         { field: 'payment_method', label: 'payment method' },
-        { field: 'updated_at', label: 'last updated' },
         { field: 'transfer_by', label: 'transfered by' },
-        { field: 'detail', label: 'detail', align: 'center' },
+        { field: 'result_logs', label: 'log' },
+        // { field: 'detail', label: 'detail', align: 'center' },
       ];
       if (this.transferMode) {
         columns.unshift({ field: 'checkbox', label: 'checkbox', align: 'center' });
@@ -116,6 +117,7 @@ export default {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
 
+      this.loading = true;
       try {
         const {
           data: { data },
@@ -124,10 +126,18 @@ export default {
         console.log('TRANSFER: ', data);
         this.transfers = data.map((el) => ({
           id: el.id,
-          code: el.order.code,
-          transfer_status: el.order.transfer_status,
-          customer_name: el.customer.name,
-          payment_method: el.order.payment_method,
+          order_date: dayjs(el.order.date).format('DD-MM-YYYY HH:mm:ss'),
+          code: el.order?.code,
+          transfer_status: el.order?.transfer_status,
+          // result_logs: 'LOGS',
+          result_logs: JSON.stringify(el.result_logs, null, 2),
+          merchant_name: el.order?.merchant.name,
+          customer_name: el.customer?.name,
+          subtotal_price: this.convertToRp(el.order?.subtotal_price),
+          commission_fee: this.convertToRp(el.order?.commission_fee),
+          delivery_price: this.convertToRp(el.order?.delivery_fee),
+          payment_method: el.order?.payment_method,
+          transfer_date: dayjs(el.transfer_date).format('DD-MM-YYYY HH:mm:ss'),
           transfer_by: el.transfer_by,
         }));
 
@@ -138,6 +148,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.loading = false;
     },
   },
   async mounted() {
