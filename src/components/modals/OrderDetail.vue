@@ -128,8 +128,38 @@
 </template>
 
 <script>
+import API from '@/apis';
+
 export default {
   name: 'OrderDetail',
+  data() {
+    return {
+      order: {},
+    };
+  },
+  computed: {
+    orderId() {
+      return this.$store.state.orderId;
+    },
+  },
+  methods: {
+    async getOrder() {
+      try {
+        const {
+          data: { data },
+        } = await API.get(`orders/${this.orderId}`);
+
+        this.order = data;
+
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.getOrder();
+  },
 };
 </script>
 

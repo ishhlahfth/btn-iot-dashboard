@@ -56,7 +56,7 @@
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
-import OrderDetail from '@/components/modals/Order.vue';
+import OrderDetail from '@/components/modals/OrderDetail.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -137,9 +137,11 @@ export default {
       }
       this.loading = false;
     },
-    openOrderDetail() {
+    openOrderDetail(orderId) {
+      console.log(orderId);
+      console.log('- - - - -');
       this.detailModal = true;
-      console.log('OPEN ORDER DETAIL');
+      this.$store.commit('SET_ORDER_ID', orderId);
     },
   },
   async mounted() {

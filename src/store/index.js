@@ -11,6 +11,7 @@ export default createStore({
     opHour: [],
     verifDetail: {},
     commissionDetail: {},
+    orderId: 0,
     loading: {
       merchant: false,
     },
@@ -39,6 +40,9 @@ export default createStore({
     },
     SET_COMMISSION_DETAIL(state, payload) {
       state.commissionDetail = payload;
+    },
+    SET_ORDER_ID(state, payload) {
+      state.orderId = payload;
     },
     SET_LOADING(state, { type, payload }) {
       state.loading[type] = payload;
