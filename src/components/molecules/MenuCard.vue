@@ -20,7 +20,7 @@
               <p class="font-medium">{{ name }}</p>
               <help-badge
                 :label="availabilityStatus"
-                :color="availabilityStatus === 'Available' ? 'positive' : 'negative'"
+                :color="availabilityStatus === 'Tersedia' ? 'positive' : 'negative'"
               />
               <help-button
                 icon-only

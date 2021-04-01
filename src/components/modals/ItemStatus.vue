@@ -39,13 +39,13 @@ export default {
   data() {
     return {
       statuses: [
-        { value: 'AVAILABLE', label: 'Available' },
-        { value: 'UNAVAILABLE', label: 'Unavailable' },
-        { value: 'HIDDEN', label: 'Hidden' },
-        { value: 'OUT_OF_STOCK', label: 'Out of Stock' },
+        { value: 'AVAILABLE', label: 'Tersedia' },
+        { value: 'UNAVAILABLE', label: 'Habis' },
+        // { value: 'HIDDEN', label: 'Hidden' },
+        // { value: 'OUT_OF_STOCK', label: 'Out of Stock' },
         { value: 'SUSPEND', label: 'Suspend' },
       ],
-      selectedStatus: { value: 'AVAILABLE', label: 'Available' },
+      selectedStatus: { value: 'AVAILABLE', label: 'Tersedia' },
     };
   },
   computed: {
