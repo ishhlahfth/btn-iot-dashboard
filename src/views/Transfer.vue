@@ -2,7 +2,11 @@
   <help-modal v-model="confirmTransferModal">
     <confirmation
       title="Transfer confirmation"
-      message="Are you sure you want to transfer the selected orders? This action cannot be undone"
+      :message="
+        `Are you sure you want to transfer to the selected orders with total amount of ${convertToRp(
+          totalAmount,
+        )}? This action cannot be undone`
+      "
       @close="confirmTransferModal = false"
       @cancel="confirmTransferModal = false"
       @confirm="conductTransfer"
@@ -51,8 +55,14 @@
             @click="toggleAll"
           />
         </template>
-        <template v-slot:body="{ column, row }">
-          <help-checkbox v-if="column === 'is_checked'" v-model:checked="row.is_checked.val" />
+        <template v-slot:body="{ column, row, data }">
+          <template v-if="column === 'is_checked'">
+            <help-checkbox
+              v-if="row.transfer_status !== 'SUCCESS'"
+              v-model:checked="row.is_checked.val"
+            />
+            <div v-else class="h-5 w-5"></div>
+          </template>
           <help-badge
             v-if="column === 'transfer_status'"
             :label="row.transfer_status"
@@ -65,6 +75,7 @@
             "
           />
           <code class="bg-grey-6" v-if="column === 'result_logs'">{{ row.result_logs }}</code>
+          <p v-if="column === 'amount'">{{ convertToRp(data) }}</p>
         </template>
       </help-table>
     </div>
@@ -118,6 +129,7 @@ export default {
         { field: 'transfer_status', label: 'transfer status', align: 'center' },
         { field: 'merchant_name', label: 'merchant name' },
         { field: 'customer_name', label: 'buyer name' },
+        { field: 'amount', label: 'transfer amount' },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
         { field: 'delivery_price', label: 'delivery price' },
@@ -127,12 +139,19 @@ export default {
         // { field: 'detail', label: 'detail', align: 'center' },
       ];
       if (this.transferMode) {
-        columns.unshift(
-          { field: 'is_checked', label: 'checkbox', align: 'center' },
-          // { field: 'transfer', label: 'transfer', align: 'center' },
-        );
+        columns.unshift({ field: 'is_checked', label: 'checkbox', align: 'center' });
       }
       return columns;
+    },
+    queue() {
+      return this.transfers.filter((el) => el.is_checked.val);
+    },
+    totalAmount() {
+      let sumTransferAmount = 0;
+      for (let i = 0; i < this.queue.length; i += 1) {
+        sumTransferAmount += this.transfers[i].amount;
+      }
+      return sumTransferAmount;
     },
   },
   methods: {
@@ -162,7 +181,7 @@ export default {
           payment_method: el.order?.payment_method,
           transfer_date: dayjs(el.transfer_date).format('DD-MM-YYYY HH:mm:ss'),
           transfer_by: el.transfer_by,
-          is_checked: { val: false },
+          is_checked: el.order?.transfer_status !== 'SUCCESS' ? { val: false } : { val: null },
         }));
 
         this.transferPagination = {
@@ -174,18 +193,24 @@ export default {
       }
       this.loading = false;
     },
-    conductTransfer() {
-      console.log(this.transfers);
-      let sumTransferAmount = 0;
-      const queue = this.transfers.filter((el) => el.is_checked.val);
-      for (let i = 0; i < queue.length; i += 1) {
-        sumTransferAmount += this.transfers[i].amount;
+    async conductTransfer() {
+      console.log('TRANSFER AMOUNT: ', this.totalAmount);
+      if (this.queue.length) {
+        for (let i = 0; i < this.queue.length; i += 1) {
+          const {
+            data: { data },
+          } = await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
+          console.log('= = = queue = = =');
+          console.log(data);
+        }
       }
-      alert(`TRANSFER ${this.convertToRp(sumTransferAmount)}?`);
+      alert(`SUCCESSFULLY TRANSFERED ${this.convertToRp(this.totalAmount)} TO THE SELECTED ORDERS`);
     },
     toggleAll() {
       for (let i = 0; i < this.transfers.length; i += 1) {
-        this.transfers[i].is_checked.val = !this.checkAll;
+        if (this.transfers[i].is_checked.val !== null) {
+          this.transfers[i].is_checked.val = !this.checkAll;
+        }
       }
     },
   },
