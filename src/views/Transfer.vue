@@ -179,7 +179,7 @@ export default {
           transfer_status: el.order?.transfer_status,
           result_logs: JSON.stringify(el.result_logs, null, 2),
           merchant_name: el.order?.merchant.name,
-          customer_name: el.customer?.name,
+          customer_name: el.order?.customer?.name,
           subtotal_price: this.convertToRp(el.order?.subtotal_price),
           commission_fee: this.convertToRp(el.order?.commission_fee),
           delivery_price: this.convertToRp(el.order?.delivery_fee),
