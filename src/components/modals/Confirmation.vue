@@ -21,6 +21,7 @@
         label="yes i'm sure"
         class="mb-2 sm:mb-0"
         :loading="confirmLoading"
+        loading-label="transfering"
       />
       <help-button
         @click="$emit('cancel')"

@@ -17,7 +17,10 @@
         <icon name="loading" :class="{ 'animate-spin': loading }" />
       </div>
       <div v-if="label" class="h-full w-full flex items-center">
-        <p class="text-body">{{ buttonLabel }}</p>
+        <p v-if="!loading" class="text-body">{{ buttonLabel }}</p>
+        <template v-else>
+          <p v-if="uppercasedLoadingLabel" class="text-body">{{ uppercasedLoadingLabel }}</p>
+        </template>
       </div>
     </div>
   </button>
@@ -57,6 +60,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    loadingLabel: {
+      type: String,
+      default: '',
+    },
   },
   components: {
     Icon,
@@ -64,6 +71,9 @@ export default {
   computed: {
     buttonLabel() {
       return this.label.toUpperCase();
+    },
+    uppercasedLoadingLabel() {
+      return this.loadingLabel.toUpperCase();
     },
   },
 };

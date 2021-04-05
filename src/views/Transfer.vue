@@ -200,7 +200,6 @@ export default {
     },
     async conductTransfer() {
       this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: true });
-      console.log('TRANSFER AMOUNT: ', this.totalAmount);
       if (this.queue.length) {
         for (let i = 0; i < this.queue.length; i += 1) {
           const {
