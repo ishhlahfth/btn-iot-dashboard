@@ -1,4 +1,8 @@
 <template>
+  <help-modal v-model="detailModal">
+    <order-detail />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
@@ -50,7 +54,9 @@
 
 <script>
 import HelpBadge from '@/components/atoms/Badge.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import OrderDetail from '@/components/modals/OrderDetail.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -60,7 +66,9 @@ export default {
   mixins: [mixin],
   components: {
     HelpBadge,
+    HelpModal,
     HelpTable,
+    OrderDetail,
   },
   data() {
     return {
@@ -87,6 +95,7 @@ export default {
         order: 'asc',
       },
       loading: false,
+      detailModal: false,
     };
   },
   methods: {
@@ -128,8 +137,11 @@ export default {
       }
       this.loading = false;
     },
-    openOrderDetail() {
-      console.log('OPEN ORDER DETAIL');
+    openOrderDetail(orderId) {
+      console.log(orderId);
+      console.log('- - - - -');
+      this.detailModal = true;
+      this.$store.commit('SET_ORDER_ID', orderId);
     },
   },
   async mounted() {
