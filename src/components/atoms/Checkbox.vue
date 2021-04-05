@@ -1,9 +1,9 @@
 <template>
   <div class="grid grid-flow-col auto-cols-max gap-1 place-items-center">
     <input
-      @input="$emit('update:modelValue', !modelValue)"
+      @change="(event) => $emit('update:checked', event.target.checked)"
       type="checkbox"
-      :value="modelValue"
+      :checked="checked"
       :disabled="disabled"
       :class="{ 'cursor-pointer': !disabled }"
       class="bg-white help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none"
@@ -16,7 +16,7 @@
 export default {
   name: 'HelpCheckbox',
   props: {
-    modelValue: {
+    checked: {
       type: Boolean,
       default: false,
     },

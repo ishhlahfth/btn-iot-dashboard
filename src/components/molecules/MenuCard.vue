@@ -20,7 +20,7 @@
               <p class="font-medium">{{ name }}</p>
               <help-badge
                 :label="availabilityStatus"
-                :color="availabilityStatus === 'Available' ? 'positive' : 'negative'"
+                :color="availabilityStatus === 'Tersedia' ? 'positive' : 'negative'"
               />
               <help-button
                 icon-only
@@ -51,15 +51,15 @@
 
     <template v-else>
       <div class="w-20 h-20 sm:w-26 sm:h-26 bg-grey-4 rounded animate-pulse"></div>
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-between animate-pulse">
         <div class="grid gap-1 sm:gap-2">
           <div class="grid gap-1">
-            <div class="rounded bg-grey-4 h-4 w-32 animate-pulse"></div>
-            <div class="rounded bg-grey-4 h-3 w-16 animate-pulse"></div>
+            <div class="rounded bg-grey-4 h-4 w-32"></div>
+            <div class="rounded bg-grey-4 h-3 w-16"></div>
           </div>
-          <div class="rounded bg-grey-4 h-4 mb-2 animate-pulse"></div>
+          <div class="rounded bg-grey-4 h-4 mb-2"></div>
         </div>
-        <div class="rounded bg-grey-4 h-4 w-16 animate-pulse"></div>
+        <div class="rounded bg-grey-4 h-4 w-16"></div>
       </div>
     </template>
   </div>

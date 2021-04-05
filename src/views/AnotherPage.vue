@@ -89,9 +89,12 @@
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Checkboxes</p>
       <div class="grid grid-flow-col auto-cols-max gap-6">
-        <help-checkbox v-model="checkboxState1" label="Item 1" />
-        <help-checkbox v-model="checkboxState2" label="Item 2" />
-        <help-checkbox v-model="checkboxState3" label="Item 3" />
+        <help-checkbox v-model:checked="checkboxState1" label="Item 1" />
+        <help-checkbox v-model:checked="checkboxState2" label="Item 2" />
+        <help-checkbox v-model:checked="checkboxState3" label="Item 3" />
+      </div>
+      <div class="grid grid-flow-col auto-cols-max gap-6">
+        <help-checkbox v-for="obj in anArrayOfObj" :key="obj.id" v-model:checked="obj.state" :label="`Item ${obj.state}`" />
       </div>
     </div>
 
@@ -244,7 +247,7 @@
     <div class="grid grid-flow-row gap-1">
       <p class="font-medium">Table</p>
       <!-- <help-table :columns="shortTableColumn" :rows="shortTableBody" /> -->
-      <help-table
+      <!-- <help-table
         :columns="longTableColumn"
         :rows="longTableBody"
         :pagination="parentPagination"
@@ -258,7 +261,7 @@
             :color="row.verification_status ? 'positive' : 'negative'"
           />
         </template>
-      </help-table>
+      </help-table> -->
     </div>
 
     <div class="grid grid-flow-row gap-1">
@@ -282,7 +285,7 @@ import HelpOptionItem from '../components/atoms/OptionItem.vue';
 import HelpRadio from '../components/atoms/Radio.vue';
 import HelpSelect from '../components/molecules/Select.vue';
 // import HelpSidebar from '../components/molecules/Sidebar.vue';
-import HelpTable from '../components/templates/Table.vue';
+// import HelpTable from '../components/templates/Table.vue';
 import HelpThumbnail from '../components/atoms/Thumbnail.vue';
 import HelpToggle from '../components/atoms/Toggle.vue';
 import HelpTooltip from '../components/atoms/Tooltip.vue';
@@ -301,7 +304,7 @@ export default {
     HelpRadio,
     HelpSelect,
     // HelpSidebar,
-    HelpTable,
+    // HelpTable,
     HelpThumbnail,
     HelpToggle,
     HelpTooltip,
@@ -309,6 +312,13 @@ export default {
   },
   data() {
     return {
+      anArrayOfObj: [
+        { state: false, id: 1 },
+        { state: false, id: 2 },
+        { state: false, id: 3 },
+        { state: false, id: 4 },
+        { state: true, id: 5 },
+      ],
       toggleState1: true,
       toggleState2: true,
       toggleState3: false,

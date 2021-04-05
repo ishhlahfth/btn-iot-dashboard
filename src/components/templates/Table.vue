@@ -205,15 +205,15 @@ export default {
     processedTableData() {
       // add new keys based on column name with null value
       const columnLibrary = {};
-      this.columns.forEach((el) => {
-        columnLibrary[el.field] = null;
-      });
+      for (let i = 0; i < this.columns.length; i += 1) {
+        columnLibrary[this.columns[i].field] = null;
+      }
 
       // override value if key already exists
       const matchedByColumns = [];
-      this.rows.forEach((row) => {
-        matchedByColumns.push({ ...columnLibrary, ...row });
-      });
+      for (let i = 0; i < this.rows.length; i += 1) {
+        matchedByColumns.push({ ...columnLibrary, ...this.rows[i] });
+      }
 
       return matchedByColumns;
     },

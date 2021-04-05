@@ -29,10 +29,10 @@ export default {
       if (value) {
         switch (value) {
           case 'AVAILABLE':
-            translated = 'Available';
+            translated = 'Tersedia';
             break;
           case 'UNAVAILABLE':
-            translated = 'Unavailable';
+            translated = 'Habis';
             break;
           case 'HIDDEN':
             translated = 'Hidden';
