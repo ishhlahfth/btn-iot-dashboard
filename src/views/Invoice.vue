@@ -133,7 +133,7 @@
             style="grid-column: span 2 / span 2; text-align: right;"
             :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
           >
-            {{ convertToRp(item.price) }}
+            {{ convertToRp(calculateItemPrice(item)) }}
           </p>
           <p
             style="grid-column: span 2 / span 2; text-align: right;"
@@ -307,6 +307,15 @@ export default {
         .then(() => {
           this.notification = true;
         });
+    },
+    calculateItemPrice(item) {
+      let subtotal = item.price;
+      if (item.variations.length) {
+        for (let i = 0; i < item.variations.length; i += 1) {
+          subtotal += item.variations[i].options[0].price;
+        }
+      }
+      return subtotal;
     },
   },
   mounted() {
