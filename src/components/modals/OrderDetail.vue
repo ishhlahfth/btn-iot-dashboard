@@ -2,26 +2,22 @@
   <div
     class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
   >
-    <div class="grid md:grid-flow-col gap-8 auto-rows-max overflow-auto">
-      <div class="grid gap-4 md:gap-8">
+    <div class="grid md:grid-flow-col gap-8 grid-cols-12 overflow-auto">
+      <div class="md:col-span-9 grid gap-4 md:gap-8">
         <div class="divide-y divide-grey-4 font-medium">
           <p class="font-medium pb-4 md:text-base">Order</p>
           <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p class="text-grey-2">PO Number</p>
-              <p>O1090F</p>
+              <p class="text-grey-2">Buy &#38; Sell PO Number</p>
+              <p>{{ order.code }}</p>
             </div>
             <div>
               <p class="text-grey-2">Order Date</p>
-              <p>23 Apr 2021 11:20</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Last Updated</p>
-              <p>23 Apr 2021 11:20</p>
+              <p>{{ order.date }}</p>
             </div>
             <div>
               <p class="text-grey-2">Status</p>
-              <p class="text-royal">Pending</p>
+              <p class="text-royal">{{ order.current_step?.title }}</p>
             </div>
           </div>
         </div>
@@ -29,20 +25,20 @@
           <p class="font-medium pb-4 md:text-base">Delivery</p>
           <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p class="text-grey-2">PO Number</p>
-              <p>O1090F</p>
+              <p class="text-grey-2">Delivery PO Number</p>
+              <p>{{ order.delivery_code }}</p>
             </div>
             <div>
-              <p class="text-grey-2">Order Date</p>
-              <p>23 Apr 2021 11:20</p>
+              <p class="text-grey-2">Delivery Type</p>
+              <p>{{ order.order_type_details?.delivery_method?.name }}</p>
             </div>
             <div>
-              <p class="text-grey-2">Last Updated</p>
-              <p>23 Apr 2021 11:20</p>
+              <p class="text-grey-2">Driver Name</p>
+              <p></p>
             </div>
             <div>
-              <p class="text-grey-2">Status</p>
-              <p class="text-royal">Pending</p>
+              <p class="text-grey-2">License Number</p>
+              <p></p>
             </div>
           </div>
         </div>
@@ -51,15 +47,19 @@
           <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Name</p>
-              <p>Herba Kitchen</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Location</p>
-              <p>Jakarta Selatan</p>
+              <p>{{ order.merchant?.name }}</p>
             </div>
             <div>
               <p class="text-grey-2">Phone Number</p>
-              <p>0896-3340-1529</p>
+              <p>{{ order.merchant?.phone_number }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-grey-2">Address</p>
+              <p>
+                {{
+                  `${order.merchant?.address?.line_address}, ${order.merchant?.address?.district}, ${order.merchant?.address?.city}`
+                }}
+              </p>
             </div>
           </div>
         </div>
@@ -68,58 +68,64 @@
           <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Name</p>
-              <p>Kania</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Location</p>
-              <p>Jakarta Barat</p>
+              <p>{{ order.customer?.profile?.name }}</p>
             </div>
             <div>
               <p class="text-grey-2">Phone Number</p>
-              <p>0896-3340-1529</p>
+              <p>{{ order.customer?.profile?.phone_number }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-grey-2">Shipping Address</p>
+              <p>
+                {{
+                  `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
+                }}
+              </p>
             </div>
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
           <p class="font-medium pb-4 md:text-base">Product</p>
           <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <p class="text-grey-2">Name</p>
-              <p>Kania</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Price Per Product</p>
-              <p>Jakarta Barat</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Category</p>
-              <p>0896-3340-1529</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Phone Number</p>
-              <p>0896-3340-1529</p>
-            </div>
+            <template v-for="item in order.items" :key="item.id">
+              <div>
+                <p class="text-grey-2">Name</p>
+                <p>{{ item?.name }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Quantity</p>
+                <p>{{ item?.qty }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Item Price</p>
+                <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Subtotal</p>
+                <p>{{ convertToRp(item?.subtotal_price) }}</p>
+              </div>
+            </template>
           </div>
         </div>
       </div>
-      <div class="divide-y divide-grey-4 font-medium">
+      <div class="md:col-span-3 divide-y divide-grey-4 font-medium">
         <p class="font-medium pb-4 md:text-base">Payment</p>
         <div class="pt-4 grid grid-cols-2 md:grid-cols-none gap-4 md:gap-8">
           <div>
             <p class="text-grey-2">Delivery Fee</p>
-            <p>Rp 8.000</p>
+            <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
           </div>
           <div>
             <p class="text-grey-2">Item Price</p>
-            <p>Rp 31.000</p>
+            <p>{{ convertToRp(order?.subtotal_price) }}</p>
           </div>
           <div>
             <p class="text-grey-2">Commission</p>
-            <p>Rp 2.000</p>
+            <p>{{ convertToRp(order?.commission_fee) }}</p>
           </div>
           <div>
             <p class="text-grey-2">Total Price</p>
-            <p>Rp 49.000</p>
+            <p>{{ convertToRp(order?.total_price) }}</p>
           </div>
         </div>
       </div>
@@ -129,9 +135,11 @@
 
 <script>
 import API from '@/apis';
+import mixin from '@/mixin';
 
 export default {
   name: 'OrderDetail',
+  mixins: [mixin],
   data() {
     return {
       order: {},
@@ -155,6 +163,15 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    calculateItemPrice(item) {
+      let subtotal = item.price;
+      if (item.variations.length) {
+        for (let i = 0; i < item.variations.length; i += 1) {
+          subtotal += item.variations[i].options[0].price;
+        }
+      }
+      return subtotal;
     },
   },
   mounted() {
