@@ -262,9 +262,12 @@ export default {
     },
     calculateItemPrice(item) {
       let subtotal = item.price;
+      console.log(subtotal);
       if (item.variations.length) {
         for (let i = 0; i < item.variations.length; i += 1) {
-          subtotal += item.variations[i].options[0].price;
+          for (let j = 0; j < item.variations[i].options.length; j += 1) {
+            subtotal += item.variations[i].options[j].price;
+          }
         }
       }
       return subtotal;
