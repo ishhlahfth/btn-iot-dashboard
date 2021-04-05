@@ -16,7 +16,12 @@
     </div>
 
     <div class="flex flex-col sm:flex-row-reverse">
-      <help-button @click="$emit('confirm')" label="yes i'm sure" class="mb-2 sm:mb-0" />
+      <help-button
+        @click="$emit('confirm')"
+        label="yes i'm sure"
+        class="mb-2 sm:mb-0"
+        :loading="confirmLoading"
+      />
       <help-button
         @click="$emit('cancel')"
         label="cancel"
@@ -41,6 +46,10 @@ export default {
     message: {
       type: String,
       default: '',
+    },
+    confirmLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

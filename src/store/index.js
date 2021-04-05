@@ -13,6 +13,7 @@ export default createStore({
     commissionDetail: {},
     loading: {
       merchant: false,
+      conductTransfer: false,
     },
   },
   mutations: {

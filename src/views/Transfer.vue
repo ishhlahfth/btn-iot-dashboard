@@ -7,6 +7,7 @@
           totalAmount,
         )}? This action cannot be undone`
       "
+      :confirm-loading="conductTransferLoading"
       @close="confirmTransferModal = false"
       @cancel="confirmTransferModal = false"
       @confirm="conductTransfer"
@@ -149,9 +150,12 @@ export default {
     totalAmount() {
       let sumTransferAmount = 0;
       for (let i = 0; i < this.queue.length; i += 1) {
-        sumTransferAmount += this.transfers[i].amount;
+        sumTransferAmount += this.queue[i].amount;
       }
       return sumTransferAmount;
+    },
+    conductTransferLoading() {
+      return this.$store.state.loading.conductTransfer;
     },
   },
   methods: {
@@ -160,6 +164,7 @@ export default {
       const offset = pagination.offset || 0;
 
       this.loading = true;
+
       try {
         const {
           data: { data },
@@ -194,6 +199,7 @@ export default {
       this.loading = false;
     },
     async conductTransfer() {
+      this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: true });
       console.log('TRANSFER AMOUNT: ', this.totalAmount);
       if (this.queue.length) {
         for (let i = 0; i < this.queue.length; i += 1) {
@@ -204,7 +210,9 @@ export default {
           console.log(data);
         }
       }
-      alert(`SUCCESSFULLY TRANSFERED ${this.convertToRp(this.totalAmount)} TO THE SELECTED ORDERS`);
+      this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
+      this.getTransferData(this.transferPagination);
+      this.confirmTransferModal = false;
     },
     toggleAll() {
       for (let i = 0; i < this.transfers.length; i += 1) {
