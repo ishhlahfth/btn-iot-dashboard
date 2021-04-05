@@ -14,6 +14,7 @@ export default createStore({
     orderId: 0,
     loading: {
       merchant: false,
+      conductTransfer: false,
     },
   },
   mutations: {

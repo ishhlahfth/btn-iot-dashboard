@@ -21,65 +21,55 @@
   </help-modal>
   <div
     id="invoice"
-    style="padding: 1rem 1rem 4rem 1rem; display: grid; gap: 1rem; position: relative; font-family: Nunito, 'serif';"
-    :style="{ 'animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;': loading }"
+    :class="{ 'animate-pulse': loading }"
+    class="p-4 pb-16 grid gap-4 relative"
+    style="font-family: Nunito, 'serif';"
   >
-    <div style="position: absolute; bottom: 5rem; left: 50%; transform: translateX(-50%);">
+    <div v-if="!loading" class="absolute bottom-20 left-1/2 transform -translate-x-1/2">
       <img
         src="../assets/sudah-bayar.png"
         alt="sudah-bayar"
-        style="width: 16rem; max-width: none !important;"
+        class="w-64"
+        style="max-width: none !important;"
       />
     </div>
 
-    <div style="width: 100%; display: flex; justify-content: center;">
+    <div class="w-full flex justify-center">
       <img src="../assets/logo-lowres.png" alt="logo" style="width: 128px; height: 37.69px;" />
     </div>
 
-    <div
-      style="width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1rem; column-gap: 1.5rem; font-size: 12px;"
-      class="sm:gap-x-14"
-    >
-      <p style="font-weight: 700;">Nomor PO</p>
-      <p
-        style="color: rgb(41, 120, 212); text-align: right;"
-        :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-      >
-        {{ poNumber }}
-      </p>
-      <p style="font-weight: 700;">Nama Penjual</p>
-      <p
-        style="text-align: right;"
-        :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-      >
-        {{ merchantName }}
-      </p>
-      <p style="font-weight: 700;">Tanggal Pembelian</p>
-      <p
-        style="text-align: right;"
-        :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-      >
-        {{ orderDate }}
-      </p>
-      <p style="font-weight: 700;">Nama Pembeli</p>
-      <p
-        style="text-align: right;"
-        :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-      >
-        {{ buyerName }}
-      </p>
-      <div style="grid-column: span 2 / span 2; display: grid; row-gap: 0.5rem;">
-        <p style="font-weight: 700;">Tujuan Pengiriman</p>
-        <div
-          style="display: grid; row-gap: 0.25rem;"
-          :style="{
-            'background-color: rgb(210, 214, 219); border-radius: 0.25rem; height: 1rem': loading,
-          }"
-        >
-          <p>{{ addressShort }}</p>
-          <p>{{ addressFull }}</p>
-          <p>{{ phoneNumber }}</p>
-        </div>
+    <div class="w-full grid grid-cols-2 gap-4 text-small sm:gap-x-14">
+      <p class="font-bold">Nomor PO</p>
+      <p v-if="!loading" class="text-royal text-right">{{ poNumber }}</p>
+      <div v-else class="bg-grey-4 rounded h-4" />
+
+      <p class="font-bold">Nama Penjual</p>
+      <p v-if="!loading" class="text-right">{{ merchantName }}</p>
+      <div v-else class="bg-grey-4 rounded h-4" />
+
+      <p class="font-bold">Tanggal Pembelian</p>
+      <p v-if="!loading" class="text-right">{{ orderDate }}</p>
+      <div v-else class="bg-grey-4 rounded h-4" />
+
+      <p class="font-bold">Nama Pembeli</p>
+      <p v-if="!loading" class="text-right">{{ buyerName }}</p>
+      <div v-else class="bg-grey-4 rounded h-4" />
+
+      <div class="col-span-2 grid gap-2">
+        <p class="font-bold">Tujuan Pengiriman</p>
+        <template class="grid gap-2">
+          <template v-if="!loading">
+            <p>{{ addressShort }}</p>
+            <p>{{ addressFull }}</p>
+            <p>{{ phoneNumber }}</p>
+          </template>
+          <template v-else>
+            <div class="bg-grey-4 rounded h-4 w-16 mb-2"></div>
+            <div class="bg-grey-4 rounded h-4"></div>
+            <div class="bg-grey-4 rounded h-4 w-3/4 mb-2"></div>
+            <div class="bg-grey-4 rounded h-4 w-16"></div>
+          </template>
+        </template>
       </div>
     </div>
 
@@ -88,119 +78,81 @@
       <p></p>
     </div>
 
-    <div style="width: 100%;">
-      <p style="font-size: 12px; font-weight: 700;">Detail Pembelian</p>
+    <div class="w-full">
+      <p class="text-small font-bold">Detail Pembelian</p>
     </div>
 
-    <div style="width: 100%;">
-      <div
-        style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;"
-        class="divide-y divide-grey-1"
-      >
-        <div
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;"
-        >
-          <p style="grid-column: span 3 / span 3;">Nama Produk</p>
-          <p style="grid-column: span 1 / span 1; text-align: right;">Jumlah</p>
-          <p style="grid-column: span 2 / span 2; text-align: right;">Harga Barang</p>
-          <p style="grid-column: span 2 / span 2; text-align: right;">Subtotal</p>
+    <div class="w-full">
+      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
+        <div class="p-3 grid grid-cols-8 gap-1 font-bold">
+          <p class="col-span-3">Nama Produk</p>
+          <p class="col-span-1 text-right">Jumlah</p>
+          <p class="col-span-2 text-right">Harga Barang</p>
+          <p class="col-span-2 text-right">Subtotal</p>
         </div>
-        <div
-          v-for="item in items"
-          :key="item.id"
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 0.25rem;"
-        >
-          <div style="grid-column: span 3 / span 3; display: grid; gap: 0.25rem;">
-            <p
-              style="font-weight: 700;"
-              :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-            >
-              {{ item.name }}
+        <template v-if="!loading">
+          <div v-for="item in items" :key="item.id" class="p-3 grid grid-cols-8 gap-1">
+            <div class="col-span-3 grid gap-1">
+              <p class="font-bold">
+                {{ item.name }}
+              </p>
+              <p>
+                {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+              </p>
+            </div>
+            <p class="col-span-1 text-right">
+              {{ groupDigit(item.qty) }}
             </p>
-            <p
-              :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-            >
-              {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+            <p class="col-span-2 text-right">
+              {{ convertToRp(calculateItemPrice(item)) }}
+            </p>
+            <p class="col-span-2 text-right">
+              {{ convertToRp(item.subtotal_price) }}
             </p>
           </div>
-          <p
-            style="grid-column: span 1 / span 1; text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ groupDigit(item.qty) }}
-          </p>
-          <p
-            style="grid-column: span 2 / span 2; text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ convertToRp(item.price) }}
-          </p>
-          <p
-            style="grid-column: span 2 / span 2; text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ convertToRp(item.subtotal_price) }}
-          </p>
-        </div>
-        <div
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;"
-        >
-          <p style="grid-column: span 3 / span 3; text-align: right;">Subtotal Harga Barang</p>
-          <p
-            style="text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ subtotalItem }}
-          </p>
+        </template>
+        <template v-else>
+          <div v-for="i in 2" :key="i" class="p-3 grid grid-cols-8 gap-2">
+            <div class="col-span-3 bg-grey-4 rounded h-4" />
+            <div class="col-span-1 bg-grey-4 rounded h-4" />
+            <div class="col-span-2 bg-grey-4 rounded h-4" />
+            <div class="col-span-2 bg-grey-4 rounded h-4" />
+          </div>
+        </template>
+        <div class="p-3 grid grid-cols-4 gap-1 font-bold">
+          <p class="col-span-3 text-right">Subtotal Harga Barang</p>
+          <p v-if="!loading" class="text-right">{{ subtotalItem }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
         </div>
       </div>
     </div>
 
-    <div style="width: 100%;">
-      <div
-        style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;"
-        class="divide-y divide-grey-1"
-      >
-        <div
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem;"
-        >
-          <p>{{ deliveryName }}</p>
-          <p
-            style="text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ deliveryPrice }}
-          </p>
+    <div class="w-full">
+      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
+        <div class="p-3 grid grid-cols-2 gap-1">
+          <template v-if="!loading">
+            <p>{{ deliveryName }}</p>
+            <p class="text-right">{{ deliveryPrice }}</p>
+          </template>
+          <template v-else>
+            <div class="bg-grey-4 rounded h-4 w-32" />
+            <div class="bg-grey-4 rounded h-4" />
+          </template>
         </div>
-        <div
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;"
-        >
+        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
           <p>Subtotal Pengiriman</p>
-          <p
-            style="text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ subtotalDelivery }}
-          </p>
+          <p v-if="!loading" class="text-right">{{ subtotalDelivery }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
         </div>
       </div>
     </div>
 
-    <div style="width: 100%;">
-      <div
-        style="border-radius: 0.5rem; border: 1px solid rgba(48, 59, 77); font-size: 10px;"
-        class="divide-y divide-grey-1"
-      >
-        <div
-          style="padding: 0.75rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem; font-weight: 700;"
-        >
+    <div class="w-full">
+      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
+        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
           <p>Total Pembayaran</p>
-          <p
-            style="text-align: right;"
-            :style="{ 'background-color: rgb(210, 214, 219); border-radius: 0.25rem;': loading }"
-          >
-            {{ totalPrice }}
-          </p>
+          <p v-if="!loading" class="text-right">{{ totalPrice }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
         </div>
       </div>
     </div>
@@ -307,6 +259,15 @@ export default {
         .then(() => {
           this.notification = true;
         });
+    },
+    calculateItemPrice(item) {
+      let subtotal = item.price;
+      if (item.variations.length) {
+        for (let i = 0; i < item.variations.length; i += 1) {
+          subtotal += item.variations[i].options[0].price;
+        }
+      }
+      return subtotal;
     },
   },
   mounted() {

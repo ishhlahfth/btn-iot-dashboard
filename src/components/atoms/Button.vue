@@ -1,21 +1,26 @@
 <template>
   <button
+    :disabled="loading"
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
       `bg-${bgColor} text-${color}`,
       { bordered: outlined },
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
-      bgColor === 'transparent'
-        ? 'hover:bg-grey-4 hover:bg-opacity-70'
-        : 'hover:bg-opacity-80',
+      bgColor === 'transparent' ? 'hover:bg-grey-4 hover:bg-opacity-70' : 'hover:bg-opacity-80',
     ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
       <div v-if="icon" class="h-full w-full flex items-center justify-center">
-        <icon :name="icon" />
+        <icon :name="loading ? 'loading' : icon" :class="{ 'animate-spin': loading }" />
+      </div>
+      <div v-if="!icon && loading" class="h-full w-full flex items-center justify-center">
+        <icon name="loading" :class="{ 'animate-spin': loading }" />
       </div>
       <div v-if="label" class="h-full w-full flex items-center">
-        <p class="text-body">{{ buttonLabel }}</p>
+        <p v-if="!loading" class="text-body">{{ buttonLabel }}</p>
+        <template v-else>
+          <p v-if="uppercasedLoadingLabel" class="text-body">{{ uppercasedLoadingLabel }}</p>
+        </template>
       </div>
     </div>
   </button>
@@ -51,6 +56,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    loadingLabel: {
+      type: String,
+      default: '',
+    },
   },
   components: {
     Icon,
@@ -58,6 +71,9 @@ export default {
   computed: {
     buttonLabel() {
       return this.label.toUpperCase();
+    },
+    uppercasedLoadingLabel() {
+      return this.loadingLabel.toUpperCase();
     },
   },
 };

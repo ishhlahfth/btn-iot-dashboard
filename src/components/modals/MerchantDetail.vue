@@ -1,6 +1,7 @@
 <template>
   <div
     class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
+    :class="{ 'animate-pulse': loading }"
   >
     <div class="grid gap-4 auto-rows-max overflow-auto">
       <div class="w-full grid place-items-center py-8">
@@ -19,7 +20,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="w-44 h-44 rounded-full bg-grey-4 animate-pulse"></div>
+          <div class="w-44 h-44 rounded-full bg-grey-4"></div>
         </template>
       </div>
       <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
@@ -46,7 +47,7 @@
           </p>
         </template>
         <template v-else>
-          <div v-for="i in 10" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
+          <div v-for="i in 10" :key="i" class="rounded bg-grey-4 h-4"></div>
         </template>
       </div>
       <div class="divide-y divide-grey-4">
@@ -71,7 +72,7 @@
           <p>{{ merchant.summary?.refunded }}</p>
         </template>
         <template v-else>
-          <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4 animate-pulse"></div>
+          <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4"></div>
         </template>
       </div>
       <div class="divide-y divide-grey-4">
@@ -84,7 +85,7 @@
           <p>{{ merchant.summary?.sold }}</p>
         </template>
         <template v-else>
-          <div class="rounded bg-grey-4 h-4 animate-pulse"></div>
+          <div class="rounded bg-grey-4 h-4"></div>
         </template>
       </div>
       <div class="divide-y divide-grey-4 sm:hidden">
@@ -132,7 +133,7 @@
       <template v-else>
         <div>
           <div class="sm:pl-2 py-1">
-            <div class="rounded bg-grey-4 h-4 w-32 animate-pulse"></div>
+            <div class="rounded bg-grey-4 h-4 w-32"></div>
           </div>
           <div class="divide-y divide-grey-4">
             <menu-card v-for="i in 5" :key="i" :loading="loading" />

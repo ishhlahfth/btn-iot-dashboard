@@ -19,9 +19,6 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  @apply bg-grey-6;
-}
 body {
   font-size: 14px;
   color: #303b4d;
