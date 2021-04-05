@@ -13,7 +13,7 @@
             </div>
             <div>
               <p class="text-grey-2">Order Date</p>
-              <p>{{ order.date }}</p>
+              <p>{{ formatTime(order.date) }}</p>
             </div>
             <div>
               <p class="text-grey-2">Status</p>
@@ -34,7 +34,7 @@
             </div>
             <div>
               <p class="text-grey-2">Driver Name</p>
-              <p></p>
+              <p>{{ order.order_type_details?.driver?.driver_name }}</p>
             </div>
             <div>
               <p class="text-grey-2">License Number</p>
@@ -91,6 +91,7 @@
               <div>
                 <p class="text-grey-2">Name</p>
                 <p>{{ item?.name }}</p>
+                <p class="text-xsmall">{{ item.variations.map((el) => el.options[0].name).join(', ') }}</p>
               </div>
               <div>
                 <p class="text-grey-2">Quantity</p>
@@ -136,6 +137,7 @@
 <script>
 import API from '@/apis';
 import mixin from '@/mixin';
+import dayjs from 'dayjs';
 
 export default {
   name: 'OrderDetail',
@@ -168,10 +170,15 @@ export default {
       let subtotal = item.price;
       if (item.variations.length) {
         for (let i = 0; i < item.variations.length; i += 1) {
-          subtotal += item.variations[i].options[0].price;
+          for (let j = 0; j < item.variations[i].options.length; j += 1) {
+            subtotal += item.variations[i].options[j].price;
+          }
         }
       }
       return subtotal;
+    },
+    formatTime(unix) {
+      return dayjs(unix).format('DD-MM-YYYY HH:mm:ss');
     },
   },
   mounted() {
