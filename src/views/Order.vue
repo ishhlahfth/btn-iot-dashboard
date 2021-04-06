@@ -108,13 +108,12 @@ export default {
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'date';
       const order = pagination.order || 'asc';
-      const search = this.searchValue || '';
       try {
         this.loading = true;
         const {
           data: { data },
         } = await API.get(
-          `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
+          `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
         );
 
         this.orders = data.map((el) => ({
