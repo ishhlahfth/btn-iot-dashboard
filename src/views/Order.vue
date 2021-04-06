@@ -73,15 +73,20 @@ export default {
     return {
       searchValue: '',
       columns: [
-        { field: 'date', label: 'order date' },
+        { field: 'date', label: 'order date', sortable: true },
         { field: 'code', label: 'po number' },
-        { field: 'current_step', label: 'status', align: 'center' },
-        { field: 'merchant_name', label: 'merchant name' },
-        { field: 'customer_name', label: 'buyer name' },
+        {
+          field: 'current_step',
+          label: 'status',
+          align: 'center',
+          sortable: true,
+        },
+        { field: 'merchant_name', label: 'merchant name', sortable: true },
+        { field: 'customer_name', label: 'buyer name', sortable: true },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
         { field: 'delivery_price', label: 'delivery price' },
-        { field: 'payment_method', label: 'payment method' },
+        { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
       transferMode: false,
@@ -137,8 +142,6 @@ export default {
       this.loading = false;
     },
     openOrderDetail(orderId) {
-      console.log(orderId);
-      console.log('- - - - -');
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
