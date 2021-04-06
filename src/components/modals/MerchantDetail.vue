@@ -45,6 +45,8 @@
           >
             {{ translateStatus(merchant.verificationStatus) }}
           </p>
+          <p class="text-grey-2">Status Last Updated</p>
+          <p>{{ merchant.verificationDate }}</p>
         </template>
         <template v-else>
           <div v-for="i in 10" :key="i" class="rounded bg-grey-4 h-4"></div>
