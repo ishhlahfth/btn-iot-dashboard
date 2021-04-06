@@ -125,6 +125,7 @@ import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import mixin from '@/mixin';
 import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default {
   name: 'Merchant',
@@ -156,6 +157,7 @@ export default {
           align: 'center',
           sortable: true,
         },
+        { field: 'verify_date', label: 'status last updated', sortable: true },
         { field: 'commission', label: 'commission (%)', align: 'right' },
         { field: 'menu', label: 'merchant detail', align: 'center' },
         { field: 'operational_detail', label: 'operational time', align: 'center' },
@@ -224,6 +226,7 @@ export default {
           city: el.address.city.name,
           verify_status: this.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
+          verify_date: dayjs(el.verify_date).format('DD-MM-YYYY HH:mm:ss'),
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
               openHour,
