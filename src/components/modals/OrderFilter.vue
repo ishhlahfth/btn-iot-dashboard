@@ -31,6 +31,12 @@ export default {
     HelpButton,
     HelpSelect,
   },
+  props: {
+    filter: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       selectedPayment: '',
@@ -42,10 +48,8 @@ export default {
       return this.$store.state.screenWidth;
     },
   },
-  methods: {
-    apply() {
-      console.log('Ngantuk');
-    },
+  mounted() {
+    this.selectedPayment = this.filter.paymentMethod;
   },
 };
 </script>
