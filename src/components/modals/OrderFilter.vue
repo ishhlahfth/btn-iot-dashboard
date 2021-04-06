@@ -10,7 +10,7 @@
         @click="$emit('close')"
       />
     </div>
-    <form @submit.prevent="$emit('apply', selectedPayment)" class="grid gap-4">
+    <form @submit.prevent="$emit('apply', selectedPayment.value)" class="grid gap-4">
       <div class="w-full">
         <help-select
           v-model="selectedPayment"
@@ -20,7 +20,13 @@
         />
       </div>
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
-        <help-button type="button" label="cancel" bg-color="transparent" color="grey-1" @click="$emit('close')" />
+        <help-button
+          type="button"
+          label="cancel"
+          bg-color="transparent"
+          color="grey-1"
+          @click="$emit('close')"
+        />
         <help-button label="apply" />
       </div>
     </form>
@@ -45,8 +51,14 @@ export default {
   },
   data() {
     return {
-      selectedPayment: '',
-      paymentMethods: ['Gopay', 'ShopeePay', 'Ovo', 'Dana'],
+      selectedPayment: { value: '', label: 'All' },
+      paymentMethods: [
+        { value: '', label: 'All' },
+        { value: 'Gopay', label: 'Gopay' },
+        { value: 'ShopeePay', label: 'ShopeePay' },
+        { value: 'Ovo', label: 'Ovo' },
+        { value: 'Dana', label: 'Dana' },
+      ],
     };
   },
   computed: {
@@ -55,7 +67,9 @@ export default {
     },
   },
   mounted() {
-    this.selectedPayment = this.filter.paymentMethod;
+    this.selectedPayment = this.paymentMethods.filter(
+      (el) => el.value === this.filter.paymentMethod,
+    )[0];
   },
 };
 </script>
