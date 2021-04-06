@@ -91,7 +91,7 @@
               <div>
                 <p class="text-grey-2">Name</p>
                 <p>{{ item?.name }}</p>
-                <p class="text-xsmall">{{ item.variations.map((el) => el.options[0].name).join(', ') }}</p>
+                <p class="text-xsmall font-light text-grey-2">{{ item.variations.map((el) => el.options[0].name).join(', ') }}</p>
               </div>
               <div>
                 <p class="text-grey-2">Quantity</p>
