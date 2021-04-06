@@ -2,28 +2,39 @@
   <div
     class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
   >
-    <div class="grid md:grid-flow-col gap-8 grid-cols-12 overflow-auto">
-      <div class="md:col-span-9 grid gap-4 md:gap-8">
+    <div class="grid lg:grid-flow-col gap-8 lg:grid-cols-12 overflow-auto">
+      <div class="lg:col-span-9 grid gap-4 lg:gap-8">
         <div class="divide-y divide-grey-4 font-medium">
-          <p class="font-medium pb-4 md:text-base">Order</p>
-          <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p class="font-medium pb-4 lg:text-base">Order</p>
+          <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Buy &#38; Sell PO Number</p>
               <p>{{ order.code }}</p>
             </div>
             <div>
               <p class="text-grey-2">Order Date</p>
-              <p>{{ order.date }}</p>
+              <p>{{ formatTime(order.date) }}</p>
             </div>
             <div>
               <p class="text-grey-2">Status</p>
-              <p class="text-royal">{{ order.current_step?.title }}</p>
+              <p
+                :class="
+                  order.current_step?.title === 'Completed' || order.current_step?.title === 'New'
+                    ? 'text-mint'
+                    : order.current_step?.title === 'In-Progress' ||
+                      order.current_step?.title === 'Pending'
+                    ? 'text-gold'
+                    : 'text-flame'
+                "
+              >
+                {{ order.current_step?.title }}
+              </p>
             </div>
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
-          <p class="font-medium pb-4 md:text-base">Delivery</p>
-          <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p class="font-medium pb-4 lg:text-base">Delivery</p>
+          <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Delivery PO Number</p>
               <p>{{ order.delivery_code }}</p>
@@ -34,17 +45,17 @@
             </div>
             <div>
               <p class="text-grey-2">Driver Name</p>
-              <p></p>
+              <p>{{ order.order_type_details?.driver?.driver_name }}</p>
             </div>
             <div>
-              <p class="text-grey-2">License Number</p>
-              <p></p>
+              <p class="text-grey-2">Vehicle Number</p>
+              <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
             </div>
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
-          <p class="font-medium pb-4 md:text-base">Seller</p>
-          <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p class="font-medium pb-4 lg:text-base">Seller</p>
+          <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Name</p>
               <p>{{ order.merchant?.name }}</p>
@@ -53,7 +64,7 @@
               <p class="text-grey-2">Phone Number</p>
               <p>{{ order.merchant?.phone_number }}</p>
             </div>
-            <div class="md:col-span-2">
+            <div class="lg:col-span-2">
               <p class="text-grey-2">Address</p>
               <p>
                 {{
@@ -64,8 +75,8 @@
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
-          <p class="font-medium pb-4 md:text-base">Buyer</p>
-          <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p class="font-medium pb-4 lg:text-base">Buyer</p>
+          <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Name</p>
               <p>{{ order.customer?.profile?.name }}</p>
@@ -74,7 +85,20 @@
               <p class="text-grey-2">Phone Number</p>
               <p>{{ order.customer?.profile?.phone_number }}</p>
             </div>
-            <div class="md:col-span-2">
+          </div>
+        </div>
+        <div class="divide-y divide-grey-4 font-medium">
+          <p class="font-medium pb-4 lg:text-base">Recipient</p>
+          <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+              <p class="text-grey-2">Name</p>
+              <p>{{ order.order_type_details?.shipping_address?.contact_person }}</p>
+            </div>
+            <div>
+              <p class="text-grey-2">Phone Number</p>
+              <p>{{ order.order_type_details?.shipping_address?.contact_person_hp }}</p>
+            </div>
+            <div class="lg:col-span-2">
               <p class="text-grey-2">Shipping Address</p>
               <p>
                 {{
@@ -85,32 +109,36 @@
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
-          <p class="font-medium pb-4 md:text-base">Product</p>
-          <div class="pt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p class="font-medium pb-4 lg:text-base">Product</p>
+          <div class="pt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <p class="text-grey-2">Name</p>
+            <p class="text-grey-2">Quantity</p>
+            <p class="text-grey-2">Item Price</p>
+            <p class="text-grey-2">Subtotal</p>
             <template v-for="item in order.items" :key="item.id">
               <div>
-                <p class="text-grey-2">Name</p>
-                <p>{{ item?.name }}</p>
+                <div class="mb-1">
+                  <p>{{ item?.name }}</p>
+                  <p class="text-xsmall font-light text-grey-2">
+                    {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                  </p>
+                </div>
+                <p
+                  class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                >
+                  {{ item.note ? item.note : '-' }}
+                </p>
               </div>
-              <div>
-                <p class="text-grey-2">Quantity</p>
-                <p>{{ item?.qty }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Item Price</p>
-                <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Subtotal</p>
-                <p>{{ convertToRp(item?.subtotal_price) }}</p>
-              </div>
+              <p>{{ item?.qty }}</p>
+              <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+              <p>{{ convertToRp(item?.subtotal_price) }}</p>
             </template>
           </div>
         </div>
       </div>
-      <div class="md:col-span-3 divide-y divide-grey-4 font-medium">
-        <p class="font-medium pb-4 md:text-base">Payment</p>
-        <div class="pt-4 grid grid-cols-2 md:grid-cols-none gap-4 md:gap-8">
+      <div class="lg:col-span-3 divide-y divide-grey-4 font-medium">
+        <p class="font-medium pb-4 lg:text-base">Payment</p>
+        <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
           <div>
             <p class="text-grey-2">Delivery Fee</p>
             <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
@@ -136,6 +164,7 @@
 <script>
 import API from '@/apis';
 import mixin from '@/mixin';
+import dayjs from 'dayjs';
 
 export default {
   name: 'OrderDetail',
@@ -168,10 +197,15 @@ export default {
       let subtotal = item.price;
       if (item.variations.length) {
         for (let i = 0; i < item.variations.length; i += 1) {
-          subtotal += item.variations[i].options[0].price;
+          for (let j = 0; j < item.variations[i].options.length; j += 1) {
+            subtotal += item.variations[i].options[j].price;
+          }
         }
       }
       return subtotal;
+    },
+    formatTime(unix) {
+      return dayjs(unix).format('DD-MM-YYYY HH:mm:ss');
     },
   },
   mounted() {

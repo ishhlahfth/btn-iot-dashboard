@@ -31,10 +31,9 @@
             v-if="column === 'current_step'"
             :label="row.current_step"
             :color="
-              row.current_step === 'Pesanan Selesai'
+              row.current_step === 'Completed' || row.current_step === 'New'
                 ? 'positive'
-                : row.current_step === 'Sedang Dikirim' ||
-                  row.current_step === 'Menunggu Konfirmasi'
+                : row.current_step === 'In-Progress' || row.current_step === 'Pending'
                 ? 'warning'
                 : 'negative'
             "
