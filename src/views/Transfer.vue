@@ -115,6 +115,8 @@ export default {
       transferPagination: {
         limit: 10,
         offset: 0,
+        sort: 'order_date',
+        order: 'asc',
       },
       loading: false,
       checkAll: false,
@@ -124,17 +126,22 @@ export default {
   computed: {
     columns() {
       const columns = [
-        { field: 'order_date', label: 'order date' },
+        { field: 'order_date', label: 'order date', sortable: true },
         { field: 'code', label: 'po number' },
-        { field: 'transfer_date', label: 'transfer date' },
-        { field: 'transfer_status', label: 'transfer status', align: 'center' },
-        { field: 'merchant_name', label: 'merchant name' },
+        { field: 'transfer_date', label: 'transfer date', sortable: true },
+        {
+          field: 'transfer_status',
+          label: 'transfer status',
+          align: 'center',
+          sortable: true,
+        },
+        { field: 'merchant_name', label: 'merchant name', sortable: true },
         { field: 'customer_name', label: 'buyer name' },
         { field: 'amount', label: 'transfer amount' },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
         { field: 'delivery_price', label: 'delivery price' },
-        { field: 'payment_method', label: 'payment method' },
+        { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'transfer_by', label: 'transfered by' },
         { field: 'result_logs', label: 'log' },
         // { field: 'detail', label: 'detail', align: 'center' },
@@ -162,15 +169,18 @@ export default {
     async getTransferData(pagination) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
+      const sort = pagination.sort || 'order_date';
+      const order = pagination.order || 'asc';
 
       this.loading = true;
 
       try {
         const {
           data: { data },
-        } = await API.get(`transfer-queues?offset=${offset}&limit=${limit}`);
+        } = await API.get(
+          `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
+        );
 
-        console.log('TRANSFER: ', data);
         this.transfers = data.map((el) => ({
           id: el.id,
           amount: el.amount,
@@ -192,6 +202,8 @@ export default {
         this.transferPagination = {
           limit,
           offset,
+          sort,
+          order,
         };
       } catch (error) {
         console.log(error);
