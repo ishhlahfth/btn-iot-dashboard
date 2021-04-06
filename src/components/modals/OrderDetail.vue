@@ -111,26 +111,27 @@
         <div class="divide-y divide-grey-4 font-medium">
           <p class="font-medium pb-4 lg:text-base">Product</p>
           <div class="pt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <p class="text-grey-2">Name</p>
+            <p class="text-grey-2">Quantity</p>
+            <p class="text-grey-2">Item Price</p>
+            <p class="text-grey-2">Subtotal</p>
             <template v-for="item in order.items" :key="item.id">
               <div>
-                <p class="text-grey-2">Name</p>
-                <p>{{ item?.name }}</p>
-                <p class="text-xsmall font-light text-grey-2">
-                  {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                <div class="mb-1">
+                  <p>{{ item?.name }}</p>
+                  <p class="text-xsmall font-light text-grey-2">
+                    {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                  </p>
+                </div>
+                <p
+                  class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                >
+                  {{ item.note ? item.note : '-' }}
                 </p>
               </div>
-              <div>
-                <p class="text-grey-2">Quantity</p>
-                <p>{{ item?.qty }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Item Price</p>
-                <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Subtotal</p>
-                <p>{{ convertToRp(item?.subtotal_price) }}</p>
-              </div>
+              <p>{{ item?.qty }}</p>
+              <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+              <p>{{ convertToRp(item?.subtotal_price) }}</p>
             </template>
           </div>
         </div>
