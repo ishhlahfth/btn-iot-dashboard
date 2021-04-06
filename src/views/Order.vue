@@ -4,7 +4,7 @@
   </help-modal>
 
   <help-modal v-model="filterModal">
-    <order-filter :filter="orderFilter" @apply="applyFilter" />
+    <order-filter :filter="orderFilter" @apply="applyFilter" @close="filterModal = false" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">

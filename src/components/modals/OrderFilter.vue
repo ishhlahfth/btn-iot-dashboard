@@ -2,7 +2,13 @@
   <div class="grid gap-6 inner-modal-auto modal-md">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Filter Order</p>
-      <help-button icon-only icon="close" bg-color="transparent" color="grey-1" />
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
     </div>
     <form @submit.prevent="$emit('apply', selectedPayment)" class="grid gap-4">
       <div class="w-full">
@@ -14,8 +20,8 @@
         />
       </div>
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
-        <help-button label="cancel" bg-color="transparent" color="grey-1" />
-        <help-button label="apply" type="submit" />
+        <help-button type="button" label="cancel" bg-color="transparent" color="grey-1" @click="$emit('close')" />
+        <help-button label="apply" />
       </div>
     </form>
   </div>
