@@ -7,6 +7,10 @@
     <order-filter :filter="orderFilter" @apply="applyFilter" @close="filterModal = false" />
   </help-modal>
 
+  <help-modal v-model="statusHistoryModal">
+    <p>Status History</p>
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
@@ -33,6 +37,7 @@
       >
         <template v-slot:body="{ column, row }">
           <help-badge
+            class="cursor-pointer"
             v-if="column === 'current_step'"
             :label="row.current_step"
             :color="
@@ -42,6 +47,7 @@
                 ? 'warning'
                 : 'negative'
             "
+            @click="statusHistoryModal = true"
           />
           <p
             v-if="column === 'detail'"
@@ -108,11 +114,11 @@ export default {
       loading: false,
       detailModal: false,
       filterModal: false,
+      statusHistoryModal: false,
     };
   },
   methods: {
     async getOrders({ pagination, filter }) {
-      console.log('OOO', pagination, filter);
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'date';
