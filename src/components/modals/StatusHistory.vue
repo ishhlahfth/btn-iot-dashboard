@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-md">
     <div class="flex justify-between items-center">
-      <p class="text-heading4 font-semibold">Change Order Status</p>
+      <p class="text-heading4 font-semibold">Status History</p>
       <help-button
         icon-only
         icon="close"
@@ -29,12 +29,16 @@
         </div>
       </template>
     </div>
-    <form @submit.prevent="$emit('apply', selectedStep)" class="grid gap-4">
+    <form
+      @submit.prevent="$emit('apply', selectedAction.value)"
+      class="grid gap-4"
+      v-if="actions.length"
+    >
       <div class="w-full">
         <help-select
-          v-model="selectedStep"
+          v-model="selectedAction"
           label="Change order status to"
-          :options="steps"
+          :options="actions"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
@@ -74,9 +78,10 @@ export default {
   },
   data() {
     return {
-      selectedStep: '',
-      steps: [],
+      selectedAction: '',
+      actions: [],
       history: [],
+      currentStep: {},
     };
   },
   computed: {
@@ -96,7 +101,7 @@ export default {
         const {
           data: { data },
         } = await API.get(`orders/${this.orderId}/history`);
-        console.log('HISTORY', data);
+
         this.history = data.map((el) => ({
           ...el,
           process_date: dayjs(el.process_date).format('DD-MM-YYYY HH:mm:ss'),
@@ -110,17 +115,22 @@ export default {
         const {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/order-steps`);
-        this.steps = data.map((el) => el.title);
-        this.selectedStep = this.steps[0];
-        console.log('STEPS - - >', data);
+
+        const currentStep = data.filter(
+          (el) => el.title === this.history[this.history.length - 1].step_title,
+        )[0];
+
+        this.actions = currentStep.actions.length
+          ? currentStep.actions.map((el) => ({ value: el.id, label: el.title }))
+          : [];
       } catch (error) {
         console.log(error);
       }
     },
   },
-  mounted() {
+  async mounted() {
+    await this.getStatusHistory();
     this.getOrderSteps();
-    this.getStatusHistory();
   },
 };
 </script>
