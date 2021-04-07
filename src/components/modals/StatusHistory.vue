@@ -11,43 +11,23 @@
       />
     </div>
     <div class="grid gap-1">
-      <div class="flex justify-between">
-        <div class="grid grid-flow-col gap-4 place-items-center">
-          <div class="bg-royal rounded-full h-7 w-7"></div>
-          <p class="font-medium">New</p>
-        </div>
-        <div>
-          <p class="text-grey-2">23-10-2021 18:20</p>
-        </div>
-      </div>
-      <div class="pl-3">
-        <div class="bg-royal w-1 h-5"></div>
-      </div>
-
-      <div class="flex justify-between">
-        <div class="grid grid-flow-col gap-4 place-items-center">
-          <div class="bg-royal rounded-full h-7 w-7"></div>
-          <p class="font-medium">Pending Payment</p>
-        </div>
-        <div>
-          <p class="text-grey-2">23-10-2021 18:20</p>
-        </div>
-      </div>
-      <div class="pl-3">
-        <div class="bg-royal w-1 h-5"></div>
-      </div>
-
-      <div class="flex justify-between">
-        <div class="grid grid-flow-col gap-4 place-items-center">
-          <div class="bg-mint rounded-full h-7 w-7 grid place-items-center">
-            <icon name="check" color="white" />
+      <template v-for="(step, i) in history" :key="step.id">
+        <div class="flex justify-between">
+          <div class="grid grid-flow-col gap-4 place-items-center">
+            <div v-if="step.step_title !== 'Completed'" class="bg-royal rounded-full h-7 w-7" />
+            <div v-else class="bg-mint rounded-full h-7 w-7 grid place-items-center">
+              <icon name="check" color="white" />
+            </div>
+            <p class="font-medium">{{ step.step_title }}</p>
           </div>
-          <p class="font-medium">Finished</p>
+          <div>
+            <p class="text-grey-2">{{ step.process_date }}</p>
+          </div>
         </div>
-        <div>
-          <p class="text-grey-2">23-10-2021 18:20</p>
+        <div v-if="i !== history.length - 1" class="pl-3">
+          <div class="bg-royal w-1 h-5" />
         </div>
-      </div>
+      </template>
     </div>
     <!-- <form @submit.prevent="$emit('apply', selectedPayment.value)" class="grid gap-4">
       <div class="w-full">
@@ -76,9 +56,11 @@
 import HelpButton from '@/components/atoms/Button.vue';
 // import HelpSelect from '@/components/molecules/Select.vue';
 import Icon from '@/components/atoms/Icon.vue';
+import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default {
-  name: 'OrderFilter',
+  name: 'StatusHistory',
   components: {
     HelpButton,
     // HelpSelect,
@@ -92,26 +74,36 @@ export default {
   },
   data() {
     return {
-      selectedPayment: { value: '', label: 'All' },
-      paymentMethods: [
-        { value: '', label: 'All' },
-        { value: 'Gopay', label: 'Gopay' },
-        { value: 'ShopeePay', label: 'ShopeePay' },
-        { value: 'Ovo', label: 'Ovo' },
-        { value: 'Dana', label: 'Dana' },
-      ],
+      history: [],
     };
   },
   computed: {
     screenWidth() {
       return this.$store.state.screenWidth;
     },
+    orderId() {
+      return this.$store.state.orderId;
+    },
   },
-  // mounted() {
-  //   this.selectedPayment = this.paymentMethods.filter(
-  //     (el) => el.value === this.filter.paymentMethod,
-  //   )[0];
-  // },
+  methods: {
+    async getStatusHistory() {
+      try {
+        const {
+          data: { data },
+        } = await API.get(`orders/${this.orderId}/history`);
+        console.log('HISTORY', data);
+        this.history = data.map((el) => ({
+          ...el,
+          process_date: dayjs(el.process_date).format('DD-MM-YYYY HH:mm:ss'),
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.getStatusHistory();
+  },
 };
 </script>
 

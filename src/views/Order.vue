@@ -47,7 +47,7 @@
                 ? 'warning'
                 : 'negative'
             "
-            @click="statusHistoryModal = true"
+            @click="openStatusHistory(row.id)"
           />
           <p
             v-if="column === 'detail'"
@@ -168,6 +168,10 @@ export default {
       console.log(orderId);
       console.log('- - - - -');
       this.detailModal = true;
+      this.$store.commit('SET_ORDER_ID', orderId);
+    },
+    openStatusHistory(orderId) {
+      this.statusHistoryModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
     applyFilter($event) {
