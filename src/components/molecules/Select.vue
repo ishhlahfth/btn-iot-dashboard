@@ -53,13 +53,22 @@ export default {
   },
   data() {
     return {
-      selected: !this.modelValue
-        ? this.options.length > 0
-          ? this.options[0]
-          : null
-        : this.modelValue,
       opened: false,
     };
+  },
+  computed: {
+    selected: {
+      get() {
+        return !this.modelValue
+          ? this.options.length > 0
+            ? this.options[0]
+            : null
+          : this.modelValue;
+      },
+      set(value) {
+        return value;
+      },
+    },
   },
   methods: {
     changeSelected(newItem) {
