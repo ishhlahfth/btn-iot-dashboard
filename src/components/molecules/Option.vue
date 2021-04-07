@@ -57,7 +57,7 @@ export default {
     },
     checkValue(option) {
       let result = option;
-      if (typeof option === 'object') {
+      if (option && typeof option === 'object') {
         result = option.value;
       }
       return result;

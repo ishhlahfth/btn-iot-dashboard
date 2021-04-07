@@ -79,7 +79,8 @@ export default {
     },
     checkSelected(selected) {
       let result = selected;
-      if (typeof selected === 'object') {
+      if (selected && typeof selected === 'object') {
+        console.log('emang masuk sini?');
         result = selected.label;
       }
       return result;

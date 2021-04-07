@@ -29,12 +29,12 @@
         </div>
       </template>
     </div>
-    <!-- <form @submit.prevent="$emit('apply', selectedPayment.value)" class="grid gap-4">
+    <form @submit.prevent="$emit('apply', selectedStep)" class="grid gap-4">
       <div class="w-full">
         <help-select
-          v-model="selectedPayment"
-          label="Payment Method"
-          :options="paymentMethods"
+          v-model="selectedStep"
+          label="Change order status to"
+          :options="steps"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
@@ -48,13 +48,13 @@
         />
         <help-button label="apply" />
       </div>
-    </form> -->
+    </form>
   </div>
 </template>
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-// import HelpSelect from '@/components/molecules/Select.vue';
+import HelpSelect from '@/components/molecules/Select.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import API from '@/apis';
 import dayjs from 'dayjs';
@@ -63,7 +63,7 @@ export default {
   name: 'StatusHistory',
   components: {
     HelpButton,
-    // HelpSelect,
+    HelpSelect,
     Icon,
   },
   props: {
@@ -74,6 +74,8 @@ export default {
   },
   data() {
     return {
+      selectedStep: '',
+      steps: [],
       history: [],
     };
   },
@@ -83,6 +85,9 @@ export default {
     },
     orderId() {
       return this.$store.state.orderId;
+    },
+    merchantId() {
+      return this.$store.state.merchantId;
     },
   },
   methods: {
@@ -100,8 +105,21 @@ export default {
         console.log(error);
       }
     },
+    async getOrderSteps() {
+      try {
+        const {
+          data: { data },
+        } = await API.get(`merchants/${this.merchantId}/order-steps`);
+        this.steps = data.map((el) => el.title);
+        this.selectedStep = this.steps[0];
+        console.log('STEPS - - >', data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
+    this.getOrderSteps();
     this.getStatusHistory();
   },
 };

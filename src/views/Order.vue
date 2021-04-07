@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history />
+    <status-history @close="statusHistoryModal = false" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -47,7 +47,7 @@
                 ? 'warning'
                 : 'negative'
             "
-            @click="openStatusHistory(row.id)"
+            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id })"
           />
           <p
             v-if="column === 'detail'"
@@ -139,8 +139,11 @@ export default {
           data: { data },
         } = await API.get(url);
 
+        console.log('ORDER - - >', data);
+
         this.orders = data.map((el) => ({
           id: el.id,
+          merchant_id: el.merchant_id,
           code: el.code,
           date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
           current_step: el.current_step.title,
@@ -170,9 +173,10 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
-    openStatusHistory(orderId) {
+    openStatusHistory({ id, merchantId }) {
       this.statusHistoryModal = true;
-      this.$store.commit('SET_ORDER_ID', orderId);
+      this.$store.commit('SET_ORDER_ID', id);
+      this.$store.commit('SET_MERCHANT_ID', merchantId);
     },
     applyFilter($event) {
       const pagination = {
