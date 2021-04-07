@@ -30,7 +30,7 @@
       </template>
     </div>
     <form
-      @submit.prevent="$emit('apply', selectedAction.value)"
+      @submit.prevent="updateStatus"
       class="grid gap-4"
       v-if="actions.length"
     >
@@ -116,13 +116,26 @@ export default {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/order-steps`);
 
-        const currentStep = data.filter(
-          (el) => el.title === this.history[this.history.length - 1].step_title,
-        )[0];
+        this.currentStep = this.history[this.history.length - 1];
 
-        this.actions = currentStep.actions.length
-          ? currentStep.actions.map((el) => ({ value: el.id, label: el.title }))
+        const currentStepDetail = data.filter((el) => el.title === this.currentStep.step_title)[0];
+
+        this.actions = currentStepDetail.actions.length
+          ? currentStepDetail.actions.map((el) => ({ value: el.id, label: el.title }))
           : [];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateStatus() {
+      try {
+        const {
+          data: { data },
+        } = await API.post(
+          `orders/${this.orderId}/steps/${this.currentStep.id}/actions/${this.selectedAction.value}/next`,
+          {},
+        );
+        console.log('UPDATE: ', data);
       } catch (error) {
         console.log(error);
       }
