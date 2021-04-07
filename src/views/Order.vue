@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <p>Status History</p>
+    <status-history />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -69,6 +69,7 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
+import StatusHistory from '@/components/modals/StatusHistory.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -83,6 +84,7 @@ export default {
     HelpTable,
     OrderDetail,
     OrderFilter,
+    StatusHistory,
   },
   data() {
     return {
