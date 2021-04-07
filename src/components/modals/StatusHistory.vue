@@ -29,11 +29,7 @@
         </div>
       </template>
     </div>
-    <form
-      @submit.prevent="updateStatus"
-      class="grid gap-4"
-      v-if="actions.length"
-    >
+    <form @submit.prevent="updateStatus" class="grid gap-4" v-if="actions.length">
       <div class="w-full">
         <help-select
           v-model="selectedAction"
@@ -82,6 +78,11 @@ export default {
       actions: [],
       history: [],
       currentStep: {},
+      loading: {
+        history: false,
+        steps: false,
+        update: false,
+      },
     };
   },
   computed: {
@@ -97,6 +98,7 @@ export default {
   },
   methods: {
     async getStatusHistory() {
+      this.loading.history = true;
       try {
         const {
           data: { data },
@@ -109,16 +111,27 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.loading.history = false;
     },
     async getOrderSteps() {
+      this.loading.steps = true;
       try {
         const {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/order-steps`);
+        console.log('🚀 ~ file: StatusHistory.vue ~ line 118 ~ getOrderSteps ~ data', data);
 
         this.currentStep = this.history[this.history.length - 1];
+        console.log(
+          '🚀 ~ file: StatusHistory.vue ~ line 120 ~ getOrderSteps ~ this.currentStep',
+          this.currentStep,
+        );
 
         const currentStepDetail = data.filter((el) => el.title === this.currentStep.step_title)[0];
+        console.log(
+          '🚀 ~ file: StatusHistory.vue ~ line 123 ~ getOrderSteps ~ currentStepDetail',
+          currentStepDetail,
+        );
 
         this.actions = currentStepDetail.actions.length
           ? currentStepDetail.actions.map((el) => ({ value: el.id, label: el.title }))
@@ -126,19 +139,23 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.loading.steps = false;
     },
     async updateStatus() {
+      this.loading.update = true;
       try {
         const {
           data: { data },
         } = await API.post(
-          `orders/${this.orderId}/steps/${this.currentStep.id}/actions/${this.selectedAction.value}/next`,
+          `orders/${this.orderId}/steps/${this.currentStep.step_id}/actions/${this.selectedAction.value}/next`,
           {},
         );
         console.log('UPDATE: ', data);
+        this.getStatusHistory();
       } catch (error) {
         console.log(error);
       }
+      this.loading.update = false;
     },
   },
   async mounted() {
