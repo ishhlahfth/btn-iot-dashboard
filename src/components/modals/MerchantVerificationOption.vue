@@ -43,6 +43,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import API from '@/apis';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'MerchantVerificationOption',
@@ -52,6 +53,10 @@ export default {
     HelpSelect,
   },
   emits: ['close', 'closeAndRefetch'],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       selectedStatus: { value: 'SUCCESS', label: 'Terverifikasi' },
@@ -86,8 +91,9 @@ export default {
         } = await API.patch(`merchants/${this.verifDetail.id}`, payload);
 
         this.$emit('closeAndRefetch');
-        console.log('AFTER VERIFY', data);
+        this.toast.success(`Successully updated ${data.name}`);
       } catch (error) {
+        this.toast.error(error);
         console.log(error);
       }
     },
