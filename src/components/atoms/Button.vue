@@ -1,5 +1,6 @@
 <template>
   <button
+    :type="type"
     :disabled="loading"
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
@@ -61,6 +62,10 @@ export default {
       default: false,
     },
     loadingLabel: {
+      type: String,
+      default: '',
+    },
+    type: {
       type: String,
       default: '',
     },

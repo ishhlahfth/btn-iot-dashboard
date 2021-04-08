@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default createStore({
   state: {
@@ -63,6 +64,7 @@ export default createStore({
           city: data.address?.city.name,
           bank: data.account?.bank.name,
           verificationStatus: data.verify_status,
+          verificationDate: dayjs(data.verify_date).format('DD-MM-YYYY HH:mm:ss'),
           summary: {
             canceled: data.total_summary?.canceled_order,
             completed: data.total_summary?.completed,

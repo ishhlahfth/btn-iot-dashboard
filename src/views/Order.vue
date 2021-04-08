@@ -3,9 +3,14 @@
     <order-detail />
   </help-modal>
 
+  <help-modal v-model="filterModal">
+    <order-filter :filter="orderFilter" @apply="applyFilter" @close="filterModal = false" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
+      <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <!-- <div>
       <form @submit.prevent="getOrders">
@@ -23,8 +28,8 @@
         :loading="loading"
         :rows="orders"
         :pagination="orderPagination"
-        @onChangePagination="getOrders($event)"
-        @sort="getOrders($event)"
+        @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
+        @sort="getOrders({ pagination: $event, filter: orderFilter })"
       >
         <template v-slot:body="{ column, row }">
           <help-badge
@@ -53,9 +58,11 @@
 
 <script>
 import HelpBadge from '@/components/atoms/Badge.vue';
+import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
+import OrderFilter from '@/components/modals/OrderFilter.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -65,9 +72,11 @@ export default {
   mixins: [mixin],
   components: {
     HelpBadge,
+    HelpButton,
     HelpModal,
     HelpTable,
     OrderDetail,
+    OrderFilter,
   },
   data() {
     return {
@@ -98,23 +107,34 @@ export default {
         sort: 'date',
         order: 'asc',
       },
+      orderFilter: {
+        paymentMethod: '',
+      },
       loading: false,
       detailModal: false,
+      filterModal: false,
     };
   },
   methods: {
-    async getOrders(pagination) {
+    async getOrders({ pagination, filter }) {
+      console.log('OOO', pagination, filter);
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'date';
       const order = pagination.order || 'asc';
+      const search = this.searchValue || '';
+
+      let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+
+      if (filter?.paymentMethod) {
+        url += `&payment_method=${filter?.paymentMethod}`;
+      }
+
       try {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(
-          `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
-        );
+        } = await API.get(url);
 
         this.orders = data.map((el) => ({
           id: el.id,
@@ -135,6 +155,7 @@ export default {
           sort,
           order,
         };
+        this.orderFilter = filter;
       } catch (error) {
         console.log(error);
       }
@@ -144,9 +165,26 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
+    applyFilter($event) {
+      const pagination = {
+        limit: 10,
+        offset: 0,
+        sort: 'date',
+        order: 'asc',
+      };
+      const filter = {
+        ...this.orderFilter,
+        paymentMethod: $event,
+      };
+      this.getOrders({ pagination, filter });
+      this.filterModal = false;
+    },
   },
   async mounted() {
-    this.getOrders(this.orderPagination);
+    this.getOrders({
+      pagination: this.orderPagination,
+      filter: this.orderFilter,
+    });
   },
 };
 </script>

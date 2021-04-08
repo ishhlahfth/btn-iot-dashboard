@@ -123,8 +123,10 @@ import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default {
   name: 'Merchant',
@@ -144,6 +146,10 @@ export default {
     MerchantVerification,
     MerchantVerificationOption,
   },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       searchValue: '',
@@ -156,6 +162,7 @@ export default {
           align: 'center',
           sortable: true,
         },
+        { field: 'verify_date', label: 'status last updated', sortable: true },
         { field: 'commission', label: 'commission (%)', align: 'right' },
         { field: 'menu', label: 'merchant detail', align: 'center' },
         { field: 'operational_detail', label: 'operational time', align: 'center' },
@@ -216,14 +223,13 @@ export default {
           `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
         );
 
-        console.log(currentMerchants);
-
         this.merchants = currentMerchants.map((el) => ({
           id: el.id,
           name: el.name,
           city: el.address.city.name,
           verify_status: this.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
+          verify_date: dayjs(el.verify_date).format('DD-MM-YYYY HH:mm:ss'),
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
               openHour,
@@ -283,7 +289,8 @@ export default {
         const {
           data: { data },
         } = await API.patch(`merchants/${this.verifDetail.id}`, payload);
-        console.log('SUSPEND OK', data);
+
+        this.toast.success(`Successfully suspended ${data.name}`);
         this.confirmSuspendModal = false;
         this.verificationModal = false;
         this.getMerchants(this.merchantPagination);
