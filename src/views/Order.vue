@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history @close="statusHistoryModal = false" />
+    <status-history @close="closeAndRefetch" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -41,9 +41,13 @@
             v-if="column === 'current_step'"
             :label="row.current_step"
             :color="
-              row.current_step === 'Completed' || row.current_step === 'New'
+              row.current_step === 'Pesanan Selesai'
                 ? 'positive'
-                : row.current_step === 'In-Progress' || row.current_step === 'Pending'
+                : row.current_step === 'Menunggu Konfirmasi' ||
+                  row.current_step === 'Menunggu Pembayaran' ||
+                  row.current_step === 'Mengajukan Komplain' ||
+                  row.current_step === 'Sedang Dikirim' ||
+                  row.current_step === 'Pesanan Tiba'
                 ? 'warning'
                 : 'negative'
             "
@@ -168,8 +172,6 @@ export default {
       this.loading = false;
     },
     openOrderDetail(orderId) {
-      console.log(orderId);
-      console.log('- - - - -');
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
@@ -191,6 +193,13 @@ export default {
       };
       this.getOrders({ pagination, filter });
       this.filterModal = false;
+    },
+    closeAndRefetch() {
+      this.statusHistoryModal = false;
+      this.getOrders({
+        pagination: this.orderPagination,
+        filter: this.orderFilter,
+      });
     },
   },
   async mounted() {
