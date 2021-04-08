@@ -23,6 +23,9 @@ const toastOption = {
   closeButton: 'button',
   icon: true,
   rtl: false,
+  containerClassName: 'custom-container',
+  toastClassName: 'custom-toast',
+  bodyClassName: 'custom-body',
 };
 
 createApp(App)

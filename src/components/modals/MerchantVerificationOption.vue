@@ -42,6 +42,7 @@
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
+import Toast from '@/components/atoms/Toast.vue';
 import API from '@/apis';
 import { useToast } from 'vue-toastification';
 
@@ -92,12 +93,19 @@ export default {
 
         this.$emit('closeAndRefetch');
 
-        this.toast.success(`Updated ${data.name} successfully`);
+        // this.toast.success(`Updated ${data.name} successfully`);
+        this.toast.success(Toast);
+        console.log('proceed', data);
       } catch (error) {
         this.toast.error(error);
         console.log(error);
       }
     },
+  },
+  mounted() {
+    this.toast.info('regular string');
+    this.toast.success('regular string');
+    this.toast.error('regular string');
   },
   // mounted() {
   //   console.log('🌛', this.verifDetail);
