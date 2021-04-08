@@ -27,6 +27,7 @@
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
+import { useToast } from 'vue-toastification';
 import API from '@/apis';
 
 export default {
@@ -36,6 +37,10 @@ export default {
     HelpSelect,
   },
   emits: ['close'],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       statuses: [
@@ -82,7 +87,7 @@ export default {
           data: { data },
         } = await API.patch(`items/${this.item.id}`, payload);
 
-        console.log('SUCCESSFULLY EDITED', data);
+        this.toast.success(`Successfully updated ${data.name}`);
         this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
         this.$emit('close');
       } catch (error) {
