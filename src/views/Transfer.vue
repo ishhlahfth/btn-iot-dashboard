@@ -91,6 +91,7 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 // import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -106,6 +107,10 @@ export default {
     HelpModal,
     // HelpInput,
     HelpTable,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -206,6 +211,7 @@ export default {
           order,
         };
       } catch (error) {
+        this.toast.error(error.message);
         console.log(error);
       }
       this.loading = false;
