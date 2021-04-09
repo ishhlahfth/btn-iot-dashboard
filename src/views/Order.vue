@@ -7,6 +7,10 @@
     <order-filter :filter="orderFilter" @apply="applyFilter" @close="filterModal = false" />
   </help-modal>
 
+  <help-modal v-model="statusHistoryModal">
+    <status-history @close="closeAndRefetch" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
@@ -33,15 +37,21 @@
       >
         <template v-slot:body="{ column, row }">
           <help-badge
+            class="cursor-pointer"
             v-if="column === 'current_step'"
             :label="row.current_step"
             :color="
-              row.current_step === 'Completed' || row.current_step === 'New'
+              row.current_step === 'Pesanan Selesai'
                 ? 'positive'
-                : row.current_step === 'In-Progress' || row.current_step === 'Pending'
+                : row.current_step === 'Menunggu Konfirmasi' ||
+                  row.current_step === 'Menunggu Pembayaran' ||
+                  row.current_step === 'Mengajukan Komplain' ||
+                  row.current_step === 'Sedang Dikirim' ||
+                  row.current_step === 'Pesanan Tiba'
                 ? 'warning'
                 : 'negative'
             "
+            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id })"
           />
           <p
             v-if="column === 'detail'"
@@ -63,6 +73,7 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
+import StatusHistory from '@/components/modals/StatusHistory.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -77,6 +88,7 @@ export default {
     HelpTable,
     OrderDetail,
     OrderFilter,
+    StatusHistory,
   },
   data() {
     return {
@@ -113,11 +125,11 @@ export default {
       loading: false,
       detailModal: false,
       filterModal: false,
+      statusHistoryModal: false,
     };
   },
   methods: {
     async getOrders({ pagination, filter }) {
-      console.log('OOO', pagination, filter);
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'date';
@@ -136,8 +148,11 @@ export default {
           data: { data },
         } = await API.get(url);
 
+        console.log('ORDER - - >', data);
+
         this.orders = data.map((el) => ({
           id: el.id,
+          merchant_id: el.merchant_id,
           code: el.code,
           date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
           current_step: el.current_step.title,
@@ -165,6 +180,11 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
+    openStatusHistory({ id, merchantId }) {
+      this.statusHistoryModal = true;
+      this.$store.commit('SET_ORDER_ID', id);
+      this.$store.commit('SET_MERCHANT_ID', merchantId);
+    },
     applyFilter($event) {
       const pagination = {
         limit: 10,
@@ -178,6 +198,13 @@ export default {
       };
       this.getOrders({ pagination, filter });
       this.filterModal = false;
+    },
+    closeAndRefetch() {
+      this.statusHistoryModal = false;
+      this.getOrders({
+        pagination: this.orderPagination,
+        filter: this.orderFilter,
+      });
     },
   },
   async mounted() {

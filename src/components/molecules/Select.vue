@@ -72,14 +72,13 @@ export default {
   },
   methods: {
     changeSelected(newItem) {
-      console.log(9999, newItem);
       this.selected = newItem;
       this.opened = false;
       this.$emit('update:modelValue', newItem);
     },
     checkSelected(selected) {
       let result = selected;
-      if (typeof selected === 'object') {
+      if (selected && typeof selected === 'object') {
         result = selected.label;
       }
       return result;
