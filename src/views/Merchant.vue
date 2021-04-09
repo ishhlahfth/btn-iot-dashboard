@@ -123,6 +123,7 @@ import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import API from '@/apis';
 import dayjs from 'dayjs';
@@ -144,6 +145,10 @@ export default {
     MerchantDetail,
     MerchantVerification,
     MerchantVerificationOption,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -218,8 +223,6 @@ export default {
           `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
         );
 
-        console.log(currentMerchants);
-
         this.merchants = currentMerchants.map((el) => ({
           id: el.id,
           name: el.name,
@@ -286,7 +289,8 @@ export default {
         const {
           data: { data },
         } = await API.patch(`merchants/${this.verifDetail.id}`, payload);
-        console.log('SUSPEND OK', data);
+
+        this.toast.success(`Successfully suspended ${data.name}`);
         this.confirmSuspendModal = false;
         this.verificationModal = false;
         this.getMerchants(this.merchantPagination);

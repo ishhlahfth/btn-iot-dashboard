@@ -38,6 +38,7 @@
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import { useToast } from 'vue-toastification';
 import API from '@/apis';
 
 export default {
@@ -47,6 +48,10 @@ export default {
     HelpInput,
   },
   emits: ['closeAndRefetch', 'close', 'refetch'],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       commissionDetail: {
@@ -92,13 +97,11 @@ export default {
       };
       this.loading = true;
       try {
-        const {
-          data: { data },
-        } = await API.patch(`bill-formulas/${this.commissionDetail.id}`, payload);
+        await API.patch(`bill-formulas/${this.commissionDetail.id}`, payload);
 
         this.getCommission();
         this.$emit('refetch');
-        console.log('UPDATED', data);
+        this.toast.success(`Successfully updated ${this.merchantName}`);
       } catch (error) {
         console.log(error);
       }

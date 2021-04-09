@@ -119,7 +119,10 @@ export default {
         this.idNumber = data[0]?.profile.identity_number || '-';
 
         if (data[0]?.banners.length) {
-          this.idImage = await this.$store.dispatch('loadImage', data[0].banners[0].url);
+          this.idImage = await this.$store.dispatch(
+            'loadImage',
+            data[0].banners[data[0].banners.length - 1].url,
+          );
         }
       } catch (error) {
         console.log(error);
