@@ -252,6 +252,7 @@ export default {
           order,
         };
       } catch (error) {
+        this.toast.error(error.message);
         console.log(error);
       }
       this.loading = false;

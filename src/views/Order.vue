@@ -74,6 +74,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '@/apis';
@@ -89,6 +90,10 @@ export default {
     OrderDetail,
     OrderFilter,
     StatusHistory,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -148,8 +153,6 @@ export default {
           data: { data },
         } = await API.get(url);
 
-        console.log('ORDER - - >', data);
-
         this.orders = data.map((el) => ({
           id: el.id,
           merchant_id: el.merchant_id,
@@ -172,6 +175,7 @@ export default {
         };
         this.orderFilter = filter;
       } catch (error) {
+        this.toast.error(error.message);
         console.log(error);
       }
       this.loading = false;
