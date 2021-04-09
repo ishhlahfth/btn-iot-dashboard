@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-6 inner-modal-auto modal-md">
+  <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Status History</p>
       <help-button
@@ -212,7 +212,6 @@ export default {
       deep: true,
       async handler() {
         if (this.selectedAction.label === 'Batalkan Pesanan') {
-          console.log('BATALKAN PESANAN');
           this.needsReason = true;
           try {
             const {
