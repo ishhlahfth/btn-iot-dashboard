@@ -3,13 +3,14 @@
     <div
       v-if="modelValue"
       class="w-screen h-screen bg-black bg-opacity-50 fixed inset-0 z-50"
-      @click="$emit('update:modelValue', false)"
+      @click="overlayClick"
     />
   </transition>
   <transition :name="screenWidth < 640 ? 'mobile-slide-up' : 'slide-up'" appear>
     <div
       v-if="modelValue"
-      class="fixed modal-style bg-snow p-4 sm:p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50"
+      class="fixed modal-style p-4 sm:p-6 rounded-t-2xl sm:rounded-lg shadow-custom z-50 transition-colors duration-500 transform"
+      :class="violated ? 'bg-flame-soft' : 'bg-snow'"
     >
       <slot></slot>
     </div>
@@ -24,10 +25,31 @@ export default {
       type: Boolean,
       default: false,
     },
+    permanent: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      violated: false,
+    };
   },
   computed: {
     screenWidth() {
       return this.$store.state.screenWidth;
+    },
+  },
+  methods: {
+    overlayClick() {
+      if (!this.permanent) {
+        this.$emit('update:modelValue', false);
+      } else {
+        this.violated = true;
+        setTimeout(() => {
+          this.violated = false;
+        }, 500);
+      }
     },
   },
 };

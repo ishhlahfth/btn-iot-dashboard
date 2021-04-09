@@ -1,5 +1,5 @@
 <template>
-  <help-modal v-model="confirmTransferModal">
+  <help-modal v-model="confirmTransferModal" permanent>
     <confirmation
       title="Transfer confirmation"
       :message="

@@ -22,7 +22,7 @@
     />
   </help-modal>
 
-  <help-modal v-model="confirmSuspendModal">
+  <help-modal v-model="confirmSuspendModal" permanent>
     <confirmation
       title="Changes confirmation"
       message="Are you sure you want to suspend this merchant?"
@@ -36,7 +36,7 @@
     <commission @close="commissionModal = false" @refetch="getMerchants(merchantPagination)" />
   </help-modal>
 
-  <help-modal v-model="itemStatusModal">
+  <help-modal v-model="itemStatusModal" permanent>
     <item-status @close="itemStatusModal = false" />
   </help-modal>
 
