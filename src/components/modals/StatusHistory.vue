@@ -82,6 +82,7 @@
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import Icon from '@/components/atoms/Icon.vue';
+import { useToast } from 'vue-toastification';
 import API from '@/apis';
 import dayjs from 'dayjs';
 
@@ -97,6 +98,10 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -191,9 +196,12 @@ export default {
         console.log('PAYLOAD: ', payload);
 
         console.log('UPDATE: ', data);
-        this.getStatusHistory();
+
+        this.toast.success('Successfully updated status');
+        await this.getStatusHistory();
         this.getOrderSteps();
       } catch (error) {
+        this.toast.error(error);
         console.log(error);
       }
       this.loading.update = false;
