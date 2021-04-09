@@ -96,6 +96,9 @@ export default {
       if (this.offset !== 0) {
         firstRow = this.offset + 1;
       }
+      if (!this.currentRowCount) {
+        firstRow = 0;
+      }
       return firstRow;
     },
     lastRow() {
