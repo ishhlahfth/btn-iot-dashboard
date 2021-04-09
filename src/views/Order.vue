@@ -105,7 +105,7 @@ export default {
         limit: 10,
         offset: 0,
         sort: 'date',
-        order: 'asc',
+        order: 'desc',
       },
       orderFilter: {
         paymentMethod: '',

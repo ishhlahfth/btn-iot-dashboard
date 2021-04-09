@@ -116,7 +116,7 @@ export default {
         limit: 10,
         offset: 0,
         sort: 'order_date',
-        order: 'asc',
+        order: 'desc',
       },
       loading: false,
       checkAll: false,
