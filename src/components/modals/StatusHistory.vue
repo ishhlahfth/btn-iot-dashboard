@@ -178,9 +178,7 @@ export default {
       }
 
       try {
-        const {
-          data: { data },
-        } = await API.post(
+        await API.post(
           `orders/${this.orderId}/steps/${this.currentStep.step_id}/actions/${this.selectedAction.value}/next`,
           payload,
         );
