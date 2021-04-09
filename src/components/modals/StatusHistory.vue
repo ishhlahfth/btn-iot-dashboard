@@ -142,8 +142,6 @@ export default {
           data: { data },
         } = await API.get(`orders/${this.orderId}/history`);
 
-        console.log('HISTORY: ', data);
-
         this.history = data.map((el) => ({
           ...el,
           process_date: dayjs(el.process_date).format('DD-MM-YYYY HH:mm:ss'),
@@ -159,18 +157,12 @@ export default {
         const {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/order-steps`);
-        console.log('🚀 ORDER STEPS: ', data);
 
         this.currentStep = this.history[this.history.length - 1];
-        console.log('🚀 CURRENT STEP: ', this.currentStep);
-
         const currentStepDetail = data.filter((el) => el.title === this.currentStep.step_title)[0];
-        console.log('🚀 CURRENT STEP DETAIL: ', currentStepDetail);
-
         this.actions = currentStepDetail.actions.length
           ? currentStepDetail.actions.map((el) => ({ value: el.id, label: el.title }))
           : [];
-
         this.selectedAction = this.actions.length ? this.actions[0] : {};
       } catch (error) {
         console.log(error);
@@ -192,11 +184,6 @@ export default {
           `orders/${this.orderId}/steps/${this.currentStep.step_id}/actions/${this.selectedAction.value}/next`,
           payload,
         );
-
-        console.log('PAYLOAD: ', payload);
-
-        console.log('UPDATE: ', data);
-
         this.toast.success('Successfully updated status');
         await this.getStatusHistory();
         this.getOrderSteps();
