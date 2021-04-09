@@ -4,7 +4,7 @@
   </help-modal>
 
   <help-modal v-model="opHourModal">
-    <operational-hour />
+    <operational-hour @close="opHourModal = false" />
   </help-modal>
 
   <help-modal v-model="verificationModal">
@@ -85,7 +85,7 @@
           <p
             v-if="column === 'operational_detail'"
             class="text-royal font-medium cursor-pointer"
-            @click="openOpHourDetail(row.operational_hours)"
+            @click="openOpHourDetail({ opHour: row.operational_hours, merchantName: row.name })"
           >
             See Detail
           </p>
@@ -260,9 +260,10 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_MERCHANT_ID', merchantId);
     },
-    openOpHourDetail(operationalHours) {
+    openOpHourDetail({ opHour, merchantName }) {
       this.opHourModal = true;
-      this.$store.commit('SET_OP_HOUR', operationalHours);
+      this.$store.commit('SET_OP_HOUR', opHour);
+      this.$store.commit('SET_MERCHANT_NAME', merchantName);
     },
     openMerchantVerivication(verifDetail) {
       this.verificationModal = true;

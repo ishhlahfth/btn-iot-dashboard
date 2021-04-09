@@ -1,20 +1,36 @@
 <template>
-  <div class="grid inner-modal-auto modal-md overflow-auto">
+  <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
+    <div class="flex justify-between items-center">
+      <p class="text-heading4 font-semibold">{{ merchantName }}</p>
+      <help-button
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-1"
+        @click="$emit('close')"
+      />
+    </div>
+
     <div class="grid grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
       <template v-for="(schedule, i) in operationalHours" :key="i">
         <p class="text-grey-2">{{ schedule.day }}</p>
         <p class="place-self-end" v-if="schedule.openHour && schedule.closeHour">
           {{ `${beautify(schedule.openHour)} - ${beautify(schedule.closeHour)}` }}
         </p>
-        <p class="place-self-end" v-else>Off</p>
+        <p class="place-self-end text-flame" v-else>Off</p>
       </template>
     </div>
   </div>
 </template>
 
 <script>
+import HelpButton from '@/components/atoms/Button.vue';
+
 export default {
   name: 'OperationalHour',
+  components: {
+    HelpButton,
+  },
   data() {
     return {
       operationalHours: [],
@@ -29,9 +45,17 @@ export default {
       return beautified;
     },
   },
+  computed: {
+    opHour() {
+      return this.$store.state.opHour;
+    },
+    merchantName() {
+      return this.$store.state.merchantName;
+    },
+  },
   mounted() {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const operationalHours = this.$store.state.opHour;
+    const operationalHours = [...this.opHour];
 
     for (let i = 0; i < 7; i += 1) {
       let hasDayProperty = false;
