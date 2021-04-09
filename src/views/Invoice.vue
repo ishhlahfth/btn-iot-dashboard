@@ -211,7 +211,7 @@ export default {
         const {
           data: { data },
         } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
+          `https://stg-bns.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
           {
             headers: {
               'x-api-key': `${this.$route.query.key}`,
@@ -230,7 +230,7 @@ export default {
         this.poNumber = data.code || '-';
         this.merchantName = data.merchant.name || '-';
         this.orderDate = dayjs(data.date).format('DD-MM-YYYY HH:mm:ss') || '-';
-        this.buyerName = data.customer.profile.name || '-';
+        this.buyerName = data.customer?.profile.name || '-';
         this.addressShort = data.order_type_details.shipping_address.name || '-';
         this.addressFull = data.order_type_details.shipping_address.line_address || '-';
         this.phoneNumber = data.order_type_details.shipping_address.contact_person_hp || '-';
