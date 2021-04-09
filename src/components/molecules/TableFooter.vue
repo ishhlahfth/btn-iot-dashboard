@@ -75,6 +75,12 @@ export default {
       type: Number,
       required: true,
     },
+    sort: {
+      type: String,
+    },
+    order: {
+      type: String,
+    },
     moreDataAvailable: {
       type: Boolean,
       required: true,
@@ -96,6 +102,9 @@ export default {
       if (this.offset !== 0) {
         firstRow = this.offset + 1;
       }
+      if (!this.currentRowCount) {
+        firstRow = 0;
+      }
       return firstRow;
     },
     lastRow() {
@@ -111,17 +120,27 @@ export default {
   },
   watch: {
     localLimit(newValue) {
-      this.$emit('onChangePagination', {
+      const payload = {
         limit: newValue,
         offset: 0,
-      });
+      };
+
+      if (this.sort) payload.sort = this.sort;
+      if (this.order) payload.order = this.order;
+
+      this.$emit('onChangePagination', payload);
       this.localOffset = 0;
     },
     localOffset(newValue) {
-      this.$emit('onChangePagination', {
+      const payload = {
         limit: this.localLimit,
         offset: newValue,
-      });
+      };
+
+      if (this.sort) payload.sort = this.sort;
+      if (this.order) payload.order = this.order;
+
+      this.$emit('onChangePagination', payload);
     },
   },
   methods: {

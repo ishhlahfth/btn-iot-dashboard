@@ -1,5 +1,5 @@
 <template>
-  <help-modal v-model="confirmTransferModal">
+  <help-modal v-model="confirmTransferModal" permanent>
     <confirmation
       title="Transfer confirmation"
       :message="
@@ -175,7 +175,7 @@ export default {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'order_date';
-      const order = pagination.order || 'asc';
+      const order = pagination.order || 'desc';
 
       this.loading = true;
 

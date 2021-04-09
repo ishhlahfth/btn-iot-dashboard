@@ -96,6 +96,8 @@
     <table-footer
       :limit="pagination.limit"
       :offset="pagination.offset"
+      :sort="pagination.sort"
+      :order="pagination.order"
       :more-data-available="moreDataAvailable"
       :current-row-count="rows.length"
       @onChangePagination="onChangePagination"

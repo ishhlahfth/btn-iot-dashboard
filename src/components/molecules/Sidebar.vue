@@ -36,19 +36,19 @@ export default {
         { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },
         // { path: '/bns/admin', label: 'Admin', icon: 'shield' },
         // { path: '/bns/role', label: 'Role', icon: 'user-group' },
-        { path: '/bns/home', label: 'Home', icon: 'home' },
-        { path: '/bns/another-page', label: 'Components', icon: 'user-group' },
-        { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
-        {
-          path: '/',
-          label: 'Dummy Page',
-          icon: 'cube',
-          subMenu: [
-            { path: '/bns/dummy-page-1', label: 'First', icon: '' },
-            { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
-            { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
-          ],
-        },
+        // { path: '/bns/home', label: 'Home', icon: 'home' },
+        { path: '/bns/another-page', label: 'Components', icon: 'template' },
+        // { path: '/bns/lorem-ipsum', label: 'Templates', icon: 'photograph' },
+        // {
+        //   path: '/',
+        //   label: 'Dummy Page',
+        //   icon: 'cube',
+        //   subMenu: [
+        //     { path: '/bns/dummy-page-1', label: 'First', icon: '' },
+        //     { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
+        //     { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
+        //   ],
+        // },
       ],
     };
   },

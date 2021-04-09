@@ -138,7 +138,7 @@ export default {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'date';
-      const order = pagination.order || 'asc';
+      const order = pagination.order || 'desc';
       const search = this.searchValue || '';
 
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
