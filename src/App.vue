@@ -54,7 +54,9 @@ input:focus {
   padding-top: 8px;
   padding-bottom: 8px;
   min-height: 56px;
-  min-width: 480px;
+  @sceen sm {
+    min-width: 480px;
+  }
 }
 
 .Vue-Toastification__toast-body.custom-body {
