@@ -211,8 +211,11 @@ export default {
           order,
         };
       } catch (error) {
-        this.toast.error(error.message);
-        console.log(error);
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
       }
       this.loading = false;
     },
