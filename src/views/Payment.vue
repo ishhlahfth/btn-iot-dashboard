@@ -15,7 +15,11 @@
         @sort="getPayments($event)"
       >
         <template v-slot:body="{ column, row }">
-          <help-toggle v-if="column === 'is_active'" v-model="row.is_active" />
+          <help-toggle
+            v-if="column === 'is_active'"
+            v-model="row.is_active"
+            @change="togglePayment($event, row)"
+          />
         </template>
       </help-table>
     </div>
@@ -61,10 +65,7 @@ export default {
         const {
           data: { data },
         } = await API.get('payments');
-        this.payments = data.map((el) => ({
-          name: el.name,
-          is_active: el.is_active,
-        }));
+        this.payments = data;
         console.log('🔰 PAYMENTS', data);
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -74,6 +75,30 @@ export default {
         }
       }
       this.loading = false;
+    },
+    async togglePayment(newValue, detail) {
+      const payload = {
+        code: detail.code,
+        name: detail.name,
+        category_id: detail.category_id,
+        vendor_id: detail.vendor_id,
+        method_type: detail.method_type,
+        timeout: detail.timeout,
+        is_active: newValue,
+        trigger: detail.trigger,
+        source_from: detail.source_from,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`payments/${detail.id}`, payload);
+        console.log('🌂', data);
+        this.toast.success(`Successfully updated ${detail.name}`);
+      } catch (error) {
+        this.toast.error(
+          `Error ${error.response.data.meta.status}: ${error.response.data.meta.message}`,
+        );
+      }
     },
   },
   mounted() {
