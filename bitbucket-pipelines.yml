@@ -49,3 +49,15 @@ pipelines:
           deployment: test
       - step: *build-app
       - step: *deploy-scp
+    staging:
+      - step:
+          <<: *set-environment
+          deployment: staging
+      - step: *build-app
+      - step: *deploy-scp
+    production:
+      - step:
+          <<: *set-environment
+          deployment: production
+      - step: *build-app
+      - step: *deploy-scp
