@@ -1,28 +1,29 @@
 <template>
   <button
-    v-if="type === 'primary'"
-    class="flex items-center justify-center rounded-lg bg-midnight py-2 px-4 text-snow font-semibold hover:bg-royal"
+    :type="type"
+    :disabled="loading"
+    class="flex items-center justify-center font-semibold transition-all"
+    :class="[
+      `bg-${bgColor} text-${color}`,
+      { bordered: outlined },
+      iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
+      bgColor === 'transparent' ? 'hover:bg-grey-4 hover:bg-opacity-70' : 'hover:bg-opacity-80',
+    ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
-      <div class="h-full w-full flex items-center justify-center">
-        <icon />
+      <div v-if="icon" class="h-full w-full flex items-center justify-center">
+        <icon :name="loading ? 'loading' : icon" :class="{ 'animate-spin': loading }" />
       </div>
-      <div class="h-full w-full flex items-center">
-        {{ buttonLabel }}
+      <div v-if="!icon && loading" class="h-full w-full flex items-center justify-center">
+        <icon name="loading" :class="{ 'animate-spin': loading }" />
+      </div>
+      <div v-if="label" class="h-full w-full flex items-center">
+        <p v-if="!loading" class="text-body">{{ buttonLabel }}</p>
+        <template v-else>
+          <p v-if="uppercasedLoadingLabel" class="text-body">{{ uppercasedLoadingLabel }}</p>
+        </template>
       </div>
     </div>
-  </button>
-  <button
-    v-if="type === 'secondary'"
-    class="rounded-lg bg-snow border-2 border-grey-4 py-2 px-4 text-grey-1 font-semibold hover:border-snow hover:ring-2 hover:ring-royal"
-  >
-    {{ buttonLabel }}
-  </button>
-  <button
-    v-if="type === 'danger'"
-    class="rounded-lg bg-flame py-2 px-4 text-snow font-semibold hover:bg-flame-dark"
-  >
-    {{ buttonLabel }}
   </button>
 </template>
 
@@ -32,13 +33,41 @@ import Icon from './Icon.vue';
 export default {
   name: 'HelpButton',
   props: {
-    type: {
+    bgColor: {
       type: String,
-      default: 'primary',
+      default: 'midnight',
+    },
+    color: {
+      type: String,
+      default: 'white',
+    },
+    outlined: {
+      type: Boolean,
+      default: false,
     },
     label: {
       type: String,
-      default: 'ok',
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
+    iconOnly: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    loadingLabel: {
+      type: String,
+      default: '',
+    },
+    type: {
+      type: String,
+      default: '',
     },
   },
   components: {
@@ -47,6 +76,9 @@ export default {
   computed: {
     buttonLabel() {
       return this.label.toUpperCase();
+    },
+    uppercasedLoadingLabel() {
+      return this.loadingLabel.toUpperCase();
     },
   },
 };
