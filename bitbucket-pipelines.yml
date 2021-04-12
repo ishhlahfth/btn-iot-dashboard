@@ -55,7 +55,7 @@ pipelines:
           deployment: staging
       - step: *build-app
       - step: *deploy-scp
-    production:
+    main:
       - step:
           <<: *set-environment
           deployment: production
