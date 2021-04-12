@@ -1,0 +1,2742 @@
+{
+  "login": [
+    {
+      "id": 0,
+      "name": "Sheila",
+      "email": "sheila@gmail.com",
+      "address": "Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-3309-1090",
+      "role": "Super Admin",
+      "avatar": "https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg",
+      "token_type": "Bearer",
+      "token": "eygHkl19awjafn3iP!fava91m0agaRins2.Hslae8VbS==",
+      "refresh_token": "Wi9u51izrPcJrQgwiTGhZPO8hQhBxgyCofeUkzY6ybRJw0Au2B0Uadu4yHhtKwKCkOq4x3mSJELdfkOsjU5lu53BjqsEYZfRpSHMPj1uqysOTIbfKYnahz0FI0gGKckhNLh6bYIhlASMreTommBHCe3Klar3dDx1Wmedd4tJF9DVrTTTeLNP5EyxOZqIgUFkHsPV6e4zRguBBK2Sq0vhI2xjuS0GRiBhs8cJlvhLfjkf4q4ot4osdiAFPZsIQ4b",
+      "expired_date": "2021-03-01T06:19:03.024Z"
+    }
+  ],
+  "admin": [
+    {
+      "name": "Sheila",
+      "email": "sheila@gmail.com",
+      "address": "Jl. Kemanggisan Raya No. 64 RT04/RT03 Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-3309-1090",
+      "role": "Super Admin",
+      "email2": "sheila@rocketmail.co.id",
+      "favorite_food": "Ketela rebus dengan taburan wijen",
+      "phone_number2": "0812-3309-1090",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Kiara",
+      "email": "kiara@gmail.com",
+      "address": "Jl. Indonesia Raya No. 1 RT04/RT03 Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-3309-1090",
+      "role": "Super Admin",
+      "email2": "kiara@rocketmail.co.id",
+      "favorite_food": "Cumi goreng asam manis",
+      "phone_number2": "0812-0849-6690",
+      "verification_status": true,
+      "status": false
+    },
+    {
+      "name": "Alya",
+      "email": "alya@gmail.com",
+      "address": "Jl. Ahmad Narnia No. 101 Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-2224-1590",
+      "role": "Admin",
+      "email2": "alya@rocketmail.co.id",
+      "favorite_food": "Ayam bakar madu",
+      "phone_number2": "0813-3309-2090",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Salila",
+      "email": "salila@gmail.com",
+      "address": "Jl. Jaksa Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-1111-1111",
+      "role": "Admin",
+      "email2": "salila@rocketmail.co.id",
+      "favorite_food": "Peyek udang",
+      "phone_number2": "0813-1111-1111",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Muklis",
+      "email": "muklis@gmail.com",
+      "address": "Jl. Bersama Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-2222-2222",
+      "role": "Admin",
+      "email2": "muklis@rocketmail.co.id",
+      "favorite_food": "Martabak telor",
+      "phone_number2": "0813-2222-2222",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Anya",
+      "email": "anya@gmail.com",
+      "address": "Jl. Sosial Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-3333-3333",
+      "role": "Admin",
+      "email2": "anya@rocketmail.co.id",
+      "favorite_food": "Nasi gila",
+      "phone_number2": "0813-3333-3333",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Medina",
+      "email": "medina@gmail.com",
+      "address": "Jl. Hukum No. 4 Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-4444-4444",
+      "role": "Admin",
+      "email2": "medina@rocketmail.co.id",
+      "favorite_food": "Gurame asam manis ekstra pedas",
+      "phone_number2": "0813-4444-4444",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Adin",
+      "email": "adin@gmail.com",
+      "address": "Jl. Humaniora II Jakarta Timur, DKI Jakarta",
+      "phone_number": "0812-5555-5555",
+      "role": "Marketing",
+      "email2": "adin@rocketmail.co.id",
+      "favorite_food": "Onde-onde",
+      "phone_number2": "0813-5555-5555",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Vania",
+      "email": "vania@gmail.com",
+      "address": "Kwitang, Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-6666-6666",
+      "role": "Visitor",
+      "email2": "vania@rocketmail.co.id",
+      "favorite_food": "Ayam geprek",
+      "phone_number2": "0813-6666-6666",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Deviany",
+      "email": "deviany@gmail.com",
+      "address": "Jl. Kesehatan IV Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-7777-7777",
+      "role": "Marketing",
+      "email2": "deviany@rocketmail.co.id",
+      "favorite_food": "Nasi goreng hong kong",
+      "phone_number2": "0813-7777-7777",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Darin",
+      "email": "darin@gmail.com",
+      "address": "Jl. Fauna Gg. Kelinci Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-8888-8888",
+      "role": "Admin",
+      "email2": "darin@rocketmail.co.id",
+      "favorite_food": "Susu telor madu jahe",
+      "phone_number2": "0813-8888-8888",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Megan",
+      "email": "megan@gmail.com",
+      "address": "Jl. Denta Jakarta Pusat, DKI Jakarta",
+      "phone_number": "0812-9999-9999",
+      "role": "Admin",
+      "email2": "megan@rocketmail.co.id",
+      "favorite_food": "Soto",
+      "phone_number2": "0813-9999-9999",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Riri",
+      "email": "riri@gmail.com",
+      "address": "Jl. Flora III Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-1010-1010",
+      "role": "Marketing",
+      "email2": "riri@rocketmail.co.id",
+      "favorite_food": "Pokchoy",
+      "phone_number2": "0813-1010-1010",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Clarinta",
+      "email": "clarinta@gmail.com",
+      "address": "Jl. Kawan Jakarta Barat, DKI Jakarta",
+      "phone_number": "0812-1111-1112",
+      "role": "Visitor",
+      "email2": "clarinta@rocketmail.co.id",
+      "favorite_food": "-",
+      "phone_number2": "0813-1111-1112",
+      "verification_status": false,
+      "status": false
+    },
+    {
+      "name": "Ajeng",
+      "email": "ajeng@gmail.com",
+      "address": "Jl. Kebugaran Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-1212-1212",
+      "role": "Admin",
+      "email2": "ajeng@rocketmail.co.id",
+      "favorite_food": "Cimol BBQ",
+      "phone_number2": "0813-1212-1212",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Dinda",
+      "email": "dinda@gmail.com",
+      "address": "Jl. Bandung A3, Jakarta Pusat, DKI Jakarta",
+      "phone_number": "0812-1313-1313",
+      "role": "Admin",
+      "email2": "dinda@rocketmail.co.id",
+      "favorite_food": "Kentang balado",
+      "phone_number2": "0813-1313-1313",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Syifa",
+      "email": "syifa@gmail.com",
+      "address": "Jl. Teknika Gg. Industri, Karawang, Jawa Barat",
+      "phone_number": "0812-1414-1414",
+      "role": "Visitor",
+      "email2": "syifa@rocketmail.co.id",
+      "favorite_food": "Keripik ketela goreng gurih",
+      "phone_number2": "0813-1414-1414",
+      "verification_status": false,
+      "status": false
+    },
+    {
+      "name": "Gina",
+      "email": "gina@gmail.com",
+      "address": "Jl. Wilis, Malang, Jawa Timur",
+      "phone_number": "0812-1515-1515",
+      "role": "Marketing",
+      "email2": "gina@rocketmail.co.id",
+      "favorite_food": "Gulai kambing",
+      "phone_number2": "0813-1515-1515",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Emerita",
+      "email": "emerita@gmail.com",
+      "address": "Jl. Banteng II, Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-1616-1616",
+      "role": "Admin",
+      "email2": "emerita@rocketmail.co.id",
+      "favorite_food": "Cream soup",
+      "phone_number2": "0813-1717-1717",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Nindy",
+      "email": "nindy@gmail.com",
+      "address": "Jl. Bromo, Jakarta Utara, DKI Jakarta",
+      "phone_number": "0812-1818-1818",
+      "role": "Call Center",
+      "email2": "nindy@rocketmail.co.id",
+      "favorite_food": "Paru goreng & rendang",
+      "phone_number2": "0813-1818-1818",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Putri",
+      "email": "putri@gmail.com",
+      "address": "Jl. Arjuna, Jakarta Utara, DKI Jakarta",
+      "phone_number": "0812-1919-1919",
+      "role": "Marketing",
+      "email2": "putri@rocketmail.co.id",
+      "favorite_food": "-",
+      "phone_number2": "0813-1919-1919",
+      "verification_status": true,
+      "status": true
+    },
+    {
+      "name": "Fira",
+      "email": "fira@gmail.com",
+      "address": "Jl. Ijen, Jakarta Utara, DKI Jakarta",
+      "phone_number": "0812-1818-1818",
+      "role": "Admin",
+      "email2": "fira@rocketmail.co.id",
+      "favorite_food": "Pepes tahu",
+      "phone_number2": "0813-1818-1818",
+      "verification_status": false,
+      "status": true
+    },
+    {
+      "name": "Tiara",
+      "email": "tiara@gmail.com",
+      "address": "Jl. Bogor, Jakarta Selatan, DKI Jakarta",
+      "phone_number": "0812-1919-1919",
+      "role": "Marketing",
+      "email2": "tiara@rocketmail.co.id",
+      "favorite_food": "-",
+      "phone_number2": "0813-1919-1919",
+      "verification_status": true,
+      "status": true
+    }
+  ],
+  "seller": [
+    {
+      "id": 1,
+      "name": "Couvee Tj. Duren",
+      "city": "Jakarta Barat",
+      "image_url": "https://ik.imagekit.io/tvlk/cul-asset/guys1L+Yyer9kzI3sp-pb0CG1j2bhflZGFUZOoIf1YOBAm37kEUOKR41ieUZm7ZJ/tvlk-prod-cul-assets/culinary/asset/REST_cou-720x896-FIT_AND_TRIM-96d9f0c80d811b4a0ba431e816f8adad.jpeg?tr=q-40,c-at_max,w-1080,h-1920&_src=imagekit",
+      "finished_orders": 9530,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" },
+        { "open_hour": "08:00:00", "close_hour": "22:00:00" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "McDonald's",
+      "city": "Jakarta Pusat",
+      "image_url": "https://1.bp.blogspot.com/-hiToOv_OlnY/WCUt5_clZHI/AAAAAAAAAiU/Zu9mlja3oo8ErYAYQKYLNz-3GVYZsBY_wCLcB/s1600/photo.jpg",
+      "finished_orders": 15203,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" },
+        { "open_hour": "00:00:00", "close_hour": "23:59:59" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ketoprak Mbak Yati",
+      "city": "Jakarta Selatan",
+      "image_url": "",
+      "finished_orders": 14,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": false,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Yusa Martabak",
+      "city": "Jakarta Selatan",
+      "image_url": "",
+      "finished_orders": 1500,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Nasi Uduk Janda",
+      "city": "Jakarta Barat",
+      "image_url": "",
+      "finished_orders": 4980,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-12-01 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Gudeg Bromo Bu Tekluk",
+      "city": "Kota Yogyakarta",
+      "image_url": "",
+      "finished_orders": 22,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": false,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Nasi Gila Bucin",
+      "city": "Jakarta Barat",
+      "image_url": "",
+      "finished_orders": 840,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BNI",
+      "account_number": "4410399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Eatlah",
+      "city": "Jakarta Barat",
+      "image_url": "https://sosj.co.id/storage/projects/May2019/cuPoRNR2kYP4fM4fWLzc.jpg",
+      "finished_orders": 1440,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Chicken",
+          "items": [
+            {
+              "name": "Salted Egg Chicken Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ayam bumbu telur asin.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Brown Butter Chicken Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ayam bumbu mentega.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Sambal Chicken Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ayam pedas.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Dori",
+          "items": [
+            {
+              "name": "Salted Egg Dori Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ikan dori bumbu telur asin.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Brown Butter Dori Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ikan dori bumbu mentega.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Sambal Dori Rice",
+              "category": "Nasi",
+              "description": "Nasi dengan ikan dori pedas.",
+              "image_url": "",
+              "price": 32000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Size", "variant_items": ["Regular", "Tall", "Extra Tall"], "multiple_choice": false },
+                { "variant_name": "Sugar", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Secbowl",
+      "city": "Jakarta Barat",
+      "image_url": "",
+      "finished_orders": 900,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Nasi Goreng Republic",
+      "city": "Jakarta Selatan",
+      "image_url": "",
+      "finished_orders": 1510,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": null, "close_hour": null },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" },
+        { "open_hour": "06:30:00", "close_hour": "17:00:00" }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Pisang Goreng Bu Nanik",
+      "city": "Jakarta Barat",
+      "image_url": "https://sribu-sg.s3.amazonaws.com/assets/media/contest_detail/2014/9/desain-logo-untuk-rumah-jajan-bu-nanik-54113148b79de4a481000003/normal_cea9af4fa0.png",
+      "finished_orders": 338,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-11-25 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Fore Coffee",
+      "city": "Jakarta Pusat",
+      "image_url": "https://cdn.techinasia.com/data/images/4RYPkSx813As9YGjJ7EgYCQ8EOrq0KSJLOuLn5QY.png",
+      "finished_orders": 511,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-12-21 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Pesenkopi",
+      "city": "Kota Malang",
+      "image_url": "",
+      "finished_orders": 1104,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Tizi Cake Shop & Restaurant",
+      "city": "Bandung",
+      "image_url": "",
+      "finished_orders": 5184,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Mie Naripan",
+      "city": "Bandung",
+      "image_url": "",
+      "finished_orders": 90,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Red Velvet Latte",
+              "category": "Minuman",
+              "description": "Our favorite red velvet drink with cream cheese notes.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/81F180C1-BA4A-467C-A7B9-8DCD43431940-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Sumber Hidangan",
+      "city": "Bandung",
+      "image_url": "",
+      "finished_orders": 4730,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Raja Thai Tea",
+      "city": "Bandung",
+      "image_url": "",
+      "finished_orders": 10349,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Honey Lemonade",
+              "category": "Minuman",
+              "description": "A refreshing combination of premium longan honey, lemon juice, and soda.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/AF8C8EEC-5DB4-4CD0-8095-95ED05936730-768x768.jpg",
+              "price": 18000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Fremilt",
+      "city": "Kota Yogyakarta",
+      "image_url": "",
+      "finished_orders": 9014,
+      "ongoing_orders": 32,
+      "cancelled_orders": 133,
+      "commission_percentage": 10,
+      "verification_status": true,
+      "suspension_status": false,
+      "bank": "BCA",
+      "account_number": "8610399917",
+      "id_number": "3510241901860003",
+      "created_at": "2020-09-15 04:09:16.2697+00",
+      "menu": [
+        {
+          "catalog_name": "Coffee",
+          "items": [
+            {
+              "name": "Java",
+              "category": "Minuman",
+              "description": "Our signature caffe latte with intense coffee and creamy condensed milk.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Melacca",
+              "category": "Minuman",
+              "description": "Our signature caffe latte sweetened with premium palm sugar.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/211B2BBB-7277-487F-9752-92AE422460FD-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "White",
+              "category": "Minuman",
+              "description": "A classic caffe latte.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2020/01/5D3778CC-43E0-4CC7-8102-CC0B4984FD61-768x768.jpeg",
+              "price": 22000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        },
+        {
+          "catalog_name": "Non-Coffee",
+          "items": [
+            {
+              "name": "Cookie Crumble",
+              "category": "Minuman",
+              "description": "The best seller of non-coffee drink, made with Regal cookies and our secret milk mixture.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/11/49B95676-408B-4A59-BB3E-EC7BD9F9A1DC-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            },
+            {
+              "name": "Black Cookie Latte",
+              "category": "Minuman",
+              "description": "A classic drink with chocolate cookies and vanilla cream.",
+              "image_url": "https://www.couvee.co.id/wp-content/uploads/2019/07/F03B2AB7-12B6-47F6-AA82-3B924C32F96D-768x768.jpg",
+              "price": 20000,
+              "avaliability_status": true,
+              "is_active": true,
+              "variants": [
+                { "variant_name": "Ice", "variant_items": ["Normal", "Less"], "multiple_choice": false },
+                { "variant_name": "Topping", "variant_items": ["Cocoa Powder", "Caramel Syrup", "Oreo"], "multiple_choice": true }
+              ]
+            }
+          ]
+        }
+      ],
+      "operational_hours": [
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" },
+        { "open_hour": "10:00:00", "close_hour": "21:00:00" }
+      ]
+    }
+  ],
+  "role": [
+    {
+      "id": 0,
+      "name": "Super Admin",
+      "description": "The highest role. Has permission to access all menu and all possible privileges.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Sheila",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e35/p1080x1080/128451476_402267484250014_3832408683591121759_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=vIZLY3bjy70AX-mb8BR&oh=da612e69efc7ea5a2b2ac0ff193d36e7&oe=6070D957"
+        },
+        {
+          "name": "Kiara",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e15/10727681_721108811291169_1125061761_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=FG_5179Z0s8AX8fk5Kb&oh=a577b23abc1385518db425546b6ccdd5&oe=606F1074"
+        }
+      ],
+      "permissions": [
+        {
+          "id": 1,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 2,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 3,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 4,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": true },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Marketing",
+      "description": "Has permission to access all menu related with promo & marketing.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Kanina",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/p1080x1080/152949669_2587407558226803_1228240072280431618_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=4R19BFSRGesAX-5qQxH&oh=a2cdf5597e2718e6ca3ac5a7264da74d&oe=60713B22"
+        },
+        {
+          "name": "Alya",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/s1080x1080/142987167_169110557977432_745135852807276361_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=NvWxYvB_oo0AX_QKwBl&oh=a00fdf351cffd8cf3f44098b9e45a507&oe=606E5F81"
+        },
+        {
+          "name": "Muklis",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/e35/49833639_523911698093301_2892703999054577664_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=XtwTFm3AXaQAX9HGkZD&oh=a6f672c95d92b5bf7b4a7719938cf631&oe=60702FEF"
+        }
+      ],
+      "permissions": [
+        {
+          "id": 5,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 6,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 7,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 8,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Visitor",
+      "description": "Has permission to access non-essential & insensitive data.",
+      "is_active": true,
+      "admins": [
+        {
+          "name": "Ajeng",
+          "img_url": ""
+        },
+        {
+          "name": "Ana",
+          "img_url": "https://instagram.fcgk12-1.fna.fbcdn.net/v/t51.2885-15/fr/e15/p1080x1080/131889244_432577377743964_8833856056873486578_n.jpg?tp=1&_nc_ht=instagram.fcgk12-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=mdoPTT7bgC4AX8NwdO4&oh=382ae766316933464b500dcf789a2d17&oe=606F76F3"
+        },
+        {
+          "name": "Lila",
+          "img_url": ""
+        },
+        {
+          "name": "Naila",
+          "img_url": ""
+        },
+        {
+          "name": "Rere",
+          "img_url": ""
+        }
+      ],
+      "permissions": [
+        {
+          "id": 9,
+          "menu": "Seller",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 10,
+          "menu": "Order",
+          "permission": [
+            { "type": "view", "value": true },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": true },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 11,
+          "menu": "Admin",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        },
+        {
+          "id": 12,
+          "menu": "Role",
+          "permission": [
+            { "type": "view", "value": false },
+            { "type": "create", "value": false },
+            { "type": "edit", "value": false },
+            { "type": "delete", "value": false }
+          ]
+        }
+      ]
+    }
+  ]
+}
