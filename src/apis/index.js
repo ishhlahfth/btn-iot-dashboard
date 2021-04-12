@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Environment
 // const baseURL = 'http://buynsell-dev.wehelpyou.xyz/api/v1/'; // Development
 // const baseURL = 'https://dev-bns.wehelpyou.xyz'; // Development (New)
 const baseURL = 'https://stg-bns.wehelpyou.xyz'; // Staging
