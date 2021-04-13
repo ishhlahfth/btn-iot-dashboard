@@ -118,6 +118,7 @@ export default createStore({
         const {
           request: { responseURL },
         } = await API.get(bnsURL);
+        console.log('LOAD IMGAE', responseURL);
         imageURL = responseURL;
       } catch (error) {
         console.log(error);
