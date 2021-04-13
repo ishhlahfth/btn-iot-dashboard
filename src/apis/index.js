@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const baseURL = 'http://buynsell-dev.wehelpyou.xyz/api/v1/'; // Development
-// const baseURL = 'https://dev-bns.wehelpyou.xyz'; // Development (New)
-// const baseURL = 'https://stg-bns.wehelpyou.xyz'; // Staging
+// const baseURL = 'http://buynsell-dev.wehelpyou.xyz/api/v1/'; // Development
+const baseURL = 'https://dev-bns.wehelpyou.xyz/api/v1/'; // Development (New)
+// const baseURL = 'https://stg-bns.wehelpyou.xyz/api/v1/'; // Staging
 
 const API = axios.create({
   baseURL,
