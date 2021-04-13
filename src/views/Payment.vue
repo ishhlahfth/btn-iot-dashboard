@@ -60,13 +60,11 @@ export default {
   },
   methods: {
     async getPayments() {
-      this.loading = true;
       try {
         const {
           data: { data },
         } = await API.get('payments');
         this.payments = data;
-        console.log('🔰 PAYMENTS', data);
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -78,22 +76,17 @@ export default {
     },
     async togglePayment(newValue, detail) {
       const payload = {
-        code: detail.code,
-        name: detail.name,
-        category_id: detail.category_id,
-        vendor_id: detail.vendor_id,
-        method_type: detail.method_type,
-        timeout: detail.timeout,
         is_active: newValue,
-        trigger: detail.trigger,
-        source_from: detail.source_from,
       };
+
       try {
         const {
           data: { data },
         } = await API.patch(`payments/${detail.id}`, payload);
-        console.log('🌂', data);
-        this.toast.success(`Successfully updated ${detail.name}`);
+
+        const action = data.is_active ? 'enabled' : 'disabled';
+        this.toast.success(`Successfully ${action} ${detail.name}`);
+        this.getPayments();
       } catch (error) {
         this.toast.error(
           `Error ${error.response.data.meta.status}: ${error.response.data.meta.message}`,
@@ -102,6 +95,7 @@ export default {
     },
   },
   mounted() {
+    this.loading = true;
     this.getPayments();
   },
 };
