@@ -60,13 +60,11 @@ export default {
   },
   methods: {
     async getPayments() {
-      this.loading = true;
       try {
         const {
           data: { data },
         } = await API.get('payments');
         this.payments = data;
-        console.log('🔰 PAYMENTS', data);
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -88,6 +86,7 @@ export default {
 
         const action = data.is_active ? 'enabled' : 'disabled';
         this.toast.success(`Successfully ${action} ${detail.name}`);
+        this.getPayments();
       } catch (error) {
         this.toast.error(
           `Error ${error.response.data.meta.status}: ${error.response.data.meta.message}`,
@@ -96,6 +95,7 @@ export default {
     },
   },
   mounted() {
+    this.loading = true;
     this.getPayments();
   },
 };
