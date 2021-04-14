@@ -1,4 +1,8 @@
 <template>
+  <help-modal v-model="bannerForm">
+    <banner-form @close="bannerForm = false" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Banner</p>
@@ -13,7 +17,7 @@
           <help-button label="cancel" bg-color="flame" @click="reorderMode = false" />
           <help-button label="save" bg-color="mint" />
         </template>
-        <help-button label="add" icon="plus" />
+        <help-button label="add" icon="plus" @click="bannerForm = true" />
       </div>
     </div>
     <div class="overflow-hidden">
@@ -53,7 +57,9 @@
 </template>
 
 <script>
+import BannerForm from '@/components/modals/BannerForm.vue';
 import HelpButton from '@/components/atoms/Button.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
@@ -64,7 +70,9 @@ import dayjs from 'dayjs';
 export default {
   name: 'Banner',
   components: {
+    BannerForm,
     HelpButton,
+    HelpModal,
     HelpTable,
     HelpToggle,
     HelpThumbnail,
@@ -89,6 +97,7 @@ export default {
       },
       loading: false,
       reorderMode: false,
+      bannerForm: false,
     };
   },
   methods: {

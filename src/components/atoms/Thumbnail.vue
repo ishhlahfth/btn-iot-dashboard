@@ -6,6 +6,7 @@
   >
     <icon name="photograph" />
     <p class="text-xsmall font-medium">No Image</p>
+    <slot></slot>
   </div>
   <div v-else :style="bannerStyle" class="grid place-items-center rounded">
     <img v-if="!useBg" :src="src" alt="banner" class="rounded object-cover" />
@@ -41,8 +42,8 @@ export default {
   computed: {
     bannerStyle() {
       return {
-        width: this.width.toString().includes('%') ? this.width : `${this.width.toString()}px`,
-        height: this.height.toString().includes('%') ? this.height : `${this.height.toString()}px`,
+        width: typeof this.width === 'string' ? this.width : `${this.width.toString()}px`,
+        height: typeof this.width === 'string' ? this.height : `${this.height.toString()}px`,
         'background-image': this.useBg ? `url(${this.src})` : 'none',
         'background-position': this.useBg ? 'center' : 'none',
         'background-size': this.useBg ? 'cover' : 'none',
