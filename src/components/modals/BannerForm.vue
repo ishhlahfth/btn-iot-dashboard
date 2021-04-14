@@ -16,11 +16,11 @@
 
     <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
       <div class="md:col-span-5 grid gap-2">
-        <help-input label="Title" placeholder="Give your banner a distinctive title" />
-        <help-input label="Link to article" placeholder="http://www.redirect-here.wehelpyou.xyz" />
+        <help-input v-model="title" label="Title" placeholder="Give your banner a distinctive title" />
+        <help-input v-model="articleURL" label="Link to article" placeholder="http://www.redirect-here.wehelpyou.xyz" />
         <div class="grid md:grid-cols-2 gap-4">
-          <help-input label="Starts at" placeholder="##-##-##" />
-          <help-input label="Ends at" placeholder="##-##-##" />
+          <help-input v-model="startDate" label="Starts at" placeholder="##-##-##" />
+          <help-input v-model="endDate" label="Ends at" placeholder="##-##-##" />
         </div>
         <help-checkbox label="Won't expire" v-model="isPermanent" />
       </div>
@@ -28,9 +28,9 @@
       <div class="md:col-span-7 md:grid template-rows-auto-1fr">
         <p class="font-medium mb-1">Banner image</p>
         <help-thumbnail src="" width="100%" :height="screenWidth < 640 ? 128 : !src ? '100%' : ''">
-          <div class="grid gap-2 place-items-center text-grey-2">
-            <icon name="photograph" :size="6" />
-            <p class="font-medium">
+          <div class="grid gap-2 place-items-center text-grey-2 p-4">
+            <icon v-if="screenWidth >= 640" name="photograph" :size="6" />
+            <p class="font-medium text-center">
               No image selected. You can upload an image up to 2MB.
             </p>
             <help-button label="upload" class="mt-2" />
@@ -70,9 +70,13 @@ export default {
   },
   data() {
     return {
+      title: '',
+      articleURL: '',
+      startDate: '',
+      endDate: '',
+      isPermanent: false,
       loading: false,
       src: '',
-      isPermanent: false,
     };
   },
   computed: {
