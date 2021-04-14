@@ -4,9 +4,10 @@
     :style="bannerStyle"
     class="border-2 border-grey-4 border-dashed rounded-md flex flex-col justify-center items-center"
   >
-    <icon name="photograph" />
-    <p class="text-xsmall font-medium">No Image</p>
-    <slot></slot>
+    <slot>
+      <icon name="photograph" />
+      <p class="text-xsmall font-medium">No Image</p>
+    </slot>
   </div>
   <div v-else :style="bannerStyle" class="grid place-items-center rounded">
     <img v-if="!useBg" :src="src" alt="banner" class="rounded object-cover" />

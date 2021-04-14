@@ -28,7 +28,13 @@
       <div class="md:col-span-7 md:grid template-rows-auto-1fr">
         <p class="font-medium mb-1">Banner image</p>
         <help-thumbnail src="" width="100%" :height="screenWidth < 640 ? 128 : !src ? '100%' : ''">
-          <help-button label="upload" class="mt-2" />
+          <div class="grid gap-2 place-items-center text-grey-2">
+            <icon name="photograph" :size="6" />
+            <p class="font-medium">
+              No image selected. You can upload an image up to 2MB.
+            </p>
+            <help-button label="upload" class="mt-2" />
+          </div>
         </help-thumbnail>
       </div>
     </div>
@@ -51,6 +57,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'BannerForm',
@@ -59,6 +66,7 @@ export default {
     HelpCheckbox,
     HelpInput,
     HelpThumbnail,
+    Icon,
   },
   data() {
     return {
