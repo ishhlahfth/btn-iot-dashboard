@@ -9,7 +9,7 @@
       <p class="text-xsmall font-medium">No Image</p>
     </slot>
   </div>
-  <div v-else :style="bannerStyle" class="grid place-items-center rounded">
+  <div v-else :style="bannerStyle" class="grid rounded">
     <img v-if="!useBg" :src="src" alt="banner" class="rounded object-cover" />
   </div>
 </template>
