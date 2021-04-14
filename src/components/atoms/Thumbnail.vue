@@ -43,7 +43,7 @@ export default {
     bannerStyle() {
       return {
         width: typeof this.width === 'string' ? this.width : `${this.width.toString()}px`,
-        height: typeof this.width === 'string' ? this.height : `${this.height.toString()}px`,
+        height: typeof this.height === 'string' ? this.height : `${this.height.toString()}px`,
         'background-image': this.useBg ? `url(${this.src})` : 'none',
         'background-position': this.useBg ? 'center' : 'none',
         'background-size': this.useBg ? 'cover' : 'none',
