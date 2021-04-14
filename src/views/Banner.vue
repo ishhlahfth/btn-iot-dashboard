@@ -29,9 +29,16 @@
         <template v-slot:body="{ column, row }">
           <div v-if="column === 'banner'" class="grid grid-flow-col gap-2 auto-cols-max">
             <help-thumbnail :src="row.image_url" :height="row.image_url ? '100%' : 72" />
-            <div>
-              <p>{{ row.start_date }}</p>
-              <p>{{ row.end_date }}</p>
+            <div class="flex flex-col justify-between">
+              <div>
+                <p class="font-semibold">Shopeepay Promo</p>
+                <a href="#" class=" text-royal">https://www.google.co.id/</a>
+              </div>
+              <div class="grid grid-flow-col gap-2 ">
+                <p>{{ row.start_date }}</p>
+                <p>-</p>
+                <p>{{ row.end_date }}</p>
+              </div>
             </div>
           </div>
           <help-toggle v-if="column === 'is_active'" />
@@ -52,6 +59,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default {
   name: 'Banner',
@@ -97,6 +105,8 @@ export default {
         } = await API.get(`banners?bannerable=GLOBAL&offset=${offset}&limit=${limit}`);
         this.banners = data.map((el) => ({
           ...el,
+          start_date: dayjs(el.start_date).format('ddd, D MMM YYYY'),
+          end_date: dayjs(el.end_date).format('ddd, D MMM YYYY'),
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
