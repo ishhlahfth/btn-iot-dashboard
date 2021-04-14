@@ -2,6 +2,19 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Banner</p>
+      <div class="grid grid-flow-col gap-4">
+        <help-button
+          v-if="!reorderMode"
+          label="reorder"
+          icon="reorder"
+          @click="reorderMode = true"
+        />
+        <template v-else>
+          <help-button label="cancel" bg-color="flame" @click="reorderMode = false" />
+          <help-button label="save" bg-color="mint" />
+        </template>
+        <help-button label="add" icon="plus" />
+      </div>
     </div>
     <div class="overflow-hidden">
       <help-table
@@ -21,6 +34,11 @@
               <p>{{ row.end_date }}</p>
             </div>
           </div>
+          <help-toggle v-if="column === 'is_active'" />
+          <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
+            <help-button bg-color="royal" color="white" icon="edit" icon-only />
+            <help-button bg-color="flame" color="white" icon="trash" icon-only />
+          </div>
         </template>
       </help-table>
     </div>
@@ -28,7 +46,9 @@
 </template>
 
 <script>
+import HelpButton from '@/components/atoms/Button.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import API from '@/apis';
@@ -36,7 +56,9 @@ import API from '@/apis';
 export default {
   name: 'Banner',
   components: {
+    HelpButton,
     HelpTable,
+    HelpToggle,
     HelpThumbnail,
   },
   setup() {
@@ -47,7 +69,8 @@ export default {
     return {
       columns: [
         { field: 'banner', label: 'name' },
-        { field: 'status', label: 'status' },
+        { field: 'is_active', label: 'status', align: 'center' },
+        { field: 'actions', label: ' ', align: 'center' },
       ],
       banners: [],
       bannerPagination: {
@@ -57,6 +80,7 @@ export default {
         // order: 'asc',
       },
       loading: false,
+      reorderMode: false,
     };
   },
   methods: {
@@ -70,9 +94,7 @@ export default {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(
-          `banners?bannerable=GLOBAL&offset=${offset}&limit=${limit}`,
-        );
+        } = await API.get(`banners?bannerable=GLOBAL&offset=${offset}&limit=${limit}`);
         this.banners = data.map((el) => ({
           ...el,
           image_url: '',
