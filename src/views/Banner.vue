@@ -3,6 +3,10 @@
     <banner-form @close="bannerForm = false" />
   </help-modal>
 
+  <help-modal v-model="bannerDetail">
+    <banner-detail @close="bannerDetail = false" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Banner</p>
@@ -50,6 +54,13 @@
             <help-button bg-color="royal" color="white" icon="edit" icon-only />
             <help-button bg-color="flame" color="white" icon="trash" icon-only />
           </div>
+          <p
+            v-if="column === 'detail'"
+            class="text-royal font-medium cursor-pointer"
+            @click="openMerchantDetail(row.id)"
+          >
+            See Detail
+          </p>
         </template>
       </help-table>
     </div>
@@ -57,6 +68,7 @@
 </template>
 
 <script>
+import BannerDetail from '@/components/modals/BannerDetail.vue';
 import BannerForm from '@/components/modals/BannerForm.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -70,6 +82,7 @@ import dayjs from 'dayjs';
 export default {
   name: 'Banner',
   components: {
+    BannerDetail,
     BannerForm,
     HelpButton,
     HelpModal,
@@ -86,6 +99,7 @@ export default {
       columns: [
         { field: 'banner', label: 'name' },
         { field: 'is_active', label: 'status', align: 'center' },
+        { field: 'detail', label: 'detail', align: 'center' },
         { field: 'actions', label: ' ', align: 'center' },
       ],
       banners: [],
@@ -97,6 +111,7 @@ export default {
       },
       loading: false,
       reorderMode: false,
+      bannerDetail: false,
       bannerForm: false,
     };
   },
@@ -137,6 +152,9 @@ export default {
         }
       }
       this.loading = false;
+    },
+    haaaa() {
+      console.log('HAAA!');
     },
   },
   mounted() {
