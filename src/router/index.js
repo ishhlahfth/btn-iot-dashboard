@@ -55,11 +55,6 @@ const routes = [
         component: () => import('@/views/AnotherPage.vue'),
       },
       {
-        path: 'dummy-page-1',
-        name: 'DummyPage1',
-        component: () => import('@/views/DummyPage.vue'),
-      },
-      {
         path: 'dummy-page-2',
         name: 'DummyPage2',
         component: () => import('@/views/DummyPage2.vue'),
@@ -117,6 +112,11 @@ const routes = [
         component: () => import('@/views/InvoiceDownload.vue'),
       },
     ],
+  },
+  {
+    path: '/tnc',
+    name: 'TNC',
+    component: () => import('@/views/DummyPage.vue'),
   },
 ];
 
