@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-4 md:p-6 grid gap-4">
+  <div class="w-full p-4 md:py-6 md:px-64 grid gap-4">
     <h2>Syarat & Ketentuan Umum Wehelpyou Sell</h2>
     <p>
       Dengan mendaftar dan menyatakan persetujuan Anda untuk menjadi Merchant, maka Anda
@@ -956,22 +956,12 @@
       </li>
     </ol>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-// import HelpButton from '../components/atoms/Button.vue';
 
 export default {
-  name: 'DummyPage',
-  components: {
-    // HelpButton,
-  },
-  methods: {
-    clicked() {
-      console.log('click!');
-    },
-  },
+  name: 'TermsConditions',
 };
 </script>
 

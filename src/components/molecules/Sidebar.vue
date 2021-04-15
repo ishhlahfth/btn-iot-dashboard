@@ -39,7 +39,6 @@ export default {
         // { path: '/bns/role', label: 'Role', icon: 'user-group' },
         // { path: '/bns/home', label: 'Home', icon: 'home' },
         { path: '/bns/another-page', label: 'Components', icon: 'template' },
-        { path: '/bns/dummy-page', label: 'Terms & Conditions', icon: 'photograph' },
         // {
         //   path: '/',
         //   label: 'Dummy Page',

@@ -115,8 +115,8 @@ const routes = [
   },
   {
     path: '/tnc',
-    name: 'TNC',
-    component: () => import('@/views/DummyPage.vue'),
+    name: 'TermsConditions',
+    component: () => import('@/views/TermsConditions.vue'),
   },
 ];
 
