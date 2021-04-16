@@ -1,10 +1,7 @@
 <template>
   <div
-    class="grid gap-6 modal-lg overflow-auto"
-    :class="[
-      { 'animate-pulse': loading },
-      screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto',
-    ]"
+    class="grid gap-6 modal-lg inner-modal-auto overflow-auto"
+    :class="[{ 'animate-pulse': loading }]"
   >
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Banner detail</p>
@@ -17,28 +14,32 @@
       />
     </div>
 
-    <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
-      <div class="md:col-span-5 grid gap-2">
+    <div class="grid gap-2 md:gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
+      <div class="md:col-span-5 grid gap-2 md:gap-8 font-medium">
         <div class="grid gap-1">
-          <p>Label</p>
-          <p>Contnet</p>
+          <p class="text-grey-2">Title</p>
+          <p>Lorem, ipsum dolor</p>
         </div>
+
         <div class="grid gap-1">
-          <p>Label</p>
-          <p>Contnet</p>
+          <p class="text-grey-2">Link to article</p>
+          <p class="text-royal">https://www.something-something.co/</p>
         </div>
-        <div class="grid gap-1">
-          <p>Label</p>
-          <p>Contnet</p>
-        </div>
-        <div class="grid gap-1">
-          <p>Label</p>
-          <p>Contnet</p>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="grid gap-1">
+            <p class="text-grey-2">Starts at</p>
+            <p>01-01-2021</p>
+          </div>
+          <div class="grid gap-1">
+            <p class="text-grey-2">Ends at</p>
+            <p>31-01-2021</p>
+          </div>
         </div>
       </div>
 
       <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
-        <p class="font-medium mb-1">Banner image</p>
+        <p class="font-medium mb-1 text-grey-2">Banner image</p>
         <help-thumbnail
           class="mb-1"
           width="100%"
@@ -46,39 +47,13 @@
           :height="screenWidth < 640 && !src ? 128 : ''"
         >
           <div class="grid gap-2 place-items-center text-grey-2 p-4">
-            <icon v-if="screenWidth >= 640" name="photograph" :size="6" />
+            <icon name="photograph" :size="6" />
             <p class="font-medium text-center">
-              No image selected. You can upload an image up to 2MB.
+              No image
             </p>
-            <help-button
-              type="button"
-              label="upload"
-              class="mt-2"
-              @click="$refs.bannerImageInput.click()"
-            />
           </div>
         </help-thumbnail>
-        <div v-if="src" class="grid grid-flow-col auto-cols-max gap-2 justify-end">
-          <span
-            class="text-royal cursor-pointer font-medium"
-            @click="$refs.bannerImageInput.click()"
-          >
-            Edit
-          </span>
-          <span class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
-        </div>
       </div>
-    </div>
-
-    <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
-      <help-button
-        type="button"
-        label="cancel"
-        bg-color="transparent"
-        color="grey-1"
-        @click="$emit('close')"
-      />
-      <help-button label="save" />
     </div>
   </div>
 </template>
@@ -87,7 +62,6 @@
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
-import { useToast } from 'vue-toastification';
 
 export default {
   name: 'BannerDetail',
@@ -96,48 +70,14 @@ export default {
     HelpThumbnail,
     Icon,
   },
-  setup() {
-    const toast = useToast();
-    return { toast };
-  },
   data() {
     return {
-      title: '',
-      articleURL: '',
-      startDate: '',
-      endDate: '',
-      isPermanent: false,
-      loading: false,
-      src: '',
-      imageFile: null,
-      config: {
-        bucketName: 'wehelpyou-content',
-        dirName: 'banners',
-        region: 'ap-southeast-1',
-        accessKeyId: '',
-        secretAccessKey: '',
-        s3Url: 'https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com',
-      },
+      src: 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png',
     };
   },
   computed: {
     screenWidth() {
       return this.$store.state.screenWidth;
-    },
-  },
-  methods: {
-    handleChangeImg(e) {
-      if (e.target.files.length) {
-        const file = e.target.files[0];
-        const fileName = e.target.files[0].name.split('.')[0].replace(/\s+/g, '');
-        const url = `${this.config.s3Url}/${this.config.dirName}/${fileName}`;
-        this.src = URL.createObjectURL(file);
-        this.imageFile = { file, fileName, url };
-      }
-    },
-    submit() {
-      this.toast.success('Dummy success response');
-      this.$emit('close');
     },
   },
 };

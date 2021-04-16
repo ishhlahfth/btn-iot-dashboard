@@ -7,7 +7,7 @@
     <banner-detail @close="bannerDetail = false" />
   </help-modal>
 
-  <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
+  <div class="p-4 sm:p-6 grid gap-4 sm:gap-6 auto-rows-max">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Banner</p>
       <div class="grid grid-flow-col gap-4">
@@ -39,8 +39,8 @@
             <help-thumbnail :src="row.image_url" :height="row.image_url ? '100%' : 72" />
             <div class="flex flex-col justify-between">
               <div>
-                <p class="font-semibold">Shopeepay Promo</p>
-                <a href="#" class=" text-royal">https://www.google.co.id/</a>
+                <p class="font-semibold">Eat & Sell Banner</p>
+                <a href="#" class=" text-royal">https://www.something-something.co/</a>
               </div>
               <div class="grid grid-flow-col gap-2 ">
                 <p>{{ row.start_date }}</p>
@@ -136,7 +136,8 @@ export default {
         for (let i = 0; i < data.length; i += 1) {
           console.log(data[i].url);
           const response = await this.$store.dispatch('loadImage', data[i].url);
-          this.banners[i].image_url = response;
+          // this.banners[i].image_url = response;
+          this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
           console.log('IMG', response);
         }
         this.bannerPagination = {
