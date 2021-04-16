@@ -33,6 +33,7 @@
         { 'with-left-and-right-icon': leftIcon && rightIcon },
         { 'with-left-icon': leftIcon },
         { 'with-right-icon': rightIcon },
+        { 'search-bar': searchBar },
       ]"
       @click="$refs.helpInput.focus()"
       @blur="$refs.helpInput.blur()"
@@ -49,6 +50,22 @@
         @focus="onFocus = true"
         @input="$emit('update:modelValue', $event.target.value)"
       />
+      <help-button
+        v-if="searchBar && !modelValue"
+        icon-only
+        icon="search"
+        bg-color="transparent"
+        color="grey-2"
+      />
+      <help-button
+        type="button"
+        v-if="searchBar && modelValue"
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-2"
+        @click="$emit('update:modelValue', '')"
+      />
       <icon v-if="rightIcon" :name="rightIcon" class="justify-self-center self-center" />
     </div>
     <p v-if="hasError" class="font-medium text-xsmall text-flame mt-0.5">
@@ -59,11 +76,13 @@
 </template>
 
 <script>
+import HelpButton from '@/components/atoms/Button.vue';
 import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'HelpInput',
   components: {
+    HelpButton,
     Icon,
   },
   props: {
@@ -100,6 +119,10 @@ export default {
       type: String,
       default: '',
     },
+    searchBar: {
+      type: Boolean,
+      default: false,
+    },
     // hasError: {
     //   type: Boolean,
     //   default: false,
@@ -123,5 +146,8 @@ export default {
 }
 .with-left-and-right-icon {
   grid-template-columns: 20px 1fr 20px;
+}
+.search-bar {
+  grid-template-columns: 1fr 24px;
 }
 </style>
