@@ -211,7 +211,7 @@ export default {
         const {
           data: { data },
         } = await axios.get(
-          `http://buynsell-dev.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
+          `https://dev-bns.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
           {
             headers: {
               'x-api-key': `${this.$route.query.key}`,
