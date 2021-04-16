@@ -50,8 +50,8 @@ const routes = [
         component: () => import('@/views/TheDummyPage.vue'),
       },
       {
-        path: 'another-page',
-        name: 'AnotherPage',
+        path: 'components',
+        name: 'Components',
         component: () => import('@/views/AnotherPage.vue'),
       },
       {
