@@ -37,20 +37,22 @@
           <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p class="text-grey-2">Delivery PO Number</p>
-              <p>{{ order.delivery_code }}</p>
+              <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
             </div>
             <div>
               <p class="text-grey-2">Delivery Type</p>
               <p>{{ order.order_type_details?.delivery_method?.name }}</p>
             </div>
-            <div>
-              <p class="text-grey-2">Driver Name</p>
-              <p>{{ order.order_type_details?.driver?.driver_name }}</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Vehicle Number</p>
-              <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
-            </div>
+            <template v-if="order.order_type_details?.driver?.driver_name">
+              <div>
+                <p class="text-grey-2">Driver Name</p>
+                <p>{{ order.order_type_details?.driver?.driver_name }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Vehicle Number</p>
+                <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
+              </div>
+            </template>
           </div>
         </div>
         <div class="divide-y divide-grey-4 font-medium">
@@ -124,6 +126,7 @@
                   </p>
                 </div>
                 <p
+                  v-if="item.note"
                   class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
                 >
                   {{ item.note ? item.note : '-' }}
