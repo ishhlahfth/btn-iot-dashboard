@@ -25,7 +25,7 @@
     </div>
     <div
       v-else
-      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2"
+      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
       :class="[
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
@@ -39,6 +39,7 @@
     >
       <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
       <input
+        class="w-full"
         ref="helpInput"
         spellcheck="false"
         :type="type"

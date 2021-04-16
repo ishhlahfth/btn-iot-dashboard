@@ -99,6 +99,11 @@ const routes = [
         name: 'Payment',
         component: () => import('@/views/Payment.vue'),
       },
+      {
+        path: 'banner',
+        name: 'Banner',
+        component: () => import('@/views/Banner.vue'),
+      },
     ],
   },
   {

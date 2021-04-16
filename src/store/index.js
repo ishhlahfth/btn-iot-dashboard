@@ -14,6 +14,7 @@ export default createStore({
     verifDetail: {},
     commissionDetail: {},
     orderId: 0,
+    bannerId: 0,
     loading: {
       merchant: false,
       conductTransfer: false,
@@ -49,6 +50,9 @@ export default createStore({
     },
     SET_ORDER_ID(state, payload) {
       state.orderId = payload;
+    },
+    SET_BANNER_ID(state, payload) {
+      state.bannerId = payload;
     },
     SET_LOADING(state, { type, payload }) {
       state.loading[type] = payload;
@@ -118,6 +122,7 @@ export default createStore({
         const {
           request: { responseURL },
         } = await API.get(bnsURL);
+        console.log('LOAD IMGAE', responseURL);
         imageURL = responseURL;
       } catch (error) {
         console.log(error);

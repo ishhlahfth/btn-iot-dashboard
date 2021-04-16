@@ -111,8 +111,8 @@ export default {
   }
   .modal-lg {
     @screen sm {
-      width: 57.5vw;
-      height: 75vh;
+      min-width: 57.5vw;
+      max-height: 75vh;
     }
   }
   .modal-md {
