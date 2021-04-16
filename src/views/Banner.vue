@@ -57,7 +57,7 @@
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
-            @click="openMerchantDetail(row.id)"
+            @click="openBannerDetail(row.id)"
           >
             See Detail
           </p>
@@ -153,8 +153,9 @@ export default {
       }
       this.loading = false;
     },
-    haaaa() {
-      console.log('HAAA!');
+    openBannerDetail(bannerId) {
+      this.bannerDetail = true;
+      this.$store.commit('SET_BANNER_ID', bannerId);
     },
   },
   mounted() {
