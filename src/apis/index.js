@@ -3,7 +3,8 @@ import axios from 'axios';
 // Environment
 // const baseURL = 'http://buynsell-dev.wehelpyou.xyz/api/v1/'; // Development
 // const baseURL = 'https://dev-bns.wehelpyou.xyz/api/v1/'; // Development (New)
-const baseURL = 'https://stg-bns.wehelpyou.xyz/api/v1/'; // Staging
+// const baseURL = 'https://stg-bns.wehelpyou.xyz/api/v1/'; // Staging
+const baseURL = 'https://bns.wehelpyou.xyz/api/v1/'; // Production
 
 const API = axios.create({
   baseURL,
