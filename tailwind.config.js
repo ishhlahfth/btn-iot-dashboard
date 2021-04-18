@@ -495,6 +495,10 @@ module.exports = {
       none: 'none',
       disc: 'disc',
       decimal: 'decimal',
+      'upper-alpha': 'upper-alpha',
+      'lower-alpha': 'lower-alpha',
+      'upper-roman': 'upper-roman',
+      'lower-roman': 'lower-roman',
     },
     margin: (theme, { negative }) => ({
       auto: 'auto',
