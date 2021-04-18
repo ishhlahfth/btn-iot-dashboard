@@ -1,6 +1,6 @@
 <template>
   <div
-    @click="$emit('update:modelValue', !modelValue)"
+    @click="onToggle"
     class="w-11 p-0.5 flex rounded-full cursor-pointer transition-all duration-200 ease-in-out"
     :class="{ ' justify-end': modelValue }"
     :style="modelValue ? 'background: #60D66A;' : 'background: #E4E7EB;'"
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     onToggle() {
-      console.log('🌏 on toggle');
+      this.$emit('change', !this.modelValue);
     },
   },
 };
