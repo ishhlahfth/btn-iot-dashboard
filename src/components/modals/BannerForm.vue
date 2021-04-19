@@ -98,6 +98,9 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import { useToast } from 'vue-toastification';
+import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
+import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 export default {
   name: 'BannerForm',
@@ -136,6 +139,15 @@ export default {
     screenWidth() {
       return this.$store.state.screenWidth;
     },
+    s3() {
+      return new S3Client({
+        region: 'ap-southeast-1',
+        credentials: fromCognitoIdentityPool({
+          client: new CognitoIdentityClient({ region: 'ap-southeast-1' }),
+          identityPoolId: 'ap-southeast-1:b5e549ab-effd-404c-823e-d32df1c8f64e',
+        }),
+      });
+    },
   },
   methods: {
     handleChangeImg(e) {
@@ -145,9 +157,23 @@ export default {
         const url = `${this.config.s3Url}/${this.config.dirName}/${fileName}`;
         this.src = URL.createObjectURL(file);
         this.imageFile = { file, fileName, url };
+        console.log('🏓');
+        console.log(this.imageFile);
       }
     },
-    submit() {
+    async submit() {
+      const uploadParams = {
+        Bucket: 'help-bns-bucket',
+        Key: this.imageFile.fileName,
+        Body: this.imageFile.file,
+      };
+      try {
+        const data = await this.s3.send(new PutObjectCommand(uploadParams));
+        console.log('-----');
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
       this.toast.success('Dummy success response');
       this.$emit('close');
     },
