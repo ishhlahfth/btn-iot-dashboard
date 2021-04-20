@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import Toast from 'vue-toastification';
+import Maska from 'maska';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -32,4 +33,5 @@ createApp(App)
   .use(router)
   .use(store)
   .use(Toast, toastOption)
+  .use(Maska)
   .mount('#app');

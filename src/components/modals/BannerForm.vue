@@ -35,8 +35,18 @@
             placeholder="http://www.redirect-here.wehelpyou.xyz"
           />
           <div class="grid md:grid-cols-2 gap-4">
-            <help-input v-model="form.startDate" label="Starts at" placeholder="##-##-##" />
-            <help-input v-model="form.endDate" label="Ends at" placeholder="##-##-##" />
+            <help-input
+              v-model="form.startDate"
+              mask="##-##-####"
+              label="Starts at"
+              placeholder="DD-MM-YYYY"
+            />
+            <help-input
+              v-model="form.endDate"
+              mask="##-##-####"
+              label="Ends at"
+              placeholder="DD-MM-YYYY"
+            />
           </div>
           <help-checkbox label="Won't expire" v-model="form.isPermanent" />
         </div>
@@ -99,8 +109,11 @@ import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uuid } from 'uuidv4';
-import dayjs from 'dayjs';
 import API from '@/apis';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 
 export default {
   name: 'BannerForm',
@@ -144,12 +157,6 @@ export default {
       });
     },
   },
-  watch: {
-    startDate(newValue) {
-      console.log('# # # # #');
-      console.log(dayjs(newValue).valueOf());
-    },
-  },
   methods: {
     handleChangeImg(e) {
       if (e.target.files.length) {
@@ -181,8 +188,8 @@ export default {
               type: 'GLOBAL',
             },
             group: 'OTHER',
-            start_date: dayjs(this.form.startDate).valueOf(),
-            end_date: dayjs(this.form.endDate).valueOf(),
+            start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
+            end_date: dayjs(this.form.endDate, 'DD-MM-YYYY').valueOf(),
             title: this.form.title,
             sort_no: 12, // to be deleted
             hyperlink: this.form.hyperlink,
