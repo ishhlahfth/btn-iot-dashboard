@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="bannerForm">
-    <banner-form @close="bannerForm = false" />
+    <banner-form @close="bannerForm = false" @reload="getBanners(bannerPagination)" />
   </help-modal>
 
   <help-modal v-model="bannerDetail">
@@ -39,10 +39,10 @@
             <help-thumbnail :src="row.image_url" :height="row.image_url ? '100%' : 72" />
             <div class="flex flex-col justify-between">
               <div>
-                <p class="font-semibold">Eat & Sell Banner</p>
-                <a href="#" class=" text-royal">https://www.something-something.co/</a>
+                <p class="font-semibold">{{ row.title }}</p>
+                <a href="#" class=" text-royal">{{ row.hyperlink }}</a>
               </div>
-              <div class="grid grid-flow-col gap-2 ">
+              <div class="grid grid-flow-col auto-cols-max gap-2 ">
                 <p>{{ row.start_date }}</p>
                 <p>-</p>
                 <p>{{ row.end_date }}</p>
@@ -136,8 +136,8 @@ export default {
         for (let i = 0; i < data.length; i += 1) {
           console.log(data[i].url);
           const response = await this.$store.dispatch('loadImage', data[i].url);
-          // this.banners[i].image_url = response;
-          this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
+          this.banners[i].image_url = response;
+          // this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
           console.log('IMG', response);
         }
         this.bannerPagination = {

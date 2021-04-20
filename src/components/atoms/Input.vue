@@ -46,6 +46,7 @@
         :type="type"
         :placeholder="placeholder"
         :value="modelValue"
+        v-maska="mask"
         @blur="onFocus = false"
         @focus="onFocus = true"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -122,6 +123,10 @@ export default {
     searchBar: {
       type: Boolean,
       default: false,
+    },
+    mask: {
+      type: String,
+      default: '',
     },
     // hasError: {
     //   type: Boolean,
