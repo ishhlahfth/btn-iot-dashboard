@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="bannerForm">
-    <banner-form @close="bannerForm = false" />
+    <banner-form @close="bannerForm = false" @reload="getBanners(bannerPagination)" />
   </help-modal>
 
   <help-modal v-model="bannerDetail">
@@ -39,8 +39,8 @@
             <help-thumbnail :src="row.image_url" :height="row.image_url ? '100%' : 72" />
             <div class="flex flex-col justify-between">
               <div>
-                <p class="font-semibold">Eat & Sell Banner</p>
-                <a href="#" class=" text-royal">https://www.something-something.co/</a>
+                <p class="font-semibold">{{ row.title }}</p>
+                <a href="#" class=" text-royal">{{ row.hyperlink }}</a>
               </div>
               <div class="grid grid-flow-col gap-2 ">
                 <p>{{ row.start_date }}</p>

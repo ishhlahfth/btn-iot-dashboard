@@ -1,10 +1,7 @@
 <template>
   <div
     class="grid gap-6 modal-lg overflow-auto"
-    :class="[
-      { 'animate-pulse': loading },
-      screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto',
-    ]"
+    :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
   >
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">Add a new banner</p>
@@ -85,7 +82,7 @@
           color="grey-1"
           @click="$emit('close')"
         />
-        <help-button label="save" />
+        <help-button label="save" :loading="loading" loading-label="uploading" />
       </div>
     </form>
   </div>
@@ -126,9 +123,9 @@ export default {
         startDate: '',
         endDate: '',
         isPermanent: false,
-        loading: false,
         src: '',
       },
+      loading: false,
       imageFile: null,
       S3BaseURL: 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com',
     };
@@ -174,6 +171,7 @@ export default {
       };
       console.log(S3Params);
       try {
+        this.loading = true;
         const S3Response = await this.s3.send(new PutObjectCommand(S3Params));
         console.log('-----');
         console.log(S3Response);
@@ -186,7 +184,7 @@ export default {
             start_date: dayjs(this.form.startDate).valueOf(),
             end_date: dayjs(this.form.endDate).valueOf(),
             title: this.form.title,
-            sort_no: 11,
+            sort_no: 12, // to be deleted
             hyperlink: this.form.hyperlink,
             provider: {
               name: 'S3',
@@ -206,8 +204,9 @@ export default {
               data: { data },
             } = await API.post('banners', BNSParams);
             console.log('BNS RESPONSE', data);
-            this.toast.success(`${data.title} banner uploaded`);
+            this.$emit('reload');
             this.$emit('close');
+            this.toast.success(`${data.title} banner uploaded`);
           } catch (error) {
             this.toast.error(error.message);
           }
@@ -215,6 +214,7 @@ export default {
       } catch (error) {
         this.toast.error(error.message);
       }
+      this.loading = false;
     },
   },
 };
