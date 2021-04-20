@@ -47,7 +47,7 @@
             class="mb-1"
             width="100%"
             :src="form.src"
-            :height="screenWidth < 640 && !src ? 128 : ''"
+            :height="screenWidth < 640 && !form.src ? 128 : ''"
           >
             <div class="grid gap-2 place-items-center text-grey-2 p-4">
               <icon v-if="screenWidth >= 640" name="photograph" :size="6" />
@@ -62,7 +62,7 @@
               />
             </div>
           </help-thumbnail>
-          <div v-if="src" class="grid grid-flow-col auto-cols-max gap-2 justify-end">
+          <div v-if="form.src" class="grid grid-flow-col auto-cols-max gap-2 justify-end">
             <span
               class="text-royal cursor-pointer font-medium"
               @click="$refs.bannerImageInput.click()"
