@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-// Environment
-// const baseURL = 'http://buynsell-dev.wehelpyou.xyz/api/v1/'; // Development
-// const baseURL = 'https://dev-bns.wehelpyou.xyz/api/v1/'; // Development (New)
-const baseURL = 'https://stg-bns.wehelpyou.xyz/api/v1/'; // Staging
-
 const API = axios.create({
-  baseURL,
+  baseURL: process.env.VUE_APP_BASE_URL,
   headers: {
     'x-api-key': 'secret-xApiKey-for-developer',
     'x-device-type': 'LINUX',

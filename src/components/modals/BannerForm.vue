@@ -140,7 +140,7 @@ export default {
       },
       loading: false,
       imageFile: null,
-      S3BaseURL: 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com',
+      S3BaseURL: process.env.VUE_APP_S3_BASE_URL,
     };
   },
   computed: {
@@ -152,7 +152,7 @@ export default {
         region: 'ap-southeast-1',
         credentials: fromCognitoIdentityPool({
           client: new CognitoIdentityClient({ region: 'ap-southeast-1' }),
-          identityPoolId: 'ap-southeast-1:b5e549ab-effd-404c-823e-d32df1c8f64e',
+          identityPoolId: process.env.VUE_APP_ID_POOL_ID,
         }),
       });
     },
@@ -165,8 +165,6 @@ export default {
         const url = `${this.S3BaseURL}/${fileName}`;
         this.form.src = URL.createObjectURL(file);
         this.imageFile = { file, fileName, url };
-        console.log('🏓');
-        console.log(this.imageFile);
       }
     },
     async submit() {
@@ -176,12 +174,9 @@ export default {
         Body: this.imageFile.file,
         ContentType: this.imageFile.file.type,
       };
-      console.log(S3Params);
       try {
         this.loading = true;
         const S3Response = await this.s3.send(new PutObjectCommand(S3Params));
-        console.log('-----');
-        console.log(S3Response);
         if (S3Response) {
           const BNSParams = {
             bannerable: {
@@ -204,8 +199,6 @@ export default {
             },
           };
 
-          console.log('BNSParams - - - -');
-          console.log(BNSParams);
           try {
             const {
               data: { data },
