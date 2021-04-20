@@ -48,6 +48,8 @@ input:focus {
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  @apply bg-grey-6;
 }
 
 .Vue-Toastification__toast.custom-toast {

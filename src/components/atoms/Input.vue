@@ -25,7 +25,7 @@
     </div>
     <div
       v-else
-      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2"
+      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
       :class="[
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
@@ -33,20 +33,39 @@
         { 'with-left-and-right-icon': leftIcon && rightIcon },
         { 'with-left-icon': leftIcon },
         { 'with-right-icon': rightIcon },
+        { 'search-bar': searchBar },
       ]"
       @click="$refs.helpInput.focus()"
       @blur="$refs.helpInput.blur()"
     >
       <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
       <input
+        class="w-full"
         ref="helpInput"
         spellcheck="false"
         :type="type"
         :placeholder="placeholder"
         :value="modelValue"
+        v-maska="mask"
         @blur="onFocus = false"
         @focus="onFocus = true"
         @input="$emit('update:modelValue', $event.target.value)"
+      />
+      <help-button
+        v-if="searchBar && !modelValue"
+        icon-only
+        icon="search"
+        bg-color="transparent"
+        color="grey-2"
+      />
+      <help-button
+        type="button"
+        v-if="searchBar && modelValue"
+        icon-only
+        icon="close"
+        bg-color="transparent"
+        color="grey-2"
+        @click="$emit('update:modelValue', '')"
       />
       <icon v-if="rightIcon" :name="rightIcon" class="justify-self-center self-center" />
     </div>
@@ -58,11 +77,13 @@
 </template>
 
 <script>
+import HelpButton from '@/components/atoms/Button.vue';
 import Icon from '@/components/atoms/Icon.vue';
 
 export default {
   name: 'HelpInput',
   components: {
+    HelpButton,
     Icon,
   },
   props: {
@@ -99,6 +120,14 @@ export default {
       type: String,
       default: '',
     },
+    searchBar: {
+      type: Boolean,
+      default: false,
+    },
+    mask: {
+      type: String,
+      default: '',
+    },
     // hasError: {
     //   type: Boolean,
     //   default: false,
@@ -122,5 +151,8 @@ export default {
 }
 .with-left-and-right-icon {
   grid-template-columns: 20px 1fr 20px;
+}
+.search-bar {
+  grid-template-columns: 1fr 24px;
 }
 </style>
