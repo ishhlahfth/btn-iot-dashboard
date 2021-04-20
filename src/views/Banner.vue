@@ -136,8 +136,8 @@ export default {
         for (let i = 0; i < data.length; i += 1) {
           console.log(data[i].url);
           const response = await this.$store.dispatch('loadImage', data[i].url);
-          // this.banners[i].image_url = response;
-          this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
+          this.banners[i].image_url = response;
+          // this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
           console.log('IMG', response);
         }
         this.bannerPagination = {

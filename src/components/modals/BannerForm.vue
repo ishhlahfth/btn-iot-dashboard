@@ -28,20 +28,20 @@
             @input="handleChangeImg"
           />
           <help-input
-            v-model="title"
+            v-model="form.title"
             label="Title"
             placeholder="Give your banner a distinctive title"
           />
           <help-input
-            v-model="articleURL"
+            v-model="form.hyperlink"
             label="Link to article"
             placeholder="http://www.redirect-here.wehelpyou.xyz"
           />
           <div class="grid md:grid-cols-2 gap-4">
-            <help-input v-model="startDate" label="Starts at" placeholder="##-##-##" />
-            <help-input v-model="endDate" label="Ends at" placeholder="##-##-##" />
+            <help-input v-model="form.startDate" label="Starts at" placeholder="##-##-##" />
+            <help-input v-model="form.endDate" label="Ends at" placeholder="##-##-##" />
           </div>
-          <help-checkbox label="Won't expire" v-model="isPermanent" />
+          <help-checkbox label="Won't expire" v-model="form.isPermanent" />
         </div>
 
         <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
@@ -49,7 +49,7 @@
           <help-thumbnail
             class="mb-1"
             width="100%"
-            :src="src"
+            :src="form.src"
             :height="screenWidth < 640 && !src ? 128 : ''"
           >
             <div class="grid gap-2 place-items-center text-grey-2 p-4">
@@ -72,7 +72,7 @@
             >
               Edit
             </span>
-            <span class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
+            <span class="text-flame cursor-pointer font-medium" @click="form.src = ''">Remove</span>
           </div>
         </div>
       </div>
@@ -101,6 +101,9 @@ import { useToast } from 'vue-toastification';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { uuid } from 'uuidv4';
+import dayjs from 'dayjs';
+import API from '@/apis';
 
 export default {
   name: 'BannerForm',
@@ -117,22 +120,17 @@ export default {
   },
   data() {
     return {
-      title: '',
-      articleURL: '',
-      startDate: '',
-      endDate: '',
-      isPermanent: false,
-      loading: false,
-      src: '',
-      imageFile: null,
-      config: {
-        bucketName: 'wehelpyou-content',
-        dirName: 'banners',
-        region: 'ap-southeast-1',
-        accessKeyId: '',
-        secretAccessKey: '',
-        s3Url: 'https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com',
+      form: {
+        title: '',
+        hyperlink: '',
+        startDate: '',
+        endDate: '',
+        isPermanent: false,
+        loading: false,
+        src: '',
       },
+      imageFile: null,
+      S3BaseURL: 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com',
     };
   },
   computed: {
@@ -149,33 +147,74 @@ export default {
       });
     },
   },
+  watch: {
+    startDate(newValue) {
+      console.log('# # # # #');
+      console.log(dayjs(newValue).valueOf());
+    },
+  },
   methods: {
     handleChangeImg(e) {
       if (e.target.files.length) {
         const file = e.target.files[0];
-        const fileName = e.target.files[0].name.split('.')[0].replace(/\s+/g, '');
-        const url = `${this.config.s3Url}/${this.config.dirName}/${fileName}`;
-        this.src = URL.createObjectURL(file);
+        const fileName = `${uuid()}.${e.target.files[0].type.split('/')[1]}`;
+        const url = `${this.S3BaseURL}/${fileName}`;
+        this.form.src = URL.createObjectURL(file);
         this.imageFile = { file, fileName, url };
         console.log('🏓');
         console.log(this.imageFile);
       }
     },
     async submit() {
-      const uploadParams = {
+      const S3Params = {
         Bucket: 'help-bns-bucket',
         Key: this.imageFile.fileName,
         Body: this.imageFile.file,
+        ContentType: this.imageFile.file.type,
       };
+      console.log(S3Params);
       try {
-        const data = await this.s3.send(new PutObjectCommand(uploadParams));
+        const S3Response = await this.s3.send(new PutObjectCommand(S3Params));
         console.log('-----');
-        console.log(data);
+        console.log(S3Response);
+        if (S3Response) {
+          const BNSParams = {
+            bannerable: {
+              type: 'GLOBAL',
+            },
+            group: 'OTHER',
+            start_date: dayjs(this.form.startDate).valueOf(),
+            end_date: dayjs(this.form.endDate).valueOf(),
+            title: this.form.title,
+            sort_no: 11,
+            hyperlink: this.form.hyperlink,
+            provider: {
+              name: 'S3',
+              config: {
+                location: this.imageFile.url,
+                etag: S3Response.ETag.slice(1, -1),
+                bucket: 'help-bns-bucket',
+                key: this.imageFile.fileName,
+              },
+            },
+          };
+
+          console.log('BNSParams - - - -');
+          console.log(BNSParams);
+          try {
+            const {
+              data: { data },
+            } = await API.post('banners', BNSParams);
+            console.log('BNS RESPONSE', data);
+            this.toast.success(`${data.title} banner uploaded`);
+            this.$emit('close');
+          } catch (error) {
+            this.toast.error(error.message);
+          }
+        }
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
-      this.toast.success('Dummy success response');
-      this.$emit('close');
     },
   },
 };

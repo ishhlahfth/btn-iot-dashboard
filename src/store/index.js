@@ -125,6 +125,7 @@ export default createStore({
         console.log('LOAD IMGAE', responseURL);
         imageURL = responseURL;
       } catch (error) {
+        console.log('e r r o r disini');
         console.log(error);
       }
       return imageURL;
