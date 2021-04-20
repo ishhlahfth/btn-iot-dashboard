@@ -42,7 +42,7 @@
                 <p class="font-semibold">{{ row.title }}</p>
                 <a href="#" class=" text-royal">{{ row.hyperlink }}</a>
               </div>
-              <div class="grid grid-flow-col gap-2 ">
+              <div class="grid grid-flow-col auto-cols-max gap-2 ">
                 <p>{{ row.start_date }}</p>
                 <p>-</p>
                 <p>{{ row.end_date }}</p>
