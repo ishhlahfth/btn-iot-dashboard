@@ -50,7 +50,7 @@
         <help-input
           v-model="searchValue"
           placeholder="Search merchant name here"
-          right-icon="search"
+          search-bar
         />
       </form>
     </div>

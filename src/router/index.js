@@ -50,8 +50,8 @@ const routes = [
         component: () => import('@/views/TheDummyPage.vue'),
       },
       {
-        path: 'another-page',
-        name: 'AnotherPage',
+        path: 'components',
+        name: 'Components',
         component: () => import('@/views/AnotherPage.vue'),
       },
       {
@@ -98,6 +98,11 @@ const routes = [
         path: 'payment',
         name: 'Payment',
         component: () => import('@/views/Payment.vue'),
+      },
+      {
+        path: 'banner',
+        name: 'Banner',
+        component: () => import('@/views/Banner.vue'),
       },
     ],
   },
