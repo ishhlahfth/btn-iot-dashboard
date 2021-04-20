@@ -4,10 +4,12 @@
     :style="bannerStyle"
     class="border-2 border-grey-4 border-dashed rounded-md flex flex-col justify-center items-center"
   >
-    <icon name="photograph" />
-    <p class="text-xsmall font-medium">No Image</p>
+    <slot>
+      <icon name="photograph" />
+      <p class="text-xsmall font-medium">No Image</p>
+    </slot>
   </div>
-  <div v-else :style="bannerStyle" class="grid place-items-center rounded">
+  <div v-else :style="bannerStyle" class="grid rounded">
     <img v-if="!useBg" :src="src" alt="banner" class="rounded object-cover" />
   </div>
 </template>
@@ -41,8 +43,8 @@ export default {
   computed: {
     bannerStyle() {
       return {
-        width: this.width.toString().includes('%') ? this.width : `${this.width.toString()}px`,
-        height: this.height.toString().includes('%') ? this.height : `${this.height.toString()}px`,
+        width: typeof this.width === 'string' ? this.width : `${this.width.toString()}px`,
+        height: typeof this.height === 'string' ? this.height : `${this.height.toString()}px`,
         'background-image': this.useBg ? `url(${this.src})` : 'none',
         'background-position': this.useBg ? 'center' : 'none',
         'background-size': this.useBg ? 'cover' : 'none',
