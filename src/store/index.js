@@ -122,17 +122,14 @@ export default createStore({
         const {
           request: { responseURL },
         } = await API.get(bnsURL);
-        console.log('LOAD IMGAE', responseURL);
         imageURL = responseURL;
       } catch (error) {
-        console.log('e r r o r disini');
         console.log(error);
       }
       return imageURL;
     },
     // async loadKTP(_, )
     translateItemStatus(_, value) {
-      console.log('TRANSLATE', value);
       let translated = '';
       if (value) {
         switch (value) {
