@@ -1,13 +1,14 @@
 <template>
   <button
     :type="type"
-    :disabled="loading"
+    :disabled="loading || disabled"
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
       `bg-${bgColor} text-${color}`,
       { bordered: outlined },
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
       bgColor === 'transparent' ? 'hover:bg-grey-4 hover:bg-opacity-70' : 'hover:bg-opacity-80',
+      { 'cursor-not-allowed bg-opacity-80': loading || disabled },
     ]"
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
@@ -68,6 +69,10 @@ export default {
     type: {
       type: String,
       default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

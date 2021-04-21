@@ -211,7 +211,7 @@ export default {
         const {
           data: { data },
         } = await axios.get(
-          `https://bns.wehelpyou.xyz/api/v1/orders/${this.$route.params.id}`,
+          `${process.env.VUE_APP_BASE_URL}orders/${this.$route.params.id}`,
           {
             headers: {
               'x-api-key': `${this.$route.query.key}`,
