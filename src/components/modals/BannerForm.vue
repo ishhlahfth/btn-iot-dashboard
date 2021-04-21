@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid gap-6 modal-lg overflow-auto"
+    class="grid gap-6 modal-lg overflow-auto px-1"
     :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
   >
     <div class="flex justify-between items-center">
@@ -31,10 +31,10 @@
           />
           <help-input
             v-model="form.hyperlink"
-            label="Link to article"
+            label="Redirect URL"
             placeholder="http://www.redirect-here.wehelpyou.xyz"
           />
-          <div class="grid md:grid-cols-2 gap-4">
+          <div class="grid gap-4" :class="{ 'md:grid-cols-2': !form.isPermanent }">
             <help-input
               v-model="form.startDate"
               mask="##-##-####"
@@ -42,13 +42,14 @@
               placeholder="DD-MM-YYYY"
             />
             <help-input
+              v-if="!form.isPermanent"
               v-model="form.endDate"
               mask="##-##-####"
               label="Ends at"
               placeholder="DD-MM-YYYY"
             />
           </div>
-          <help-checkbox label="Won't expire" v-model="form.isPermanent" />
+          <help-checkbox label="Won't expire" v-model:checked="form.isPermanent" />
         </div>
 
         <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
@@ -186,7 +187,6 @@ export default {
             start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
             end_date: dayjs(this.form.endDate, 'DD-MM-YYYY').valueOf(),
             title: this.form.title,
-            sort_no: 12, // to be deleted
             hyperlink: this.form.hyperlink,
             provider: {
               name: 'S3',
@@ -203,7 +203,6 @@ export default {
             const {
               data: { data },
             } = await API.post('banners', BNSParams);
-            console.log('BNS RESPONSE', data);
             this.$emit('reload');
             this.$emit('close');
             this.toast.success(`${data.title} banner uploaded`);

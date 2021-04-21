@@ -15,6 +15,7 @@
           v-if="!reorderMode"
           label="reorder"
           icon="reorder"
+          disabled
           @click="reorderMode = true"
         />
         <template v-else>
@@ -40,7 +41,12 @@
             <div class="flex flex-col justify-between">
               <div>
                 <p class="font-semibold">{{ row.title }}</p>
-                <a href="#" class=" text-royal">{{ row.hyperlink }}</a>
+                <a
+                  :href="row.hyperlink"
+                  target="blank"
+                  class="cursor-pointer text-royal hover:underline"
+                  >{{ row.hyperlink }}</a
+                >
               </div>
               <div class="grid grid-flow-col auto-cols-max gap-2 ">
                 <p>{{ row.start_date }}</p>
@@ -49,10 +55,15 @@
               </div>
             </div>
           </div>
-          <help-toggle v-if="column === 'is_active'" />
+          <help-badge
+            v-if="column === 'is_active'"
+            :label="row.is_active ? 'Active' : 'Inactive'"
+            :color="row.is_active ? 'positive' : 'negative'"
+          />
+          <!-- <help-toggle v-if="column === 'is_active'" /> -->
           <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
-            <help-button bg-color="royal" color="white" icon="edit" icon-only />
-            <help-button bg-color="flame" color="white" icon="trash" icon-only />
+            <help-button disabled bg-color="royal" color="white" icon="edit" icon-only />
+            <help-button disabled bg-color="flame" color="white" icon="trash" icon-only />
           </div>
           <p
             v-if="column === 'detail'"
@@ -70,10 +81,11 @@
 <script>
 import BannerDetail from '@/components/modals/BannerDetail.vue';
 import BannerForm from '@/components/modals/BannerForm.vue';
+import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
-import HelpToggle from '@/components/atoms/Toggle.vue';
+// import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import API from '@/apis';
@@ -84,10 +96,11 @@ export default {
   components: {
     BannerDetail,
     BannerForm,
+    HelpBadge,
     HelpButton,
     HelpModal,
     HelpTable,
-    HelpToggle,
+    // HelpToggle,
     HelpThumbnail,
   },
   setup() {
@@ -106,8 +119,6 @@ export default {
       bannerPagination: {
         limit: 10,
         offset: 0,
-        // sort: 'id',
-        // order: 'asc',
       },
       loading: false,
       reorderMode: false,
@@ -119,8 +130,6 @@ export default {
     async getBanners(pagination) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
-      // const sort = pagination.sort || 'name';
-      // const order = pagination.order || 'asc';
 
       try {
         this.loading = true;
@@ -130,21 +139,17 @@ export default {
         this.banners = data.map((el) => ({
           ...el,
           start_date: dayjs(el.start_date).format('ddd, D MMM YYYY'),
-          end_date: dayjs(el.end_date).format('ddd, D MMM YYYY'),
+          end_date: el.end_date ? dayjs(el.end_date).format('ddd, D MMM YYYY') : 'Forever',
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
-          console.log(data[i].url);
           const response = await this.$store.dispatch('loadImage', data[i].url);
           this.banners[i].image_url = response;
-          // this.banners[i].image_url = 'https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/Banner--03.png';
-          console.log('IMG', response);
         }
         this.bannerPagination = {
           limit,
           offset,
         };
-        console.log('🔰 BANNERS', data);
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
