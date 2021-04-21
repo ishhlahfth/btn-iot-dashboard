@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const basicAuth = 'Basic MTphbDJXa2l0a3dtbEJnT0VhN0tPTTdnbFJaYmphTXJsQmU3RjY1R2w1T0RlM0QwbkdYaUI5N2dkZXJlbW5Db1VOTmJoaG5oS2xpM3l3cnhxWjJJWjVycDBqZXpocU52U3ZUQzBjVWgwOVI5ZUphMjJ1N1lHdUpuMVRiZThBT3Z4Wg==';
+const basicAuth = 'Basic Q01TOjEyMzQ1';
 const BNSHeaders = {
   'x-api-key': 'secret-xApiKey-for-developer',
   'x-device-type': 'LINUX',
