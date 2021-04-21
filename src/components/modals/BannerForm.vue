@@ -31,7 +31,7 @@
           />
           <help-input
             v-model="form.hyperlink"
-            label="Link to article"
+            label="Redirect URL"
             placeholder="http://www.redirect-here.wehelpyou.xyz"
           />
           <div class="grid md:grid-cols-2 gap-4">
@@ -48,7 +48,7 @@
               placeholder="DD-MM-YYYY"
             />
           </div>
-          <help-checkbox label="Won't expire" v-model="form.isPermanent" />
+          <!-- <help-checkbox label="Won't expire" v-model="form.isPermanent" /> -->
         </div>
 
         <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
@@ -100,7 +100,7 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+// import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
@@ -119,7 +119,7 @@ export default {
   name: 'BannerForm',
   components: {
     HelpButton,
-    HelpCheckbox,
+    // HelpCheckbox,
     HelpInput,
     HelpThumbnail,
     Icon,

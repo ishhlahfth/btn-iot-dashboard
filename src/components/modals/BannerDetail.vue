@@ -22,8 +22,13 @@
         </div>
 
         <div class="grid gap-1">
-          <p class="text-grey-2">Link to article</p>
-          <p class="text-royal">{{ banner.hyperlink }}</p>
+          <p class="text-grey-2">Redirect URL</p>
+          <a
+            :href="banner.hyperlink"
+            target="blank"
+            class="text-royal cursor-pointer hover:underline"
+            >{{ banner.hyperlink }}</a
+          >
         </div>
 
         <div class="grid grid-cols-2 gap-4">
@@ -64,6 +69,7 @@ import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import { useToast } from 'vue-toastification';
 import API from '@/apis';
+import dayjs from 'dayjs';
 
 export default {
   name: 'BannerDetail',
@@ -98,7 +104,11 @@ export default {
         } = await API.get(`banners/${this.bannerId}`);
 
         if (data) {
-          this.banner = data;
+          this.banner = {
+            ...data,
+            start_date: dayjs(data.start_date).format('ddd, D MMM YYYY'),
+            end_date: dayjs(data.end_date).format('ddd, D MMM YYYY'),
+          };
           const response = await this.$store.dispatch('loadImage', data.url);
           this.banner.image_url = response;
           console.log('IMG', response);

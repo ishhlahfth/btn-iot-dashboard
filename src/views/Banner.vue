@@ -40,7 +40,12 @@
             <div class="flex flex-col justify-between">
               <div>
                 <p class="font-semibold">{{ row.title }}</p>
-                <a href="#" class=" text-royal">{{ row.hyperlink }}</a>
+                <a
+                  :href="row.hyperlink"
+                  target="blank"
+                  class="cursor-pointer text-royal hover:underline"
+                  >{{ row.hyperlink }}</a
+                >
               </div>
               <div class="grid grid-flow-col auto-cols-max gap-2 ">
                 <p>{{ row.start_date }}</p>
@@ -106,8 +111,6 @@ export default {
       bannerPagination: {
         limit: 10,
         offset: 0,
-        // sort: 'id',
-        // order: 'asc',
       },
       loading: false,
       reorderMode: false,
@@ -119,8 +122,6 @@ export default {
     async getBanners(pagination) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
-      // const sort = pagination.sort || 'name';
-      // const order = pagination.order || 'asc';
 
       try {
         this.loading = true;
