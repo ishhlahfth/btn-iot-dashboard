@@ -112,7 +112,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uuid } from 'uuidv4';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { API } from '../../apis';
+import API from '../../apis';
 
 dayjs.extend(customParseFormat);
 
