@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
-import API from '@/apis';
 import dayjs from 'dayjs';
+import { API } from '../apis';
 
 export default createStore({
   state: {
