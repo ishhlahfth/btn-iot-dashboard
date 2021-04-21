@@ -1,7 +1,7 @@
 <template>
   <help-sidebar />
   <help-navbar />
-  <div class="sm:ml-14 bg-grey-6">
+  <div class="sm:ml-14 bg-grey-6 flex-auto">
     <router-view />
   </div>
 </template>
