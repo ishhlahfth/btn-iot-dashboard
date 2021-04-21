@@ -46,7 +46,7 @@
         >
           Forgot your password?
         </p>
-        <help-button label="sign in" />
+        <help-button label="sign in" :loading="loading" loading-label="signing in" />
       </form>
     </div>
   </div>
@@ -55,6 +55,7 @@
 <script>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 // import axios from 'axios';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -62,6 +63,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 // import Icon from '@/components/atoms/Icon.vue';
+import API from '@/apis';
 
 export default {
   name: 'Login',
@@ -74,6 +76,8 @@ export default {
   setup() {
     const router = useRouter();
 
+    const toast = useToast();
+
     const email = ref('');
     const password = ref('');
     const resetEmail = ref('');
@@ -81,6 +85,7 @@ export default {
       email: false,
       password: false,
     });
+    const loading = ref(false);
     const resetPasswordModal = ref(false);
 
     const sendResetPasswordLink = () => {
@@ -115,9 +120,16 @@ export default {
       if (!email.value) invalid.value.email = true;
       if (!password.value) invalid.value.password = true;
       if (!invalid.value.email && !invalid.value.password) {
+        const payload = {
+          email: email.value,
+          password: password.value,
+        };
+
+        loading.value = true;
         try {
-          // const { data } = await axios.get('http://localhost:3000/login/0');
-          const data = { email: email.value };
+          const { data } = await API.post('authentications/dashboard/login', payload);
+          // const data = { email: email.value };
+          console.log('🌶️', data);
 
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
@@ -130,8 +142,11 @@ export default {
             router.push('/bns');
           }
         } catch (error) {
+          toast.error(error.message);
+          console.log(error.message);
           console.log(error);
         }
+        loading.value = false;
       }
     };
 
@@ -141,6 +156,7 @@ export default {
       resetEmail,
       invalid,
       signIn,
+      loading,
       resetPasswordModal,
       sendResetPasswordLink,
     };
