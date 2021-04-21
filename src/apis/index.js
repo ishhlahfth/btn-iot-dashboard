@@ -22,6 +22,6 @@ export const AUTH_API = axios.create({
 });
 
 export const API = axios.create({
-  baseURL: process.env.VUE_APP_BASE_URL,
+  baseURL: `${process.env.VUE_APP_BASE_URL}v1/`,
   headers: BNSHeaders,
 });
