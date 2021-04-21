@@ -56,13 +56,11 @@
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
-// import axios from 'axios';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-// import Icon from '@/components/atoms/Icon.vue';
 import API from '@/apis';
 
 export default {
@@ -71,7 +69,6 @@ export default {
     HelpButton,
     HelpInput,
     HelpModal,
-    // Icon,
   },
   setup() {
     const router = useRouter();
@@ -127,9 +124,7 @@ export default {
 
         loading.value = true;
         try {
-          const { data } = await API.post('authentications/dashboard/login', payload);
-          // const data = { email: email.value };
-          console.log('🌶️', data);
+          const { data: { data } } = await API.post('authentications/dashboard/login', payload);
 
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
@@ -143,8 +138,6 @@ export default {
           }
         } catch (error) {
           toast.error(error.message);
-          console.log(error.message);
-          console.log(error);
         }
         loading.value = false;
       }
