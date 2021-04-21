@@ -107,11 +107,10 @@ export default {
           this.banner = {
             ...data,
             start_date: dayjs(data.start_date).format('ddd, D MMM YYYY'),
-            end_date: dayjs(data.end_date).format('ddd, D MMM YYYY'),
+            end_date: data.end_date ? dayjs(data.end_date).format('ddd, D MMM YYYY') : '-',
           };
           const response = await this.$store.dispatch('loadImage', data.url);
           this.banner.image_url = response;
-          console.log('IMG', response);
         }
       } catch (error) {
         this.toast.error(error.message);
