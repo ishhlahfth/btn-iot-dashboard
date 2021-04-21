@@ -78,7 +78,7 @@
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
-import API from '@/apis';
+import { API } from '../../apis';
 
 export default {
   name: 'MerchantVerification',

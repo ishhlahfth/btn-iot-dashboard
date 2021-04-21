@@ -125,8 +125,8 @@ import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import API from '@/apis';
 import dayjs from 'dayjs';
+import { API } from '../apis';
 
 export default {
   name: 'Merchant',

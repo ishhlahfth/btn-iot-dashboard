@@ -11,9 +11,10 @@
     <div class="flex justify-end items-center">
       <p class="font-medium">Admin</p>
       <help-avatar
-        src="https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"
+        src=""
         :size="32"
         :tabindex="0"
+        placeholder="Admin"
         class="ml-3 cursor-pointer relative outline-none"
         @click="opened = !opened"
         @blur="opened = false"
