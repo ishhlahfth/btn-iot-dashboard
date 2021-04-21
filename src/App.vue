@@ -49,7 +49,8 @@ input:focus {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  @apply bg-grey-6;
+  display: flex;
+  flex-direction: column;
 }
 
 .Vue-Toastification__toast.custom-toast {
