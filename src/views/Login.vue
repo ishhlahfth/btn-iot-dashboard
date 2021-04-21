@@ -137,7 +137,7 @@ export default {
             router.push('/bns');
           }
         } catch (error) {
-          toast.error(error.message);
+          toast.error(error.response.data.meta.message);
         }
         loading.value = false;
       }
