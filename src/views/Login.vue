@@ -61,7 +61,6 @@ import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-// import { AUTH_API } from '@/apis';
 import axios from 'axios';
 
 export default {
@@ -125,11 +124,6 @@ export default {
 
         loading.value = true;
         try {
-          // const {
-          //   data: { data },
-          // } = await AUTH_API.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload);
-
-          // const auth = `Basic ${Buffer.from(`${payload.email}:${payload.password}`).toString('base64')}`;
           const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
 
           const {

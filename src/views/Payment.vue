@@ -30,7 +30,7 @@
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import { useToast } from 'vue-toastification';
-import { API } from '../apis';
+import API from '../apis';
 
 export default {
   name: 'Payment',
