@@ -94,7 +94,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
-import { API } from '../apis';
+import API from '../apis';
 
 export default {
   name: 'Transfer',

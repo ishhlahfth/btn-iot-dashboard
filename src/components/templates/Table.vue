@@ -108,7 +108,7 @@
 <script>
 import Icon from '@/components/atoms/Icon.vue';
 import TableFooter from '@/components/molecules/TableFooter.vue';
-import { API } from '../../apis';
+import API from '../../apis';
 
 export default {
   name: 'HelpTable',

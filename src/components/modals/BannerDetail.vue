@@ -69,7 +69,7 @@ import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import { useToast } from 'vue-toastification';
 import dayjs from 'dayjs';
-import { API } from '../../apis';
+import API from '../../apis';
 
 export default {
   name: 'BannerDetail',

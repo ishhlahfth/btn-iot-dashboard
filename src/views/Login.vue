@@ -61,7 +61,7 @@ import Utf8 from 'crypto-js/enc-utf8';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-import { AUTH_API } from '@/apis';
+import axios from 'axios';
 
 export default {
   name: 'Login',
@@ -124,12 +124,13 @@ export default {
 
         loading.value = true;
         try {
+          const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+
           const {
             data: { data },
-          } = await AUTH_API.post(
-            `${process.env.VUE_APP_BASE_URL}authentications/dashboard/login`,
-            payload,
-          );
+          } = await axios.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload, {
+            headers: { authorization: auth },
+          });
 
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
