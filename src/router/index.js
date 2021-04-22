@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
+import store from '../store';
 
 const authenticate = (to, from, next) => {
   const getCookie = (cookieName) => {
@@ -22,7 +23,15 @@ const authenticate = (to, from, next) => {
   let user = getCookie('user');
   user = Base64.parse(user);
   user = Utf8.stringify(user);
-  if (user) user = JSON.parse(user);
+  if (user) {
+    user = JSON.parse(user);
+    console.log('🔰🔰🔰');
+    store.commit('SET_CURRENT_USER', {
+      ...user,
+      xApiKey: `${user.token_type} ${user.access_token}`,
+    });
+    console.log(store.state.currentUser);
+  }
   console.log('🚀👉', user);
   if (user) {
     next();
