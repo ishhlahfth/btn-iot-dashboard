@@ -22,7 +22,7 @@
           <help-button label="cancel" bg-color="flame" @click="reorderMode = false" />
           <help-button label="save" bg-color="mint" />
         </template>
-        <help-button label="add" icon="plus" @click="bannerForm = true" />
+        <help-button label="add" icon="plus" @click="addBanner" />
       </div>
     </div>
     <div class="overflow-hidden">
@@ -62,7 +62,13 @@
           />
           <!-- <help-toggle v-if="column === 'is_active'" /> -->
           <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
-            <help-button disabled bg-color="royal" color="white" icon="edit" icon-only />
+            <help-button
+              bg-color="royal"
+              color="white"
+              icon="edit"
+              icon-only
+              @click="editBanner(row)"
+            />
             <help-button disabled bg-color="flame" color="white" icon="trash" icon-only />
           </div>
           <p
@@ -162,6 +168,15 @@ export default {
     openBannerDetail(bannerId) {
       this.bannerDetail = true;
       this.$store.commit('SET_BANNER_ID', bannerId);
+    },
+    addBanner() {
+      this.bannerForm = true;
+      this.$store.commit('SET_FORM_TYPE', 'ADD');
+    },
+    editBanner(banner) {
+      this.bannerForm = true;
+      this.$store.commit('SET_BANNER', banner);
+      this.$store.commit('SET_FORM_TYPE', 'EDIT');
     },
   },
   mounted() {

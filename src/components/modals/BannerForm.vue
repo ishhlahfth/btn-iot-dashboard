@@ -148,6 +148,12 @@ export default {
     screenWidth() {
       return this.$store.state.screenWidth;
     },
+    formType() {
+      return this.$store.state.formType;
+    },
+    banner() {
+      return this.$store.state.banner;
+    },
     s3() {
       return new S3Client({
         region: 'ap-southeast-1',
@@ -215,6 +221,13 @@ export default {
       }
       this.loading = false;
     },
+  },
+  mounted() {
+    if (this.formType === 'EDIT') {
+      console.log(this.banner);
+    } else {
+      console.log('ADD FORM');
+    }
   },
 };
 </script>
