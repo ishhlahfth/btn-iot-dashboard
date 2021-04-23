@@ -225,8 +225,12 @@ export default {
   mounted() {
     if (this.formType === 'EDIT') {
       console.log(this.banner);
-    } else {
-      console.log('ADD FORM');
+      this.form.title = this.banner.title;
+      this.form.hyperlink = this.banner.hyperlink;
+      this.form.startDate = this.banner.start_date;
+      this.form.endDate = this.banner.end_date;
+      this.form.src = this.banner.image_url;
+      if (!this.banner.end_date) this.form.isPermanent = true;
     }
   },
 };
