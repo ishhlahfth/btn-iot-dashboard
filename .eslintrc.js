@@ -18,6 +18,8 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'prefer-destructuring': 'off',
     'prefer-arrow-callback': 'off',
-    'no-await-in-loop': 'off'
+    'no-await-in-loop': 'off',
+    'no-param-reassign': 'off',
+    'import/no-cycle': 'off',
   },
 };

@@ -1,9 +1,10 @@
 import { createStore } from 'vuex';
 import dayjs from 'dayjs';
-import { API } from '../apis';
+import API from '../apis';
 
 export default createStore({
   state: {
+    currentUser: {},
     screenWidth: 0,
     mini: true,
     merchantId: 0,
@@ -21,6 +22,9 @@ export default createStore({
     },
   },
   mutations: {
+    SET_CURRENT_USER(state, payload) {
+      state.currentUser = payload;
+    },
     SET_SCREEN_WIDTH(state, payload) {
       state.screenWidth = payload;
     },
