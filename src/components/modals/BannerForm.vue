@@ -93,7 +93,11 @@
           color="grey-1"
           @click="$emit('close')"
         />
-        <help-button label="save" :loading="loading" loading-label="uploading" />
+        <help-button
+          :label="formType === 'EDIT' ? 'save changes' : 'save'"
+          :loading="loading"
+          loading-label="uploading"
+        />
       </div>
     </form>
   </div>
@@ -227,8 +231,8 @@ export default {
       console.log(this.banner);
       this.form.title = this.banner.title;
       this.form.hyperlink = this.banner.hyperlink;
-      this.form.startDate = this.banner.start_date;
-      this.form.endDate = this.banner.end_date;
+      this.form.startDate = dayjs(this.banner.start_date).format('DD-MM-YYYY');
+      this.form.endDate = dayjs(this.banner.end_date).format('DD-MM-YYYY');
       this.form.src = this.banner.image_url;
       if (!this.banner.end_date) this.form.isPermanent = true;
     }

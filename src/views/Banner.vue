@@ -1,5 +1,5 @@
 <template>
-  <help-modal v-model="bannerForm">
+  <help-modal v-model="bannerForm" permanent>
     <banner-form @close="bannerForm = false" @reload="getBanners(bannerPagination)" />
   </help-modal>
 
@@ -49,9 +49,9 @@
                 >
               </div>
               <div class="grid grid-flow-col auto-cols-max gap-2 ">
-                <p>{{ row.start_date }}</p>
+                <p>{{ row.startDate }}</p>
                 <p>-</p>
-                <p>{{ row.end_date }}</p>
+                <p>{{ row.endDate }}</p>
               </div>
             </div>
           </div>
@@ -144,8 +144,8 @@ export default {
         } = await API.get(`banners?bannerable=GLOBAL&offset=${offset}&limit=${limit}`);
         this.banners = data.map((el) => ({
           ...el,
-          start_date: dayjs(el.start_date).format('ddd, D MMM YYYY'),
-          end_date: el.end_date ? dayjs(el.end_date).format('ddd, D MMM YYYY') : 'Forever',
+          startDate: dayjs(el.start_date).format('ddd, D MMM YYYY'),
+          endDate: el.end_date ? dayjs(el.end_date).format('ddd, D MMM YYYY') : 'Forever',
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
