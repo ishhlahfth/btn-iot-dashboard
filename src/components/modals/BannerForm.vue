@@ -94,9 +94,9 @@
           @click="$emit('close')"
         />
         <help-button
-          :label="formType === 'EDIT' ? 'save changes' : 'save'"
+          :label="formType === 'EDIT' ? 'save changes' : 'create'"
           :loading="loading"
-          loading-label="uploading"
+          :loading-label="formType === 'EDIT' ? 'saving' : 'creating'"
         />
       </div>
     </form>
@@ -142,6 +142,7 @@ export default {
         endDate: '',
         isPermanent: false,
         src: '',
+        isActive: true,
       },
       loading: false,
       imageFile: null,
@@ -178,7 +179,14 @@ export default {
         this.imageFile = { file, fileName, url };
       }
     },
-    async submit() {
+    submit() {
+      if (this.formType === 'EDIT') {
+        this.edit();
+      } else {
+        this.add();
+      }
+    },
+    async add() {
       const S3Params = {
         Bucket: 'help-bns-bucket',
         Key: this.imageFile.fileName,
@@ -220,6 +228,31 @@ export default {
             this.toast.error(error.message);
           }
         }
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.loading = false;
+    },
+    async edit() {
+      const payload = {
+        start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
+        title: this.form.title,
+        hyperlink: this.form.hyperlink,
+        is_active: this.banner.is_active,
+      };
+      payload.end_date = this.form.isPermanent
+        ? null
+        : dayjs(this.form.endDate, 'DD-MM-YYYY').valueOf();
+
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.patch(`banners/${this.banner.id}`, payload);
+        console.log('====', data);
+        this.$emit('reload');
+        this.$emit('close');
+        this.toast.success(`${data.title} has been edited`);
       } catch (error) {
         this.toast.error(error.message);
       }
