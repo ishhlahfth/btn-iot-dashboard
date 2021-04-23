@@ -25,14 +25,8 @@ const authenticate = (to, from, next) => {
   user = Utf8.stringify(user);
   if (user) {
     user = JSON.parse(user);
-    console.log('🔰🔰🔰');
-    store.commit('SET_CURRENT_USER', {
-      ...user,
-      xApiKey: `${user.token_type} ${user.access_token}`,
-    });
-    console.log(store.state.currentUser);
+    store.commit('SET_CURRENT_USER', user);
   }
-  console.log('🚀👉', user);
   if (user) {
     next();
   } else {

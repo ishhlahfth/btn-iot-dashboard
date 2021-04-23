@@ -4,7 +4,6 @@ import store from '@/store';
 const API = axios.create({
   baseURL: `${process.env.VUE_APP_BASE_URL}v1/`,
   headers: {
-    // 'x-api-key': 'secret-xApiKey-for-developer',
     'x-device-type': 'LINUX',
     'x-device-os-version': 'Ubuntu18.04',
     'x-device-model': '4s-dk0115AU',
@@ -18,10 +17,7 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
-    console.log('🔥🔥🔥🔥');
-    console.log(store.state.currentUser.xApiKey);
-    console.log(config.headers);
-    config.headers['x-api-key'] = store.state.currentUser.xApiKey;
+    config.headers['x-api-key'] = store.state.currentUser.access_token;
     return config;
   },
   (error) => Promise.reject(error),
