@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Seller</p>
+            <p class="font-medium pb-4 lg:text-base">Merchant</p>
             <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <p class="text-grey-2">Name</p>
