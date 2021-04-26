@@ -109,6 +109,7 @@
                     `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
                   }}
                 </p>
+                <p class="font-light text-grey-2">{{ order.order_type_details?.shipping_address.location.coordinates }}</p>
               </div>
             </div>
           </div>
