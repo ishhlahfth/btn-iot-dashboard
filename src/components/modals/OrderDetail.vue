@@ -21,10 +21,13 @@
                 <p class="text-grey-2">Status</p>
                 <p
                   :class="
-                    order.current_step?.title === 'Completed' || order.current_step?.title === 'New'
+                    order.current_step?.title === 'Pesanan Selesai'
                       ? 'text-mint'
-                      : order.current_step?.title === 'In-Progress' ||
-                        order.current_step?.title === 'Pending'
+                      : order.current_step?.title === 'Menunggu Konfirmasi' ||
+                        order.current_step?.title === 'Menunggu Pembayaran' ||
+                        order.current_step?.title === 'Mengajukan Komplain' ||
+                        order.current_step?.title === 'Sedang Dikirim' ||
+                        order.current_step?.title === 'Pesanan Tiba'
                       ? 'text-gold'
                       : 'text-flame'
                   "
