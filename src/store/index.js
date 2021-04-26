@@ -16,6 +16,8 @@ export default createStore({
     commissionDetail: {},
     orderId: 0,
     bannerId: 0,
+    banner: {},
+    formType: '',
     loading: {
       merchant: false,
       conductTransfer: false,
@@ -57,6 +59,12 @@ export default createStore({
     },
     SET_BANNER_ID(state, payload) {
       state.bannerId = payload;
+    },
+    SET_BANNER(state, payload) {
+      state.banner = payload;
+    },
+    SET_FORM_TYPE(state, payload) {
+      state.formType = payload;
     },
     SET_LOADING(state, { type, payload }) {
       state.loading[type] = payload;
