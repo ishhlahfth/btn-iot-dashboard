@@ -35,29 +35,6 @@
             </div>
           </div>
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Delivery</p>
-            <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div>
-                <p class="text-grey-2">Delivery PO Number</p>
-                <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Delivery Type</p>
-                <p>{{ order.order_type_details?.delivery_method?.name }}</p>
-              </div>
-              <template v-if="order.order_type_details?.driver?.driver_name">
-                <div>
-                  <p class="text-grey-2">Driver Name</p>
-                  <p>{{ order.order_type_details?.driver?.driver_name }}</p>
-                </div>
-                <div>
-                  <p class="text-grey-2">Vehicle Number</p>
-                  <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
-                </div>
-              </template>
-            </div>
-          </div>
-          <div class="divide-y divide-grey-4 font-medium">
             <p class="font-medium pb-4 lg:text-base">Merchant</p>
             <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
@@ -201,25 +178,67 @@
           </div>
         </template>
       </div>
-      <div class="lg:col-span-3 divide-y divide-grey-4 font-medium">
+      <div class="lg:col-span-3 font-medium grid gap-8 auto-rows-max">
         <template v-if="!loading">
-          <p class="font-medium pb-4 lg:text-base">Payment</p>
-          <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
-            <div>
-              <p class="text-grey-2">Delivery Fee</p>
-              <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
+          <div class="divide-y divide-grey-4">
+            <p class="pb-4 lg:text-base">Delivery</p>
+            <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
+              <div>
+                <p class="text-grey-2">Delivery PO Number</p>
+                <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Delivery Type</p>
+                <p>{{ order.order_type_details?.delivery_method?.name }}</p>
+              </div>
+              <template v-if="order.order_type_details?.driver?.driver_name">
+                <div class="col-span-2 lg:col-span-1">
+                  <p class="text-grey-2">Driver</p>
+                  <template v-if="screenWidth < 640">
+                    <div class="grid grid-flow-col auto-cols-max gap-2">
+                      <help-avatar
+                        :src="order.order_type_details?.driver?.driver_photo"
+                        :size="80"
+                        class="my-2"
+                      />
+                      <div>
+                        <p>{{ order.order_type_details?.driver?.driver_name }}</p>
+                        <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <p>{{ order.order_type_details?.driver?.driver_name }}</p>
+                    <help-avatar
+                      :src="order.order_type_details?.driver?.driver_photo"
+                      :size="80"
+                      class="my-2"
+                    />
+                    <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
+                  </template>
+                </div>
+              </template>
             </div>
-            <div>
-              <p class="text-grey-2">Item Price</p>
-              <p>{{ convertToRp(order?.subtotal_price) }}</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Commission</p>
-              <p>{{ convertToRp(order?.commission_fee) }}</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Total Price</p>
-              <p>{{ convertToRp(order?.total_price) }}</p>
+          </div>
+          <div class="divide-y divide-grey-4">
+            <p class="font-medium pb-4 lg:text-base">Payment</p>
+            <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
+              <div>
+                <p class="text-grey-2">Delivery Fee</p>
+                <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Item Price</p>
+                <p>{{ convertToRp(order?.subtotal_price) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Commission</p>
+                <p>{{ convertToRp(order?.commission_fee) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Total Price</p>
+                <p>{{ convertToRp(order?.total_price) }}</p>
+              </div>
             </div>
           </div>
         </template>
@@ -238,6 +257,7 @@
 </template>
 
 <script>
+import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
@@ -247,6 +267,7 @@ import API from '../../apis';
 export default {
   name: 'OrderDetail',
   components: {
+    HelpAvatar,
     HelpThumbnail,
   },
   mixins: [mixin],
@@ -286,7 +307,6 @@ export default {
             }
           }
         }
-
       } catch (error) {
         this.toast.error(error.message);
       }
