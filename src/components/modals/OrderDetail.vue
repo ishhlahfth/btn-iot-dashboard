@@ -109,35 +109,82 @@
                     `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
                   }}
                 </p>
-                <p class="font-light text-grey-2">{{ order.order_type_details?.shipping_address.location.coordinates }}</p>
+                <p class="font-light text-grey-2">
+                  {{ order.order_type_details?.shipping_address.location.coordinates }}
+                </p>
               </div>
             </div>
           </div>
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Product</p>
-            <div class="pt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <p class="text-grey-2">Name</p>
-              <p class="text-grey-2">Quantity</p>
-              <p class="text-grey-2">Item Price</p>
-              <p class="text-grey-2">Subtotal</p>
+            <p class="font-medium pb-4 lg:text-base">Items</p>
+            <div v-if="screenWidth < 640" class="pt-4 grid gap-2">
               <template v-for="item in order.items" :key="item.id">
-                <div>
-                  <div class="mb-1">
-                    <p>{{ item?.name }}</p>
-                    <p class="text-xsmall font-light text-grey-2">
-                      {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                <div class="grid gap-2">
+                  <p class="text-grey-2">Item</p>
+                  <div class="grid grid-flow-col gap-2 auto-cols-max">
+                    <help-thumbnail :src="''" :height="80" :width="80" />
+                    <div>
+                      <div class="mb-1">
+                        <p>{{ item?.name }}</p>
+                        <p class="text-xsmall font-light text-grey-2">
+                          {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                        </p>
+                      </div>
+                      <p
+                        v-if="item.note"
+                        class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                      >
+                        {{ item.note ? item.note : '-' }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-flow-col gap-2">
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Quantity</p>
+                    <p>{{ item?.qty }}</p>
+                  </div>
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Item Price</p>
+                    <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+                  </div>
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Subtotal</p>
+                    <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div v-else class="pt-4 grid grid-cols-2 gap-4">
+              <p class="text-grey-2">Item</p>
+              <div class="grid grid-flow-col gap-4 grid-cols-3">
+                <p class="text-grey-2">Quantity</p>
+                <p class="text-grey-2">Item Price</p>
+                <p class="text-grey-2">Subtotal</p>
+              </div>
+              <template v-for="item in order.items" :key="item.id">
+                <div class="grid grid-flow-col gap-2 auto-cols-max">
+                  <help-thumbnail :src="''" :height="80" :width="80" />
+                  <div>
+                    <div class="mb-1">
+                      <p>{{ item?.name }}</p>
+                      <p class="text-xsmall font-light text-grey-2">
+                        {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                      </p>
+                    </div>
+                    <p
+                      v-if="item.note"
+                      class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                    >
+                      {{ item.note ? item.note : '-' }}
                     </p>
                   </div>
-                  <p
-                    v-if="item.note"
-                    class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
-                  >
-                    {{ item.note ? item.note : '-' }}
-                  </p>
                 </div>
-                <p>{{ item?.qty }}</p>
-                <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
-                <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                <div class="grid grid-flow-col grid-cols-3 gap-4">
+                  <p>{{ item?.qty }}</p>
+                  <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+                  <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                </div>
               </template>
             </div>
           </div>
@@ -191,12 +238,16 @@
 </template>
 
 <script>
+import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '../../apis';
 
 export default {
   name: 'OrderDetail',
+  components: {
+    HelpThumbnail,
+  },
   mixins: [mixin],
   data() {
     return {
@@ -207,6 +258,9 @@ export default {
   computed: {
     orderId() {
       return this.$store.state.orderId;
+    },
+    screenWidth() {
+      return this.$store.state.screenWidth;
     },
   },
   methods: {
