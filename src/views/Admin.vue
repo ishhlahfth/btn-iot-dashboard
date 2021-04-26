@@ -3,11 +3,13 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Admin</p>
-      <help-button label="filter" />
+      <help-button label="filter" disabled />
     </div>
-    <div>
-      <help-input v-model="searchValue" placeholder="Search admin name here" right-icon="search" />
-    </div>
+    <!-- <div>
+      <form @submit.prevent="getAdmins">
+        <help-input v-model="searchValue" placeholder="Search admin name here" search-bar />
+      </form>
+    </div> -->
     <div class="overflow-hidden">
       <help-table
         path="employees"
@@ -33,7 +35,7 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
+// import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import { useToast } from 'vue-toastification';
@@ -43,7 +45,7 @@ export default {
   name: 'Admin',
   components: {
     HelpButton,
-    HelpInput,
+    // HelpInput,
     HelpModal,
     HelpTable,
   },
@@ -55,7 +57,7 @@ export default {
     return {
       searchValue: '',
       columns: [
-        { field: 'name', label: 'name', sortable: true },
+        { field: 'name', label: 'name' },
         { field: 'email', label: 'email' },
         // { field: 'address', label: 'address' },
         { field: 'phone_number', label: 'phone number' },
@@ -68,8 +70,6 @@ export default {
       adminPagination: {
         limit: 10,
         offset: 0,
-        // sort: 'name',
-        // order: 'asc',
       },
       loading: false,
       detailModal: false,
