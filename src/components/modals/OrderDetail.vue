@@ -122,10 +122,10 @@
                 <div class="grid gap-2">
                   <p class="text-grey-2">Item</p>
                   <div class="grid grid-flow-col gap-2 auto-cols-max">
-                    <help-thumbnail :src="''" :height="80" :width="80" />
+                    <help-thumbnail :src="item.image_url" :height="80" :width="80" />
                     <div>
                       <div class="mb-1">
-                        <p>{{ item?.name }}</p>
+                        <p class="truncate">{{ item?.name }}</p>
                         <p class="text-xsmall font-light text-grey-2">
                           {{ item.variations.map((el) => el.options[0].name).join(', ') }}
                         </p>
@@ -164,7 +164,7 @@
               </div>
               <template v-for="item in order.items" :key="item.id">
                 <div class="grid grid-flow-col gap-2 auto-cols-max">
-                  <help-thumbnail :src="''" :height="80" :width="80" />
+                  <help-thumbnail :src="item.image_url" :height="80" :width="80" />
                   <div>
                     <div class="mb-1">
                       <p>{{ item?.name }}</p>
@@ -239,6 +239,7 @@
 
 <script>
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '../../apis';
@@ -249,6 +250,10 @@ export default {
     HelpThumbnail,
   },
   mixins: [mixin],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       order: {},
@@ -273,9 +278,17 @@ export default {
 
         this.order = data;
 
-        console.log(data);
+        for (let i = 0; i < data.items.length; i += 1) {
+          if (data.items[i].banners) {
+            for (let j = 0; j < data.items[i].banners.length; j += 1) {
+              const image = await this.$store.dispatch('loadImage', data.items[i].banners[j].url);
+              this.order.items[i].image_url = image;
+            }
+          }
+        }
+
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },
