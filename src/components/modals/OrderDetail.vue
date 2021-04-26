@@ -21,10 +21,13 @@
                 <p class="text-grey-2">Status</p>
                 <p
                   :class="
-                    order.current_step?.title === 'Completed' || order.current_step?.title === 'New'
+                    order.current_step?.title === 'Pesanan Selesai'
                       ? 'text-mint'
-                      : order.current_step?.title === 'In-Progress' ||
-                        order.current_step?.title === 'Pending'
+                      : order.current_step?.title === 'Menunggu Konfirmasi' ||
+                        order.current_step?.title === 'Menunggu Pembayaran' ||
+                        order.current_step?.title === 'Mengajukan Komplain' ||
+                        order.current_step?.title === 'Sedang Dikirim' ||
+                        order.current_step?.title === 'Pesanan Tiba'
                       ? 'text-gold'
                       : 'text-flame'
                   "
@@ -32,29 +35,6 @@
                   {{ order.current_step?.title }}
                 </p>
               </div>
-            </div>
-          </div>
-          <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Delivery</p>
-            <div class="pt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div>
-                <p class="text-grey-2">Delivery PO Number</p>
-                <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
-              </div>
-              <div>
-                <p class="text-grey-2">Delivery Type</p>
-                <p>{{ order.order_type_details?.delivery_method?.name }}</p>
-              </div>
-              <template v-if="order.order_type_details?.driver?.driver_name">
-                <div>
-                  <p class="text-grey-2">Driver Name</p>
-                  <p>{{ order.order_type_details?.driver?.driver_name }}</p>
-                </div>
-                <div>
-                  <p class="text-grey-2">Vehicle Number</p>
-                  <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
-                </div>
-              </template>
             </div>
           </div>
           <div class="divide-y divide-grey-4 font-medium">
@@ -109,34 +89,82 @@
                     `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
                   }}
                 </p>
+                <p class="font-light text-grey-2">
+                  {{ order.order_type_details?.shipping_address.location.coordinates }}
+                </p>
               </div>
             </div>
           </div>
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Product</p>
-            <div class="pt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <p class="text-grey-2">Name</p>
-              <p class="text-grey-2">Quantity</p>
-              <p class="text-grey-2">Item Price</p>
-              <p class="text-grey-2">Subtotal</p>
+            <p class="font-medium pb-4 lg:text-base">Items</p>
+            <div v-if="screenWidth < 640" class="pt-4 grid gap-2">
               <template v-for="item in order.items" :key="item.id">
-                <div>
-                  <div class="mb-1">
-                    <p>{{ item?.name }}</p>
-                    <p class="text-xsmall font-light text-grey-2">
-                      {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                <div class="grid gap-2">
+                  <p class="text-grey-2">Item</p>
+                  <div class="grid grid-flow-col gap-2 auto-cols-max">
+                    <help-thumbnail :src="item.image_url" :height="80" :width="80" />
+                    <div>
+                      <div class="mb-1">
+                        <p class="truncate">{{ item?.name }}</p>
+                        <p class="text-xsmall font-light text-grey-2">
+                          {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                        </p>
+                      </div>
+                      <p
+                        v-if="item.note"
+                        class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                      >
+                        {{ item.note ? item.note : '-' }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-flow-col gap-2">
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Quantity</p>
+                    <p>{{ item?.qty }}</p>
+                  </div>
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Item Price</p>
+                    <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+                  </div>
+                  <div class="grid gap-2">
+                    <p class="text-grey-2">Subtotal</p>
+                    <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div v-else class="pt-4 grid grid-cols-2 gap-4">
+              <p class="text-grey-2">Item</p>
+              <div class="grid grid-flow-col gap-4 grid-cols-3">
+                <p class="text-grey-2">Quantity</p>
+                <p class="text-grey-2">Item Price</p>
+                <p class="text-grey-2">Subtotal</p>
+              </div>
+              <template v-for="item in order.items" :key="item.id">
+                <div class="grid grid-flow-col gap-2 auto-cols-max">
+                  <help-thumbnail :src="item.image_url" :height="80" :width="80" />
+                  <div>
+                    <div class="mb-1">
+                      <p>{{ item?.name }}</p>
+                      <p class="text-xsmall font-light text-grey-2">
+                        {{ item.variations.map((el) => el.options[0].name).join(', ') }}
+                      </p>
+                    </div>
+                    <p
+                      v-if="item.note"
+                      class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
+                    >
+                      {{ item.note ? item.note : '-' }}
                     </p>
                   </div>
-                  <p
-                    v-if="item.note"
-                    class="border border-grey-4 rounded py-1 px-2 text-xsmall font-light text-grey-2"
-                  >
-                    {{ item.note ? item.note : '-' }}
-                  </p>
                 </div>
-                <p>{{ item?.qty }}</p>
-                <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
-                <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                <div class="grid grid-flow-col grid-cols-3 gap-4">
+                  <p>{{ item?.qty }}</p>
+                  <p>{{ convertToRp(calculateItemPrice(item)) }}</p>
+                  <p>{{ convertToRp(item?.subtotal_price) }}</p>
+                </div>
               </template>
             </div>
           </div>
@@ -153,25 +181,67 @@
           </div>
         </template>
       </div>
-      <div class="lg:col-span-3 divide-y divide-grey-4 font-medium">
+      <div class="lg:col-span-3 font-medium grid gap-8 auto-rows-max">
         <template v-if="!loading">
-          <p class="font-medium pb-4 lg:text-base">Payment</p>
-          <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
-            <div>
-              <p class="text-grey-2">Delivery Fee</p>
-              <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
+          <div class="divide-y divide-grey-4">
+            <p class="pb-4 lg:text-base">Delivery</p>
+            <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
+              <div>
+                <p class="text-grey-2">Delivery PO Number</p>
+                <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Delivery Type</p>
+                <p>{{ order.order_type_details?.delivery_method?.name }}</p>
+              </div>
+              <template v-if="order.order_type_details?.driver?.driver_name">
+                <div class="col-span-2 lg:col-span-1">
+                  <p class="text-grey-2">Driver</p>
+                  <template v-if="screenWidth < 640">
+                    <div class="grid grid-flow-col auto-cols-max gap-2">
+                      <help-avatar
+                        :src="order.order_type_details?.driver?.driver_photo"
+                        :size="80"
+                        class="my-2"
+                      />
+                      <div>
+                        <p>{{ order.order_type_details?.driver?.driver_name }}</p>
+                        <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <p>{{ order.order_type_details?.driver?.driver_name }}</p>
+                    <help-avatar
+                      :src="order.order_type_details?.driver?.driver_photo"
+                      :size="80"
+                      class="my-2"
+                    />
+                    <p>{{ order.order_type_details?.driver?.vehicle_number }}</p>
+                  </template>
+                </div>
+              </template>
             </div>
-            <div>
-              <p class="text-grey-2">Item Price</p>
-              <p>{{ convertToRp(order?.subtotal_price) }}</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Commission</p>
-              <p>{{ convertToRp(order?.commission_fee) }}</p>
-            </div>
-            <div>
-              <p class="text-grey-2">Total Price</p>
-              <p>{{ convertToRp(order?.total_price) }}</p>
+          </div>
+          <div class="divide-y divide-grey-4">
+            <p class="font-medium pb-4 lg:text-base">Payment</p>
+            <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
+              <div>
+                <p class="text-grey-2">Delivery Fee</p>
+                <p>{{ convertToRp(order.order_type_details?.delivery_method.price) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Item Price</p>
+                <p>{{ convertToRp(order?.subtotal_price) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Commission</p>
+                <p>{{ convertToRp(order?.commission_fee) }}</p>
+              </div>
+              <div>
+                <p class="text-grey-2">Total Price</p>
+                <p>{{ convertToRp(order?.total_price) }}</p>
+              </div>
             </div>
           </div>
         </template>
@@ -190,13 +260,24 @@
 </template>
 
 <script>
+import HelpAvatar from '@/components/atoms/Avatar.vue';
+import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
 import API from '../../apis';
 
 export default {
   name: 'OrderDetail',
+  components: {
+    HelpAvatar,
+    HelpThumbnail,
+  },
   mixins: [mixin],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       order: {},
@@ -206,6 +287,9 @@ export default {
   computed: {
     orderId() {
       return this.$store.state.orderId;
+    },
+    screenWidth() {
+      return this.$store.state.screenWidth;
     },
   },
   methods: {
@@ -218,9 +302,16 @@ export default {
 
         this.order = data;
 
-        console.log(data);
+        for (let i = 0; i < data.items.length; i += 1) {
+          if (data.items[i].banners) {
+            for (let j = 0; j < data.items[i].banners.length; j += 1) {
+              const image = await this.$store.dispatch('loadImage', data.items[i].banners[j].url);
+              this.order.items[i].image_url = image;
+            }
+          }
+        }
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },
