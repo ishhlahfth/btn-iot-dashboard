@@ -15,7 +15,7 @@
       class="grid gap-4"
     >
       <div class="w-full">
-        <help-input v-model="merchantName" label="Merchant Name" />
+        <help-input v-model="merchantName" label="Merchant Name" placeholder="Type a merchant" />
       </div>
       <div class="w-full">
         <help-select
