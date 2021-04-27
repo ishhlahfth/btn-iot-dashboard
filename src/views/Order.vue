@@ -124,6 +124,7 @@ export default {
       },
       orderFilter: {
         paymentMethod: '',
+        merchantName: '',
       },
       loading: false,
       detailModal: false,
@@ -143,6 +144,9 @@ export default {
 
       if (filter?.paymentMethod) {
         url += `&payment_method=${filter?.paymentMethod}`;
+      }
+      if (filter?.merchantName) {
+        url += `&merchant=${filter?.merchantName}`;
       }
 
       try {
@@ -192,14 +196,13 @@ export default {
     },
     applyFilter($event) {
       const pagination = {
-        limit: 10,
+        ...this.orderPagination,
         offset: 0,
-        sort: 'date',
-        order: 'asc',
       };
       const filter = {
         ...this.orderFilter,
-        paymentMethod: $event,
+        paymentMethod: $event.paymentMethod,
+        merchantName: $event.merchantName,
       };
       this.getOrders({ pagination, filter });
       this.filterModal = false;
