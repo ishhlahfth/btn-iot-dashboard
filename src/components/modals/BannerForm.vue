@@ -184,12 +184,10 @@ export default {
       }
     },
     submit() {
-      console.log('🚀 SUBMIT');
       if (this.formType === 'EDIT') this.edit();
       if (this.formType === 'ADD') this.add();
     },
     async uploadS3(callback) {
-      console.log('🚀 UPLOAD S3');
       if (this.imageFile.file.size > 2000000) {
         this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
@@ -212,7 +210,6 @@ export default {
       }
     },
     add() {
-      console.log('🚀 ADD');
       this.uploadS3(async (S3Response) => {
         const BNSParams = {
           bannerable: {
@@ -235,7 +232,6 @@ export default {
         };
 
         try {
-          console.log('🚀 ADD TRYCATCH');
           this.loading = true;
           const {
             data: { data },
@@ -250,8 +246,6 @@ export default {
       this.loading = false;
     },
     async edit() {
-      console.log('🚀 EDIT');
-
       const payload = {
         start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
         title: this.form.title,
@@ -281,7 +275,6 @@ export default {
     },
     async patchBNS(payload) {
       try {
-        console.log('🚀 PATCH BNS');
         this.loading = true;
         const {
           data: { data },
