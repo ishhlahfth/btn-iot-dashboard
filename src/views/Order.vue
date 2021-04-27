@@ -16,15 +16,11 @@
       <p class="text-heading2 font-semibold">Order</p>
       <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
-    <!-- <div>
-      <form @submit.prevent="getOrders">
-        <help-input
-          v-model="searchValue"
-          placeholder="Search order PO number here"
-          right-icon="search"
-        />
+    <div>
+      <form @submit.prevent="getOrders({ pagination: orderPagination, filter: orderFilter })">
+        <help-input v-model="searchValue" placeholder="Search order PO number here" search-bar />
       </form>
-    </div> -->
+    </div>
     <div class="overflow-hidden">
       <help-table
         path="orders"
@@ -69,6 +65,7 @@
 <script>
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
@@ -85,6 +82,7 @@ export default {
   components: {
     HelpBadge,
     HelpButton,
+    HelpInput,
     HelpModal,
     HelpTable,
     OrderDetail,
@@ -135,13 +133,13 @@ export default {
   },
   methods: {
     async getOrders({ pagination, filter }) {
-      const limit = pagination.limit || 10;
-      const offset = pagination.offset || 0;
-      const sort = pagination.sort || 'date';
-      const order = pagination.order || 'desc';
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      const sort = pagination?.sort || 'date';
+      const order = pagination?.order || 'desc';
       const search = this.searchValue || '';
 
-      let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
 
       if (filter?.paymentMethod) {
         url += `&payment_method=${filter?.paymentMethod}`;
