@@ -1,5 +1,5 @@
 <template>
-  <help-modal v-model="bannerForm">
+  <help-modal v-model="bannerForm" permanent>
     <banner-form @close="bannerForm = false" @reload="getBanners(bannerPagination)" />
   </help-modal>
 
@@ -22,7 +22,7 @@
           <help-button label="cancel" bg-color="flame" @click="reorderMode = false" />
           <help-button label="save" bg-color="mint" />
         </template>
-        <help-button label="add" icon="plus" @click="bannerForm = true" />
+        <help-button label="add" icon="plus" @click="addBanner" />
       </div>
     </div>
     <div class="overflow-hidden">
@@ -49,20 +49,30 @@
                 >
               </div>
               <div class="grid grid-flow-col auto-cols-max gap-2 ">
-                <p>{{ row.start_date }}</p>
+                <p>{{ row.startDate }}</p>
                 <p>-</p>
-                <p>{{ row.end_date }}</p>
+                <p>{{ row.endDate }}</p>
               </div>
             </div>
           </div>
-          <help-badge
+          <!-- <help-badge
             v-if="column === 'is_active'"
             :label="row.is_active ? 'Active' : 'Inactive'"
             :color="row.is_active ? 'positive' : 'negative'"
+          /> -->
+          <help-toggle
+            v-if="column === 'is_active'"
+            v-model="row.is_active"
+            @change="toggleBanner($event, row)"
           />
-          <!-- <help-toggle v-if="column === 'is_active'" /> -->
           <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
-            <help-button disabled bg-color="royal" color="white" icon="edit" icon-only />
+            <help-button
+              bg-color="royal"
+              color="white"
+              icon="edit"
+              icon-only
+              @click="editBanner(row)"
+            />
             <help-button disabled bg-color="flame" color="white" icon="trash" icon-only />
           </div>
           <p
@@ -81,11 +91,11 @@
 <script>
 import BannerDetail from '@/components/modals/BannerDetail.vue';
 import BannerForm from '@/components/modals/BannerForm.vue';
-import HelpBadge from '@/components/atoms/Badge.vue';
+// import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
-// import HelpToggle from '@/components/atoms/Toggle.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import dayjs from 'dayjs';
@@ -96,11 +106,11 @@ export default {
   components: {
     BannerDetail,
     BannerForm,
-    HelpBadge,
+    // HelpBadge,
     HelpButton,
     HelpModal,
     HelpTable,
-    // HelpToggle,
+    HelpToggle,
     HelpThumbnail,
   },
   setup() {
@@ -127,19 +137,19 @@ export default {
     };
   },
   methods: {
-    async getBanners(pagination) {
+    async getBanners(pagination, withoutLoading = false) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
 
       try {
-        this.loading = true;
+        if (!withoutLoading) this.loading = true;
         const {
           data: { data },
         } = await API.get(`banners?bannerable=GLOBAL&offset=${offset}&limit=${limit}`);
         this.banners = data.map((el) => ({
           ...el,
-          start_date: dayjs(el.start_date).format('ddd, D MMM YYYY'),
-          end_date: el.end_date ? dayjs(el.end_date).format('ddd, D MMM YYYY') : 'Forever',
+          startDate: dayjs(el.start_date).format('ddd, D MMM YYYY'),
+          endDate: el.end_date ? dayjs(el.end_date).format('ddd, D MMM YYYY') : 'Forever',
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
@@ -162,6 +172,35 @@ export default {
     openBannerDetail(bannerId) {
       this.bannerDetail = true;
       this.$store.commit('SET_BANNER_ID', bannerId);
+    },
+    addBanner() {
+      this.bannerForm = true;
+      this.$store.commit('SET_FORM_TYPE', 'ADD');
+    },
+    editBanner(banner) {
+      this.bannerForm = true;
+      this.$store.commit('SET_BANNER', banner);
+      this.$store.commit('SET_FORM_TYPE', 'EDIT');
+    },
+    async toggleBanner(newValue, detail) {
+      const payload = {
+        start_date: detail.start_date,
+        end_date: detail.end_date,
+        title: detail.title,
+        hyperlink: detail.hyperlink,
+        is_active: newValue,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`banners/${detail.id}`, payload);
+
+        const action = data.is_active ? 'enabled' : 'disabled';
+        this.toast.success(`Successfully ${action} ${detail.title}`);
+        this.getBanners(this.bannerPagination, true);
+      } catch (error) {
+        this.toast.error(error.message);
+      }
     },
   },
   mounted() {
