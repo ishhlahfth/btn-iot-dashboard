@@ -246,41 +246,45 @@ export default {
       this.loading = false;
     },
     async edit() {
+      const payload = {
+        start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
+        title: this.form.title,
+        hyperlink: this.form.hyperlink,
+        is_active: this.banner.is_active,
+      };
+      payload.end_date = this.form.isPermanent
+        ? null
+        : dayjs(this.form.endDate, 'DD-MM-YYYY').valueOf();
+
       if (this.imageIsChanged) {
         this.uploadS3(async (S3Response) => {
-          const payload = {
-            start_date: dayjs(this.form.startDate, 'DD-MM-YYYY').valueOf(),
-            title: this.form.title,
-            hyperlink: this.form.hyperlink,
-            is_active: this.banner.is_active,
-            provider: {
-              name: 'S3',
-              config: {
-                location: this.imageFile.url,
-                etag: S3Response.ETag.slice(1, -1),
-                bucket: 'help-bns-bucket',
-                key: this.imageFile.fileName,
-              },
+          payload.provider = {
+            name: 'S3',
+            config: {
+              location: this.imageFile.url,
+              etag: S3Response.ETag.slice(1, -1),
+              bucket: 'help-bns-bucket',
+              key: this.imageFile.fileName,
             },
           };
-          payload.end_date = this.form.isPermanent
-            ? null
-            : dayjs(this.form.endDate, 'DD-MM-YYYY').valueOf();
-
-          try {
-            this.loading = true;
-            const {
-              data: { data },
-            } = await API.patch(`banners/${this.banner.id}`, payload);
-            this.$emit('reload');
-            this.$emit('close');
-            this.toast.success(`${data.title} has been edited`);
-          } catch (error) {
-            this.toast.error(error.message);
-          }
+          this.patchBNS(payload);
         });
+      } else {
+        this.patchBNS(payload);
       }
-
+    },
+    async patchBNS(payload) {
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.patch(`banners/${this.banner.id}`, payload);
+        this.$emit('reload');
+        this.$emit('close');
+        this.toast.success(`${data.title} has been edited`);
+      } catch (error) {
+        this.toast.error(error.message);
+      }
       this.loading = false;
     },
   },
