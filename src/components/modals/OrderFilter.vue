@@ -10,7 +10,13 @@
         @click="$emit('close')"
       />
     </div>
-    <form @submit.prevent="$emit('apply', selectedPayment.value)" class="grid gap-4">
+    <form
+      @submit.prevent="$emit('apply', { merchantName, paymentMethod: selectedPayment.value })"
+      class="grid gap-4"
+    >
+      <div class="w-full">
+        <help-input v-model="merchantName" label="Merchant Name" />
+      </div>
       <div class="w-full">
         <help-select
           v-model="selectedPayment"
@@ -35,12 +41,14 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 
 export default {
   name: 'OrderFilter',
   components: {
     HelpButton,
+    HelpInput,
     HelpSelect,
   },
   props: {
@@ -51,6 +59,7 @@ export default {
   },
   data() {
     return {
+      merchantName: '',
       selectedPayment: { value: '', label: 'All' },
       paymentMethods: [
         { value: '', label: 'All' },
@@ -67,6 +76,7 @@ export default {
     },
   },
   mounted() {
+    this.merchantName = this.filter.merchantName;
     this.selectedPayment = this.paymentMethods.filter(
       (el) => el.value === this.filter.paymentMethod,
     )[0];
