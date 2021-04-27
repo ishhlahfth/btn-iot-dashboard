@@ -143,7 +143,7 @@ export default {
       const order = pagination?.order || 'desc';
       const search = this.searchValue || '';
 
-      let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
 
       if (filter?.paymentMethod) {
         url += `&payment_method=${filter?.paymentMethod}`;
