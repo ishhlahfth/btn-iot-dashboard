@@ -11,6 +11,8 @@
     <confirmation
       title="Delete confirmation"
       message="This action cannot be undone. Are you sure you want to delete this banner permanently?"
+      :confirm-loading="deleteLoading"
+      loading-label="deleting"
       @close="deleteConfirmation = false"
       @cancel="deleteConfirmation = false"
       @confirm="deleteBanner"
@@ -149,6 +151,7 @@ export default {
         offset: 0,
       },
       loading: false,
+      deleteLoading: false,
       reorderMode: false,
       bannerDetail: false,
       bannerForm: false,
@@ -231,16 +234,17 @@ export default {
       }
     },
     async deleteBanner() {
-      console.log(this.bannerId);
-      // try {
-      //   const {
-      //     data: { data },
-      //   } = await API.delete(`banners/${this.bannerId}`);
+      try {
+        this.deleteLoading = true;
+        await API.delete(`banners/${this.bannerId}`);
 
-      //   console.log('🌛', data);
-      // } catch (error) {
-      //   this.toast.error(error.message);
-      // }
+        this.getBanners(this.bannerPagination);
+        this.deleteConfirmation = false;
+        this.toast.success('Banner successfully deleted');
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.deleteLoading = false;
     },
   },
   mounted() {
