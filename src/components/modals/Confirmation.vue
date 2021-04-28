@@ -21,7 +21,7 @@
         label="yes i'm sure"
         class="mb-2 sm:mb-0"
         :loading="confirmLoading"
-        loading-label="transfering"
+        :loading-label="loadingLabel"
       />
       <help-button
         @click="$emit('cancel')"
@@ -51,6 +51,10 @@ export default {
     confirmLoading: {
       type: Boolean,
       default: false,
+    },
+    loadingLabel: {
+      type: String,
+      default: '',
     },
   },
   components: {
