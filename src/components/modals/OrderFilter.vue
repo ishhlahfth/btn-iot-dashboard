@@ -65,7 +65,7 @@ export default {
         { value: '', label: 'All' },
         { value: 'Gopay', label: 'Gopay' },
         { value: 'ShopeePay', label: 'ShopeePay' },
-        { value: 'Ovo', label: 'Ovo' },
+        { value: 'OVO', label: 'Ovo' },
         { value: 'Dana', label: 'Dana' },
       ],
     };
