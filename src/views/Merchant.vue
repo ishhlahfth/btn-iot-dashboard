@@ -3,6 +3,10 @@
     <merchant-detail @openItemStatusModal="itemStatusModal = true" />
   </help-modal>
 
+  <help-modal v-model="filterModal">
+    <merchant-filter :filter="merchantFilter" @apply="applyFilter" @close="filterModal = false" />
+  </help-modal>
+
   <help-modal v-model="opHourModal">
     <operational-hour @close="opHourModal = false" />
   </help-modal>
@@ -33,7 +37,10 @@
   </help-modal>
 
   <help-modal v-model="commissionModal">
-    <commission @close="commissionModal = false" @refetch="getMerchants(merchantPagination)" />
+    <commission
+      @close="commissionModal = false"
+      @refetch="getMerchants({ pagination: merchantPagination, filter: merchantFilter })"
+    />
   </help-modal>
 
   <help-modal v-model="itemStatusModal" permanent>
@@ -43,15 +50,11 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
-      <!-- <help-button label="filter" /> -->
+      <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
       <form @submit.prevent="getMerchants">
-        <help-input
-          v-model="searchValue"
-          placeholder="Search merchant name here"
-          search-bar
-        />
+        <help-input v-model="searchValue" placeholder="Search merchant name here" search-bar />
       </form>
     </div>
     <div class="overflow-hidden">
@@ -61,8 +64,8 @@
         :loading="loading"
         :rows="merchants"
         :pagination="merchantPagination"
-        @onChangePagination="getMerchants($event)"
-        @sort="getMerchants($event)"
+        @onChangePagination="getMerchants({ pagination: $event, filter: merchantFilter })"
+        @sort="getMerchants({ pagination: $event, filter: merchantFilter })"
       >
         <template v-slot:body="{ column, row }">
           <p
@@ -121,6 +124,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import ItemStatus from '@/components/modals/ItemStatus.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
+import MerchantFilter from '@/components/modals/MerchantFilter.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import { useToast } from 'vue-toastification';
@@ -143,6 +147,7 @@ export default {
     ItemStatus,
     OperationalHour,
     MerchantDetail,
+    MerchantFilter,
     MerchantVerification,
     MerchantVerificationOption,
   },
@@ -174,8 +179,12 @@ export default {
         sort: 'name',
         order: 'asc',
       },
+      merchantFilter: {
+        verificationStatus: '',
+      },
       loading: false,
       detailModal: false,
+      filterModal: false,
       opHourModal: false,
       verificationModal: false,
       verificationOptionModal: false,
@@ -209,20 +218,22 @@ export default {
       }
       return commission;
     },
-    async getMerchants(pagination) {
+    async getMerchants({ pagination, filter }) {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const sort = pagination.sort || 'name';
       const order = pagination.order || 'asc';
       const search = this.searchValue || '';
+
+      let url = `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+
+      if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
+
       try {
         this.loading = true;
         const {
           data: { data: currentMerchants },
-        } = await API.get(
-          `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`,
-          { crossdomain: true },
-        );
+        } = await API.get(url);
 
         this.merchants = currentMerchants.map((el) => ({
           id: el.id,
@@ -252,6 +263,7 @@ export default {
           sort,
           order,
         };
+        this.merchantFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -279,12 +291,24 @@ export default {
       this.$store.commit('SET_COMMISSION_DETAIL', commissionDetail);
     },
     closeAndRefetch() {
-      this.getMerchants(this.merchantPagination);
+      this.getMerchants({ pagination: this.merchantPagination, filter: this.merchantFilter });
       this.verificationOptionModal = false;
       this.verificationModal = false;
       this.commissionModal = false;
       this.itemStatusModal = false;
       this.detailModal = false;
+    },
+    applyFilter($event) {
+      const pagination = {
+        ...this.merchantPagination,
+        offset: 0,
+      };
+      const filter = {
+        ...this.merchantFilter,
+        verificationStatus: $event.verificationStatus,
+      };
+      this.getMerchants({ pagination, filter });
+      this.filterModal = false;
     },
     async suspendMerchant() {
       const payload = {
@@ -299,14 +323,17 @@ export default {
         this.toast.success(`Successfully suspended ${data.name}`);
         this.confirmSuspendModal = false;
         this.verificationModal = false;
-        this.getMerchants(this.merchantPagination);
+        this.getMerchants({ pagination: this.merchantPagination, filter: this.merchantFilter });
       } catch (error) {
         console.log(error);
       }
     },
   },
-  async mounted() {
-    await this.getMerchants(this.merchantPagination);
+  mounted() {
+    this.getMerchants({
+      pagination: this.merchantPagination,
+      filter: this.merchantFilter,
+    });
   },
 };
 </script>
