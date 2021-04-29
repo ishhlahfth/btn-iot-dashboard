@@ -3,6 +3,10 @@
     <merchant-detail @openItemStatusModal="itemStatusModal = true" />
   </help-modal>
 
+  <help-modal v-model="filterModal">
+    <merchant-filter @filter="merchantFilter" @close="filterModal = false" />
+  </help-modal>
+
   <help-modal v-model="opHourModal">
     <operational-hour @close="opHourModal = false" />
   </help-modal>
@@ -43,15 +47,11 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
-      <!-- <help-button label="filter" /> -->
+      <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
       <form @submit.prevent="getMerchants">
-        <help-input
-          v-model="searchValue"
-          placeholder="Search merchant name here"
-          search-bar
-        />
+        <help-input v-model="searchValue" placeholder="Search merchant name here" search-bar />
       </form>
     </div>
     <div class="overflow-hidden">
@@ -121,6 +121,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import ItemStatus from '@/components/modals/ItemStatus.vue';
 import OperationalHour from '@/components/modals/OperationalHour.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
+import MerchantFilter from '@/components/modals/MerchantFilter.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
 import { useToast } from 'vue-toastification';
@@ -143,6 +144,7 @@ export default {
     ItemStatus,
     OperationalHour,
     MerchantDetail,
+    MerchantFilter,
     MerchantVerification,
     MerchantVerificationOption,
   },
@@ -174,8 +176,12 @@ export default {
         sort: 'name',
         order: 'asc',
       },
+      merchantFilter: {
+        verificationStatus: '',
+      },
       loading: false,
       detailModal: false,
+      filterModal: false,
       opHourModal: false,
       verificationModal: false,
       verificationOptionModal: false,
