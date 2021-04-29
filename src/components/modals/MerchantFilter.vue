@@ -11,7 +11,7 @@
       />
     </div>
     <form
-      @submit.prevent="$emit('apply', { verificationStatus: selectedStatus })"
+      @submit.prevent="$emit('apply', { verificationStatus: selectedStatus.value })"
       class="grid gap-4"
     >
       <div class="w-full">
