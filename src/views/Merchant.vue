@@ -4,7 +4,7 @@
   </help-modal>
 
   <help-modal v-model="filterModal">
-    <merchant-filter @filter="merchantFilter" @close="filterModal = false" />
+    <merchant-filter :filter="merchantFilter" @close="filterModal = false" />
   </help-modal>
 
   <help-modal v-model="opHourModal">

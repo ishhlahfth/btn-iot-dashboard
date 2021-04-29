@@ -17,7 +17,7 @@
       <div class="w-full">
         <help-select
           v-model="selectedStatus"
-          label="Payment Method"
+          label="Verification Status"
           :options="statuses"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
@@ -56,6 +56,7 @@ export default {
     return {
       selectedStatus: { value: '', label: 'All' },
       statuses: [
+        { value: '', label: 'All' },
         { value: 'SUCCESS', label: 'Terverifikasi' },
         { value: 'PENDING', label: 'Pending' },
         { value: 'FAIL', label: 'Verifikasi Gagal' },
@@ -69,10 +70,9 @@ export default {
     },
   },
   mounted() {
-    // this.merchantName = this.filter.merchantName;
-    // this.selectedPayment = this.paymentMethods.filter(
-    //   (el) => el.value === this.filter.paymentMethod,
-    // )[0];
+    this.selectedStatus = this.statuses.filter(
+      (el) => el.value === this.filter.verificationStatus,
+    )[0];
   },
 };
 </script>
