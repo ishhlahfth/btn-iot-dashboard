@@ -53,7 +53,7 @@
       <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
-      <form @submit.prevent="getMerchants">
+      <form @submit.prevent="getMerchants({ pagination: merchantPagination, filter: merchantFilter })">
         <help-input v-model="searchValue" placeholder="Search merchant name here" search-bar />
       </form>
     </div>
@@ -219,10 +219,10 @@ export default {
       return commission;
     },
     async getMerchants({ pagination, filter }) {
-      const limit = pagination.limit || 10;
-      const offset = pagination.offset || 0;
-      const sort = pagination.sort || 'name';
-      const order = pagination.order || 'asc';
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      const sort = pagination?.sort || 'name';
+      const order = pagination?.order || 'asc';
       const search = this.searchValue || '';
 
       let url = `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
@@ -325,7 +325,7 @@ export default {
         this.verificationModal = false;
         this.getMerchants({ pagination: this.merchantPagination, filter: this.merchantFilter });
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },
