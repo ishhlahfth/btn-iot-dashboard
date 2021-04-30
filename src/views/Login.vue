@@ -86,28 +86,32 @@ export default {
     const resetPasswordModal = ref(false);
 
     const sendResetPasswordLink = async () => {
-      const {
-        data: { data },
-      } = await axios.post(
-        `${process.env.VUE_APP_BASE_URL}v1/authentications/dashboard/send-verify-email`,
-        { email: resetEmail },
-        {
-          headers: {
-            'x-api-key': 'secret-xApiKey-for-developer',
-            'x-device-type': 'LINUX',
-            'x-device-os-version': 'Ubuntu18.04',
-            'x-device-model': '4s-dk0115AU',
-            'x-app-version': 'v1.2',
-            'x-request-id': '1234',
-            'x-device-utc-offset': '+07:00',
-            'x-device-lang': 'en',
-            'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+      try {
+        const {
+          data: { data },
+        } = await axios.post(
+          `${process.env.VUE_APP_BASE_URL}v1/authentications/dashboard/send-verify-email`,
+          { email: resetEmail },
+          {
+            headers: {
+              'x-api-key': 'secret-xApiKey-for-developer',
+              'x-device-type': 'LINUX',
+              'x-device-os-version': 'Ubuntu18.04',
+              'x-device-model': '4s-dk0115AU',
+              'x-app-version': 'v1.2',
+              'x-request-id': '1234',
+              'x-device-utc-offset': '+07:00',
+              'x-device-lang': 'en',
+              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+            },
           },
-        },
-      );
-      console.log(`Link has been sent to ${email.value}`);
-      console.log(data);
-      // resetPasswordModal.value = false;
+        );
+        console.log(`Link has been sent to ${email.value}`);
+        console.log(data);
+        // resetPasswordModal.value = false;
+      } catch (error) {
+        toast.error(error.response.data.meta.message);
+      }
     };
 
     const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
