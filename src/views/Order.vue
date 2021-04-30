@@ -142,12 +142,8 @@ export default {
 
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
 
-      if (filter?.paymentMethod) {
-        url += `&payment_method=${filter?.paymentMethod}`;
-      }
-      if (filter?.merchantName) {
-        url += `&merchant=${filter?.merchantName}`;
-      }
+      if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
 
       try {
         this.loading = true;
