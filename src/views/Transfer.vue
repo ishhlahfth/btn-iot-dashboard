@@ -8,6 +8,7 @@
         )}? This action cannot be undone`
       "
       :confirm-loading="conductTransferLoading"
+      loading-label="transfering"
       @close="confirmTransferModal = false"
       @cancel="confirmTransferModal = false"
       @confirm="conductTransfer"

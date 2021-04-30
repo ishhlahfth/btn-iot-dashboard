@@ -7,6 +7,18 @@
     <banner-detail @close="bannerDetail = false" />
   </help-modal>
 
+  <help-modal v-model="deleteConfirmation">
+    <confirmation
+      title="Delete confirmation"
+      message="This action cannot be undone. Are you sure you want to delete this banner permanently?"
+      :confirm-loading="deleteLoading"
+      loading-label="deleting"
+      @close="deleteConfirmation = false"
+      @cancel="deleteConfirmation = false"
+      @confirm="deleteBanner"
+    />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6 auto-rows-max">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Banner</p>
@@ -73,7 +85,13 @@
               icon-only
               @click="editBanner(row)"
             />
-            <help-button disabled bg-color="flame" color="white" icon="trash" icon-only />
+            <help-button
+              bg-color="flame"
+              color="white"
+              icon="trash"
+              icon-only
+              @click="openConfirmation(row.id)"
+            />
           </div>
           <p
             v-if="column === 'detail'"
@@ -91,6 +109,7 @@
 <script>
 import BannerDetail from '@/components/modals/BannerDetail.vue';
 import BannerForm from '@/components/modals/BannerForm.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 // import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -106,6 +125,7 @@ export default {
   components: {
     BannerDetail,
     BannerForm,
+    Confirmation,
     // HelpBadge,
     HelpButton,
     HelpModal,
@@ -131,10 +151,17 @@ export default {
         offset: 0,
       },
       loading: false,
+      deleteLoading: false,
       reorderMode: false,
       bannerDetail: false,
       bannerForm: false,
+      deleteConfirmation: false,
     };
+  },
+  computed: {
+    bannerId() {
+      return this.$store.state.bannerId;
+    },
   },
   methods: {
     async getBanners(pagination, withoutLoading = false) {
@@ -182,6 +209,10 @@ export default {
       this.$store.commit('SET_BANNER', banner);
       this.$store.commit('SET_FORM_TYPE', 'EDIT');
     },
+    openConfirmation(bannerId) {
+      this.deleteConfirmation = true;
+      this.$store.commit('SET_BANNER_ID', bannerId);
+    },
     async toggleBanner(newValue, detail) {
       const payload = {
         start_date: detail.start_date,
@@ -201,6 +232,19 @@ export default {
       } catch (error) {
         this.toast.error(error.message);
       }
+    },
+    async deleteBanner() {
+      try {
+        this.deleteLoading = true;
+        await API.delete(`banners/${this.bannerId}`);
+
+        this.getBanners(this.bannerPagination);
+        this.deleteConfirmation = false;
+        this.toast.success('Banner successfully deleted');
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.deleteLoading = false;
     },
   },
   mounted() {

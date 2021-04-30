@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-6 inner-modal-auto modal-md">
     <div class="flex justify-between items-center">
-      <p class="text-heading4 font-semibold">Filter Order</p>
+      <p class="text-heading4 font-semibold">Filter Merchant</p>
       <help-button
         icon-only
         icon="close"
@@ -11,17 +11,14 @@
       />
     </div>
     <form
-      @submit.prevent="$emit('apply', { merchantName, paymentMethod: selectedPayment.value })"
+      @submit.prevent="$emit('apply', { verificationStatus: selectedStatus.value })"
       class="grid gap-4"
     >
       <div class="w-full">
-        <help-input v-model="merchantName" label="Merchant Name" placeholder="Type a merchant" />
-      </div>
-      <div class="w-full">
         <help-select
-          v-model="selectedPayment"
-          label="Payment Method"
-          :options="paymentMethods"
+          v-model="selectedStatus"
+          label="Verification Status"
+          :options="statuses"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
@@ -41,14 +38,12 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 
 export default {
-  name: 'OrderFilter',
+  name: 'MerchantFilter',
   components: {
     HelpButton,
-    HelpInput,
     HelpSelect,
   },
   props: {
@@ -59,14 +54,13 @@ export default {
   },
   data() {
     return {
-      merchantName: '',
-      selectedPayment: { value: '', label: 'All' },
-      paymentMethods: [
+      selectedStatus: { value: '', label: 'All' },
+      statuses: [
         { value: '', label: 'All' },
-        { value: 'Gopay', label: 'Gopay' },
-        { value: 'ShopeePay', label: 'ShopeePay' },
-        { value: 'OVO', label: 'Ovo' },
-        { value: 'Dana', label: 'Dana' },
+        { value: 'SUCCESS', label: 'Terverifikasi' },
+        { value: 'PENDING', label: 'Pending' },
+        { value: 'FAIL', label: 'Verifikasi Gagal' },
+        { value: 'SUSPEND', label: 'Akun Disabled' },
       ],
     };
   },
@@ -76,9 +70,8 @@ export default {
     },
   },
   mounted() {
-    this.merchantName = this.filter.merchantName;
-    this.selectedPayment = this.paymentMethods.filter(
-      (el) => el.value === this.filter.paymentMethod,
+    this.selectedStatus = this.statuses.filter(
+      (el) => el.value === this.filter.verificationStatus,
     )[0];
   },
 };
