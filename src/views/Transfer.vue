@@ -52,8 +52,8 @@
         :loading="loading"
         :rows="transfers"
         :pagination="transferPagination"
-        @onChangePagination="getTransferData($event)"
-        @sort="getTransferData($event)"
+        @onChangePagination="getTransferData({ pagination: $event, filter: transferFilter })"
+        @sort="getTransferData({ pagination: $event, filter: transferFilter })"
       >
         <template v-slot:header="{ column: { field } }">
           <help-checkbox
@@ -183,20 +183,21 @@ export default {
     },
   },
   methods: {
-    async getTransferData(pagination) {
-      const limit = pagination.limit || 10;
-      const offset = pagination.offset || 0;
-      const sort = pagination.sort || 'order_date';
-      const order = pagination.order || 'desc';
+    async getTransferData({ pagination, filter }) {
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      const sort = pagination?.sort || 'order_date';
+      const order = pagination?.order || 'desc';
 
-      this.loading = true;
+      let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`;
+
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
 
       try {
+        this.loading = true;
         const {
           data: { data },
-        } = await API.get(
-          `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
-        );
+        } = await API.get(url);
 
         this.transfers = data.map((el) => ({
           id: el.id,
@@ -222,6 +223,7 @@ export default {
           sort,
           order,
         };
+        this.transferFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -243,7 +245,10 @@ export default {
         }
       }
       this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
-      this.getTransferData(this.transferPagination);
+      this.getTransferData({
+        pagination: this.transferPagination,
+        filter: this.transferFilter,
+      });
       this.confirmTransferModal = false;
     },
     toggleAll() {
@@ -253,9 +258,24 @@ export default {
         }
       }
     },
+    applyFilter($event) {
+      const pagination = {
+        ...this.transferPagination,
+        offset: 0,
+      };
+      const filter = {
+        ...this.transferFilter,
+        merchantName: $event.merchantName,
+      };
+      this.getTransferData({ pagination, filter });
+      this.filterModal = false;
+    },
   },
   async mounted() {
-    this.getTransferData(this.transferPagination);
+    this.getTransferData({
+      pagination: this.transferPagination,
+      filter: this.transferFilter,
+    });
   },
 };
 </script>
