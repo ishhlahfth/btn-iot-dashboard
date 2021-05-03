@@ -126,6 +126,11 @@ const routes = [
     name: 'TermsConditions',
     component: () => import('@/views/TermsConditions.vue'),
   },
+  {
+    path: '/components',
+    name: 'Components',
+    component: () => import('@/views/_Components.vue'),
+  },
 ];
 
 const router = createRouter({
