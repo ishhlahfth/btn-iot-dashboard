@@ -15,6 +15,10 @@
     />
   </help-modal>
 
+  <help-modal v-model="filterModal">
+    <transfer-filter :filter="transferFilter" @apply="applyFilter" @close="filterModal = false" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Transfer</p>
@@ -29,6 +33,7 @@
           <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
           <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
         </template>
+        <help-button label="filter" icon="filter" @click="filterModal = true" />
       </div>
     </div>
     <!-- <div>
@@ -92,6 +97,7 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 // import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import TransferFilter from '@/components/modals/TransferFilter.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -108,6 +114,7 @@ export default {
     HelpModal,
     // HelpInput,
     HelpTable,
+    TransferFilter,
   },
   setup() {
     const toast = useToast();
@@ -124,9 +131,13 @@ export default {
         sort: 'order_date',
         order: 'desc',
       },
+      transferFilter: {
+        merchantName: '',
+      },
       loading: false,
       checkAll: false,
       confirmTransferModal: false,
+      filterModal: false,
     };
   },
   computed: {
