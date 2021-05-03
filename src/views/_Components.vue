@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <div class="p-4 max-h-screen w-104 grid gap-4 auto-rows-max overflow-auto">
+  <div class="w-screen grid grid-flow-col grid-cols-12">
+    <div class="col-span-2 p-4 max-h-screen grid gap-4 auto-rows-max overflow-auto">
       <p class="font-bold mb-2">Atoms</p>
       <a href="#avatar">Avatar</a>
       <a href="#badge">Badge</a>
@@ -37,50 +37,118 @@
       <a href="#">Initiating Modal</a>
       <a href="#">Git Flow</a>
     </div>
-    <div class="p-8 h-screen flex-auto grid gap-12 auto-rows-min overflow-auto">
+
+    <section class="col-span-10 p-8 h-screen grid gap-12 auto-rows-min overflow-auto">
       <div id="avatar" class="grid gap-8 auto-rows-max">
         <p class="text-heading2 font-semibold text-midnight">Avatar</p>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium ab unde officiis
-          fugiat sed! Eaque commodi ducimus, quasi, at dolore laudantium cum exercitationem amet
-          accusantium quae officiis assumenda sapiente. Tenetur ad laudantium consequatur quam
-          architecto quos, fugit illo officiis quisquam, necessitatibus corrupti odit id voluptates
-          voluptas accusantium, ipsum quaerat?
+          Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
+          <a href="#thumbnail">thumbnail</a>, cuma ini lebih straightforward dan spesifik buat
+          avatar kayak avatar admin atau logo partner aja.
         </p>
 
         <div class="divide-y divide-grey-4 grid gap-2">
-          <p class="font-semibold">Design</p>
+          <div class="flex justify-between">
+            <p class="font-semibold">Design</p>
+            <help-button icon-only icon="code" bg-color="transparent" color="grey-1" />
+          </div>
           <p></p>
         </div>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium ab unde officiis
-          fugiat sed! Eaque commodi ducimus, quasi, at dolore laudantium cum exercitationem amet
-          accusantium quae officiis assumenda sapiente. Tenetur ad laudantium consequatur quam
-          architecto quos, fugit illo officiis quisquam, necessitatibus corrupti odit id voluptates
-          voluptas accusantium, ipsum quaerat?
-        </p>
+        <div class="grid grid-flow-col auto-cols-max gap-1">
+          <help-avatar
+            src="https://img.okezone.com/content/2017/07/11/205/1734089/rhythm-of-people-jadi-ajang-iga-massardi-kolaborasi-bareng-kikan-hingga-coki-netral-8pUCnHgLmx.jpg"
+          />
+          <help-avatar
+            src="https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"
+          />
+          <help-avatar :src="require('@/assets/partnerlogo/OVO-logo-circle.png')" :size="40" />
+          <help-avatar :src="require('@/assets/partnerlogo/lalamove-logo-circle.png')" :size="40" />
+          <help-avatar
+            src="https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg"
+            :size="32"
+          />
+          <help-avatar src="" :size="32" placeholder="Putri" />
+        </div>
+        <!-- <pre class="text-white bg-grey-1 rounded p-4 overflow-x-auto">
+<code>&lt;<span class="tag">help-avatar</span> <span class="prop">src</span>=<span class="string">""</span> :<span class="prop">size</span>="32" <span class="prop">placeholder</span>=<span class="string">"Putri"</span> /&gt;</code>
+<code>&lt;<span class="tag">help-avatar</span>
+  <span class="prop">src</span>=<span class="string">"https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"</span>
+  :<span class="prop">size</span>="32"
+/&gt;
+&lt;<span class="tag">help-avatar</span> <span class="prop">src</span>=<span class="string">"https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg"</span> :<span class="prop">size</span>="32" /&gt;
+&lt;<span class="tag">help-avatar</span> :<span class="prop">src</span>=<span class="string">"require('@/assets/partnerlogo/OVO-logo-circle.png')"</span> :<span class="prop">size</span>="40" /&gt;
+&lt;<span class="tag">help-avatar</span> :<span class="prop">src</span>=<span class="string">"require('@/assets/partnerlogo/lalamove-logo-circle.png')"</span> :<span class="prop">size</span>="40" /&gt;
+&lt;<span class="tag">help-avatar</span>
+  <span class="prop">src</span>="<span class="string">https://awsimages.detik.net.id/community/media/visual/2020/09/25/kristo-immanuel_34.jpeg?"</span>
+  :<span class="prop">size</span>="64"
+/&gt;</code>
+</pre> -->
 
         <div class="divide-y divide-grey-4 grid gap-2">
           <p class="font-semibold">Props</p>
           <p></p>
         </div>
-        <code>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium ab unde officiis
-          fugiat sed! Eaque commodi ducimus, quasi, at dolore laudantium cum exercitationem amet
-          accusantium quae officiis assumenda sapiente. Tenetur ad laudantium consequatur quam
-          architecto quos, fugit illo officiis quisquam, necessitatibus corrupti odit id voluptates
-          voluptas accusantium, ipsum quaerat?
-        </code>
-
+        <help-table
+          :footer="false"
+          :columns="[
+            { field: 'prop', label: 'Prop' },
+            { field: 'description', label: 'Description' },
+            { field: 'type', label: 'Type' },
+            { field: 'default', label: 'Default' },
+          ]"
+          :rows="[
+            {
+              prop: 'size',
+              description: 'Diameter avatar, akan dianggap px',
+              type: 'Number',
+              default: 64,
+            },
+            {
+              prop: 'src',
+              description: 'Image yang akan ditampilkan',
+              type: 'String',
+              default: '',
+            },
+            {
+              prop: 'placeholder',
+              description: 'Text untuk diambil index ke-0-nya apabila src tidak ada',
+              type: 'String',
+              default: '',
+            },
+          ]"
+        />
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
+import HelpAvatar from '@/components/atoms/Avatar.vue';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpTable from '@/components/templates/Table.vue';
+
 export default {
   name: 'Components',
+  components: {
+    HelpAvatar,
+    HelpButton,
+    HelpTable,
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+code {
+  .tag {
+    // color: #4788b6;
+    @apply text-mint;
+  }
+  .prop {
+    color: #00d0ff;
+  }
+  .string {
+    // color: #a47553;
+    @apply text-gold;
+  }
+}
+</style>
