@@ -407,6 +407,19 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="toggle" title="Toggle" :props="props.toggle">
+          <template v-slot:description>
+            <p>
+              Biasanya buat display sesuatu yg boolean. Bisa dipencet-pencet buat turn on/off juga.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1">
+              <help-toggle v-model="toggleState" @change="toggleState = $event" />
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -422,6 +435,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
@@ -440,6 +454,7 @@ export default {
     HelpRadio,
     // HelpTable,
     HelpThumbnail,
+    HelpToggle,
     Icon,
     NavExpandableItem,
     NavItem,
@@ -766,6 +781,14 @@ export default {
             default: false,
           },
         ],
+        toggle: [
+          {
+            prop: 'v-model',
+            description: 'State togglenya (sementara pakai event @change, diubah manual)',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
       },
       checkboxState: true,
       anArrayOfObj: [
@@ -777,6 +800,7 @@ export default {
       radioState1: true,
       radioState2: true,
       radioState3: false,
+      toggleState: true,
     };
   },
 };
