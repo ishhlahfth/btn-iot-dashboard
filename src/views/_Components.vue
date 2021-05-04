@@ -9,8 +9,8 @@
         <a href="#checkbox">Checkbox</a>
         <a href="#icon">Icon</a>
         <a href="#input">Input</a>
-        <a href="#navexpandableitem">Nav Expandable Item</a>
-        <a href="#navitem">Nav Item</a>
+        <a href="#nav-expandable-item">Nav Expandable Item</a>
+        <a href="#nav-item">Nav Item</a>
         <a href="#optionitem">Option Item</a>
         <a href="#radiobutton">Radio Button</a>
         <a href="#thumbnail">Thumbnail</a>
@@ -292,7 +292,61 @@
                 placeholder="With a left icon"
                 left-icon="user-group"
               />
-              <help-input v-model="inputState" label="Search Bar" placeholder="Search merchant name here" search-bar />
+              <help-input
+                v-model="inputState"
+                label="Search Bar"
+                placeholder="Search merchant name here"
+                search-bar
+              />
+            </div>
+          </template>
+        </help-component>
+
+        <help-component
+          id="nav-expandable-item"
+          title="Nav Expandable Item"
+          :props="props.navExpandableItem"
+        >
+          <template v-slot:description>
+            <p>
+              Khusus dibuat untuk component <a href="#sidebar">sidebar</a>, so far nggak reusable.
+              Ini buat menu yang beranak.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="bg-midnight w-64">
+              <nav-expandable-item
+                :menu="{
+                  path: '/components',
+                  label: 'Menu',
+                  icon: 'user',
+                  subMenu: [
+                    { path: '/bns/dummy-page-1', label: 'First', icon: '' },
+                    { path: '/bns/dummy-page-2', label: 'Second', icon: '' },
+                    { path: '/bns/dummy-page-3', label: 'Third', icon: '' },
+                  ],
+                }"
+              />
+            </div>
+          </template>
+        </help-component>
+
+        <help-component id="nav-item" title="Nav Item" :props="props.navItem">
+          <template v-slot:description>
+            <p>
+              Khusus dibuat untuk component <a href="#sidebar">sidebar</a>, so far nggak reusable.
+              Ini buat menu yang enggak beranak.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="bg-midnight w-64">
+              <nav-item
+                :menu="{
+                  path: '/',
+                  label: 'Menu',
+                  icon: 'user',
+                }"
+              />
             </div>
           </template>
         </help-component>
@@ -306,9 +360,11 @@ import HelpComponent from '@/components/templates/_Component.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpCheckbox from '../components/atoms/Checkbox.vue';
-import HelpInput from '../components/atoms/Input.vue';
-import Icon from '../components/atoms/Icon.vue';
+import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+import HelpInput from '@/components/atoms/Input.vue';
+import Icon from '@/components/atoms/Icon.vue';
+import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
+import NavItem from '@/components/atoms/NavItem.vue';
 // import HelpTable from '@/components/templates/Table.vue';
 
 export default {
@@ -322,6 +378,8 @@ export default {
     HelpInput,
     // HelpTable,
     Icon,
+    NavExpandableItem,
+    NavItem,
   },
   data() {
     return {
@@ -457,7 +515,7 @@ export default {
             prop: 'name',
             description: 'Nama iconnya. List available name-nya di v-if tiap path svg-nya',
             type: 'Boolean',
-            default: false,
+            default: '',
             examples: ['chevron-up', 'close', 'home'],
           },
           {
@@ -465,7 +523,7 @@ export default {
             description:
               'Dimensi wrappernya. Udah pasti square. Accepts tailwind width/height variables tanpa prefix',
             type: 'String, Number',
-            default: 4,
+            default: false,
           },
         ],
         input: [
@@ -532,6 +590,47 @@ export default {
             type: 'String',
             default: '',
             examples: ['##-##-##', '##:##', 'more at beholdr.github.io/maska/'],
+          },
+        ],
+        navExpandableItem: [
+          {
+            prop: 'menu',
+            description: "Object berisi key 'path', 'label', 'icon', dan 'subMenu'",
+            type: 'Object',
+            default: false,
+            examples: [
+              {
+                path: '/components',
+                label: 'Menu',
+                icon: 'user',
+                subMenu: [
+                  { path: '/bns/dummy-1', label: 'First', icon: '' },
+                  { path: '/bns/dummy-2', label: 'Second', icon: '' },
+                  { path: '/bns/dummy-3', label: 'Third', icon: '' },
+                ],
+              },
+            ],
+          },
+          {
+            prop: 'mini-sidebar',
+            description: 'Mini sidebar state buat di-watch',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
+        navItem: [
+          {
+            prop: 'menu',
+            description: "Object berisi key 'path', 'label', dan 'icon'",
+            type: 'Object',
+            default: false,
+            examples: [
+              {
+                path: '/',
+                label: 'Menu',
+                icon: 'user',
+              },
+            ],
           },
         ],
       },
