@@ -12,18 +12,18 @@
         <a href="#nav-expandable-item">Nav Expandable Item</a>
         <a href="#nav-item">Nav Item</a>
         <a href="#option-item">Option Item</a>
-        <a href="#radiobutton">Radio Button</a>
+        <a href="#radio-button">Radio Button</a>
         <a href="#thumbnail">Thumbnail</a>
         <a href="#toggle">Toggle</a>
         <a href="#tooltip">Tooltip</a>
 
         <p class="font-bold mb-2">Molecules</p>
-        <a href="#menucard">Menu Card</a>
+        <a href="#menu-card">Menu Card</a>
         <a href="#navbar">Navbar</a>
         <a href="#option">Option</a>
         <a href="#select">Select</a>
         <a href="#sidebar">Sidebar</a>
-        <a href="#tablefooter">Table Footer</a>
+        <a href="#table-footer">Table Footer</a>
 
         <p class="font-bold mb-2">Templates</p>
         <a href="#modal">Modal</a>
@@ -364,6 +364,19 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="radio-button" title="Radio Button" :props="props.radioButton">
+          <template v-slot:description>
+            <p>Input radio button kayak native radio button, cuma stylingnya aja yg disesuaiin.</p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-6">
+              <help-radio v-model="radioState1" group="example-group" label="Radio 1" />
+              <help-radio v-model="radioState2" group="example-group" label="Radio 2" />
+              <help-radio v-model="radioState3" group="example-group" label="Radio 3" />
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -377,6 +390,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
+import HelpRadio from '@/components/atoms/Radio.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
@@ -392,6 +406,7 @@ export default {
     HelpCheckbox,
     HelpInput,
     HelpOptionItem,
+    HelpRadio,
     // HelpTable,
     Icon,
     NavExpandableItem,
@@ -663,6 +678,32 @@ export default {
             default: '',
           },
         ],
+        radioButton: [
+          {
+            prop: 'v-model',
+            description: 'Radio button state',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'group',
+            description: 'Identifier yang mengelompokkan beberapa radio button',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'label',
+            description: 'Text untuk radio button',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'disabled',
+            description: 'Native disabled state untuk input radio button',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
       },
       checkboxState: true,
       anArrayOfObj: [
@@ -671,6 +712,9 @@ export default {
         { state: true, id: 3 },
       ],
       inputState: '',
+      radioState1: true,
+      radioState2: true,
+      radioState3: false,
     };
   },
 };
