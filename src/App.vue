@@ -76,4 +76,11 @@ input:focus {
   display: flex;
   align-items: center;
 }
+
+.highlight {
+  @apply rounded;
+  @apply bg-grey-4;
+  @apply bg-opacity-50;
+  @apply px-2;
+}
 </style>

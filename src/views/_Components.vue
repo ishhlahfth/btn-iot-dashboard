@@ -2,7 +2,7 @@
   <div class="w-screen grid grid-flow-col grid-cols-12">
     <div class="col-span-2 h-screen overflow-auto">
       <div class="p-4 grid gap-4 auto-rows-max">
-        <p class="font-bold mb-2">Atoms</p>
+        <p class="font-bold mb-2"># Atoms</p>
         <a href="#avatar">Avatar</a>
         <a href="#badge">Badge</a>
         <a href="#button">Button</a>
@@ -17,7 +17,7 @@
         <a href="#toggle">Toggle</a>
         <!-- <a href="#tooltip">Tooltip</a> -->
 
-        <p class="font-bold mb-2">Molecules</p>
+        <p class="font-bold mb-2"># Molecules</p>
         <a href="#menu-card">Menu Card</a>
         <a href="#navbar">Navbar</a>
         <a href="#option">Option</a>
@@ -25,12 +25,12 @@
         <a href="#sidebar">Sidebar</a>
         <a href="#table-footer">Table Footer</a>
 
-        <p class="font-bold mb-2">Templates</p>
+        <p class="font-bold mb-2"># Templates</p>
         <a href="#modal">Modal</a>
         <a href="#table">Table</a>
 
-        <p class="font-bold mb-2">Guides</p>
-        <a href="#">Initiating Menu</a>
+        <p class="font-bold mb-2"># Guides</p>
+        <a href="#initiating-menu">Initiating Menu</a>
         <a href="#">GET Features</a>
         <a href="#">POST Features</a>
         <a href="#">PATCH Features</a>
@@ -124,6 +124,8 @@
             ]"
           />
         </section> -->
+
+        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Atoms</p>
 
         <help-component id="avatar" title="Avatar" :props="props.avatar">
           <template v-slot:description>
@@ -420,6 +422,57 @@
             </div>
           </template>
         </help-component>
+
+        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Guide</p>
+
+        <div id="initiating-menu" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Initiating Menu</p>
+          <p>
+            Sampai waktu dokumentasi ini dibuat, ada 6 menu di dashboard app ini:
+            <router-link to="/bns/merchant">Merchant</router-link>,
+            <router-link to="/bns/order">Order</router-link>,
+            <router-link to="/bns/transfer">Transfer</router-link>,
+            <router-link to="/bns/payment">Payment</router-link>,
+            <router-link to="/bns/banner">Banner</router-link>, dan
+            <router-link to="/bns/admin">Admin</router-link>. Nggak kecil kemungkinannya buat nambah
+            lagi. Ini rangkuman tentang gimana caranya buat initialize menu baru.
+          </p>
+          <p>Misalnya ada requirement bikin menu Role</p>
+          <ol class="list-decimal list-outside">
+            <li>
+              Buat file baru Role.vue di dalam directory <code class="highlight">@/views</code>
+            </li>
+            <li>
+              Mulai init struktur page-nya sama name-nya dulu aja. Spacing-nya baik padding maupun
+              gap <i>harus</i> segini ya karena udah cakep dan sesuai sama prototype-nya, kalo mau
+              ganti artinya ganti di semua page +di Figma juga.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">template</span>&gt;
+  &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;<span class="tag">/p</span>&gt;
+  &lt;<span class="tag">/div</span>&gt;
+&lt;<span class="tag">/template</span>&gt;
+
+&lt;<span class="tag">script</span>&gt;
+<span class="script">export default {</span>
+  <span class="prop">name: <span class="string">'Role'</span></span>,
+<span class="script">}</span>
+&lt;<span class="tag">/script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Berikutnya set routing. Tambahin object di dalem children path
+              <code class="highlight">/bns</code>. Set path, name, sama import component
+              <code class="highlight">Role.vue</code> yang tadi udah dibuat.
+            </li>
+            <li>
+              Terakhir, tambahin menu di sidebar. Di Sidebar.vue, tambahin satu object lagi di dalem
+              state <code class="highlight">links</code>. Keys di dalem objectnya sesuai
+              <a href="#nav-item">komponen nav item</a>. Set path buat routing sama path yang baru
+              aja ditambahin, label, sama kasih icon yang relevan.
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
@@ -834,5 +887,11 @@ code {
     // color: #a47553;
     @apply text-gold;
   }
+  .script {
+    color: #e667e6;
+  }
+}
+ol {
+  @apply ml-4;
 }
 </style>

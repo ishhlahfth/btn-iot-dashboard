@@ -35,7 +35,7 @@
           <code
             v-for="(example, index) in row.examples"
             :key="index"
-            class="rounded bg-grey-4 bg-opacity-50 mr-1 px-2"
+            class="highlight mr-1"
           >
             {{ example }}
           </code>
@@ -60,7 +60,7 @@
         <template v-slot:body="{ column, row }">
           <ol class="list-disc list-outside" v-if="column === 'parameters'">
             <li v-for="(param, index) in row.parameters" :key="index">
-              <span class="rounded bg-grey-4 bg-opacity-50 mr-1 px-2">{{ param.name }}</span>:
+              <span class="highlight mr-1">{{ param.name }}</span>:
               <span>{{ param.param }}</span>
             </li>
           </ol>
