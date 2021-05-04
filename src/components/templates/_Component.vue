@@ -43,6 +43,31 @@
       </template>
     </help-table>
 
+    <template v-if="events?.length">
+      <div class="divide-y divide-grey-4 grid gap-2">
+        <p class="font-semibold">Events</p>
+        <p></p>
+      </div>
+      <help-table
+        :footer="false"
+        :columns="[
+          { field: 'event', label: 'Events' },
+          { field: 'description', label: 'Description' },
+          { field: 'parameters', label: 'Parameters' },
+        ]"
+        :rows="events"
+      >
+        <template v-slot:body="{ column, row }">
+          <ol class="list-disc list-outside" v-if="column === 'parameters'">
+            <li v-for="(param, index) in row.parameters" :key="index">
+              <span class="rounded bg-grey-4 bg-opacity-50 mr-1 px-2">{{ param.name }}</span>:
+              <span>{{ param.param }}</span>
+            </li>
+          </ol>
+        </template>
+      </help-table>
+    </template>
+
     <div v-if="hasUpdateGuideSlot" class="divide-y divide-grey-4 grid gap-2">
       <p class="font-semibold">Update Guide</p>
       <p></p>
@@ -52,14 +77,12 @@
 </template>
 
 <script>
-// import HelpButton from '@/components/atoms/Button.vue';
 import HelpTable from '@/components/templates/Table.vue';
 
 export default {
   name: 'Component',
-  props: ['id', 'title', 'props'],
+  props: ['id', 'title', 'props', 'events'],
   components: {
-    // HelpButton,
     HelpTable,
   },
   computed: {

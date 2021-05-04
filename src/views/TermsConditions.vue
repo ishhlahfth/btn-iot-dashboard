@@ -970,12 +970,4 @@ h2 {
   @apply text-xl;
   @apply font-bold;
 }
-ol {
-  @apply pl-4;
-  // ol {
-  // }
-}
-li {
-  @apply mb-2;
-}
 </style>

@@ -15,7 +15,7 @@
         <a href="#radio-button">Radio Button</a>
         <a href="#thumbnail">Thumbnail</a>
         <a href="#toggle">Toggle</a>
-        <a href="#tooltip">Tooltip</a>
+        <!-- <a href="#tooltip">Tooltip</a> -->
 
         <p class="font-bold mb-2">Molecules</p>
         <a href="#menu-card">Menu Card</a>
@@ -408,7 +408,7 @@
           </template>
         </help-component>
 
-        <help-component id="toggle" title="Toggle" :props="props.toggle">
+        <help-component id="toggle" title="Toggle" :props="props.toggle" :events="events.toggle">
           <template v-slot:description>
             <p>
               Biasanya buat display sesuatu yg boolean. Bisa dipencet-pencet buat turn on/off juga.
@@ -790,6 +790,18 @@ export default {
           },
         ],
       },
+      events: {
+        toggle: [
+          {
+            event: '@change = ($event) => {}',
+            description: 'Terpanggil waktu komponennya diklik',
+            parameters: [
+              { name: '$event', param: 'negasi dari current state' },
+              { name: '$event2', param: 'negasi dari current state' },
+            ],
+          },
+        ],
+      },
       checkboxState: true,
       anArrayOfObj: [
         { state: false, id: 1 },
@@ -809,13 +821,6 @@ export default {
 <style lang="scss" scoped>
 a {
   @apply text-royal;
-}
-ul,
-ol {
-  @apply pl-4;
-  li {
-    @apply mb-2;
-  }
 }
 code {
   .tag {

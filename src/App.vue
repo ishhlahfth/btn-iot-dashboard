@@ -39,6 +39,14 @@ th {
   font-weight: inherit;
 }
 
+ul,
+ol {
+  @apply pl-4;
+  li {
+    @apply mb-2;
+  }
+}
+
 textarea:focus,
 input:focus {
   outline: none;
