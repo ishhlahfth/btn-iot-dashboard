@@ -298,6 +298,13 @@
                 placeholder="Search merchant name here"
                 search-bar
               />
+              <help-input
+                v-model="inputState"
+                label="Textarea"
+                placeholder="This input is for larger edit experience"
+                type="textarea"
+                :rows="3"
+              />
             </div>
           </template>
         </help-component>
@@ -377,6 +384,29 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="thumbnail" title="Thumbnail" :props="props.thumbnail">
+          <template v-slot:description>
+            <p>
+              Wrapper tag &lt;img&gt; buat display image apapun lengkap sama placeholdernya juga.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1">
+              <help-thumbnail src="" :width="196" :height="80" />
+              <help-thumbnail
+                src="https://wehelpyou-content.s3-ap-southeast-1.amazonaws.com/banners/Cashback50-BannerInApps_Low_.png"
+                :width="196"
+                :height="80"
+              />
+              <help-thumbnail
+                src="https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg"
+                :width="80"
+                :height="80"
+              />
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -391,6 +421,7 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
+import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
@@ -408,6 +439,7 @@ export default {
     HelpOptionItem,
     HelpRadio,
     // HelpTable,
+    HelpThumbnail,
     Icon,
     NavExpandableItem,
     NavItem,
@@ -700,6 +732,36 @@ export default {
           {
             prop: 'disabled',
             description: 'Native disabled state untuk input radio button',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
+        thumbnail: [
+          {
+            prop: 'width',
+            description:
+              'Lebar thumbnail. Kalo ngasih Number bakal diconvert ke px, kalo String langsung jadi width-nya',
+            type: 'Number, String',
+            default: 160,
+            examples: [320, '85%', '50vw'],
+          },
+          {
+            prop: 'height',
+            description: 'Tinggi thumbnail. Sama kayak width.',
+            type: 'Number, String',
+            default: 160,
+            examples: [80, '25%', '75vh'],
+          },
+          {
+            prop: 'src',
+            description: 'Native src prop buat <img> tag',
+            type: 'String',
+            default: '',
+            examples: ['https://help-bns-bucket...'],
+          },
+          {
+            prop: 'use-bg',
+            description: "Prop src dipake jadi 'background-image'-nya CSS",
             type: 'Boolean',
             default: false,
           },
