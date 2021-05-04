@@ -125,7 +125,7 @@
           />
         </section> -->
 
-        <help-component id="avatar" title="Avatar" :props="avatarProps">
+        <help-component id="avatar" title="Avatar" :props="props.avatar">
           <template v-slot:description>
             <p>
               Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
@@ -156,7 +156,7 @@
           </template>
         </help-component>
 
-        <help-component id="badge" title="Badge" :props="badgeProps">
+        <help-component id="badge" title="Badge" :props="props.badge">
           <template v-slot:description>
             <p>
               Pas untuk display hal-hal yg tipenya boolean atau enum. Misalnya status seperti
@@ -175,7 +175,7 @@
           </template>
         </help-component>
 
-        <help-component id="button" title="Button" :props="buttonProps">
+        <help-component id="button" title="Button" :props="props.button">
           <template v-slot:description>
             <p>
               Berfungsi seperti button pada umumnya.
@@ -190,20 +190,31 @@
                 <help-button label="edit" icon="edit" />
               </div>
               <div>
-                <help-button
-                  label="cancel"
-                  bg-color="transparent"
-                  color="grey-1"
-                />
+                <help-button label="cancel" bg-color="transparent" color="grey-1" />
               </div>
               <div>
-                <help-button
-                  icon-only
-                  icon="close"
-                  bg-color="transparent"
-                  color="grey-1"
-                />
+                <help-button icon-only icon="close" bg-color="transparent" color="grey-1" />
               </div>
+            </div>
+          </template>
+        </help-component>
+
+        <help-component id="checkbox" title="Checkbox" :props="props.checkbox">
+          <template v-slot:description>
+            <p>
+              Berfungsi seperti checkbox pada umumnya. Cuma stylingnya aja yang disesuaiin sama UI
+              yang lain.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-6">
+              <help-checkbox v-model:checked="checkboxState" label="Checkbox label" />
+              <help-checkbox
+                v-for="obj in anArrayOfObj"
+                :key="obj.id"
+                v-model:checked="obj.state"
+                :label="`Item ${obj.state}`"
+              />
             </div>
           </template>
         </help-component>
@@ -217,6 +228,7 @@ import HelpComponent from '@/components/templates/_Component.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
+import HelpCheckbox from '../components/atoms/Checkbox.vue';
 // import HelpTable from '@/components/templates/Table.vue';
 
 export default {
@@ -226,115 +238,145 @@ export default {
     HelpAvatar,
     HelpBadge,
     HelpButton,
+    HelpCheckbox,
     // HelpTable,
   },
   data() {
     return {
-      avatarProps: [
-        {
-          prop: 'size',
-          description: 'Diameter avatar, akan dianggap px',
-          type: 'Number',
-          default: 64,
-        },
-        {
-          prop: 'src',
-          description: 'Image yang akan ditampilkan',
-          type: 'String',
-          default: '',
-          examples: ['https://...', "require('@/assets/...')"],
-        },
-        {
-          prop: 'placeholder',
-          description: 'Text untuk diambil index ke-0-nya apabila src tidak ada',
-          type: 'String',
-          default: '',
-        },
-      ],
-      badgeProps: [
-        {
-          prop: 'label',
-          description: 'Isinya',
-          type: 'String',
-          default: '',
-        },
-        {
-          prop: 'icon',
-          description: 'Kalo di kirinya mau ada icon. Referensinya icon name',
-          type: 'String',
-          default: '',
-          examples: ['chevron-up', 'chevron-down'],
-        },
-        {
-          prop: 'color',
-          description: 'Tema badgenya. Sementara cuma 3 presetnya',
-          type: 'String',
-          default: 'negative',
-          examples: ['positive', 'negative', 'warning'],
-        },
-      ],
-      buttonProps: [
-        {
-          prop: 'bg-color',
-          description: 'Warna background button, accepts tailwind color variables tanpa prefix',
-          type: 'String',
-          default: 'midnight',
-          examples: ['mint', 'grey-500', 'red-600'],
-        },
-        {
-          prop: 'color',
-          description:
-            'Warna text dan content lainnya, accepts tailwind color variables tanpa prefix',
-          type: 'String',
-          default: 'white',
-          examples: ['mint-soft', 'grey-500', 'red-600'],
-        },
-        {
-          prop: 'label',
-          description: 'Text di dalem buttonnya',
-          type: 'String',
-          default: '',
-          examples: ['cancel', 'save changes'],
-        },
-        {
-          prop: 'icon',
-          description: 'Icon di kiri label, refer ke <icon /> name',
-          type: 'String',
-          default: '',
-          examples: ['filter', 'close', 'edit'],
-        },
-        {
-          prop: 'icon-only',
-          description: 'Button tanpa label. Style buttonnya jadi lingkaran isinya icon aja.',
-          type: 'Boolean',
-          default: 'false',
-        },
-        {
-          prop: 'loading',
-          description: 'Loading state di dalam button',
-          type: 'Boolean',
-          default: false,
-        },
-        {
-          prop: 'loading-label',
-          description: 'Text yang ditampilin pas prop loading === true',
-          type: 'String',
-          default: '',
-          examples: ['saving', 'transfering', 'updating'],
-        },
-        {
-          prop: 'type',
-          description: 'Native type button',
-          type: 'String',
-          default: '',
-          examples: ['submit', 'button'],
-        },
-        {
-          prop: 'disabled',
-          description: 'Disabled state, kalo true jadi gabisa interaksi',
-          type: 'Boolean',
-          default: 'false',
-        },
+      props: {
+        avatar: [
+          {
+            prop: 'size',
+            description: 'Diameter avatar, akan dianggap px',
+            type: 'Number',
+            default: 64,
+          },
+          {
+            prop: 'src',
+            description: 'Image yang akan ditampilkan',
+            type: 'String',
+            default: '',
+            examples: ['https://...', "require('@/assets/...')"],
+          },
+          {
+            prop: 'placeholder',
+            description: 'Text untuk diambil index ke-0-nya apabila src tidak ada',
+            type: 'String',
+            default: '',
+          },
+        ],
+        badge: [
+          {
+            prop: 'label',
+            description: 'Isinya',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'icon',
+            description: 'Kalo di kirinya mau ada icon. Referensinya icon name',
+            type: 'String',
+            default: '',
+            examples: ['chevron-up', 'chevron-down'],
+          },
+          {
+            prop: 'color',
+            description: 'Tema badgenya. Sementara cuma 3 presetnya',
+            type: 'String',
+            default: 'negative',
+            examples: ['positive', 'negative', 'warning'],
+          },
+        ],
+        button: [
+          {
+            prop: 'bg-color',
+            description: 'Warna background button, accepts tailwind color variables tanpa prefix',
+            type: 'String',
+            default: 'midnight',
+            examples: ['mint', 'grey-500', 'red-600'],
+          },
+          {
+            prop: 'color',
+            description:
+              'Warna text dan content lainnya, accepts tailwind color variables tanpa prefix',
+            type: 'String',
+            default: 'white',
+            examples: ['mint-soft', 'grey-500', 'red-600'],
+          },
+          {
+            prop: 'label',
+            description: 'Text di dalem buttonnya',
+            type: 'String',
+            default: '',
+            examples: ['cancel', 'save changes'],
+          },
+          {
+            prop: 'icon',
+            description: 'Icon di kiri label, refer ke <icon /> name',
+            type: 'String',
+            default: '',
+            examples: ['filter', 'close', 'edit'],
+          },
+          {
+            prop: 'icon-only',
+            description: 'Button tanpa label. Style buttonnya jadi lingkaran isinya icon aja.',
+            type: 'Boolean',
+            default: 'false',
+          },
+          {
+            prop: 'loading',
+            description: 'Loading state di dalam button',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'loading-label',
+            description: 'Text yang ditampilin pas prop loading === true',
+            type: 'String',
+            default: '',
+            examples: ['saving', 'transfering', 'updating'],
+          },
+          {
+            prop: 'type',
+            description: 'Native type button',
+            type: 'String',
+            default: '',
+            examples: ['submit', 'button'],
+          },
+          {
+            prop: 'disabled',
+            description: 'Disabled state, kalo true jadi gabisa interaksi',
+            type: 'Boolean',
+            default: 'false',
+          },
+        ],
+        checkbox: [
+          {
+            prop: 'v-model:checked',
+            description: 'Checkbox state',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'label',
+            description: 'Text untuk checkbox',
+            type: 'String',
+            default: '',
+            examples: ['chevron-up', 'chevron-down'],
+          },
+          {
+            prop: 'disabled',
+            description: 'Native disabled state untuk input checkbox',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
+      },
+      checkboxState: true,
+      anArrayOfObj: [
+        { state: false, id: 1 },
+        { state: false, id: 2 },
+        { state: true, id: 3 },
       ],
     };
   },
