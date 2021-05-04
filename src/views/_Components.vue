@@ -236,13 +236,13 @@
             <div class="grid grid-flow-col auto-cols-max gap-1">
               <icon name="user-group" />
               <icon name="cube" />
-              <icon name="filter" />
               <icon name="download" />
               <icon name="chevron-down" />
-              <icon name="photograph" />
               <div class="text-red-600">
                 <icon name="shield" />
               </div>
+              <icon name="edit" :size="6" />
+              <icon name="photograph" :size="6" />
             </div>
           </template>
           <template v-slot:update-guide>
@@ -264,6 +264,38 @@
             </ul>
           </template>
         </help-component>
+
+        <help-component id="input" title="Input" :props="props.input">
+          <template v-slot:description>
+            Input field seperti input pada umumnya, stylingnya aja yang udah disesuaiin
+          </template>
+          <template v-slot:design>
+            <div class="grid auto-cols-max gap-1">
+              <div class="grid grid-flow-col auto-cols-max gap-1">
+                <help-input
+                  v-model="inputState"
+                  label="Username"
+                  placeholder="Type your username"
+                />
+                <help-input v-model="inputState" placeholder="This input has no label" />
+              </div>
+
+              <help-input
+                v-model="inputState"
+                label="Right icon"
+                placeholder="With a right icon"
+                right-icon="search"
+              />
+              <help-input
+                v-model="inputState"
+                label="Left icon"
+                placeholder="With a left icon"
+                left-icon="user-group"
+              />
+              <help-input v-model="inputState" label="Search Bar" placeholder="Search merchant name here" search-bar />
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -275,6 +307,7 @@ import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
+import HelpInput from '../components/atoms/Input.vue';
 import Icon from '../components/atoms/Icon.vue';
 // import HelpTable from '@/components/templates/Table.vue';
 
@@ -286,6 +319,7 @@ export default {
     HelpBadge,
     HelpButton,
     HelpCheckbox,
+    HelpInput,
     // HelpTable,
     Icon,
   },
@@ -434,6 +468,72 @@ export default {
             default: 4,
           },
         ],
+        input: [
+          {
+            prop: 'v-model',
+            description: 'Input value state',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'label',
+            description: 'Label text di atas input fieldnya',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'label-class',
+            description: 'Tambahan class buat label, accepts all tailwind utilities',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'placeholder',
+            description: 'Placeholder text di dalem input field',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'type',
+            description: 'Native input type',
+            type: 'String',
+            default: 'text',
+            examples: ['textarea', 'password', 'email'],
+          },
+          {
+            prop: 'rows',
+            description: 'Native rows prop untuk <textarea> tag',
+            type: 'Number',
+            default: 3,
+          },
+          {
+            prop: 'left-icon',
+            description: 'Siapa tau mau naruh icon di kiri. Accepts all <icon> name.',
+            type: 'String',
+            default: '',
+            examples: ['code', 'cube', 'dots-vertical'],
+          },
+          {
+            prop: 'right-icon',
+            description: 'Siapa tau mau naruh icon di kanan. Accepts all <icon> name.',
+            type: 'String',
+            default: '',
+            examples: ['download', 'refresh', 'search'],
+          },
+          {
+            prop: 'search-bar',
+            description: 'Mengubah field jadi search bar lengkap dgn icon search & clear',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'mask',
+            description: 'Format v-maska biar output state sesuai yang diharapkan',
+            type: 'String',
+            default: '',
+            examples: ['##-##-##', '##:##', 'more at beholdr.github.io/maska/'],
+          },
+        ],
       },
       checkboxState: true,
       anArrayOfObj: [
@@ -441,6 +541,7 @@ export default {
         { state: false, id: 2 },
         { state: true, id: 3 },
       ],
+      inputState: '',
     };
   },
 };
