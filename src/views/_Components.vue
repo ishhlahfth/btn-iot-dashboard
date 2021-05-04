@@ -11,7 +11,7 @@
         <a href="#input">Input</a>
         <a href="#nav-expandable-item">Nav Expandable Item</a>
         <a href="#nav-item">Nav Item</a>
-        <a href="#optionitem">Option Item</a>
+        <a href="#option-item">Option Item</a>
         <a href="#radiobutton">Radio Button</a>
         <a href="#thumbnail">Thumbnail</a>
         <a href="#toggle">Toggle</a>
@@ -350,6 +350,20 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="option-item" title="Option Item" :props="props.optionItem">
+          <template v-slot:description>
+            <p>
+              Khusus dibuat untuk component <a href="#select">select</a>, so far nggak reusable.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1">
+              <help-option-item label="Unselected" />
+              <help-option-item label="Selected" selected />
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -362,6 +376,7 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
@@ -376,6 +391,7 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpInput,
+    HelpOptionItem,
     // HelpTable,
     Icon,
     NavExpandableItem,
@@ -597,7 +613,7 @@ export default {
             prop: 'menu',
             description: "Object berisi key 'path', 'label', 'icon', dan 'subMenu'",
             type: 'Object',
-            default: false,
+            default: '',
             examples: [
               {
                 path: '/components',
@@ -623,7 +639,7 @@ export default {
             prop: 'menu',
             description: "Object berisi key 'path', 'label', dan 'icon'",
             type: 'Object',
-            default: false,
+            default: '',
             examples: [
               {
                 path: '/',
@@ -631,6 +647,20 @@ export default {
                 icon: 'user',
               },
             ],
+          },
+        ],
+        optionItem: [
+          {
+            prop: 'selected',
+            description: 'State yg jadi penanda item ini lagi dipilih apa enggak',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'label',
+            description: 'Text isi itemnya',
+            type: 'String, Number',
+            default: '',
           },
         ],
       },
