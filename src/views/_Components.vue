@@ -193,6 +193,9 @@
                 <help-button label="cancel" bg-color="transparent" color="grey-1" />
               </div>
               <div>
+                <help-button label="save" :loading="true" loading-label="updating" />
+              </div>
+              <div>
                 <help-button icon-only icon="close" bg-color="transparent" color="grey-1" />
               </div>
             </div>
@@ -218,6 +221,49 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="icon" title="Icon" :props="props.icon">
+          <template v-slot:description>
+            <p>
+              Wrapper untuk display icon. Component ini dibuat biar seragam stylingnya dan juga biar
+              gampang kalo mau ambil icon, tinggal sebut namanya aja. Icon yang dipake semua dari
+              <a href="https://heroicons.com/" target="blank">heroicons.com</a>. Warna icon-icon ini
+              bakal di-define di parent-nya. Bungkus sama div, div-nya kasih
+              <code>class="text-red-600"</code> nanti baru jadi merah
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1">
+              <icon name="user-group" />
+              <icon name="cube" />
+              <icon name="filter" />
+              <icon name="download" />
+              <icon name="chevron-down" />
+              <icon name="photograph" />
+              <div class="text-red-600">
+                <icon name="shield" />
+              </div>
+            </div>
+          </template>
+          <template v-slot:update-guide>
+            <ul class="list-disc list-outside">
+              <li>Nambahin icon baru:</li>
+              <ol class="list-decimal list-outside">
+                <li>Buka <a href="https://heroicons.com/" target="blank">heroicons.com</a></li>
+                <li>Pilih icon yang mau di-add (disarankan yang Solid, bukan yang Outline)</li>
+                <li>Hover lalu copy JSX-nya</li>
+                <li>Paste ke dalem &lt;template&gt; component Icon.vue</li>
+                <li>Hapus tag &lt;svg&gt;-nya</li>
+                <li>
+                  Kalau sisa lebih dari 1 &lt;path&gt; tag, bungkus pakai &lt;template&gt; kayak
+                  icon "clipboard"
+                </li>
+                <li>Kasih v-if dengan kondisi namanya</li>
+                <li>Kalau cuma sisa 1 &lt;path&gt; tag, langsung kasih v-if</li>
+              </ol>
+            </ul>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -229,6 +275,7 @@ import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '../components/atoms/Checkbox.vue';
+import Icon from '../components/atoms/Icon.vue';
 // import HelpTable from '@/components/templates/Table.vue';
 
 export default {
@@ -240,6 +287,7 @@ export default {
     HelpButton,
     HelpCheckbox,
     // HelpTable,
+    Icon,
   },
   data() {
     return {
@@ -274,7 +322,7 @@ export default {
           },
           {
             prop: 'icon',
-            description: 'Kalo di kirinya mau ada icon. Referensinya icon name',
+            description: 'Kalo di kirinya mau ada icon. Referensinya <icon /> name',
             type: 'String',
             default: '',
             examples: ['chevron-up', 'chevron-down'],
@@ -362,13 +410,28 @@ export default {
             description: 'Text untuk checkbox',
             type: 'String',
             default: '',
-            examples: ['chevron-up', 'chevron-down'],
           },
           {
             prop: 'disabled',
             description: 'Native disabled state untuk input checkbox',
             type: 'Boolean',
             default: false,
+          },
+        ],
+        icon: [
+          {
+            prop: 'name',
+            description: 'Nama iconnya. List available name-nya di v-if tiap path svg-nya',
+            type: 'Boolean',
+            default: false,
+            examples: ['chevron-up', 'close', 'home'],
+          },
+          {
+            prop: 'size',
+            description:
+              'Dimensi wrappernya. Udah pasti square. Accepts tailwind width/height variables tanpa prefix',
+            type: 'String, Number',
+            default: 4,
           },
         ],
       },
@@ -383,7 +446,17 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+a {
+  @apply text-royal;
+}
+ul,
+ol {
+  @apply pl-4;
+  li {
+    @apply mb-2;
+  }
+}
 code {
   .tag {
     // color: #4788b6;

@@ -42,6 +42,12 @@
         </div>
       </template>
     </help-table>
+
+    <div v-if="hasUpdateGuideSlot" class="divide-y divide-grey-4 grid gap-2">
+      <p class="font-semibold">Update Guide</p>
+      <p></p>
+    </div>
+    <slot name="update-guide"></slot>
   </section>
 </template>
 
@@ -55,6 +61,11 @@ export default {
   components: {
     // HelpButton,
     HelpTable,
+  },
+  computed: {
+    hasUpdateGuideSlot() {
+      return !!this.$slots['update-guide'];
+    },
   },
 };
 </script>
