@@ -129,8 +129,8 @@
           <template v-slot:description>
             <p>
               Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
-              <a href="#thumbnail">thumbnail</a>, cuma ini lebih
-              straightforward dan spesifik buat avatar kayak avatar admin atau logo partner aja.
+              <a href="#thumbnail">thumbnail</a>, cuma ini lebih straightforward dan spesifik buat
+              avatar kayak avatar admin atau logo partner aja.
             </p>
           </template>
 
@@ -174,6 +174,39 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="button" title="Button" :props="buttonProps">
+          <template v-slot:description>
+            <p>
+              Berfungsi seperti button pada umumnya.
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1 place-items-center">
+              <div>
+                <help-button label="yes i'm sure" />
+              </div>
+              <div>
+                <help-button label="edit" icon="edit" />
+              </div>
+              <div>
+                <help-button
+                  label="cancel"
+                  bg-color="transparent"
+                  color="grey-1"
+                />
+              </div>
+              <div>
+                <help-button
+                  icon-only
+                  icon="close"
+                  bg-color="transparent"
+                  color="grey-1"
+                />
+              </div>
+            </div>
+          </template>
+        </help-component>
       </div>
     </div>
   </div>
@@ -183,7 +216,7 @@
 import HelpComponent from '@/components/templates/_Component.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
-// import HelpButton from '@/components/atoms/Button.vue';
+import HelpButton from '@/components/atoms/Button.vue';
 // import HelpTable from '@/components/templates/Table.vue';
 
 export default {
@@ -192,7 +225,7 @@ export default {
     HelpComponent,
     HelpAvatar,
     HelpBadge,
-    // HelpButton,
+    HelpButton,
     // HelpTable,
   },
   data() {
@@ -238,6 +271,69 @@ export default {
           type: 'String',
           default: 'negative',
           examples: ['positive', 'negative', 'warning'],
+        },
+      ],
+      buttonProps: [
+        {
+          prop: 'bg-color',
+          description: 'Warna background button, accepts tailwind color variables tanpa prefix',
+          type: 'String',
+          default: 'midnight',
+          examples: ['mint', 'grey-500', 'red-600'],
+        },
+        {
+          prop: 'color',
+          description:
+            'Warna text dan content lainnya, accepts tailwind color variables tanpa prefix',
+          type: 'String',
+          default: 'white',
+          examples: ['mint-soft', 'grey-500', 'red-600'],
+        },
+        {
+          prop: 'label',
+          description: 'Text di dalem buttonnya',
+          type: 'String',
+          default: '',
+          examples: ['cancel', 'save changes'],
+        },
+        {
+          prop: 'icon',
+          description: 'Icon di kiri label, refer ke <icon /> name',
+          type: 'String',
+          default: '',
+          examples: ['filter', 'close', 'edit'],
+        },
+        {
+          prop: 'icon-only',
+          description: 'Button tanpa label. Style buttonnya jadi lingkaran isinya icon aja.',
+          type: 'Boolean',
+          default: 'false',
+        },
+        {
+          prop: 'loading',
+          description: 'Loading state di dalam button',
+          type: 'Boolean',
+          default: false,
+        },
+        {
+          prop: 'loading-label',
+          description: 'Text yang ditampilin pas prop loading === true',
+          type: 'String',
+          default: '',
+          examples: ['saving', 'transfering', 'updating'],
+        },
+        {
+          prop: 'type',
+          description: 'Native type button',
+          type: 'String',
+          default: '',
+          examples: ['submit', 'button'],
+        },
+        {
+          prop: 'disabled',
+          description: 'Disabled state, kalo true jadi gabisa interaksi',
+          type: 'Boolean',
+          default: 'false',
         },
       ],
     };
