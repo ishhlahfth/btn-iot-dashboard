@@ -554,6 +554,50 @@
           </template>
         </help-component>
 
+        <help-component id="table" title="Table" :props="props.table" :events="events.table">
+          <template v-slot:description>
+            <p>
+              Wrapper &lt;table&gt; tag yang udah styling & fungsionalitasnya udah dibuat sedemikian
+              rupa sehingga memudahkan kalo mau display data-data tabulasi. Mostly data-data yang
+              ditampilin di dashboard adalah data tabulasi, jadi ini salah satu component yang akan
+              sering dipake.
+            </p>
+            <p>
+              Core-nya component ini ada di prop <code class="highlight">columns</code> sama
+              <code class="highlight">rows</code>. Kedua props itu bentuknya array of object. Asal
+              key di <code class="highlight">rows[i]</code> ada juga di salah satu
+              <code class="highlight">columns[i].field</code>, value-nya pasti muncul tepat di cell
+              yang diharapkan.
+            </p>
+            <p>
+              Kadang di dalem &lt;td&gt; butuh lebih dari sekedar string. Nah buat mengakomodasi
+              kemudahan ganti-ganti isi &lt;td&gt;, udah disediain slot. Di dalem slotnya, pasang
+              logic berdasarkan column-nya. Contohnya nanti dijelaskan lebih lanjut di
+              <a href="#">GET Features</a>.
+            </p>
+          </template>
+          <template v-slot:design>
+            <help-table :footer="false" :columns="table.columns" :rows="table.rows">
+              <template v-slot:body="{ column, row }">
+                <p v-if="column === 'menu'" class="text-royal font-medium cursor-pointer">
+                  See Detail
+                </p>
+                <help-badge
+                  v-if="column === 'verify_status'"
+                  :label="row.verify_status"
+                  :color="
+                    row.verify_status === 'Terverifikasi'
+                      ? 'positive'
+                      : row.verify_status === 'Pending'
+                      ? 'warning'
+                      : 'negative'
+                  "
+                />
+              </template>
+            </help-table>
+          </template>
+        </help-component>
+
         <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
           # Guides
         </p>
@@ -628,7 +672,7 @@ import Icon from '@/components/atoms/Icon.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
-// import HelpTable from '@/components/templates/Table.vue';
+import HelpTable from '@/components/templates/Table.vue';
 
 export default {
   name: 'Components',
@@ -643,7 +687,7 @@ export default {
     HelpOptionItem,
     HelpModal,
     HelpRadio,
-    // HelpTable,
+    HelpTable,
     HelpThumbnail,
     HelpToggle,
     Icon,
@@ -995,16 +1039,94 @@ export default {
             default: false,
           },
         ],
+        table: [
+          {
+            prop: 'columns',
+            description:
+              "Kolom tabelnya. Keynya: field (String) buat integrasi sama prop rows | label (String) text yang mau ditampilin | align (String) defaultnya 'left', terima 'center' sama 'right' juga | sortable (Boolean) opsional ini kalo kolomnya mau bisa diurutin",
+            type: 'Array of Objects',
+            default: '[ ]',
+            examples: [
+              [
+                { field: 'name', label: 'nama developer' },
+                { field: 'position', label: 'posisi', align: 'center' },
+              ],
+            ],
+          },
+          {
+            prop: 'rows',
+            description: 'Data-data yang mau diisi ke dalem tabelnya',
+            type: 'Array of Objects',
+            default: '[ ]',
+            examples: [
+              [
+                { name: 'Even', position: 'Tech Lead' },
+                { name: 'Fadhil', position: 'Backend' },
+              ],
+            ],
+          },
+          {
+            prop: 'pagination',
+            description:
+              'Penting buat integrasi sama query-query endpoint. Fungsi utamanya buat dioper ke <table-footer />. Logic di dalem component ini cukup banyak yg mengandalkan prop ini.',
+            type: 'Object',
+            default: "{ limit: 10, offset: 0, sort: '', order: 'asc' }",
+            examples: [
+              {
+                limit: 10,
+                offset: 20,
+                sort: 'date',
+                order: 'desc',
+              },
+              {
+                limit: 25,
+                offset: 0,
+                sort: 'name',
+                order: 'asc',
+              },
+            ],
+          },
+          {
+            prop: 'path',
+            description:
+              'Karena endpoint-endpoint dari backend nggak provide total row count, jadi kita bisa tau di next page masih ada data atau enggak dari prop ini. Ini bakal fetch data buat next page',
+            type: 'String',
+            default: '',
+            examples: ['merchant', 'employee', 'transfer-queue'],
+          },
+          {
+            prop: 'loading',
+            description: 'Patokan muncul/enggaknya loading animation di dalem table',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'footer',
+            description: 'Patokan muncul/enggaknya <table-footer />',
+            type: 'Boolean',
+            default: true,
+          },
+        ],
       },
       events: {
         toggle: [
           {
             event: '@change = ($event) => {}',
             description: 'Terpanggil waktu komponennya diklik',
-            parameters: [
-              { name: '$event', param: 'negasi dari current state' },
-              { name: '$event2', param: 'negasi dari current state' },
-            ],
+            parameters: [{ name: '$event', param: 'negasi dari current state' }],
+          },
+        ],
+        table: [
+          {
+            event: '@onChangePagination = ($event) => {}',
+            description:
+              'Event emit-an <table-footer />. Triggered waktu limit atau offset berubah.',
+            parameters: [{ name: '$event', param: 'updated pagination' }],
+          },
+          {
+            event: '@sort = ($event) => {}',
+            description: 'Triggered waktu sort icon di column header diklik',
+            parameters: [{ name: '$event', param: 'updated pagination' }],
           },
         ],
       },
@@ -1024,6 +1146,35 @@ export default {
         md: false,
         lg: false,
         xl: false,
+      },
+      table: {
+        columns: [
+          { field: 'name', label: 'name' },
+          { field: 'city', label: 'city' },
+          {
+            field: 'verify_status',
+            label: 'verification status',
+            align: 'center',
+          },
+          { field: 'menu', label: 'merchant detail', align: 'center' },
+        ],
+        rows: [
+          {
+            city: 'Jakarta Barat',
+            name: 'Adora Store',
+            verify_status: 'Pending',
+          },
+          {
+            city: 'Jakarta Barat',
+            name: 'Amuz Store',
+            verify_status: 'Terverifikasi',
+          },
+          {
+            city: 'Jakarta Barat',
+            name: 'Couvee Tj. Duren',
+            verify_status: 'Gagal',
+          },
+        ],
       },
     };
   },
