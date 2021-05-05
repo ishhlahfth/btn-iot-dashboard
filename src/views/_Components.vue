@@ -828,8 +828,8 @@
 </pre>
             </li>
             <li>
-              Sekarang karena tabelnya udah sesuai yang dipengenin, langkah terakhir adalah buat handle next page,
-              previous page, sama sort. Pake event
+              Sekarang karena tabelnya udah sesuai yang dipengenin, langkah terakhir adalah buat
+              handle next page, previous page, sama sort. Pake event
               <code class="highlight">@onChangePagination</code> sama
               <code class="highlight">@sort</code>, panggil lagi aja method buat fetch data dari API
               endpoint yang sama.
@@ -853,6 +853,40 @@
   &lt;/<span class="tag">div</span>&gt;
 &lt;/<span class="tag">template</span>&gt;</code>
 </pre>
+            </li>
+          </ol>
+        </div>
+
+        <div id="post-features" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">POST Features</p>
+          <p>
+            Beberapa menu perlu perlu fitur create. Kalo backend provide POST endpoint, maka
+            biasanya pattern development featurenya
+          </p>
+          <ol class="list-decimal list-outside">
+            <li>
+              Pertama siapin button buat munculin form. Form ini nanti bakal muncul dalam bentuk
+              modal. Peletakan button 'add'-nya biar konsisten, kasih di ujung kanannya page title,
+              barengan sama button-button lain (filter, download, reorder, atau lainnya).
+            </li>
+            <li>
+              Create state baru buat toggle state modal formnya yg isinya boolean, kasih aja default
+              value <code class="highlight">false</code>.
+            </li>
+            <li>
+              Set event <code class="highlight">@click</code> di button yang udah dibuat tadi.
+              Ketika button ini diklik, modal state-nya set jadi
+              <code class="highlight">true</code>.
+            </li>
+            <li>
+              Bikin component baru di dalem directory
+              <code class="highlight">@/components/modals</code>. Bikin isi modalnya di component
+              ini terus panggil component ini di dalem slotnya
+              <a href="#modal">&lt;help-modal&gt;</a>
+            </li>
+            <li>
+              Consume endpoint POST-nya. Jangan lupa supaya konsisten, waktu nunggu response kasih
+              loading di button submitnya.
             </li>
           </ol>
         </div>
