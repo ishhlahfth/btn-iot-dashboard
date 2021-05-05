@@ -68,6 +68,31 @@
       </help-table>
     </template>
 
+    <template v-if="slots?.length">
+      <div class="divide-y divide-grey-4 grid gap-2">
+        <p class="font-semibold">Slots</p>
+        <p></p>
+      </div>
+      <help-table
+        :footer="false"
+        :columns="[
+          { field: 'slot', label: 'slot name' },
+          { field: 'description', label: 'description' },
+          { field: 'props', label: 'slot props' },
+        ]"
+        :rows="slots"
+      >
+        <template v-slot:body="{ column, row }">
+          <ol class="list-disc list-outside" v-if="column === 'props'">
+            <li v-for="(prop, index) in row.props" :key="index">
+              <span class="highlight mr-1">{{ prop.name }}</span>:
+              <span>{{ prop.definition }}</span>
+            </li>
+          </ol>
+        </template>
+      </help-table>
+    </template>
+
     <div v-if="hasUpdateGuideSlot" class="divide-y divide-grey-4 grid gap-2">
       <p class="font-semibold">Update Guide</p>
       <p></p>
@@ -81,7 +106,7 @@ import HelpTable from '@/components/templates/Table.vue';
 
 export default {
   name: 'Component',
-  props: ['id', 'title', 'props', 'events'],
+  props: ['id', 'title', 'props', 'events', 'slots'],
   components: {
     HelpTable,
   },

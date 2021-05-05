@@ -186,7 +186,7 @@
       <div class="p-8 grid gap-12 auto-rows-min">
         <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Atoms</p>
 
-        <help-component id="avatar" title="Avatar" :props="props.avatar">
+        <help-component id="avatar" title="Avatar" :props="props.avatar" :slots="slots.avatar">
           <template v-slot:description>
             <p>
               Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
@@ -486,7 +486,7 @@
           # Templates
         </p>
 
-        <help-component id="modal" title="Modal" :props="props.modal">
+        <help-component id="modal" title="Modal" :props="props.modal" :slots="slots.modal">
           <template v-slot:description>
             <p>
               Ini frekuensi terpakainya tinggi. Di beberapa tempat, malah ada modal yang seolah-olah
@@ -554,7 +554,13 @@
           </template>
         </help-component>
 
-        <help-component id="table" title="Table" :props="props.table" :events="events.table">
+        <help-component
+          id="table"
+          title="Table"
+          :props="props.table"
+          :events="events.table"
+          :slots="slots.table"
+        >
           <template v-slot:description>
             <p>
               Wrapper &lt;table&gt; tag yang udah styling & fungsionalitasnya udah dibuat sedemikian
@@ -572,8 +578,16 @@
             <p>
               Kadang di dalem &lt;td&gt; butuh lebih dari sekedar string. Nah buat mengakomodasi
               kemudahan ganti-ganti isi &lt;td&gt;, udah disediain slot. Di dalem slotnya, pasang
-              logic berdasarkan column-nya. Contohnya nanti dijelaskan lebih lanjut di
-              <a href="#">GET Features</a>.
+              logic berdasarkan column-nya. Jangan ngasih logic di
+              <code class="highlight">Table.vue</code>-nya kayak pattern di
+              <a
+                href="https://bitbucket.org/helpappsdev/backoffice-help-public/src/develop/"
+                target="blank"
+              >
+                Repo Dashboard Delivery
+              </a>
+              ya, karena nggak enak kalo bacanya nyampur. Lebih bijak kalo dedicated di tiap slot
+              aja logicnya. Contohnya nanti dijelaskan lebih lanjut di <a href="#">GET Features</a>.
             </p>
           </template>
           <template v-slot:design>
@@ -1127,6 +1141,44 @@ export default {
             event: '@sort = ($event) => {}',
             description: 'Triggered waktu sort icon di column header diklik',
             parameters: [{ name: '$event', param: 'updated pagination' }],
+          },
+        ],
+      },
+      slots: {
+        avatar: [
+          {
+            slot: 'default',
+            description: 'Bisa buat ngasih element absolute yang relative ke avatar',
+            props: [],
+          },
+        ],
+        modal: [
+          {
+            slot: 'default',
+            description: 'Space buat isi modalnya',
+            props: [],
+          },
+        ],
+        table: [
+          {
+            slot: 'header',
+            description: 'Slot buat modify penampilan <th>',
+            props: [
+              { name: 'column', definition: 'object column (field, label, align, sortable)' },
+            ],
+          },
+          {
+            slot: 'body',
+            description: 'Slot buat modify penampilan <td>',
+            props: [
+              { name: 'column', definition: 'field dari suatu column' },
+              { name: 'row', definition: 'object row sesuai apa yang dikasih di prop rows' },
+              {
+                name: 'data',
+                definition:
+                  'spesifik ngasih isi cell-nya aja, jadi sama aja kayak row[column] sebenernya',
+              },
+            ],
           },
         ],
       },
