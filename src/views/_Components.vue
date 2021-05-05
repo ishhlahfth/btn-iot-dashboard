@@ -1,4 +1,146 @@
 <template>
+  <help-modal v-model="modal.sm" permanent>
+    <confirmation
+      title="Changes confirmation"
+      message="Are you sure you want to suspend this merchant?"
+      @close="modal.sm = false"
+      @cancel="modal.sm = false"
+      @confirm="modal.sm = false"
+    />
+  </help-modal>
+
+  <help-modal v-model="modal.md">
+    <div class="grid gap-6 inner-modal-auto modal-md overflow-auto">
+      <div class="flex justify-between items-center">
+        <p class="text-heading4 font-semibold">Couvee Tj. Duren</p>
+        <help-button
+          icon-only
+          icon="close"
+          bg-color="transparent"
+          color="grey-1"
+          @click="modal.md = false"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 auto-rows-max gap-4 sm:gap-6 font-medium">
+        <p class="text-grey-2">Sunday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+        <p class="text-grey-2">Monday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+        <p class="text-grey-2">Tuesday</p>
+        <p class="place-self-end text-flame">Off</p>
+        <p class="text-grey-2">Wednesday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+        <p class="text-grey-2">Thursday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+        <p class="text-grey-2">Friday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+        <p class="text-grey-2">Saturday</p>
+        <p class="place-self-end">08:00 - 21:00</p>
+      </div>
+    </div>
+  </help-modal>
+
+  <help-modal v-model="modal.lg">
+    <div class="grid gap-6 modal-lg inner-modal-auto overflow-auto">
+      <div class="flex justify-between items-center">
+        <p class="text-heading4 font-semibold">Banner detail</p>
+        <help-button
+          icon-only
+          icon="close"
+          bg-color="transparent"
+          color="grey-1"
+          @click="modal.lg = false"
+        />
+      </div>
+
+      <div class="grid gap-2 md:gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
+        <div class="md:col-span-5 grid gap-2 md:gap-8 font-medium">
+          <div class="grid gap-1">
+            <p class="text-grey-2">Title</p>
+            <p>Sekarang Bisa Pesan makan Dari Wehelpyou Eat, Banyak Metode Pembayarannya Loh</p>
+          </div>
+
+          <div class="grid gap-1">
+            <p class="text-grey-2">Redirect URL</p>
+            <a
+              href="https://www.wehelpyou.id/post/sekarang-bisa-pesan-makan-dari-wehelpyou-eat-banyak-metode-pembayarannya-loh"
+              target="blank"
+              class="text-royal cursor-pointer hover:underline"
+            >
+              https://www.wehelpyou.id/post/sekarang-bisa-pesan-makan-dari-wehelpyou-eat-banyak-metode-pembayarannya-loh
+            </a>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="grid gap-1">
+              <p class="text-grey-2">Starts at</p>
+              <p>31 Nov 2021</p>
+            </div>
+            <div class="grid gap-1">
+              <p class="text-grey-2">Ends at</p>
+              <p>31 Dec 2021</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
+          <p class="font-medium mb-1 text-grey-2">Banner image</p>
+          <help-thumbnail
+            class="mb-1"
+            width="100%"
+            src="https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/6b1d3a40-6d81-4a6b-92e8-0fc90709c9b3.png"
+            :height="screenWidth < 640 && !banner.image_url ? 128 : ''"
+          />
+        </div>
+      </div>
+    </div>
+  </help-modal>
+
+  <help-modal v-model="modal.xl">
+    <div
+      class="grid grid-flow-row sm:grid-flow-col gap-6 inner-modal-fixed modal-xl overflow-auto animate-pulse"
+    >
+      <div class="grid gap-4 auto-rows-max overflow-auto">
+        <div class="w-full grid place-items-center py-8">
+          <div class="w-44 h-44 rounded-full bg-grey-4"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+          <div v-for="i in 10" :key="i" class="rounded bg-grey-4 h-4" />
+        </div>
+        <div class="divide-y divide-grey-4">
+          <p></p>
+          <p></p>
+        </div>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+          <div v-for="i in 6" :key="i" class="rounded bg-grey-4 h-4" />
+        </div>
+        <div class="divide-y divide-grey-4">
+          <p></p>
+          <p></p>
+        </div>
+        <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+          <div class="rounded bg-grey-4 h-4"></div>
+        </div>
+        <div class="divide-y divide-grey-4 sm:hidden">
+          <p></p>
+          <p></p>
+        </div>
+      </div>
+
+      <div class="overflow-auto hide-scrollbar">
+        <div>
+          <div class="sm:pl-2 py-1">
+            <div class="rounded bg-grey-4 h-4 w-32"></div>
+          </div>
+          <div class="divide-y divide-grey-4">
+            <menu-card v-for="i in 5" :key="i" :loading="true" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </help-modal>
+
   <div class="w-screen grid grid-flow-col grid-cols-12">
     <div class="col-span-2 h-screen overflow-auto">
       <div class="p-4 grid gap-4 auto-rows-max">
@@ -42,89 +184,6 @@
 
     <div class="col-span-10 h-screen overflow-auto">
       <div class="p-8 grid gap-12 auto-rows-min">
-        <!-- <section id="avatar" class="grid gap-8 auto-rows-max">
-          <p class="text-heading2 font-semibold text-midnight">Avatar</p>
-          <p>
-            Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
-            <a href="#thumbnail">thumbnail</a>, cuma ini lebih straightforward dan spesifik buat
-            avatar kayak avatar admin atau logo partner aja.
-          </p>
-
-          <div class="divide-y divide-grey-4 grid gap-2">
-            <div class="flex justify-between">
-              <p class="font-semibold">Design</p>
-              <help-button icon-only icon="code" bg-color="transparent" color="grey-1" />
-            </div>
-            <p></p>
-          </div>
-          <div class="grid grid-flow-col auto-cols-max gap-1">
-            <help-avatar
-              src="https://img.okezone.com/content/2017/07/11/205/1734089/rhythm-of-people-jadi-ajang-iga-massardi-kolaborasi-bareng-kikan-hingga-coki-netral-8pUCnHgLmx.jpg"
-            />
-            <help-avatar
-              src="https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"
-            />
-            <help-avatar :src="require('@/assets/partnerlogo/OVO-logo-circle.png')" :size="40" />
-            <help-avatar
-              :src="require('@/assets/partnerlogo/lalamove-logo-circle.png')"
-              :size="40"
-            />
-            <help-avatar
-              src="https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg"
-              :size="32"
-            />
-            <help-avatar src="" :size="32" placeholder="Putri" />
-          </div> -->
-        <!-- <pre class="text-white bg-grey-1 rounded p-4 overflow-x-auto">
-<code>&lt;<span class="tag">help-avatar</span> <span class="prop">src</span>=<span class="string">""</span> :<span class="prop">size</span>="32" <span class="prop">placeholder</span>=<span class="string">"Putri"</span> /&gt;</code>
-<code>&lt;<span class="tag">help-avatar</span>
-  <span class="prop">src</span>=<span class="string">"https://www.whiteboardjournal.com/wp-content/uploads/2020/07/Fathia-12.jpg"</span>
-  :<span class="prop">size</span>="32"
-/&gt;
-&lt;<span class="tag">help-avatar</span> <span class="prop">src</span>=<span class="string">"https://nos.jkt-1.neo.id/mcdonalds/assets/ico/richlink.jpg"</span> :<span class="prop">size</span>="32" /&gt;
-&lt;<span class="tag">help-avatar</span> :<span class="prop">src</span>=<span class="string">"require('@/assets/partnerlogo/OVO-logo-circle.png')"</span> :<span class="prop">size</span>="40" /&gt;
-&lt;<span class="tag">help-avatar</span> :<span class="prop">src</span>=<span class="string">"require('@/assets/partnerlogo/lalamove-logo-circle.png')"</span> :<span class="prop">size</span>="40" /&gt;
-&lt;<span class="tag">help-avatar</span>
-  <span class="prop">src</span>="<span class="string">https://awsimages.detik.net.id/community/media/visual/2020/09/25/kristo-immanuel_34.jpeg?"</span>
-  :<span class="prop">size</span>="64"
-/&gt;</code>
-</pre> -->
-
-        <!-- <div class="divide-y divide-grey-4 grid gap-2">
-            <p class="font-semibold">Props</p>
-            <p></p>
-          </div>
-          <help-table
-            :footer="false"
-            :columns="[
-              { field: 'prop', label: 'Prop' },
-              { field: 'description', label: 'Description' },
-              { field: 'type', label: 'Type' },
-              { field: 'default', label: 'Default' },
-            ]"
-            :rows="[
-              {
-                prop: 'size',
-                description: 'Diameter avatar, akan dianggap px',
-                type: 'Number',
-                default: 64,
-              },
-              {
-                prop: 'src',
-                description: 'Image yang akan ditampilkan',
-                type: 'String',
-                default: '',
-              },
-              {
-                prop: 'placeholder',
-                description: 'Text untuk diambil index ke-0-nya apabila src tidak ada',
-                type: 'String',
-                default: '',
-              },
-            ]"
-          />
-        </section> -->
-
         <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Atoms</p>
 
         <help-component id="avatar" title="Avatar" :props="props.avatar">
@@ -423,7 +482,81 @@
           </template>
         </help-component>
 
-        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Guide</p>
+        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
+          # Templates
+        </p>
+
+        <help-component id="modal" title="Modal" :props="props.modal">
+          <template v-slot:description>
+            <p>
+              Ini frekuensi terpakainya tinggi. Di beberapa tempat, malah ada modal yang seolah-olah
+              nggantiin perannya page. Oiya, component ini berfungsi sebagai ibaratnya frame-nya aja
+              ya, biar contentnya stay customizable.
+            </p>
+            <p>
+              Cara pakenya, taruh
+              <code class="highlight">&lt;help-modal&gt;</code> di root element di suatu page, terus
+              isi slotnya. Ada beberapa class yang possible buat dipake di dalem slotnya. Buat
+              menentukan size modal ada 2 pilihan, kalau mau ngikut content-nya kasih class
+              <code class="highlight">inner-modal auto</code> (biasanya buat modal-modal yg role-nya
+              kayak modal pada umumnya), kalo udah pasti ukurannya pake
+              <code class="highlight">inner-modal-fixed</code> (ini bagusnya buat modal gede yang
+              hampir kayak page).
+            </p>
+            <p>
+              Ada beberapa class juga yang dipake barengan sama 2 class sebelumnya buat menentukan
+              size constraint-nya: <code class="highlight">modal-sm</code>,
+              <code class="highlight">modal-md</code>, <code class="highlight">modal-lg</code>,
+              <code class="highlight">modal-xl</code>. Usahakan pakai 4 class itu aja supaya
+              konsisten ukuran-ukurannya.
+            </p>
+
+            <p>
+              Jadi nanti contoh pemakaiannya begini. Misal buat modal konfirmasi yang nge-prompt
+              user mau OK atau cancel, cukup pake modal yang kecil aja jadi nanti slot classnya
+              <code class="highlight">&lt;div class="...inner-modal-auto modal-sm...&gt;</code>.
+              Contoh lain misal bikin modal yang nampilin banyak detail pingin yang gede, lebih
+              bijak kalo dibikin fixed
+              <code class="highlight"
+                >&lt;div class="...inner-modal-fixed modal-xl overflow-auto...&gt;
+              </code>
+              (jangan lupa kasih overflow-auto karena besar kemungkinan content-nya lebih banyak
+              daripada containernya).
+            </p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-1">
+              <help-button
+                label="show modal-sm"
+                bg-color="transparent"
+                color="grey-1"
+                @click="modal.sm = true"
+              />
+              <help-button
+                label="show modal-md"
+                bg-color="transparent"
+                color="grey-1"
+                @click="modal.md = true"
+              />
+              <help-button
+                label="show modal-lg"
+                bg-color="transparent"
+                color="grey-1"
+                @click="modal.lg = true"
+              />
+              <help-button
+                label="show modal-xl"
+                bg-color="transparent"
+                color="grey-1"
+                @click="openMerchantDetail"
+              />
+            </div>
+          </template>
+        </help-component>
+
+        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
+          # Guides
+        </p>
 
         <div id="initiating-menu" class="grid gap-8">
           <p class="text-heading2 font-semibold text-midnight">Initiating Menu</p>
@@ -479,17 +612,20 @@
 </template>
 
 <script>
+import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpComponent from '@/components/templates/_Component.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import HelpModal from '@/components/templates/Modal.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import Icon from '@/components/atoms/Icon.vue';
+import MenuCard from '@/components/molecules/MenuCard.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
 // import HelpTable from '@/components/templates/Table.vue';
@@ -497,6 +633,7 @@ import NavItem from '@/components/atoms/NavItem.vue';
 export default {
   name: 'Components',
   components: {
+    Confirmation,
     HelpComponent,
     HelpAvatar,
     HelpBadge,
@@ -504,11 +641,13 @@ export default {
     HelpCheckbox,
     HelpInput,
     HelpOptionItem,
+    HelpModal,
     HelpRadio,
     // HelpTable,
     HelpThumbnail,
     HelpToggle,
     Icon,
+    MenuCard,
     NavExpandableItem,
     NavItem,
   },
@@ -842,6 +981,20 @@ export default {
             default: false,
           },
         ],
+        modal: [
+          {
+            prop: 'v-model',
+            description: 'State show/hide modalnya',
+            type: 'Boolean',
+            default: false,
+          },
+          {
+            prop: 'permanent',
+            description: 'Siapa tau pingin kalo diklik luarnya nggak ketutup',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
       },
       events: {
         toggle: [
@@ -866,7 +1019,19 @@ export default {
       radioState2: true,
       radioState3: false,
       toggleState: true,
+      modal: {
+        sm: false,
+        md: false,
+        lg: false,
+        xl: false,
+      },
     };
+  },
+  methods: {
+    openMerchantDetail() {
+      this.modal.xl = true;
+      this.$store.commit('SET_MERCHANT_ID', 181);
+    },
   },
 };
 </script>
