@@ -173,12 +173,12 @@
 
         <p class="font-bold mb-2"># Guides</p>
         <a href="#initiating-menu">Initiating Menu</a>
-        <a href="#">GET Features</a>
-        <a href="#">POST Features</a>
-        <a href="#">PATCH Features</a>
-        <a href="#">DELETE Features</a>
-        <a href="#">Initiating Modal</a>
-        <a href="#">Git Flow</a>
+        <a href="#get-features">GET Features</a>
+        <a href="#post-features">POST Features</a>
+        <a href="#patch-features">PATCH Features</a>
+        <a href="#delete-features">DELETE Features</a>
+        <a href="#initiating-modal">Initiating Modal</a>
+        <a href="#git-flow">Git Flow</a>
       </div>
     </div>
 
@@ -586,8 +586,9 @@
               >
                 Repo Dashboard Delivery
               </a>
-              ya, karena nggak enak kalo bacanya nyampur. Lebih bijak kalo dedicated di tiap slot
-              aja logicnya. Contohnya nanti dijelaskan lebih lanjut di <a href="#">GET Features</a>.
+              ya, karena nggak enak kalo bacanya nyampur. Rasanya lebih bijak kalo dedicated di tiap
+              slot aja logicnya. Contohnya nanti dijelaskan lebih lanjut di
+              <a href="#">GET Features</a>.
             </p>
           </template>
           <template v-slot:design>
@@ -640,15 +641,15 @@
               <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
 <code>&lt;<span class="tag">template</span>&gt;
   &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
-    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;<span class="tag">/p</span>&gt;
-  &lt;<span class="tag">/div</span>&gt;
-&lt;<span class="tag">/template</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;/<span class="tag">p</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">template</span>&gt;
 
 &lt;<span class="tag">script</span>&gt;
 <span class="script">export default {</span>
   <span class="prop">name: <span class="string">'Role'</span></span>,
 <span class="script">}</span>
-&lt;<span class="tag">/script</span>&gt;</code>
+&lt;/<span class="tag">script</span>&gt;</code>
 </pre>
             </li>
             <li>
@@ -661,6 +662,197 @@
               state <code class="highlight">links</code>. Keys di dalem objectnya sesuai
               <a href="#nav-item">komponen nav item</a>. Set path buat routing sama path yang baru
               aja ditambahin, label, sama kasih icon yang relevan.
+            </li>
+          </ol>
+        </div>
+
+        <div id="get-features" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">GET Features</p>
+          <p>
+            Normalnya endpoint yang wajib ada di suatu menu ya endpoint GET All. Jadi setelah menu
+            selesai dibuat, waktunya fetch data terus di-apply di app ini. Consuming endpoint GET
+            dari backend sebenernya sederhana. Rasanya lebih baik kalo ngikut pattern ini biar
+            konsisten.
+          </p>
+          <p>
+            Misalnya lanjut menu Role aja ya.
+          </p>
+          <ol class="list-decimal list-outside">
+            <li>
+              Data yang diambil most of the time divisualisasikan dalam bentuk tabel. Jadi pertama
+              siapin template buat tabelnya.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">template</span>&gt;
+  &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;/<span class="tag">p</span>&gt;
+    &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"overflow-hidden"</span>&gt;
+      &lt;<span class="tag">help-table</span>
+        <span class="prop">path</span>=<span class="string">"role"</span>
+        :<span class="prop">columns</span>="<span class="prop">columns</span>"
+        :<span class="prop">rows</span>="<span class="prop">roles</span>"
+        :<span class="prop">loading</span>="<span class="prop">loading</span>"
+        :<span class="prop">pagination</span>="<span class="prop">rolePagination</span>"
+      /&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">template</span>&gt;
+
+&lt;<span class="tag">script</span>&gt;
+<span class="script">import <span class="prop">HelpTable</span> from <span class="string">'@/components/templates/Table.vue'</span></span>;
+<span class="script">export default {</span>
+  <span class="prop">name: <span class="string">'Role'</span></span>,
+  <span class="prop">components: <span class="script">{</span></span>,
+    <span class="prop">HelpTable</span>
+  <span class="script">}</span>,
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Bikin state <code class="highlight">columns</code>,
+              <code class="highlight">roles</code>, <code class="highlight">rolePagination</code>,
+              sama <code class="highlight">loading</code> (data apa aja yang mau ditampilin sesuai
+              sama requirement tasknya ya tentunya).
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">script</span>&gt;
+<span class="script">import <span class="prop">HelpTable</span> from <span class="string">'@/components/templates/Table.vue'</span></span>;
+<span class="script">export default {</span>
+  <span class="prop">name: <span class="string">'Role'</span></span>,
+  <span class="prop">components: <span class="script">{</span></span>,
+    <span class="prop">HelpTable</span>
+  <span class="script">}</span>,
+  <span class="script"><span class="text-yellow-300">data</span>() <span class="script">{</span></span>,
+    <span class="script">return {</span>
+      <span class="prop">columns</span>: [
+        { <span class="prop">field</span>: <span class="string">'name'</span>, <span class="prop">label</span>: <span class="string">'role name'</span>, <span class="prop">sortable</span>: <span class="text-blue-600">true</span> },
+        { <span class="prop">field</span>: <span class="string">'description'</span>, <span class="prop">label</span>: <span class="string">'description'</span> },
+        { <span class="prop">field</span>: <span class="string">'is_active'</span>, <span class="prop">label:</span> <span class="string">'status'</span>, <span class="prop">align</span>: <span class="string">'center'</span> },
+      ],
+      <span class="prop">roles</span>: []
+      <span class="prop">rolePagination</span>: {
+        <span class="prop">limit</span>: <span class="text-yellow-300">10</span>,
+        <span class="prop">offset</span>: <span class="text-yellow-300">0</span>,
+        <span class="prop">sort</span>: <span class="string">'name'</span>, <span class="text-green-700">// kalo endpoint-nya support</span>
+        <span class="prop">order</span>: <span class="string">'asc'</span>, <span class="text-green-700">// kalo endpoint-nya support</span>
+      }
+      <span class="prop">loading</span>: <span class="text-blue-600">false</span>
+    <span class="script">}</span>
+  <span class="script">}</span>,
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Create suatu method yang berfungsi untuk ngehit endpoint, lengkap ngirim paginationnya
+              juga lewat param. Baiknya pagination kita jagain default valuenya juga.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">script</span>&gt;
+<span class="script">export default {</span>
+  <span class="prop">methods: <span class="script">{</span></span>,
+    <span class="text-blue-600">async</span> <span class="text-yellow-300">getRoles<span class="prop">(<span class="text-yellow-300">{</span> pagination <span class="text-yellow-300">}</span>)</span></span> { <span class="text-green-700">// bentuk paramnya object biar nggak kesusahan nanti waktu ada mekanisme filter</span>
+      <span class="text-blue-600">const</span> <span class="prop">limit</span> = <span class="prop">pagination</span>?.<span class="prop">limit</span> || <span class="text-yellow-300">10</span>;
+      <span class="text-blue-600">const</span> <span class="prop">offset</span> = <span class="prop">pagination</span>?.<span class="prop">offset</span> || <span class="text-yellow-300">0</span>;
+      <span class="text-blue-600">const</span> <span class="prop">sort</span> = <span class="prop">pagination</span>?.<span class="prop">sort</span> || <span class="string">'name'</span>;
+      <span class="text-blue-600">const</span> <span class="prop">order</span> = <span class="prop">pagination</span>?.<span class="prop">order</span> || <span class="string">'asc'</span>;
+      <span class="text-blue-600">const</span> <span class="prop">search</span> = <span class="text-blue-600">this</span>.<span class="prop">searchValue</span> || <span class="string">''</span>;
+
+      <span class="text-blue-600">let</span> <span class="prop">url</span> = <span class="string">`merchants?offset=<span class="prop">${offset}</span>&limit=<span class="prop">${limit}</span>&sort=<span class="prop">${sort}</span>&order=<span class="prop">${order}</span>`</span>;
+
+      <span class="text-blue-600">this</span>.<span class="prop">loading</span> = <span class="text-blue-600">true</span>;
+      <span class="script">try</span> {
+        <span class="text-green-700">// hit endpoint</span>
+        <span class="text-green-700">// ...</span>
+        <span class="text-green-700">// map response-nya dulu (kalo perlu)</span>
+        <span class="text-green-700">// ...</span>
+        <span class="text-green-700">// assign ke this.roles</span>
+        <span class="text-green-700">// ...</span>
+
+        <span class="text-green-700">// PENTING: update pagination</span>
+        <span class="text-blue-600">this</span>.<span class="prop">rolePagination</span> = { <span class="prop">limit, offset, sort, order</span> };
+      } <span class="script">catch</span> (<span class="prop">error</span>) {
+        <span class="text-green-700">// ...</span>
+      }
+      <span class="text-blue-600">this</span>.<span class="prop">loading</span> = <span class="text-blue-600">false</span>;
+    }
+  <span class="script">}</span>,
+  <span class="prop">mounted() <span class="script">{</span></span>,
+    <span class="text-green-700">// jangan lupa di-summon</span>
+    <span class="text-blue-600">this</span>.<span class="text-yellow-300">getRoles<span class="prop">(<span class="text-yellow-300">{</span> pagination: <span class="text-blue-600">this</span>.<span class="prop">rolePagination</span> <span class="text-yellow-300">}</span>)</span></span>;
+  <span class="script">}</span>,
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Di step ini, kalo key di object-object
+              <code class="highlight">this.roles</code> sesuai sama field-field di
+              <code class="highlight">this.columns</code>, harusnya data-data udah muncul di
+              cell-nya masing-masing.
+            </li>
+            <li>
+              Misalnya pingin ganti isi dari &lt;td&gt; di kolom
+              <code class="highlight">is_active</code> dari yang awalnya
+              <code class="highlight">String</code> jadi
+              <a href="#badge">&lt;help-badge&gt;</a> biar lebih cakep. Kita perlu apply logic di
+              dalem slot &lt;help-table&gt;. Caranya nggak susah, ini contohnya.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">template</span>&gt;
+  &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;/<span class="tag">p</span>&gt;
+    &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"overflow-hidden"</span>&gt;
+      &lt;<span class="tag">help-table</span>
+        <span class="prop">path</span>=<span class="string">"role"</span>
+        :<span class="prop">columns</span>="<span class="prop">columns</span>"
+        :<span class="prop">rows</span>="<span class="prop">roles</span>"
+        :<span class="prop">loading</span>="<span class="prop">loading</span>"
+        :<span class="prop">pagination</span>="<span class="prop">rolePagination</span>"
+      &gt;
+        &lt;<span class="tag">template</span> <span class="prop">v-slot</span>="{ <span class="prop">column, row</span> }"&gt;
+          &lt;<span class="tag">help-badge</span>
+            <span class="prop">v-if</span>="<span class="prop">column</span> === <span class="string">'is_active'</span>" <span class="text-green-700">// jadi pas nama kolomnya === 'is_active' yang di-render component ini</span>
+            :<span class="prop">label</span>="<span class="prop">row.is_active</span> ? '<span class="string">Active</span>' : '<span class="string">Inactive'</span>"
+            :<span class="prop">color</span>="<span class="prop">row.is_active</span> ? '<span class="string">positive</span>' : '<span class="string">negative'</span>"
+          />
+        &lt;/<span class="tag">template</span>&gt;
+      &lt;<span class="tag">help-table</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">template</span>&gt;
+
+&lt;<span class="tag">script</span>&gt;
+<span class="script">import <span class="prop">HelpBadge</span> from <span class="string">'@/components/atoms/Badge.vue'</span></span>;
+<span class="script">export default {</span>
+  <span class="text-green-700">// ...</span>
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Sekarang karena tabelnya udah sesuai yang dipengenin, langkah terakhir adalah buat handle next page,
+              previous page, sama sort. Pake event
+              <code class="highlight">@onChangePagination</code> sama
+              <code class="highlight">@sort</code>, panggil lagi aja method buat fetch data dari API
+              endpoint yang sama.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">template</span>&gt;
+  &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;/<span class="tag">p</span>&gt;
+    &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"overflow-hidden"</span>&gt;
+      &lt;<span class="tag">help-table</span>
+        <span class="prop">path</span>=<span class="string">"role"</span>
+        :<span class="prop">columns</span>="<span class="prop">columns</span>"
+        :<span class="prop">rows</span>="<span class="prop">roles</span>"
+        :<span class="prop">loading</span>="<span class="prop">loading</span>"
+        :<span class="prop">pagination</span>="<span class="prop">rolePagination</span>"
+        @<span class="prop">onChangePagination</span>="<span class="text-yellow-300">getRoles<span class="prop">(<span class="text-yellow-300">{</span> pagination: <span class="prop">$event</span> <span class="text-yellow-300">}</span>)</span></span>;"
+        @<span class="prop">sort</span>="<span class="text-yellow-300">getRoles<span class="prop">(<span class="text-yellow-300">{</span> pagination: <span class="prop">$event</span> <span class="text-yellow-300">}</span>)</span></span>;"
+      &gt;
+        <span class="text-green-700">// ...</span>
+      &lt;<span class="tag">help-table</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">template</span>&gt;</code>
+</pre>
             </li>
           </ol>
         </div>
