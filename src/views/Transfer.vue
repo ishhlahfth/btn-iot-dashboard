@@ -184,9 +184,9 @@ export default {
       const offset = pagination?.offset || 0;
       const sort = pagination?.sort || 'order_date';
       const order = pagination?.order || 'desc';
-      // const search = this.searchValue || '';
+      const search = this.searchValue || '';
 
-      let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`;
+      let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
 
       if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
 
