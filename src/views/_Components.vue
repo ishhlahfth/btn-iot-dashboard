@@ -542,6 +542,36 @@
           </template>
         </help-component>
 
+        <help-component id="select" title="Select" :props="props.select">
+          <template v-slot:description>
+            <p>Custom component buat nggantiin native select-option</p>
+          </template>
+          <template v-slot:design>
+            <div class="grid grid-flow-col auto-cols-max gap-2">
+              <div class="w-52">
+                <help-select
+                  :options="['Today', 'Yesterday', 'Last 7 Days', 'This Month']"
+                  v-model="selectState1"
+                />
+                <p class="text-xsmall text-grey-3 mt-2">Fixed width</p>
+              </div>
+              <div>
+                <help-select
+                  :options="[
+                    'Gopay',
+                    'Ovo',
+                    'ShopeePay',
+                    'Dana',
+                    'Very long text label but not lorem ipsum',
+                  ]"
+                  v-model="selectState2"
+                />
+                <p class="text-xsmall text-grey-3 mt-2">Auto width</p>
+              </div>
+            </div>
+          </template>
+        </help-component>
+
         <help-component id="modal" title="Modal" :props="props.modal" :slots="slots.modal">
           <template v-slot:description>
             <p>
@@ -1239,6 +1269,7 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpOption from '@/components/molecules/Option.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
+import HelpSelect from '@/components/molecules/Select.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
@@ -1261,6 +1292,7 @@ export default {
     HelpOption,
     HelpOptionItem,
     HelpRadio,
+    HelpSelect,
     HelpTable,
     HelpThumbnail,
     HelpToggle,
@@ -1720,6 +1752,46 @@ export default {
             ],
           },
         ],
+        select: [
+          {
+            prop: 'v-model',
+            description: 'State buat wadah option yang dipilih sama user',
+            type: 'String, Number, Object',
+            default: '',
+          },
+          {
+            prop: 'label',
+            description: 'Text di atasnya',
+            type: 'String',
+            default: '',
+          },
+          {
+            prop: 'options',
+            description:
+              'Pilihan yang tersedia buat dropdownnya. Isi arraynya boleh berbentuk object juga kalo misal mau value sama labelnya beda',
+            type: 'Array',
+            default: '',
+            examples: [
+              ['Today', 'Yesterday'],
+              [10, 25, 50],
+              [
+                { label: 'Tersedia', value: 'AVAILABLE' },
+                { label: 'Habis', value: 'UNAVAILABLE' },
+              ],
+            ],
+          },
+          {
+            prop: 'position',
+            description:
+              'Posisi absolute options waktu dibuka. Index ke-0 terima top/bottom & index ke-1 terima right/left relative terhadap parent',
+            type: 'Array',
+            default: "['bottom', 'right']",
+            examples: [
+              ['top', 'left'],
+              ['bottom', 'right'],
+            ],
+          },
+        ],
         table: [
           {
             prop: 'columns',
@@ -1867,6 +1939,9 @@ export default {
       radioState2: true,
       radioState3: false,
       toggleState: true,
+      selectState1: 'Today',
+      selectState2: 'Gopay',
+      selectState3: 'Brick By Boring Brick',
       modal: {
         sm: false,
         md: false,
