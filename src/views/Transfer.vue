@@ -188,7 +188,7 @@ export default {
 
       let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
 
-      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
 
       try {
         this.loading = true;
