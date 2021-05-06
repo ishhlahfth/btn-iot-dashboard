@@ -173,11 +173,10 @@
 
         <p class="font-bold mb-2"># Guides</p>
         <a href="#initiating-menu">Initiating Menu</a>
-        <a href="#get-features">GET Features</a>
-        <a href="#post-features">POST Features</a>
-        <a href="#patch-features">PATCH Features</a>
-        <a href="#delete-features">DELETE Features</a>
-        <a href="#initiating-modal">Initiating Modal</a>
+        <a href="#get-feature">Get Feature</a>
+        <a href="#create-feature">Create Feature</a>
+        <a href="#edit-feature">Edit Feature</a>
+        <a href="#delete-feature">Delete Feature</a>
         <a href="#git-flow">Git Flow</a>
       </div>
     </div>
@@ -588,7 +587,7 @@
               </a>
               ya, karena nggak enak kalo bacanya nyampur. Rasanya lebih bijak kalo dedicated di tiap
               slot aja logicnya. Contohnya nanti dijelaskan lebih lanjut di
-              <a href="#">GET Features</a>.
+              <a href="#">GET Feature</a>.
             </p>
           </template>
           <template v-slot:design>
@@ -666,8 +665,8 @@
           </ol>
         </div>
 
-        <div id="get-features" class="grid gap-8">
-          <p class="text-heading2 font-semibold text-midnight">Get Features</p>
+        <div id="get-feature" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Get Feature</p>
           <p>
             Normalnya endpoint yang wajib ada di suatu menu ya endpoint GET All. Jadi setelah menu
             selesai dibuat, waktunya fetch data terus di-apply di app ini. Consuming endpoint GET
@@ -857,8 +856,8 @@
           </ol>
         </div>
 
-        <div id="post-features" class="grid gap-8">
-          <p class="text-heading2 font-semibold text-midnight">Create Features</p>
+        <div id="create-feature" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Create Feature</p>
           <p>
             Beberapa menu perlu perlu fitur create. Kalo backend provide POST endpoint, maka
             biasanya pattern development featurenya
@@ -891,8 +890,8 @@
           </ol>
         </div>
 
-        <div id="patch-features" class="grid gap-8">
-          <p class="text-heading2 font-semibold text-midnight">Edit Features</p>
+        <div id="edit-feature" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Edit Feature</p>
           <p>
             Sebenernya cukup luas konteksnya kalo istilahnya Edit. Tapi yang dibahas di sini itu
             konteksnya edit beberapa field sekaligus. Dari segi UI mirip banget sama fitur create.
@@ -989,6 +988,28 @@
               Setelah formnya populated sama data existing, langkah terakhir adalah sediain method
               yg hit endpoint PATCH yang bakal kepanggil waktu formnya disubmit.
             </li>
+          </ol>
+        </div>
+
+        <div id="delete-feature" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Delete Feature</p>
+          <p>
+            Sebenernya jarang ada fitur delete di dashboard, karena sejak jaman develop dashboard
+            delivery Mas Al mintanya no hard delete. Tapi in case ada yang minta develop fitur ini,
+            kayak menu Banner misalnya, ini walkthrough-nya.
+          </p>
+          <ol class="list-decimal list-outside">
+            <li>
+              Siapin button buat delete row di suatu table. Konsep, layout, styling samain kayak di
+              fitur edit cuma ya kasih aja warna merah selayaknya button delete.
+            </li>
+            <li>
+              Jangan langsung hit API pas diklik ya. Kalo diklik, button ini nge-trigger open
+              confirmation modal yang ngeprompt user-nya "Yakin mau dihapus?" intinya gitu.
+              Component modalnya udah ada kok, tinggal pake. Yang ini
+              <code class="highlight">@/component/modals/Confirmation.vue</code>.
+            </li>
+            <li>Nanti pas usernya klik yes, baru hit endpoint delete.</li>
           </ol>
         </div>
       </div>
