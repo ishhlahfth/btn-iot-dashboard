@@ -531,6 +531,17 @@
           # Templates
         </p>
 
+        <help-component id="option" title="Option" :props="props.option" :events="events.option">
+          <template v-slot:description>
+            <p>Dedicated buat dipanggil sama <a href="#select">&lt;select&gt;</a></p>
+          </template>
+          <template v-slot:design>
+            <div class="grid w-32 relative h-64">
+              <help-option :options="['Option 1', 'Option 2', 'Option 3']" selected="Option 1" />
+            </div>
+          </template>
+        </help-component>
+
         <help-component id="modal" title="Modal" :props="props.modal" :slots="slots.modal">
           <template v-slot:description>
             <p>
@@ -1225,6 +1236,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
+import HelpOption from '@/components/molecules/Option.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import HelpTable from '@/components/templates/Table.vue';
@@ -1245,8 +1257,9 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpInput,
-    HelpOptionItem,
     HelpModal,
+    HelpOption,
+    HelpOptionItem,
     HelpRadio,
     HelpTable,
     HelpThumbnail,
@@ -1673,6 +1686,40 @@ export default {
             default: false,
           },
         ],
+        option: [
+          {
+            prop: 'options',
+            description:
+              'Pilihan yang tersedia buat dropdownnya. Isi arraynya boleh berbentuk object juga kalo misal mau value sama labelnya beda',
+            type: 'Array',
+            default: '',
+            examples: [
+              ['Today', 'Yesterday'],
+              [10, 25, 50],
+              [
+                { label: 'Tersedia', value: 'AVAILABLE' },
+                { label: 'Habis', value: 'UNAVAILABLE' },
+              ],
+            ],
+          },
+          {
+            prop: 'selected',
+            description: 'Yang ngasih tunjuk mana option yang sedang terpilih',
+            type: 'String, Number, Object',
+            default: '',
+          },
+          {
+            prop: 'position',
+            description:
+              'Posisi absolute options waktu dibuka. Index ke-0 terima top/bottom & index ke-1 terima right/left relative terhadap parent',
+            type: 'Array',
+            default: "['bottom', 'right']",
+            examples: [
+              ['top', 'left'],
+              ['bottom', 'right'],
+            ],
+          },
+        ],
         table: [
           {
             prop: 'columns',
@@ -1748,6 +1795,13 @@ export default {
             event: '@change = ($event) => {}',
             description: 'Terpanggil waktu komponennya diklik',
             parameters: [{ name: '$event', param: 'negasi dari current state' }],
+          },
+        ],
+        option: [
+          {
+            event: '@changeSelected = ($event) => {}',
+            description: 'Triggered waktu salah satu option diklik.',
+            parameters: [{ name: '$event', param: 'option yg dipilih' }],
           },
         ],
         table: [
