@@ -1012,6 +1012,154 @@
             <li>Nanti pas usernya klik yes, baru hit endpoint delete.</li>
           </ol>
         </div>
+
+        <div id="git-flow" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Git Flow</p>
+          <p>
+            Ada 3 branch utama di repo ini. Branch <code class="highlight">development</code>,
+            <code class="highlight">staging</code>, sama <code class="highlight">main</code>.
+            Tiga-tiganya udah CI/CD, jadi kalo push ke ketiga branch tadi pipeline-nya langsung
+            running dan auto deploy. App yang udah deployed masing-masing bisa diakses di sini.
+          </p>
+          <help-table
+            :footer="false"
+            :columns="[
+              { field: 'branch', label: 'branch' },
+              { field: 'url', label: 'url' },
+            ]"
+            :rows="[
+              { branch: 'development', url: 'bns-dashboard-dev.wehelpyou.xyz' },
+              { branch: 'staging', url: 'bns-dashboard-stg.wehelpyou.xyz' },
+              { branch: 'main', url: 'bns-dashboard.wehelpyou.xyz' },
+            ]"
+          />
+          <p>
+            <i>Idealnya</i> supaya semua branch synced, kalo mau deploy fitur baru di production
+            environment (branch <code class="highlight">main</code>) workflow dari awalnya begini.
+          </p>
+          <ol class="list-decimal list-outside">
+            <li>Mulai dari PR ke <code class="highlight">development</code> dulu</li>
+            <ol class="list-disc list-outside">
+              <li>
+                Bikin branch dari task di JIRA
+                <div class="border rounded w-96 mt-2 mb-4">
+                  <help-thumbnail
+                    src="https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/BNS-doc-1.png"
+                    height="auto"
+                    width="100%"
+                  />
+                </div>
+              </li>
+              <li>Checkout ke branch tersebut</li>
+              <li>Develop, commit commit commit</li>
+              <li>
+                Kalo udah selesai develop,
+                <code class="highlight">git pull origin development</code>. Inget, selalu pull
+                sebelum push
+              </li>
+              <li>
+                Push ke branch tersebut
+                <code class="highlight">git push origin feature/BNS-XXX</code>
+              </li>
+              <li>Create pull request branch fitur => branch development
+                <div class="border rounded w-104 mt-2 mb-4">
+                  <help-thumbnail
+                    src="https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/BNS-doc-2.png"
+                    height="auto"
+                    width="100%"
+                  />
+                </div>
+              </li>
+              <li>Approve, merge</li>
+              <li>
+                Setelah bitbucket pipeline-nya completed, cek di
+                <a href="http://bns-dashboard-dev.wehelpyou.xyz" target="blank">dashboard dev</a>
+                <div class="border rounded w-104 mt-2 mb-4">
+                  <help-thumbnail
+                    src="https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/BNS-doc-3.png"
+                    height="auto"
+                    width="100%"
+                  />
+                </div>
+              </li>
+            </ol>
+
+            <li>Naikin changes-nya ke <code class="highlight">staging</code></li>
+            <ol class="list-disc list-outside">
+              <li>
+                Checkout ke branch development
+                <code class="highlight">git checkout development</code>
+              </li>
+              <li>
+                Sync branch development local biar up to date aja sama changes yg udah dimerge tadi
+                <code class="highlight">git pull origin development</code>
+              </li>
+              <li>
+                Checkout ke intermediary branch dev-staging
+                <code class="highlight">git checkout dev-staging</code>
+              </li>
+              <li>
+                Ambil changes yang ada di branch development
+                <code class="highlight">git pull origin development</code>
+              </li>
+              <li>
+                Sebelum push dan bikin PR, pull branch staging dulu
+                <code class="highlight">git pull origin staging</code>
+              </li>
+              <li>
+                Tes dulu di lokal
+              </li>
+              <li>
+                Kalo udah mantep, push ke dev-staging
+                <code class="highlight">git push origin dev-staging</code>
+              </li>
+              <li>Create pull request branch dev-staging => branch staging</li>
+              <li>Approve, merge</li>
+              <li>
+                Setelah bitbucket pipeline staging-nya completed, test di
+                <a href="http://bns-dashboard-stg.wehelpyou.xyz" target="blank">dashboard staging</a>
+              </li>
+            </ol>
+
+            <li>Naikin changes-nya ke <code class="highlight">main</code></li>
+            <ol class="list-disc list-outside">
+              <li>
+                Sama kayak step 2 sebenernya, cuma intermediary branch-nya aja yang beda. Checkout
+                ke branch staging
+                <code class="highlight">git checkout staging</code>
+              </li>
+              <li>
+                Sync branch staging local biar up to date aja sama changes yg udah dimerge tadi
+                <code class="highlight">git pull origin staging</code>
+              </li>
+              <li>
+                Checkout ke intermediary branch staging-prod
+                <code class="highlight">git checkout staging-prod</code>
+              </li>
+              <li>
+                Ambil changes yang ada di branch staging
+                <code class="highlight">git pull origin staging</code>
+              </li>
+              <li>
+                Sebelum push dan bikin PR, pull branch main dulu
+                <code class="highlight">git pull origin main</code>
+              </li>
+              <li>
+                Tes dulu di lokal
+              </li>
+              <li>
+                Kalo udah mantep, push ke staging-prod
+                <code class="highlight">git push origin staging-prod</code>
+              </li>
+              <li>Create pull request branch staging-prod => branch main</li>
+              <li>Approve, merge</li>
+              <li>
+                Setelah bitbucket pipeline main-nya completed, test di
+                <a href="https://bns-dashboard-stg.wehelpyou.xyz" target="blank">dashboard production</a>
+              </li>
+            </ol>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
