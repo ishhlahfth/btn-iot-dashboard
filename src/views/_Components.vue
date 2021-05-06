@@ -667,7 +667,7 @@
         </div>
 
         <div id="get-features" class="grid gap-8">
-          <p class="text-heading2 font-semibold text-midnight">GET Features</p>
+          <p class="text-heading2 font-semibold text-midnight">Get Features</p>
           <p>
             Normalnya endpoint yang wajib ada di suatu menu ya endpoint GET All. Jadi setelah menu
             selesai dibuat, waktunya fetch data terus di-apply di app ini. Consuming endpoint GET
@@ -775,7 +775,7 @@
       <span class="text-blue-600">this</span>.<span class="prop">loading</span> = <span class="text-blue-600">false</span>;
     }
   <span class="script">}</span>,
-  <span class="prop">mounted() <span class="script">{</span></span>,
+  <span class="text-yellow-300">mounted() <span class="script">{</span></span>,
     <span class="text-green-700">// jangan lupa di-summon</span>
     <span class="text-blue-600">this</span>.<span class="text-yellow-300">getRoles<span class="prop">(<span class="text-yellow-300">{</span> pagination: <span class="text-blue-600">this</span>.<span class="prop">rolePagination</span> <span class="text-yellow-300">}</span>)</span></span>;
   <span class="script">}</span>,
@@ -858,7 +858,7 @@
         </div>
 
         <div id="post-features" class="grid gap-8">
-          <p class="text-heading2 font-semibold text-midnight">POST Features</p>
+          <p class="text-heading2 font-semibold text-midnight">Create Features</p>
           <p>
             Beberapa menu perlu perlu fitur create. Kalo backend provide POST endpoint, maka
             biasanya pattern development featurenya
@@ -887,6 +887,107 @@
             <li>
               Consume endpoint POST-nya. Jangan lupa supaya konsisten, waktu nunggu response kasih
               loading di button submitnya.
+            </li>
+          </ol>
+        </div>
+
+        <div id="patch-features" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Edit Features</p>
+          <p>
+            Sebenernya cukup luas konteksnya kalo istilahnya Edit. Tapi yang dibahas di sini itu
+            konteksnya edit beberapa field sekaligus. Dari segi UI mirip banget sama fitur create.
+            Makanya sebisa mungkin kalo di menu yang sama ada fitur create, component modalnya satu
+            aja, dijadiin satu sama component modalnya form create. Contohnya fitur
+            <router-link to="/bns/banner">edit banner</router-link>. Tapi kalo belum, ya bikin lagi
+            no issue. Okay, pattern developmentnya biasanya begini.
+          </p>
+          <ol class="list-decimal list-outside">
+            <li>
+              Siapin akses ke popup modal formnya. Biar konsisten, bikin kolom baru terus tambahin
+              button edit aja di tiap row.
+            </li>
+            <li>
+              Kalo component modalnya pake form create, statenya pake state create modal juga. Kalo
+              enggak, siapin modal state baru valuenya <code class="highlight">false</code>.
+            </li>
+            <li>
+              Selanjutnya populate form editnya. Biasanya caranya consume endpoint GET by id. Nah
+              sebelum itu ada yang perlu diselesaiin dulu. Ini perlu diinget: karena style app ini
+              bukan pindah routing melainkan pake modal, nggak bisa dengan mudah passing id di route
+              param. Maka dari itu, perlu state yang bisa diakses sama component modalnya sehingga
+              pas component modalnya itu ke-render bisa consume endpoint GET by id-nya.
+            </li>
+            <li>
+              Set event <code class="highlight">@click</code> di button edit tadi. Ketika button ini
+              diklik, set modal state-nya jadi <code class="highlight">true</code> dan set id di
+              vuex jadi id yang dikirim dari row.
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code><span class="text-green-700">// Role.vue</span>
+&lt;<span class="tag">template</span>&gt;
+  &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"p-4 sm:p-6 grid gap-4 sm:gap-6"</span>&gt;
+    &lt;<span class="tag">p</span> <span class="prop">class</span>=<span class="string">"text-heading2 font-semibold"</span>&gt;Role&lt;/<span class="tag">p</span>&gt;
+    &lt;<span class="tag">div</span> <span class="prop">class</span>=<span class="string">"overflow-hidden"</span>&gt;
+      &lt;<span class="tag">help-table</span>
+        <span class="prop">path</span>=<span class="string">"role"</span>
+        :<span class="prop">columns</span>="<span class="prop">columns</span>"
+        :<span class="prop">rows</span>="<span class="prop">roles</span>"
+        :<span class="prop">loading</span>="<span class="prop">loading</span>"
+        :<span class="prop">pagination</span>="<span class="prop">rolePagination</span>"
+      &gt;
+        &lt;<span class="tag">template</span> <span class="prop">v-slot</span>="{ <span class="prop">column, row</span> }"&gt;
+          &lt;<span class="tag">help-button</span>
+            <span class="prop">v-if</span>="<span class="prop">column</span> === <span class="string">'action'</span>" <span class="text-green-700">// jangan lupa bikin kolom action di state columns</span>
+            <span class="prop">bg-color</span>=<span class="string">"royal"</span>
+            <span class="prop">color</span>=<span class="string">"white"</span>
+            <span class="prop">icon</span>=<span class="string">"edit"</span>
+            <span class="prop">icon-only</span>
+            @<span class="prop">click</span>="<span class="text-yellow-300">openEditRole</span>(<span class="prop"><span class="prop">row.id</span></span>)"
+          />
+        &lt;/<span class="tag">template</span>&gt;
+      &lt;<span class="tag">help-table</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">template</span>&gt;
+
+&lt;<span class="tag">script</span>&gt;
+<span class="script">export default {</span>
+  <span class="text-green-700">// ...</span>
+  <span class="prop">methods: <span class="script">{</span></span>
+    <span class="text-yellow-300">openEditRole(<span class="prop">roleId</span>)</span> {
+      <span class="text-blue-600">this</span>.<span class="prop">modalState</span> = <span class="text-blue-600">true</span>;
+      <span class="text-blue-600">this</span>.<span class="prop">$store</span>.<span class="text-yellow-300">commit(<span class="string">'SET_ROLE_ID'</span>, <span class="prop">roleId</span>)</span>; <span class="text-green-700">// set state roleId di store buat dipake di modal nantinya</span>
+    }
+  <span class="script">}</span>,
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code><span class="text-green-700">// store/index.js</span>
+<span class="script">export default <span class="text-yellow-300">createStore(</span> {</span>
+  <span class="text-green-700">// ...</span>
+  <span class="prop">state: {</span>
+    <span class="text-green-700">// ...</span>
+    <span class="prop">roleId: </span>0,
+  <span class="prop">}</span>,
+  <span class="prop">mutations: {</span>
+    <span class="text-green-700">// ...</span>
+    <span class="text-yellow-300">SET_ROLE_ID(<span class="prop">state, payload</span>) {</span>
+      <span class="prop">state.roleId</span> = <span class="prop">payload</span>
+    <span class="text-yellow-300">}</span>
+  <span class="prop">}</span>,
+<span class="script">}</span></code>
+</pre>
+            </li>
+            <li>
+              State di vuex yang udah keganti sama <code class="highlight">roleId</code> yang akan
+              di-fetch bisa diakses di component edit modalnya. Di component edit modal, ambil
+              <code class="highlight">roleId</code> dari vuex, terus pas
+              <code class="highlight">mounted()</code> consume endpoint GET by id. Populate form
+              pake responsenya deh.
+            </li>
+            <li>
+              Setelah formnya populated sama data existing, langkah terakhir adalah sediain method
+              yg hit endpoint PATCH yang bakal kepanggil waktu formnya disubmit.
             </li>
           </ol>
         </div>
