@@ -482,6 +482,41 @@
         </help-component>
 
         <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
+          # Molecules
+        </p>
+
+        <help-component id="menu-card" title="Menu Card" :props="props.menuCard">
+          <template v-slot:description>
+            <p>
+              Component buat nampilin info detail menu
+            </p>
+          </template>
+          <template v-slot:design>
+            <div>
+              <menu-card
+                image-url="https://help-bns-bucket.s3.ap-southeast-1.amazonaws.com/84DA268F-ABEA-4E96-8CC6-1622D674D12D.jpg"
+                name="Java"
+                category="Makanan & Minuman"
+                description="Our signature caffe latte with intense coffee and creamy condensed milk."
+                :price="20000"
+                availability-status="Tersedia"
+                :variants="[
+                  {
+                    is_mandatory: true,
+                    name: 'Size',
+                    options: [
+                      { name: 'Regular', price: 0 },
+                      { name: 'Tall', price: 3000 },
+                      { name: 'Giant', price: 6000 },
+                    ],
+                  },
+                ]"
+              />
+            </div>
+          </template>
+        </help-component>
+
+        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
           # Templates
         </p>
 
@@ -1061,7 +1096,8 @@
                 Push ke branch tersebut
                 <code class="highlight">git push origin feature/BNS-XXX</code>
               </li>
-              <li>Create pull request branch fitur => branch development
+              <li>
+                Create pull request branch fitur => branch development
                 <div class="border rounded w-104 mt-2 mb-4">
                   <help-thumbnail
                     src="https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/BNS-doc-2.png"
@@ -1117,7 +1153,9 @@
               <li>Approve, merge</li>
               <li>
                 Setelah bitbucket pipeline staging-nya completed, test di
-                <a href="http://bns-dashboard-stg.wehelpyou.xyz" target="blank">dashboard staging</a>
+                <a href="http://bns-dashboard-stg.wehelpyou.xyz" target="blank"
+                  >dashboard staging</a
+                >
               </li>
             </ol>
 
@@ -1155,7 +1193,9 @@
               <li>Approve, merge</li>
               <li>
                 Setelah bitbucket pipeline main-nya completed, test di
-                <a href="https://bns-dashboard-stg.wehelpyou.xyz" target="blank">dashboard production</a>
+                <a href="https://bns-dashboard-stg.wehelpyou.xyz" target="blank"
+                  >dashboard production</a
+                >
               </li>
             </ol>
           </ol>
@@ -1176,13 +1216,13 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
+import HelpTable from '@/components/templates/Table.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
-import HelpTable from '@/components/templates/Table.vue';
 
 export default {
   name: 'Components',
@@ -1531,6 +1571,79 @@ export default {
           {
             prop: 'v-model',
             description: 'State togglenya (sementara pakai event @change, diubah manual)',
+            type: 'Boolean',
+            default: false,
+          },
+        ],
+        menuCard: [
+          {
+            prop: 'raw',
+            description: 'Khusus buat payload endpoint PATCH /items/:id',
+            type: 'Object',
+            default: '',
+          },
+          {
+            prop: 'image-url',
+            description: 'Foto item',
+            type: 'String',
+            default: '',
+            examples: ['https://...'],
+          },
+          {
+            prop: 'name',
+            description: 'Nama item',
+            type: 'String',
+            default: '',
+            examples: ['Nasi Goreng Gila', 'Thai Tea'],
+          },
+          {
+            prop: 'category',
+            description: 'Kategori item',
+            type: 'String',
+            default: '-',
+            examples: ['Makanan & Minuman', 'Elektronik'],
+          },
+          {
+            prop: 'description',
+            description: 'Deskripsi item',
+            type: 'String',
+            default: '-',
+            examples: ['Dimsum ayam isi 4 pcs', 'Pangsit goreng isi ayam, sawi, dan batagor'],
+          },
+          {
+            prop: 'price',
+            description: 'Harga item',
+            type: 'Number',
+            default: 0,
+            examples: [15000, 26000],
+          },
+          {
+            prop: 'availability-status',
+            description: 'Status ketersediaan item',
+            type: 'String',
+            default: 'Tersedia',
+            examples: ['Tersedia', 'Habis', 'Suspend'],
+          },
+          {
+            prop: 'variants',
+            description:
+              'Varian item yang tersedia. Kalo !is_mandatory checkbox, sebaliknya jadi radio btn',
+            type: 'Array of Objects',
+            default: '[ ]',
+            examples: [
+              {
+                is_mandatory: true,
+                name: 'Size',
+                options: [
+                  { name: 'Regular', price: 0 },
+                  { name: 'Tall', price: 3000 },
+                ],
+              },
+            ],
+          },
+          {
+            prop: 'loading',
+            description: 'Patokan muncul/enggaknya skeleton loading',
             type: 'Boolean',
             default: false,
           },
