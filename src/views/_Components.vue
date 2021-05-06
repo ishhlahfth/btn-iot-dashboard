@@ -516,6 +516,17 @@
           </template>
         </help-component>
 
+        <help-component id="navbar" title="Navbar">
+          <template v-slot:description>
+            <p>
+              Navigation bar yang isinya avatar sama nama current admin yang lagi login. Akses user
+              buat logout dan ke liat profilenya dia ada di navbar ini. Contoh UI-nya langsung
+              diliat di dashboardnya aja karena di sini kalo dipasang kosongan. Component ini
+              otomatis ambil data-data current user yang lagi login soalnya.
+            </p>
+          </template>
+        </help-component>
+
         <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
           # Templates
         </p>

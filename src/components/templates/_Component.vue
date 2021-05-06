@@ -15,33 +15,31 @@
 
     <slot name="design">-</slot>
 
-    <div class="divide-y divide-grey-4 grid gap-2">
-      <p class="font-semibold">Props</p>
-      <p></p>
-    </div>
-    <help-table
-      :footer="false"
-      :columns="[
-        { field: 'prop', label: 'Prop' },
-        { field: 'description', label: 'Description' },
-        { field: 'type', label: 'Type' },
-        { field: 'default', label: 'Default' },
-        { field: 'examples', label: 'Examples' },
-      ]"
-      :rows="props"
-    >
-      <template v-slot:body="{ column, row }">
-        <div v-if="column === 'examples'">
-          <code
-            v-for="(example, index) in row.examples"
-            :key="index"
-            class="highlight mr-1"
-          >
-            {{ example }}
-          </code>
-        </div>
-      </template>
-    </help-table>
+    <template v-if="props?.length">
+      <div class="divide-y divide-grey-4 grid gap-2">
+        <p class="font-semibold">Props</p>
+        <p></p>
+      </div>
+      <help-table
+        :footer="false"
+        :columns="[
+          { field: 'prop', label: 'Prop' },
+          { field: 'description', label: 'Description' },
+          { field: 'type', label: 'Type' },
+          { field: 'default', label: 'Default' },
+          { field: 'examples', label: 'Examples' },
+        ]"
+        :rows="props"
+      >
+        <template v-slot:body="{ column, row }">
+          <div v-if="column === 'examples'">
+            <code v-for="(example, index) in row.examples" :key="index" class="highlight mr-1">
+              {{ example }}
+            </code>
+          </div>
+        </template>
+      </help-table>
+    </template>
 
     <template v-if="events?.length">
       <div class="divide-y divide-grey-4 grid gap-2">
@@ -60,7 +58,8 @@
         <template v-slot:body="{ column, row }">
           <ol class="list-disc list-outside" v-if="column === 'parameters'">
             <li v-for="(param, index) in row.parameters" :key="index">
-              <span class="highlight mr-1">{{ param.name }}</span>:
+              <span class="highlight mr-1">{{ param.name }}</span
+              >:
               <span>{{ param.param }}</span>
             </li>
           </ol>
@@ -85,7 +84,8 @@
         <template v-slot:body="{ column, row }">
           <ol class="list-disc list-outside" v-if="column === 'props'">
             <li v-for="(prop, index) in row.props" :key="index">
-              <span class="highlight mr-1">{{ prop.name }}</span>:
+              <span class="highlight mr-1">{{ prop.name }}</span
+              >:
               <span>{{ prop.definition }}</span>
             </li>
           </ol>
