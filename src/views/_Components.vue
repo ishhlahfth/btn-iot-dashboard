@@ -586,6 +586,30 @@
           </template>
         </help-component>
 
+        <help-component
+          id="table-footer"
+          title="Table Footer"
+          :props="props.tableFooter"
+          :events="events.tableFooter"
+        >
+          <template v-slot:description>
+            <p>
+              Bagian bawah tabel yang berfungsi sebagai table navigation. Ada keterangan row nomer
+              berapa aja yang lagi ada di tabel, pilihan row limit, sama button next & previous.
+            </p>
+          </template>
+          <template v-slot:design>
+            <table-footer
+              :limit="10"
+              :offset="0"
+              sort="date"
+              order="desc"
+              :more-data-available="false"
+              :current-row-count="10"
+            />
+          </template>
+        </help-component>
+
         <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold">
           # Templates
         </p>
@@ -1295,6 +1319,7 @@ import Icon from '@/components/atoms/Icon.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import NavExpandableItem from '@/components/atoms/NavExpandableItem.vue';
 import NavItem from '@/components/atoms/NavItem.vue';
+import TableFooter from '@/components/molecules/TableFooter.vue';
 
 export default {
   name: 'Components',
@@ -1318,6 +1343,7 @@ export default {
     MenuCard,
     NavExpandableItem,
     NavItem,
+    TableFooter,
   },
   data() {
     return {
@@ -1810,6 +1836,52 @@ export default {
             ],
           },
         ],
+        tableFooter: [
+          {
+            prop: 'offset',
+            description:
+              'Query offset yang lagi aktif. Di sini gunanya buat kalkulasi banyak state dan buat nentuin next & prev pagination',
+            type: 'Number',
+            default: 'Number',
+            examples: [0, 10, 100],
+          },
+          {
+            prop: 'limit',
+            description:
+              'Query limit yang lagi aktif. Sama ini kepake banget buat kalkulasi ini itu',
+            type: 'Number',
+            default: '',
+            examples: [10, 25, 50],
+          },
+          {
+            prop: 'sort',
+            description:
+              'Query sort yang lagi aktif. Dioper ke sini buat update pagination aja, biar query sortnya ngikut pas pindah page/ganti limit',
+            type: 'String',
+            default: '',
+            examples: ['date', 'name', 'is_active'],
+          },
+          {
+            prop: 'order',
+            description: 'Query order yang lagi aktif. Alesan dioper ke sini sama kayak prop sort',
+            type: 'String',
+            default: '',
+            examples: ['asc', 'desc'],
+          },
+          {
+            prop: 'more-data-available',
+            description:
+              'Patokan udah mentok atau belum tablenya, karena backend nggak ngasih total row count buat patokan',
+            type: 'Boolean',
+            default: 'true',
+          },
+          {
+            prop: 'current-row-count',
+            description: 'Prop buat dasar kalkulasi first row sama last row',
+            type: 'Number',
+            default: '',
+          },
+        ],
         table: [
           {
             prop: 'columns',
@@ -1892,6 +1964,13 @@ export default {
             event: '@changeSelected = ($event) => {}',
             description: 'Triggered waktu salah satu option diklik.',
             parameters: [{ name: '$event', param: 'option yg dipilih' }],
+          },
+        ],
+        tableFooter: [
+          {
+            event: '@onChangePagination = ($event) => {}',
+            description: 'Triggered waktu limit atau offset berubah.',
+            parameters: [{ name: '$event', param: 'updated pagination' }],
           },
         ],
         table: [
