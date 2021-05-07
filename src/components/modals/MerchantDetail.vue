@@ -23,12 +23,14 @@
           <div class="w-44 h-44 rounded-full bg-grey-4"></div>
         </template>
       </div>
-      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Name</p>
           <p>{{ merchant.name }}</p>
-          <p class="text-grey-2">Location</p>
-          <p>{{ merchant.city }}</p>
+          <p class="text-grey-2">Address</p>
+          <p>{{ merchant.address }}</p>
+          <p class="text-grey-2">Phone No.</p>
+          <p>{{ merchant.phoneNumber }}</p>
           <p class="text-grey-2">Bank</p>
           <p>{{ merchant.bank }}</p>
           <p class="text-grey-2">ID No. (KTP)</p>
@@ -56,7 +58,7 @@
         <p></p>
         <p></p>
       </div>
-      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Order Completed</p>
           <p>{{ merchant.summary?.completed }}</p>
@@ -81,7 +83,7 @@
         <p></p>
         <p></p>
       </div>
-      <div class="grid grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-14 font-medium">
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 font-medium">
         <template v-if="!loading">
           <p class="text-grey-2">Items Sold</p>
           <p>{{ merchant.summary?.sold }}</p>

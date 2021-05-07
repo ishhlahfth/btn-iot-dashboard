@@ -81,7 +81,8 @@ export default createStore({
 
         merchant = {
           name: data.name,
-          city: data.address?.city.name,
+          phoneNumber: data.phone_number,
+          address: `${data.address?.line_address}, ${data.address?.district}, ${data.address?.city.name}, ${data.address?.state} ${data.address?.zip_code}`,
           bank: data.account?.bank.name,
           verificationStatus: data.verify_status,
           verificationDate: dayjs(data.verify_date).format('DD-MM-YYYY HH:mm:ss'),
