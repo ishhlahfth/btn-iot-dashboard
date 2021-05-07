@@ -183,12 +183,20 @@
 
     <div class="col-span-10 h-screen overflow-auto">
       <div class="p-8 grid gap-12 auto-rows-min">
-        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold"># Atoms</p>
+        <div id="jumbotron" class="rounded text-white relative px-16 pt-60" style="height: 528px;">
+          <p class="text-6xl font-bold mb-10">Wehelpyou BNS Dashboard</p>
+          <p class="w-2/3 leading-loose">
+            Ini dokumentasi seadanya BNS Dashboard. Internal developer only. Isinya custom component
+            library dan beberapa guide yang kayaknya butuh didokumentasikan dengan tujuan
+            meningkatkan konsistensi UI dan code serta mempermudah proses onboarding.
+          </p>
+        </div>
+        <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold"># Atoms</p>
 
         <help-component id="avatar" title="Avatar" :props="props.avatar" :slots="slots.avatar">
           <template v-slot:description>
             <p>
-              Komponen buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak komponen
+              component buat nampilin thumbnail yg bulet. Sebenernya fungsinya kayak component
               <a href="#thumbnail">thumbnail</a>, cuma ini lebih straightforward dan spesifik buat
               avatar kayak avatar admin atau logo partner aja.
             </p>
@@ -481,7 +489,7 @@
           </template>
         </help-component>
 
-        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
+        <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold">
           # Molecules
         </p>
 
@@ -527,10 +535,6 @@
           </template>
         </help-component>
 
-        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
-          # Templates
-        </p>
-
         <help-component id="option" title="Option" :props="props.option" :events="events.option">
           <template v-slot:description>
             <p>Dedicated buat dipanggil sama <a href="#select">&lt;select&gt;</a></p>
@@ -571,6 +575,20 @@
             </div>
           </template>
         </help-component>
+
+        <help-component id="sidebar" title="Sidebar">
+          <template v-slot:description>
+            <p>
+              Sidebar navigation menu yang muncul di semua page utama. Isinya nggak tergantung sama
+              props, emang belum ada keperluan buat ganti via props ya. Karena positionnya fixed,
+              jadi kalo mau liat contoh componentnya langsung ke app aja yah.
+            </p>
+          </template>
+        </help-component>
+
+        <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold">
+          # Templates
+        </p>
 
         <help-component id="modal" title="Modal" :props="props.modal" :slots="slots.modal">
           <template v-slot:description>
@@ -699,7 +717,7 @@
           </template>
         </help-component>
 
-        <p class="text-heading2 bg-midnight-dark text-white py-4 px-6 rounded font-bold">
+        <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold">
           # Guides
         </p>
 
@@ -746,7 +764,7 @@
             <li>
               Terakhir, tambahin menu di sidebar. Di Sidebar.vue, tambahin satu object lagi di dalem
               state <code class="highlight">links</code>. Keys di dalem objectnya sesuai
-              <a href="#nav-item">komponen nav item</a>. Set path buat routing sama path yang baru
+              <a href="#nav-item">component nav item</a>. Set path buat routing sama path yang baru
               aja ditambahin, label, sama kasih icon yang relevan.
             </li>
           </ol>
@@ -1865,7 +1883,7 @@ export default {
         toggle: [
           {
             event: '@change = ($event) => {}',
-            description: 'Terpanggil waktu komponennya diklik',
+            description: 'Terpanggil waktu componentnya diklik',
             parameters: [{ name: '$event', param: 'negasi dari current state' }],
           },
         ],
@@ -2010,5 +2028,11 @@ code {
 }
 ol {
   @apply ml-4;
+}
+#jumbotron {
+  background-image: url('https://help-bns-bucket.s3-ap-southeast-1.amazonaws.com/jumbotron-bns-docs.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
 }
 </style>
