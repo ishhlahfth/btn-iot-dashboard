@@ -39,6 +39,14 @@ th {
   font-weight: inherit;
 }
 
+ul,
+ol {
+  @apply pl-4;
+  li {
+    @apply mb-2;
+  }
+}
+
 textarea:focus,
 input:focus {
   outline: none;
@@ -67,5 +75,12 @@ input:focus {
   font-size: 14px;
   display: flex;
   align-items: center;
+}
+
+.highlight {
+  @apply rounded;
+  @apply bg-grey-4;
+  @apply bg-opacity-50;
+  @apply px-2;
 }
 </style>
