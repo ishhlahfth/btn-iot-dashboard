@@ -143,41 +143,50 @@
 
   <div class="w-screen grid grid-flow-col grid-cols-12">
     <div class="col-span-2 h-screen overflow-auto">
-      <div class="p-4 grid gap-4 auto-rows-max">
-        <p class="font-bold mb-2"># Atoms</p>
-        <a href="#avatar">Avatar</a>
-        <a href="#badge">Badge</a>
-        <a href="#button">Button</a>
-        <a href="#checkbox">Checkbox</a>
-        <a href="#icon">Icon</a>
-        <a href="#input">Input</a>
-        <a href="#nav-expandable-item">Nav Expandable Item</a>
-        <a href="#nav-item">Nav Item</a>
-        <a href="#option-item">Option Item</a>
-        <a href="#radio-button">Radio Button</a>
-        <a href="#thumbnail">Thumbnail</a>
-        <a href="#toggle">Toggle</a>
-        <!-- <a href="#tooltip">Tooltip</a> -->
+      <div class="p-4 grid gap-8 auto-rows-max">
+        <div class="grid gap-4">
+          <p class="font-bold"># Atoms</p>
+          <a href="#avatar">Avatar</a>
+          <a href="#badge">Badge</a>
+          <a href="#button">Button</a>
+          <a href="#checkbox">Checkbox</a>
+          <a href="#icon">Icon</a>
+          <a href="#input">Input</a>
+          <a href="#nav-expandable-item">Nav Expandable Item</a>
+          <a href="#nav-item">Nav Item</a>
+          <a href="#option-item">Option Item</a>
+          <a href="#radio-button">Radio Button</a>
+          <a href="#thumbnail">Thumbnail</a>
+          <a href="#toggle">Toggle</a>
+          <!-- <a href="#tooltip">Tooltip</a> -->
+        </div>
 
-        <p class="font-bold mb-2"># Molecules</p>
-        <a href="#menu-card">Menu Card</a>
-        <a href="#navbar">Navbar</a>
-        <a href="#option">Option</a>
-        <a href="#select">Select</a>
-        <a href="#sidebar">Sidebar</a>
-        <a href="#table-footer">Table Footer</a>
+        <div class="grid gap-4">
+          <p class="font-bold"># Molecules</p>
+          <a href="#menu-card">Menu Card</a>
+          <a href="#navbar">Navbar</a>
+          <a href="#option">Option</a>
+          <a href="#select">Select</a>
+          <a href="#sidebar">Sidebar</a>
+          <a href="#table-footer">Table Footer</a>
+        </div>
 
-        <p class="font-bold mb-2"># Templates</p>
-        <a href="#modal">Modal</a>
-        <a href="#table">Table</a>
+        <div class="grid gap-4">
+          <p class="font-bold"># Templates</p>
+          <a href="#modal">Modal</a>
+          <a href="#table">Table</a>
+        </div>
 
-        <p class="font-bold mb-2"># Guides</p>
-        <a href="#initiating-menu">Initiating Menu</a>
-        <a href="#get-feature">Get Feature</a>
-        <a href="#create-feature">Create Feature</a>
-        <a href="#edit-feature">Edit Feature</a>
-        <a href="#delete-feature">Delete Feature</a>
-        <a href="#git-flow">Git Flow</a>
+        <div class="grid gap-4">
+          <p class="font-bold"># Guides</p>
+          <a href="#initiating-menu">Initiating Menu</a>
+          <a href="#get-feature">Get Feature</a>
+          <a href="#create-feature">Create Feature</a>
+          <a href="#edit-feature">Edit Feature</a>
+          <a href="#delete-feature">Delete Feature</a>
+          <a href="#git-flow">Git Flow</a>
+          <a href="#toast-notif">Creating Toast Notification</a>
+        </div>
       </div>
     </div>
 
@@ -191,6 +200,17 @@
             meningkatkan konsistensi UI dan code serta mempermudah proses onboarding.
           </p>
         </div>
+
+        <div class="grid gap-4">
+          <p>Tech stack</p>
+
+          <div class="grid grid-flow-col gap-8 auto-cols-max">
+            <p class="py-4 px-8 border border-grey-2 rounded">Vue 3</p>
+            <p class="py-4 px-8 border border-grey-2 rounded">Vuex</p>
+            <p class="py-4 px-8 border border-grey-2 rounded">Tailwind CSS</p>
+          </div>
+        </div>
+
         <p class="text-heading2 bg-midnight text-white py-4 px-6 rounded font-bold"># Atoms</p>
 
         <help-component id="avatar" title="Avatar" :props="props.avatar" :slots="slots.avatar">
@@ -1294,6 +1314,48 @@
             </ol>
           </ol>
         </div>
+
+        <div id="toast-notif" class="grid gap-8">
+          <p class="text-heading2 font-semibold text-midnight">Creating Toast Notification</p>
+          <p>
+            Kadang user perlu dikasih feedback setelah mereka melakukan suatu action. Di app ini
+            bentuk feedbacknya berupa toast notification. Toast notification-nya pake library
+            <a href="https://github.com/Maronato/vue-toastification">vue-toastification</a>. Udah
+            dipilih mana yang kira-kira masuk sama theme-nya dashboard ini. Ada modifikasi dikit di
+            stylingnya, beberapa property di-override biar lebih cakep.
+          </p>
+          <p>Alasan lain kenapa pake library itu karena dia support Vue 3 😅</p>
+          <p>
+            Cara pakenya di component gampang, config timing segala macem udah dipasang di
+            <code class="highlight">@/main.js</code>, jadi tinggal
+          </p>
+          <ol class="list-decimal list-outside">
+            <li><code class="highlight">import { useToast } from 'vue-toastification';</code></li>
+            <li>
+              Return di dalem <code class="highlight">setup()</code> function
+              <pre class="text-white bg-grey-1 rounded p-4 mt-2 overflow-x-auto">
+<code>&lt;<span class="tag">script</span>&gt;
+<span class="script">export default {</span>
+  <span class="text-yellow-300">setup<span class="script">() {</span></span>
+    <span class="text-blue-600">const</span> <span class="prop">toast</span> = <span class="text-yellow-300">useToast()</span>
+    <span class="script">return</span> <span class="prop">{ toast }</span>
+  <span class="script">}</span>,
+<span class="script">}</span>
+&lt;/<span class="tag">script</span>&gt;</code>
+</pre>
+            </li>
+            <li>
+              Karena udah di-return, bisa diakses di <code class="highlight">this</code>. Panggil
+              waktu habis dapet response atau dapet error atau apapun. Docs lengkapnya cek di
+              <a href="https://github.com/Maronato/vue-toastification">vue-toastification</a>.
+            </li>
+          </ol>
+        </div>
+
+        <footer class="grid place-items-center py-8 bg-grey-5 mt-8 text-grey-2 text-center rounded">
+          _____ <br />
+          Last updated May 7, 2021
+        </footer>
       </div>
     </div>
   </div>
