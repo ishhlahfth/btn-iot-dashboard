@@ -130,6 +130,10 @@
         Produk.
       </li>
       <li><b>Wilayah</b> adalah lingkup area Layanan penjualan dan pengiriman Produk.</li>
+      <p>
+        Wehelpyou dan Merchant secara bersama-sama disebut sebagai <b>"Para Pihak"</b> dan secara
+        sendiri disebut sebagai <b>"Pihak"</b>
+      </p>
     </ol>
 
     <h2>II. Layanan</h2>
@@ -147,9 +151,8 @@
           <li>Customer Service;</li>
           <li>
             Seluruh fitur, informasi, konten, pemrograman, perangkat lunak, atau materi lainnya,
-            yang tersedia pada
+            yang tersedia pada Wehelpyou; dan
           </li>
-          <li>Wehelpyou; dan</li>
           <li>Layanan tambahan lain yang disediakan Wehelpyou.</li>
         </ol>
       </li>
@@ -164,7 +167,7 @@
       <li>
         Merchant dapat melakukan pendaftaran Akun Wehelpyou Sell dengan terlebih dahulu mengisi
         Formulir Pendaftaran dan melengkapi Dokumen Persyaratan berikut: <br /><br />
-        Identitas Subjek <br />
+        <u>Identitas Subjek</u> <br />
         <ol class="list-lower-alpha list-outside">
           <li>
             Untuk usaha perseorangan:
@@ -187,14 +190,14 @@
           </li>
         </ol>
         <br />
-        Identitas Outlet <br />
+        <u>Identitas Outlet</u> <br />
         <ol class="list-lower-alpha list-outside">
           <li>Foto tampak depan Outlet</li>
           <li>Lokasi Outlet dengan tautan google.maps</li>
         </ol>
         <br />
 
-        Identitas Produk <br />
+        <u>Identitas Produk</u> <br />
         <ol class="list-lower-alpha list-outside">
           <li>Foto Produk</li>
           <li>Nama Produk</li>
@@ -235,7 +238,7 @@
       </li>
     </ol>
 
-    <h2>IV. Kewajiban Merchant</h2>
+    <h2>IV. Kewajiban-Kewajiban</h2>
     <ol class="list-decimal list-outside">
       <li>
         Kewajiban Merchant
@@ -361,12 +364,9 @@
     <ol class="list-decimal list-outside">
       <li>
         Atas Layanan yang diberikan oleh Wehelpyou, Merchant sepakat bahwa Wehelpyou memiliki hak
-        untuk mendapatkan Biaya Layanan sebesar 10% (sepuluh persen) dari Harga Produk yang
-        ditagihkan kepada Pelanggan, termasuk biaya tambahan lainnya yang dikenakan oleh Merchant,
-        jika ada. Atas Layanan yang diberikan oleh Wehelpyou, Merchant sepakat bahwa Wehelpyou
-        memiliki hak untuk mendapatkan Biaya Layanan sebesar 10% (sepuluh persen) dari Harga Produk
-        yang ditagihkan kepada Pelanggan, termasuk biaya tambahan lainnya yang dikenakan oleh
-        Merchant, jika ada.
+        untuk mendapatkan Biaya Layanan sebesar 10% (sepuluh persen) atau sesuai dengan besaran yang
+        disepakati oleh Wehelpyou dari Harga Produk yang ditagihkan kepada Pelanggan, termasuk biaya
+        tambahan lainnya yang dikenakan oleh Merchant, jika ada.
       </li>
       <li>
         Biaya Layanan wajib dibayarkan seketika kepada Wehelpyou pada saat pembayaran Nilai
@@ -474,7 +474,7 @@
       <li>
         Setiap kegiatan pemasaran yang dilakukan oleh Merchant harus melalui persetujuan dan
         peninjauan dari Wehelpyou dengan mengirimkan rincian dan materi Promosi melalui alamat
-        e-mail [*]
+        e-mail marketing@wehelpyou.id
       </li>
     </ol>
 
@@ -745,6 +745,12 @@
         dalam Poin ini.
       </li>
       <li>
+        Selain daripada ketentuan-ketentuan di atas, penghentian Layanan dapat juga dikarenakan atas
+        permintaan Merchant. Dalam hal adanya permintaan penghentian Layanan oleh Merchant,
+        Wehelpyou Sell akan melakukan penghentian 14 (empat belas) hari kalender sejak Merchant
+        mengajukan permintaan penghentian Layanan.
+      </li>
+      <li>
         Permintaan sebagaimana dimaksud angka 7 Poin ini wajib disertai dengan alasan wajar dan
         cukup dan disampaikan kepada Wehelpyou.
       </li>
@@ -822,6 +828,11 @@
         bersedia bertanggung jawab untuk mengganti rugi Wehelpyou atau mitra Wehelpyou.
       </li>
       <li>
+        Merchant menyetujui bahwa Kurir dapat mengumpulkan atau mengelompokkan beberapa pesanan
+        Produk dari beberapa Pelanggan atau dengan sistem batching untuk tujuan efisiensi
+        perjalanan.
+      </li>
+      <li>
         Memberikan kebebasan kepada Wehelpyou untuk melakukan pemotongan Biaya Layanan dan/ atau
         biaya-biaya lainnya (jika ada) atas Nilai Transaksi sesuai dengan yang telah disepakati
         berdasarkan S&K ini. Terhadap setiap perbedaan yang terjadi atas pemotongan Biaya Layanan
@@ -861,7 +872,7 @@
       </li>
     </ol>
 
-    <h2>XIX.</h2>
+    <h2>XIX. Kerahasiaan</h2>
     <ol class="list-decimal list-outside">
       <li>
         Masing-masing Pihak harus menjaga kerahasiaan dan dilarang mengungkapkan kepada siapa pun
@@ -959,7 +970,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'TermsConditions',
 };
