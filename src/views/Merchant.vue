@@ -53,7 +53,7 @@
       <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
-      <form @submit.prevent="getMerchants({ pagination: merchantPagination, filter: merchantFilter })">
+      <form @submit.prevent="getMerchants({ filter: merchantFilter })">
         <help-input v-model="searchValue" placeholder="Search merchant name here" search-bar />
       </form>
     </div>
