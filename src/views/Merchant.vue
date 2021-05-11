@@ -53,7 +53,7 @@
       <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
-      <form @submit.prevent="getMerchants({ pagination: merchantPagination, filter: merchantFilter })">
+      <form @submit.prevent="getMerchants({ filter: merchantFilter })">
         <help-input v-model="searchValue" placeholder="Search merchant name here" search-bar />
       </form>
     </div>
@@ -161,6 +161,7 @@ export default {
       columns: [
         { field: 'name', label: 'name', sortable: true },
         { field: 'city', label: 'city', sortable: true },
+        { field: 'phone_number', label: 'phone number' },
         {
           field: 'verify_status',
           label: 'verification status',
@@ -242,6 +243,7 @@ export default {
           verify_status: this.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
           verify_date: dayjs(el.verify_date).format('DD-MM-YYYY HH:mm:ss'),
+          phone_number: el.phone_number,
           operational_hours: el.operational_hours.map(
             ({ open_hour: openHour, close_hour: closeHour, day_of_week: dayOfWeek }) => ({
               openHour,

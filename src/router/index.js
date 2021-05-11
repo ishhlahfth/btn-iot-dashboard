@@ -48,31 +48,6 @@ const routes = [
     beforeEnter: authenticate,
     children: [
       {
-        path: 'home',
-        name: 'TheDummyPage',
-        component: () => import('@/views/TheDummyPage.vue'),
-      },
-      {
-        path: 'components',
-        name: 'Components',
-        component: () => import('@/views/AnotherPage.vue'),
-      },
-      {
-        path: 'dummy-page-2',
-        name: 'DummyPage2',
-        component: () => import('@/views/DummyPage2.vue'),
-      },
-      {
-        path: 'dummy-page-3',
-        name: 'DummyPage3',
-        component: () => import('@/views/DummyPage3.vue'),
-      },
-      {
-        path: 'lorem-ipsum',
-        name: 'LoremIpsum',
-        component: () => import('@/views/Home.vue'),
-      },
-      {
         path: 'merchant',
         name: 'Merchant',
         component: () => import('@/views/Merchant.vue'),
@@ -125,6 +100,11 @@ const routes = [
     path: '/tnc',
     name: 'TermsConditions',
     component: () => import('@/views/TermsConditions.vue'),
+  },
+  {
+    path: '/doc',
+    name: 'Doc',
+    component: () => import('@/views/_Components.vue'),
   },
 ];
 

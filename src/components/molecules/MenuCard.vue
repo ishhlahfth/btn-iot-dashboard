@@ -143,7 +143,7 @@ export default {
     },
     availabilityStatus: {
       type: String,
-      default: 'AVAILABLE',
+      default: 'Tersedia',
     },
     isActive: {
       type: Boolean,

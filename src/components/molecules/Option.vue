@@ -32,7 +32,7 @@ export default {
       type: Array,
       required: true,
     },
-    default: {
+    default: { // probably unnecessary
       type: String,
       default: '',
     },
