@@ -37,7 +37,7 @@
       </div>
     </div>
     <div>
-      <form @submit.prevent="getTransferData({ pagination: transferPagination, filter: transferFilter })">
+      <form @submit.prevent="getTransferData({ filter: transferFilter })">
         <help-input v-model="searchValue" placeholder="Search order PO number here" search-bar />
       </form>
     </div>
