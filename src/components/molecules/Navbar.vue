@@ -9,12 +9,12 @@
       />
     </div>
     <div class="flex justify-end items-center">
-      <p class="font-medium">{{ currentUser.profile.name }}</p>
+      <p class="font-medium">{{ currentUser.profile?.name }}</p>
       <help-avatar
         src=""
         :size="32"
         :tabindex="0"
-        :placeholder="currentUser.profile.name"
+        :placeholder="currentUser.profile?.name"
         class="ml-3 cursor-pointer relative outline-none"
         @click="opened = !opened"
         @blur="opened = false"

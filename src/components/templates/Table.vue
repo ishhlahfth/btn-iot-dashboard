@@ -94,6 +94,7 @@
       </table>
     </div>
     <table-footer
+      v-if="footer"
       :limit="pagination.limit"
       :offset="pagination.offset"
       :sort="pagination.sort"
@@ -144,11 +145,15 @@ export default {
     },
     path: {
       type: String,
-      required: true,
+      // required: true,
     },
     loading: {
       type: Boolean,
       default: false,
+    },
+    footer: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

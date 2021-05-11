@@ -15,6 +15,10 @@
     />
   </help-modal>
 
+  <help-modal v-model="filterModal">
+    <transfer-filter :filter="transferFilter" @apply="applyFilter" @close="filterModal = false" />
+  </help-modal>
+
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Transfer</p>
@@ -29,17 +33,14 @@
           <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
           <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
         </template>
+        <help-button label="filter" icon="filter" @click="filterModal = true" />
       </div>
     </div>
-    <!-- <div>
-      <form @submit.prevent="getOrders">
-        <help-input
-          v-model="searchValue"
-          placeholder="Search order PO number here"
-          right-icon="search"
-        />
+    <div>
+      <form @submit.prevent="getTransferData({ pagination: transferPagination, filter: transferFilter })">
+        <help-input v-model="searchValue" placeholder="Search order PO number here" search-bar />
       </form>
-    </div> -->
+    </div>
     <div class="overflow-hidden">
       <help-table
         path="transfer-queues"
@@ -47,8 +48,8 @@
         :loading="loading"
         :rows="transfers"
         :pagination="transferPagination"
-        @onChangePagination="getTransferData($event)"
-        @sort="getTransferData($event)"
+        @onChangePagination="getTransferData({ pagination: $event, filter: transferFilter })"
+        @sort="getTransferData({ pagination: $event, filter: transferFilter })"
       >
         <template v-slot:header="{ column: { field } }">
           <help-checkbox
@@ -90,8 +91,9 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-// import HelpInput from '@/components/atoms/Input.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import TransferFilter from '@/components/modals/TransferFilter.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -106,8 +108,9 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpModal,
-    // HelpInput,
+    HelpInput,
     HelpTable,
+    TransferFilter,
   },
   setup() {
     const toast = useToast();
@@ -124,9 +127,13 @@ export default {
         sort: 'order_date',
         order: 'desc',
       },
+      transferFilter: {
+        merchantName: '',
+      },
       loading: false,
       checkAll: false,
       confirmTransferModal: false,
+      filterModal: false,
     };
   },
   computed: {
@@ -172,20 +179,22 @@ export default {
     },
   },
   methods: {
-    async getTransferData(pagination) {
-      const limit = pagination.limit || 10;
-      const offset = pagination.offset || 0;
-      const sort = pagination.sort || 'order_date';
-      const order = pagination.order || 'desc';
+    async getTransferData({ pagination, filter }) {
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      const sort = pagination?.sort || 'order_date';
+      const order = pagination?.order || 'desc';
+      const search = this.searchValue || '';
 
-      this.loading = true;
+      let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
+
+      if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
 
       try {
+        this.loading = true;
         const {
           data: { data },
-        } = await API.get(
-          `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}`,
-        );
+        } = await API.get(url);
 
         this.transfers = data.map((el) => ({
           id: el.id,
@@ -211,6 +220,7 @@ export default {
           sort,
           order,
         };
+        this.transferFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -232,7 +242,10 @@ export default {
         }
       }
       this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
-      this.getTransferData(this.transferPagination);
+      this.getTransferData({
+        pagination: this.transferPagination,
+        filter: this.transferFilter,
+      });
       this.confirmTransferModal = false;
     },
     toggleAll() {
@@ -242,9 +255,24 @@ export default {
         }
       }
     },
+    applyFilter($event) {
+      const pagination = {
+        ...this.transferPagination,
+        offset: 0,
+      };
+      const filter = {
+        ...this.transferFilter,
+        merchantName: $event.merchantName,
+      };
+      this.getTransferData({ pagination, filter });
+      this.filterModal = false;
+    },
   },
   async mounted() {
-    this.getTransferData(this.transferPagination);
+    this.getTransferData({
+      pagination: this.transferPagination,
+      filter: this.transferFilter,
+    });
   },
 };
 </script>

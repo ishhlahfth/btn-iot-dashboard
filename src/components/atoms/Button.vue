@@ -5,7 +5,6 @@
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
       `bg-${bgColor} text-${color}`,
-      { bordered: outlined },
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
       bgColor === 'transparent' ? 'hover:bg-grey-4 hover:bg-opacity-70' : 'hover:bg-opacity-80',
       { 'cursor-not-allowed bg-opacity-80': loading || disabled },
@@ -41,10 +40,6 @@ export default {
     color: {
       type: String,
       default: 'white',
-    },
-    outlined: {
-      type: Boolean,
-      default: false,
     },
     label: {
       type: String,
