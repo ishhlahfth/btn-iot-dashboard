@@ -17,7 +17,7 @@
       <help-button label="filter" icon="filter" @click="filterModal = true" />
     </div>
     <div>
-      <form @submit.prevent="getOrders({ pagination: orderPagination, filter: orderFilter })">
+      <form @submit.prevent="getOrders({ filter: orderFilter })">
         <help-input v-model="searchValue" placeholder="Search order PO number here" search-bar />
       </form>
     </div>
