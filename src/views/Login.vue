@@ -53,8 +53,9 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -72,6 +73,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const route = useRoute();
+    const store = useStore();
 
     const toast = useToast();
 
@@ -85,10 +88,10 @@ export default {
     const loading = ref(false);
     const resetPasswordModal = ref(false);
 
+    const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+
     const sendVerifyEmail = async () => {
       try {
-        const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
-
         await axios.post(
           `${process.env.VUE_APP_BASE_URL}dashboard/authentications/send-verify-email`,
           { email: resetEmail.value },
@@ -137,8 +140,6 @@ export default {
 
         loading.value = true;
         try {
-          const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
-
           const {
             data: { data },
           } = await axios.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload, {
@@ -161,6 +162,31 @@ export default {
         loading.value = false;
       }
     };
+
+    onMounted(async () => {
+      if (route.query?.token) {
+        console.log('👉👉👉 PARAMS.TOKEN', route.query.token);
+        const token = route.query.token;
+
+        try {
+          const {
+            data: { data },
+          } = await axios.post(
+            `${process.env.VUE_APP_BASE_URL}dashboard/authentications/verify-token`,
+            { token },
+            {
+              headers: { authorization: auth },
+            },
+          );
+          if (data?.token) {
+            store.commit('SET_RESET_PASSWORD_TOKEN', data.token);
+            router.push('reset_password');
+          }
+        } catch (error) {
+          toast.error(error.response.data.meta.message);
+        }
+      }
+    });
 
     return {
       email,
