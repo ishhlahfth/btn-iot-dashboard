@@ -22,6 +22,7 @@ export default createStore({
       merchant: false,
       conductTransfer: false,
     },
+    resetPasswordToken: '',
   },
   mutations: {
     SET_CURRENT_USER(state, payload) {
@@ -68,6 +69,9 @@ export default createStore({
     },
     SET_LOADING(state, { type, payload }) {
       state.loading[type] = payload;
+    },
+    SET_RESET_PASSWORD_TOKEN(state, payload) {
+      state.resetPasswordToken = payload;
     },
   },
   actions: {

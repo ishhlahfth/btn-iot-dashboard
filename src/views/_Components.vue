@@ -353,7 +353,7 @@
           </template>
         </help-component>
 
-        <help-component id="input" title="Input" :props="props.input">
+        <help-component id="input" title="Input" :props="props.input" :slots="slots.input">
           <template v-slot:description>
             Input field seperti input pada umumnya, stylingnya aja yang udah disesuaiin
           </template>
@@ -2054,6 +2054,13 @@ export default {
           {
             slot: 'default',
             description: 'Bisa buat ngasih element absolute yang relative ke avatar',
+            props: [],
+          },
+        ],
+        input: [
+          {
+            slot: 'default',
+            description: 'Opsi yang lebih fleksibel buat button di kanan (sangat perlu refactor)',
             props: [],
           },
         ],
