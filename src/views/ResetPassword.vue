@@ -19,8 +19,8 @@
             placeholder="create new password"
             v-model="password"
           />
-          <p class="text-xsmall text-flame font-medium" v-if="invalid">
-            Your password is required
+          <p class="text-xsmall text-flame font-medium" v-if="invalid.password">
+            Your new password is required
           </p>
         </div>
         <div class="grid auto-rows-max gap-2">
@@ -30,8 +30,8 @@
             placeholder="confirm your new password"
             v-model="confirmationPassword"
           />
-          <p class="text-xsmall text-flame font-medium" v-if="invalid">
-            Your password is required
+          <p class="text-xsmall text-flame font-medium" v-if="invalid.confirmationPassword">
+            Password incorrect
           </p>
         </div>
         <help-button label="confirm" :loading="loading" loading-label="creating password" />
@@ -61,13 +61,33 @@ export default {
     return {
       password: '',
       confirmationPassword: '',
-      invalid: false,
+      invalid: {
+        password: false,
+        confirmationPassword: false,
+      },
       loading: false,
     };
   },
   computed: {
     resetPasswordToken() {
       return this.$store.state.resetPasswordToken;
+    },
+  },
+  watch: {
+    password() {
+      if (this.password) {
+        this.invalid.password = false;
+      } else {
+        this.invalid.password = true;
+      }
+    },
+    confirmationPassword(newValue) {
+      if (newValue !== this.password) {
+        console.log('object', newValue, this.password);
+        this.invalid.confirmationPassword = true;
+      } else {
+        this.invalid.confirmationPassword = false;
+      }
     },
   },
   methods: {
@@ -77,35 +97,37 @@ export default {
         password: this.confirmationPassword,
       };
       const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
-      try {
-        this.loading = true;
-        await axios.patch(
-          `${process.env.VUE_APP_BASE_URL}dashboard/authentications/reset-password`,
-          payload,
-          {
-            headers: {
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+07:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-              authorization: auth,
+      if (!this.invalid.password && !this.invalid.confirmationPassword) {
+        try {
+          this.loading = true;
+          await axios.patch(
+            `${process.env.VUE_APP_BASE_URL}dashboard/authentications/reset-password`,
+            payload,
+            {
+              headers: {
+                'x-device-type': 'LINUX',
+                'x-device-os-version': 'Ubuntu18.04',
+                'x-device-model': '4s-dk0115AU',
+                'x-app-version': 'v1.2',
+                'x-request-id': '1234',
+                'x-device-utc-offset': '+07:00',
+                'x-device-lang': 'en',
+                'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+                authorization: auth,
+              },
             },
-          },
-        );
-        this.toast.success('Successfully created new password');
-        this.$router.push('/');
-      } catch (error) {
-        if (error.response.data.meta.message === 'Resources not found: token') {
-          this.toast.error('Token not found. Try resending email.');
-        } else {
-          this.toast.error(error.response.data.meta.message);
+          );
+          this.toast.success('Successfully created new password');
+          this.$router.push('/');
+        } catch (error) {
+          if (error.response.data.meta.message === 'Resources not found: token') {
+            this.toast.error('Token not found. Try resending email.');
+          } else {
+            this.toast.error(error.response.data.meta.message);
+          }
         }
+        this.loading = false;
       }
-      this.loading = false;
     },
   },
 };
