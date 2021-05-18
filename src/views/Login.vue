@@ -35,7 +35,21 @@
           </p>
         </div>
         <div class="grid auto-rows-max gap-2">
-          <help-input type="password" label="Password" placeholder="password" v-model="password" />
+          <help-input
+            :type="visiblePassword ? 'text' : 'password'"
+            label="Password"
+            placeholder="password"
+            v-model="password"
+          >
+            <help-button
+              type="button"
+              icon-only
+              :icon="visiblePassword ? 'eye-off' : 'eye'"
+              bg-color="transparent"
+              color="grey-3"
+              @click="visiblePassword = !visiblePassword"
+            />
+          </help-input>
           <p class="text-xsmall text-flame font-medium" v-if="invalid.password">
             Your password is required
           </p>
@@ -85,6 +99,7 @@ export default {
       email: false,
       password: false,
     });
+    const visiblePassword = ref(false);
     const loading = ref(false);
     const resetPasswordModal = ref(false);
 
@@ -194,6 +209,7 @@ export default {
       resetEmail,
       invalid,
       signIn,
+      visiblePassword,
       loading,
       resetPasswordModal,
       sendVerifyEmail,

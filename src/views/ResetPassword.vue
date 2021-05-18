@@ -14,28 +14,48 @@
       >
         <div class="grid auto-rows-max gap-2">
           <help-input
-            type="password"
+            :type="visible.password ? 'text' : 'password'"
             label="Password"
             placeholder="create new password"
             v-model="password"
-          />
+          >
+            <help-button
+              type="button"
+              icon-only
+              :icon="visible.password ? 'eye-off' : 'eye'"
+              bg-color="transparent"
+              color="grey-3"
+              @click="visible.password = !visible.password"
+            />
+          </help-input>
           <p class="text-xsmall text-flame font-medium" v-if="invalid.password">
             Your new password is required
           </p>
         </div>
         <div class="grid auto-rows-max gap-2">
           <help-input
-            type="password"
+            :type="visible.confirmationPassword ? 'text' : 'password'"
             label="Confirm Password"
             placeholder="confirm your new password"
             v-model="confirmationPassword"
-          />
+          >
+            <help-button
+              type="button"
+              icon-only
+              :icon="visible.confirmationPassword ? 'eye-off' : 'eye'"
+              bg-color="transparent"
+              color="grey-3"
+              @click="visible.confirmationPassword = !visible.confirmationPassword"
+            />
+          </help-input>
           <p class="text-xsmall text-flame font-medium" v-if="invalid.confirmationPassword">
             Password incorrect
           </p>
         </div>
-        <help-button label="confirm" :loading="loading" loading-label="creating password" />
-        <help-button label="abort" bg-color="flame" type="button" @click="$router.push('/')" />
+        <div class="grid gap-2">
+          <help-button label="confirm" :loading="loading" loading-label="creating password" />
+          <help-button label="abort" bg-color="flame" type="button" @click="$router.push('/')" />
+        </div>
       </form>
     </div>
   </div>
@@ -62,6 +82,10 @@ export default {
       password: '',
       confirmationPassword: '',
       invalid: {
+        password: false,
+        confirmationPassword: false,
+      },
+      visible: {
         password: false,
         confirmationPassword: false,
       },

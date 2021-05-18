@@ -33,7 +33,7 @@
         { 'with-left-and-right-icon': leftIcon && rightIcon },
         { 'with-left-icon': leftIcon },
         { 'with-right-icon': rightIcon },
-        { 'search-bar': searchBar },
+        { 'search-bar': searchBar || hasSlot },
       ]"
       @click="$refs.helpInput.focus()"
       @blur="$refs.helpInput.blur()"
@@ -68,6 +68,7 @@
         @click="$emit('update:modelValue', '')"
       />
       <icon v-if="rightIcon" :name="rightIcon" class="justify-self-center self-center" />
+      <slot></slot>
     </div>
     <p v-if="hasError" class="font-medium text-xsmall text-flame mt-0.5">
       This is an error message
@@ -138,6 +139,11 @@ export default {
       onFocus: false,
       hasError: false,
     };
+  },
+  computed: {
+    hasSlot() {
+      return !!this.$slots.default;
+    },
   },
 };
 </script>
