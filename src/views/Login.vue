@@ -5,14 +5,14 @@
       <p>
         Please enter your email address. You will receive a link to create a new password via email
       </p>
-      <div class="flex items-center">
+      <form @submit.prevent="sendVerifyEmail" class="flex items-center">
         <div class="w-full mr-4">
           <help-input placeholder="Type your email here" v-model="resetEmail" />
         </div>
         <div>
-          <help-button label="send link" @click="sendResetPasswordLink" />
+          <help-button label="send link" />
         </div>
-      </div>
+      </form>
     </div>
   </help-modal>
   <div class="w-full sm:min-w-min p-8 sm:p-24 sm:pb-10 sm:mb-5 bg-snow absolute top-12">
@@ -85,30 +85,19 @@ export default {
     const loading = ref(false);
     const resetPasswordModal = ref(false);
 
-    const sendResetPasswordLink = async () => {
+    const sendVerifyEmail = async () => {
       try {
-        const {
-          data: { data },
-        } = await axios.post(
-          `${process.env.VUE_APP_BASE_URL}v1/authentications/dashboard/send-verify-email`,
-          { email: resetEmail },
+        const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+
+        await axios.post(
+          `${process.env.VUE_APP_BASE_URL}dashboard/authentications/send-verify-email`,
+          { email: resetEmail.value },
           {
-            headers: {
-              'x-api-key': 'secret-xApiKey-for-developer',
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+07:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-            },
+            headers: { authorization: auth },
           },
         );
-        console.log(`Link has been sent to ${email.value}`);
-        console.log(data);
-        // resetPasswordModal.value = false;
+
+        toast.success(`Link has been sent to ${resetEmail.value}`);
       } catch (error) {
         toast.error(error.response.data.meta.message);
       }
@@ -181,7 +170,7 @@ export default {
       signIn,
       loading,
       resetPasswordModal,
-      sendResetPasswordLink,
+      sendVerifyEmail,
     };
   },
 };
