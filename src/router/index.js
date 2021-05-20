@@ -102,6 +102,11 @@ const routes = [
     component: () => import('@/views/TermsConditions.vue'),
   },
   {
+    path: '/reset_password',
+    name: 'ResetPassword',
+    component: () => import('@/views/ResetPassword.vue'),
+  },
+  {
     path: '/doc',
     name: 'Doc',
     component: () => import('@/views/_Components.vue'),
