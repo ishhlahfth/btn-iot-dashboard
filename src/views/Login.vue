@@ -5,14 +5,14 @@
       <p>
         Please enter your email address. You will receive a link to create a new password via email
       </p>
-      <div class="flex items-center">
+      <form @submit.prevent="sendVerifyEmail" class="flex items-center">
         <div class="w-full mr-4">
           <help-input placeholder="Type your email here" v-model="resetEmail" />
         </div>
         <div>
-          <help-button label="send link" @click="sendResetPasswordLink" />
+          <help-button label="send link" />
         </div>
-      </div>
+      </form>
     </div>
   </help-modal>
   <div class="w-full sm:min-w-min p-8 sm:p-24 sm:pb-10 sm:mb-5 bg-snow absolute top-12">
@@ -35,7 +35,21 @@
           </p>
         </div>
         <div class="grid auto-rows-max gap-2">
-          <help-input type="password" label="Password" placeholder="password" v-model="password" />
+          <help-input
+            :type="visiblePassword ? 'text' : 'password'"
+            label="Password"
+            placeholder="password"
+            v-model="password"
+          >
+            <help-button
+              type="button"
+              icon-only
+              :icon="visiblePassword ? 'eye-off' : 'eye'"
+              bg-color="transparent"
+              color="grey-3"
+              @click="visiblePassword = !visiblePassword"
+            />
+          </help-input>
           <p class="text-xsmall text-flame font-medium" v-if="invalid.password">
             Your password is required
           </p>
@@ -53,8 +67,9 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
@@ -72,6 +87,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const route = useRoute();
+    const store = useStore();
 
     const toast = useToast();
 
@@ -82,12 +99,26 @@ export default {
       email: false,
       password: false,
     });
+    const visiblePassword = ref(false);
     const loading = ref(false);
     const resetPasswordModal = ref(false);
 
-    const sendResetPasswordLink = () => {
-      console.log(`Link has been sent to ${email.value}`);
-      resetPasswordModal.value = false;
+    const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+
+    const sendVerifyEmail = async () => {
+      try {
+        await axios.post(
+          `${process.env.VUE_APP_BASE_URL}dashboard/authentications/send-verify-email`,
+          { email: resetEmail.value },
+          {
+            headers: { authorization: auth },
+          },
+        );
+
+        toast.success(`Link has been sent to ${resetEmail.value}`);
+      } catch (error) {
+        toast.error(error.response.data.meta.message);
+      }
     };
 
     const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
@@ -124,8 +155,6 @@ export default {
 
         loading.value = true;
         try {
-          const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
-
           const {
             data: { data },
           } = await axios.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload, {
@@ -149,15 +178,41 @@ export default {
       }
     };
 
+    onMounted(async () => {
+      if (route.query?.token) {
+        console.log('👉👉👉 PARAMS.TOKEN', route.query.token);
+        const token = route.query.token;
+
+        try {
+          const {
+            data: { data },
+          } = await axios.post(
+            `${process.env.VUE_APP_BASE_URL}dashboard/authentications/verify-token`,
+            { token },
+            {
+              headers: { authorization: auth },
+            },
+          );
+          if (data?.token) {
+            store.commit('SET_RESET_PASSWORD_TOKEN', data.token);
+            router.push('reset_password');
+          }
+        } catch (error) {
+          toast.error(error.response.data.meta.message);
+        }
+      }
+    });
+
     return {
       email,
       password,
       resetEmail,
       invalid,
       signIn,
+      visiblePassword,
       loading,
       resetPasswordModal,
-      sendResetPasswordLink,
+      sendVerifyEmail,
     };
   },
 };
