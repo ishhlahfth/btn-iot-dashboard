@@ -10,7 +10,7 @@
           <help-input placeholder="Type your email here" v-model="resetEmail" />
         </div>
         <div>
-          <help-button label="send link" />
+          <help-button label="send link" :loading="resetPasswordLoading" loading-label="sending" />
         </div>
       </form>
     </div>
@@ -102,11 +102,13 @@ export default {
     const visiblePassword = ref(false);
     const loading = ref(false);
     const resetPasswordModal = ref(false);
+    const resetPasswordLoading = ref(false);
 
     const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
 
     const sendVerifyEmail = async () => {
       try {
+        resetPasswordLoading.value = true;
         await axios.post(
           `${process.env.VUE_APP_BASE_URL}dashboard/authentications/send-verify-email`,
           { email: resetEmail.value },
@@ -119,6 +121,7 @@ export default {
       } catch (error) {
         toast.error(error.response.data.meta.message);
       }
+      resetPasswordLoading.value = false;
     };
 
     const setCookie = ({ cookieName, cookieValue, expiresIn }) => {
@@ -180,7 +183,6 @@ export default {
 
     onMounted(async () => {
       if (route.query?.token) {
-        console.log('👉👉👉 PARAMS.TOKEN', route.query.token);
         const token = route.query.token;
 
         try {
@@ -212,6 +214,7 @@ export default {
       visiblePassword,
       loading,
       resetPasswordModal,
+      resetPasswordLoading,
       sendVerifyEmail,
     };
   },
