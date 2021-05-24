@@ -48,7 +48,10 @@
               @click="visible.confirmationPassword = !visible.confirmationPassword"
             />
           </help-input>
-          <p class="text-xsmall text-flame font-medium" v-if="invalid.confirmationPassword">
+          <p
+            class="text-xsmall text-flame font-medium"
+            v-if="confirmationPassword && invalid.confirmationPassword"
+          >
             Password incorrect
           </p>
         </div>
@@ -83,7 +86,7 @@ export default {
       confirmationPassword: '',
       invalid: {
         password: false,
-        confirmationPassword: false,
+        confirmationPassword: true,
       },
       visible: {
         password: false,
@@ -107,7 +110,6 @@ export default {
     },
     confirmationPassword(newValue) {
       if (newValue !== this.password) {
-        console.log('object', newValue, this.password);
         this.invalid.confirmationPassword = true;
       } else {
         this.invalid.confirmationPassword = false;
@@ -121,7 +123,9 @@ export default {
         password: this.confirmationPassword,
       };
       const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
-      if (!this.invalid.password && !this.invalid.confirmationPassword) {
+      if (!this.confirmationPassword) {
+        this.toast.warning('Please re-type your password');
+      } else if (!this.invalid.password && !this.invalid.confirmationPassword) {
         try {
           this.loading = true;
           await axios.patch(
