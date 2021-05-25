@@ -21,7 +21,7 @@
 import HelpTable from '@/components/templates/Table.vue';
 
 export default {
-  name: 'RolesDetail',
+  name: 'RoleDetail',
   data() {
     return {
       columns: [

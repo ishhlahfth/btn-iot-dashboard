@@ -1,11 +1,11 @@
 <template>
   <help-modal v-model="visibleDetail">
-    <roles-detail />
+    <role-detail />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Role</p>
-      <help-button label="filter" icon="filter" @click="handleModal('filter')" />
+      <!-- <help-button label="filter" icon="filter" @click="handleModal('filter')" /> -->
     </div>
     <div>
       <form @submit.prevent="getMerchants({ filter: merchantFilter })">
@@ -17,10 +17,10 @@
         path="roles"
         :columns="columns"
         :rows="dataRoles"
-        :loading="loadingRoles"
+        :loading="loading"
         :pagination="rolesPagination"
-        @onChangePagination="getDataRoles($event)"
-        @sort="getDataRoles($event)"
+        @onChangePagination="getRoles({ pagination: $event })"
+        @sort="getRoles({ pagination: $event })"
       >
         <template v-slot:body="{ column, data }">
           <p v-if="column === 'name'" class="font-medium">{{ data }}</p>
@@ -49,7 +49,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-import RolesDetail from '@/components/modals/RolesDetail.vue';
+import RoleDetail from '@/components/modals/RoleDetail.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 
 import API from '../apis';
@@ -71,7 +71,7 @@ export default {
         limit: 10,
         offset: 0,
       },
-      loadingRoles: false,
+      loading: false,
       visibleDetail: false,
       visibleEdit: false,
       filterModal: false,
@@ -83,26 +83,25 @@ export default {
     HelpToggle,
     HelpModal,
     HelpInput,
-    RolesDetail,
+    RoleDetail,
   },
   methods: {
-    async getDataRoles(pagination) {
+    async getRoles({ pagination }) {
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
       try {
         const {
           data: { data },
-        } = await API.get(
-          `/roles?offset=${pagination.offset}&limit=${pagination.limit}&group=INTERNAL_DASHBOARD`,
-        );
+        } = await API.get(`/roles?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD`);
         this.dataRoles = data;
-        this.loadingRoles = false;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
         } else {
           this.toast.error(error.message);
         }
-        this.loadingRoles = false;
       }
+      this.loading = false;
     },
     handleModal(params, data) {
       switch (params) {
@@ -118,8 +117,8 @@ export default {
     },
   },
   async mounted() {
-    this.loadingRoles = true;
-    await this.getDataRoles(this.rolesPagination);
+    this.loading = true;
+    await this.getRoles({ pagination: this.rolesPagination });
   },
 };
 </script>
