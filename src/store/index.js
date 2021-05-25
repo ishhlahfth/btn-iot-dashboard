@@ -23,6 +23,7 @@ export default createStore({
       conductTransfer: false,
     },
     resetPasswordToken: '',
+    permissions: [],
   },
   mutations: {
     SET_CURRENT_USER(state, payload) {
@@ -72,6 +73,9 @@ export default createStore({
     },
     SET_RESET_PASSWORD_TOKEN(state, payload) {
       state.resetPasswordToken = payload;
+    },
+    SET_PERMISSIONS(state, payload) {
+      state.permissions = payload;
     },
   },
   actions: {

@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-// import axios from 'axios';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -54,10 +52,6 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpTooltip from '@/components/atoms/Tooltip.vue';
 import MerchantDetail from '@/components/modals/MerchantDetail.vue';
-
-// = = DUMMY = =
-import { role as dummyRole } from '../../dummy.json';
-// = = DUMMY = =
 
 export default {
   name: 'Role',
@@ -70,87 +64,6 @@ export default {
     HelpToggle,
     HelpTooltip,
     MerchantDetail,
-  },
-  setup() {
-    // const store = inject('store');
-    const searchValue = ref('');
-    const columns = [
-      { field: 'name', label: 'role name', sortable: true },
-      { field: 'description', label: 'description' },
-      { field: 'admins', label: 'admins' },
-      {
-        field: 'permissions',
-        label: 'permission',
-        align: 'center',
-      },
-      { field: 'is_active', label: 'status', align: 'center' },
-    ];
-    const roles = ref([]);
-    const rolePagination = ref({
-      totalRows: 0,
-      rowLimit: 10,
-      page: 1,
-      sortBy: 'id',
-      order: 'asc',
-    });
-    const detailModal = ref(false);
-
-    const getRoles = async (pagination) => {
-      // = = REAL = =
-      // const limit = pagination.rowLimit || 10;
-      // const page = pagination.page || 1;
-      // const sort = pagination.sortBy || 'name';
-      // const order = pagination.order || 'asc;';
-      // = = REAL = =
-      try {
-        // = = REAL = =
-        // const response = await axios.get(
-        //   `http://localhost:3000/role?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        // );
-        // roles.value = response.data
-        // = = REAL = =
-
-        // = = DUMMY = =
-        roles.value = dummyRole;
-        // = = DUMMY = =
-        rolePagination.value = {
-          // = = REAL = =
-          // totalRows: +response.headers['x-total-count'],
-          // = = REAL = =
-          // = = DUMMY = =
-          totalRows: dummyRole.length,
-          // = = DUMMY = =
-          rowLimit: pagination.rowLimit,
-          page: pagination.page,
-          sortBy: pagination.sortBy,
-          order: pagination.order,
-        };
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const adminsTooltipText = (raw) => {
-      const names = raw.map((el) => el.name);
-      const hidden = names.length - 4;
-      if (names.length > 4) {
-        return `${names.slice(0, 4).join(', ')} and ${hidden} other${hidden > 1 ? 's' : ''}`;
-      }
-      return names.join(', ');
-    };
-
-    onMounted(() => {
-      getRoles(rolePagination.value);
-    });
-    return {
-      columns,
-      roles,
-      rolePagination,
-      detailModal,
-      searchValue,
-      getRoles,
-      adminsTooltipText,
-    };
   },
 };
 </script>
