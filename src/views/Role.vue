@@ -7,11 +7,6 @@
       <p class="text-heading2 font-semibold">Role</p>
       <!-- <help-button label="filter" icon="filter" @click="handleModal('filter')" /> -->
     </div>
-    <div>
-      <form @submit.prevent="getMerchants({ filter: merchantFilter })">
-        <help-input v-model="searchValue" placeholder="Search something here" search-bar />
-      </form>
-    </div>
     <div class="overflow-hidden">
       <help-table
         path="roles"
