@@ -1,24 +1,47 @@
 <template>
-  <div class="p-4 sm:p-6 grid gap-4 sm:gap-6 grid-cols-3 inner-modal-auto modal-lg">
-    <div class="grid gap-y-2">
-      <div>
-        <p class="text-grey-2 font-medium">Role Name</p>
-        <p>Admin</p>
+  <div
+    class="grid gap-6 modal-lg overflow-auto px-1"
+    :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
+  >
+    <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
+      <div class="md:col-span-4">
+        <div>
+          <p class="text-grey-2 font-medium">Role Name</p>
+          <p>{{ roleName }}</p>
+        </div>
+        <div class="mt-4">
+          <p class="text-grey-2 font-medium">Description</p>
+          <p>{{ description }}</p>
+        </div>
       </div>
-      <div>
-        <p class="text-grey-2 font-medium">Description</p>
-        <p>Allowed to access anything exept role management</p>
+      <div class="md:col-span-8 grid">
+        <p class="text-grey-2 font-medium mb-1">Permission</p>
+        <help-table
+          :footer="false"
+          :columns="columns"
+          :rows="permissions"
+          :height="screenWidth < 640 ? 64 : 80"
+          :loading="loading"
+        >
+          <template v-slot:body="{ column, data }">
+            <div>
+              <p v-if="column === 'name'">{{ data }}</p>
+              <div v-else>
+                <help-checkbox :checked="data" :disabled="true" />
+              </div>
+            </div>
+          </template>
+        </help-table>
       </div>
-    </div>
-    <div class="col-span-2">
-      <p class="text-grey-2 font-medium">Permission</p>
-      <help-table :footer="false" :columns="columns" :rows="permissions" />
     </div>
   </div>
 </template>
 
 <script>
 import HelpTable from '@/components/templates/Table.vue';
+import HelpCheckbox from '@/components/atoms/Checkbox.vue';
+
+import API from '../../apis';
 
 export default {
   name: 'RoleDetail',
@@ -26,23 +49,49 @@ export default {
     return {
       columns: [
         { field: 'name', label: 'MENU' },
-        { field: 'view', label: 'VIEW' },
-        { field: 'create', label: 'CREATE' },
-        { field: 'edit', label: 'EDIT' },
-        { field: 'delete', label: 'DELETE' },
+        { field: 'access', label: 'ACCESS' },
       ],
+      roleName: '',
+      description: '',
+      loading: false,
+      access: [],
+      permissions: [],
     };
   },
-  props: ['descriptions'],
   components: {
     HelpTable,
+    HelpCheckbox,
   },
   mounted() {
-    console.log(this.props, 'props');
+    this.roleName = this.$store.state.role.name;
+    this.description = this.$store.state.role.description;
+    this.access = this.$store.state.permissions;
+    this.getPermissions();
+  },
+  methods: {
+    async getPermissions() {
+      this.loading = true;
+      try {
+        const {
+          data: { data },
+        } = await API.get('/permissions');
+        this.permissions = data.map((el) => ({
+          ...el,
+          access: this.access.length && this.access.map((e) => (el.id === e.id))[0],
+        }));
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loading = false;
+    },
   },
   computed: {
-    permissions() {
-      return this.$store.state.permissions;
+    screenWidth() {
+      return this.$store.state.screenWidth;
     },
   },
 };

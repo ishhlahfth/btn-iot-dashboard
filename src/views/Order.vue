@@ -27,6 +27,7 @@
         :columns="columns"
         :loading="loading"
         :rows="orders"
+        :height="40"
         :pagination="orderPagination"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"
