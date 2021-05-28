@@ -4,11 +4,11 @@
     :class="{ 'animate-pulse': loading }"
   >
     <div class="grid lg:grid-flow-col gap-8 lg:grid-cols-12 overflow-auto">
-      <div class="lg:col-span-3 lg:block grid gap-4 lg:gap-8">
+      <div class="lg:col-span-2 lg:block grid gap-4 lg:gap-8">
         <div>
           <template v-if="!loading">
             <div class="divide-y divide-grey-4 font-medium">
-              <p class="font-medium pb-4 lg:text-base">Order</p>
+              <p class="font-medium pb-4">Order</p>
               <div class="pt-4 grid sm:grid-rows-2 lg:grid-rows-4 gap-4">
                 <div>
                   <p class="text-heading1 font-semibold">{{ order.code }}</p>
@@ -51,15 +51,15 @@
           </template>
         </div>
         <div class="divide-y divide-grey-4">
-          <p class="pb-4 lg:text-base">Delivery</p>
+          <p class="font-medium pb-4">Delivery</p>
           <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4 lg:gap-8">
             <div>
-              <p class="text-grey-2">Delivery PO Number</p>
-              <p>{{ order.delivery_code ? order.delivery_code : '-' }}</p>
+              <p class="font-medium text-grey-2">Delivery PO Number</p>
+              <p class="font-medium">{{ order.delivery_code ? order.delivery_code : '-' }}</p>
             </div>
             <div>
-              <p class="text-grey-2">Delivery Type</p>
-              <p>{{ order.order_type_details?.delivery_method?.name }}</p>
+              <p class="font-medium text-grey-2">Delivery Type</p>
+              <p class="font-medium">{{ order.order_type_details?.delivery_method?.name }}</p>
             </div>
             <template v-if="order.order_type_details?.driver?.driver_name">
               <div class="col-span-2 lg:col-span-1">
@@ -91,10 +91,10 @@
           </div>
         </div>
       </div>
-      <div class="lg:col-span-9 grid auto-rows-max gap-8">
-        <div class="grid grid-flow-col gap-4 lg:gap-8">
+      <div class="lg:col-span-10 grid auto-rows-max gap-8">
+        <div class="grid md:grid-cols-3 gap-4 lg:gap-8">
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Merchant</p>
+            <p class="font-medium pb-4">Merchant</p>
             <div class="pt-4 grid gap-4">
               <div class="grid grid-flow-row gap-4">
                 <div>
@@ -116,8 +116,9 @@
               </div>
             </div>
           </div>
+
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Buyer</p>
+            <p class="font-medium pb-4">Buyer</p>
             <div class="pt-4 grid gap-4">
               <div>
                 <p class="text-grey-2">Name</p>
@@ -129,8 +130,9 @@
               </div>
             </div>
           </div>
+
           <div class="divide-y divide-grey-4 font-medium">
-            <p class="font-medium pb-4 lg:text-base">Recipient</p>
+            <p class="font-medium pb-4">Recipient</p>
             <div class="pt-4 grid gap-4">
               <div class="grid grid-flow-row gap-4">
                 <div>
@@ -156,15 +158,15 @@
             </div>
           </div>
         </div>
-        <div class="grid">
+        <div class="grid overflow-hidden">
           <help-table :columns="columns" :rows="order.items" :footer="false" :loading="loading">
             <template v-slot:body="{ column, row, data }">
               <div v-if="column === 'item'" class="grid grid-flow-col gap-4 auto-cols-max">
                 <help-thumbnail :src="row.image_url" :width="64" :height="64" />
                 <div class="flex flex-col justify-between">
                   <div class="grid">
-                    <p>{{ row.name }}</p>
-                    <p>{{ row.variations.map((el) => el.options[0].name).join(', ') }}</p>
+                    <p class="font-medium text-grey-1">{{ row.name }}</p>
+                    <p class="textxsm">{{ row.variations.map((el) => el.options[0].name).join(', ') }}</p>
                   </div>
                   <div>
                     <span v-if="row.note" class="px-2 py-1 border rounded text-xsmall w-auto">
@@ -178,6 +180,26 @@
               </p>
             </template>
           </help-table>
+        </div>
+        <div class="grid md:place-content-end gap-2">
+          <div class="grid gap-8 grid-cols-2">
+            <span>Delivery fee</span>
+            <span class="font-medium text-right">
+              {{ convertToRp(order.order_type_details?.delivery_method.price) }}
+            </span>
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Item total price</span>
+            <span class="font-medium text-right">{{ convertToRp(order?.subtotal_price) }}</span>
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Commission</span>
+            <span class="font-medium text-right">{{ convertToRp(order?.commission_fee) }}</span>
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Grand total</span>
+            <span class="font-bold text-right">{{ convertToRp(order?.total_price) }}</span>
+          </div>
         </div>
       </div>
     </div>
