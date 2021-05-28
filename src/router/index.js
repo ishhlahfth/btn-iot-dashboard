@@ -82,6 +82,11 @@ const routes = [
         name: 'Banner',
         component: () => import('@/views/Banner.vue'),
       },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/Role.vue'),
+      },
     ],
   },
   {

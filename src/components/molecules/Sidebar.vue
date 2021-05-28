@@ -37,7 +37,7 @@ export default {
         { path: '/bns/payment', label: 'Payment', icon: 'credit-card' },
         { path: '/bns/banner', label: 'Banner', icon: 'photograph' },
         { path: '/bns/admin', label: 'Admin', icon: 'shield' },
-        // { path: '/bns/role', label: 'Role', icon: 'user-group' },
+        { path: '/bns/role', label: 'Role', icon: 'user-group' },
       ],
     };
   },
