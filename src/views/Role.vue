@@ -3,15 +3,19 @@
     <role-detail />
   </help-modal>
   <help-modal v-model="modal.add">
-    <role-add @close="modal.add = false" />
+    <role-add @close="modal.add = false" @refetch="getRoles({ pagination: rolesPagination })" />
   </help-modal>
   <help-modal v-model="modal.edit" @editable="true">
-    <role-add @close="modal.edit = false" />
+    <role-add @close="modal.edit = false" @refetch="getRoles({ pagination: rolesPagination })" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Role</p>
-      <help-button label="add" icon="plus" @click="handleModal({ params: 'add', data: [], row: {} })" />
+      <help-button
+        label="add"
+        icon="plus"
+        @click="handleModal({ params: 'add', data: [], row: {} })"
+      />
     </div>
     <div class="overflow-hidden">
       <help-table

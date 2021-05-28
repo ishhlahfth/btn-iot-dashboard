@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid gap-6 modal-lg overflow-auto px-1"
+    class="grid gap-6 modal-lg overflow-auto md:overflow-hidden px-1"
     :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
   >
     <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
@@ -77,7 +77,7 @@ export default {
         } = await API.get('/permissions');
         this.permissions = data.map((el) => ({
           ...el,
-          access: this.access.length && this.access.map((e) => (el.id === e.id))[0],
+          access: this.flagging(el),
         }));
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -87,6 +87,15 @@ export default {
         }
       }
       this.loading = false;
+    },
+    flagging(row) {
+      let checked = this.$store.state.permissions.filter((e) => row.id === e.id);
+      if (checked.length && checked.length > 0) {
+        checked = true;
+      } else {
+        checked = false;
+      }
+      return checked;
     },
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid gap-6 modal-lg overflow-auto px-1"
+    class="grid gap-6 modal-lg overflow-auto md:overflow-hidden px-1"
     :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
   >
     <div class="flex justify-between items-center">
@@ -43,7 +43,7 @@
             :columns="columns"
             :rows="permissions"
             :height="screenWidth < 640 ? 64 : 80"
-            :loading="loading"
+            :loading="loading.permissions"
           >
             <template v-slot:body="{ column, data, row, loading }">
               <div v-if="loading" class="rounded h-4 bg-grey-4 animate-pulse"></div>
@@ -69,7 +69,10 @@
           color="grey-1"
           @click="$emit('close')"
         />
-        <help-button :label="roleType === 'edit' ? 'save' : 'add'" />
+        <help-button
+          :label="roleType === 'edit' ? 'save' : 'add'"
+          :loading="roleType === 'edit' ? loading.editRole : loading.addRole"
+        />
       </div>
     </form>
   </div>
@@ -81,6 +84,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 
+import { useToast } from 'vue-toastification';
 import API from '../../apis';
 
 export default {
@@ -91,6 +95,10 @@ export default {
     HelpTable,
     HelpCheckbox,
   },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       columns: [
@@ -99,13 +107,16 @@ export default {
       ],
       roleName: '',
       description: '',
-      loading: false,
+      loading: {
+        permissions: false,
+        addRole: false,
+        editRole: false,
+      },
       permissions: [],
       access: [],
       roleBody: {
         permission: [],
         group: '',
-        merchant_id: 0,
       },
     };
   },
@@ -113,11 +124,16 @@ export default {
     this.roleName = this.$store.state.role.name;
     this.description = this.$store.state.role.description;
     this.access = this.$store.state.role.permissions;
+    if (this.roleType === 'edit') {
+      this.$store.state.role.permissions.forEach((el) => {
+        this.roleBody.permission.push(String(el.id));
+      });
+    }
     this.getPermissions();
   },
   methods: {
     async getPermissions() {
-      this.loading = true;
+      this.loading.permissions = true;
       try {
         const {
           data: { data },
@@ -130,13 +146,22 @@ export default {
           this.toast.error(error.message);
         }
       }
-      this.loading = false;
+      this.loading.permissions = false;
     },
     filterAccess(data) {
       return data.map((el) => ({
         ...el,
-        access: this.access.length && this.access.map((e) => el.id === e.id)[0],
+        access: this.flagging(el),
       }));
+    },
+    flagging(row) {
+      let checked = this.$store.state.permissions.filter((e) => row.id === e.id);
+      if (checked.length && checked.length > 0) {
+        checked = true;
+      } else {
+        checked = false;
+      }
+      return checked;
     },
     submit() {
       if (this.roleType === 'edit') this.edit();
@@ -145,20 +170,29 @@ export default {
     handleChangeAccess({ row, status }) {
       console.log(row, 'ini row');
       console.log(status, 'ini status');
-      this.roleBody.group = row.module;
-      this.roleBody.permission.push(String(row.id));
+      if (status === true) {
+        this.roleBody.permission.push(String(row.id));
+      } else {
+        this.roleBody.permission.splice(
+          this.roleBody.permission.findIndex((el) => String(el.id) === String(row.id)),
+          1,
+        );
+      }
     },
     async add() {
       const body = {
         name: this.roleName,
         description: this.description,
         permission: this.roleBody.permission,
-        group: this.roleBody.group,
+        group: 'INTERNAL_DASHBOARD',
       };
+      this.loading.addRole = true;
+      console.log(body, 'body add');
       try {
         const {
           data: { data },
-        } = API.post('/roles', body);
+        } = await API.post('/roles', body);
+        this.toast.success('New role successfully created');
         console.log(data, 'data success kirim');
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -167,21 +201,25 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.loading.addRole = false;
       this.$emit('close');
+      this.$emit('refetch');
     },
     async edit() {
       const body = {
-        name: 'Administrators',
-        description: 'Administrator role for internal dashboard ENS',
-        permission: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+        name: this.roleName,
+        description: this.description,
+        permission: this.roleBody.permission,
         group: 'INTERNAL_DASHBOARD',
-        merchant_id: 2,
       };
+      this.loading.addRole = true;
+      console.log(body, 'body edit');
       try {
         const {
           data: { data },
-        } = API.post('/roles', body);
+        } = await API.patch(`/roles/${this.$store.state.role.id}`, body);
         console.log(data, 'data success kirim');
+        this.toast.success('role successfully edited');
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -189,6 +227,9 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.loading.addRole = false;
+      this.$emit('close');
+      this.$emit('refetch');
     },
   },
   computed: {
