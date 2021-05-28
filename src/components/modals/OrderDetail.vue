@@ -4,7 +4,7 @@
     :class="{ 'animate-pulse': loading }"
   >
     <div class="grid lg:grid-flow-col gap-8 lg:grid-cols-12 overflow-auto">
-      <div class="lg:col-span-4 lg:block grid gap-4 lg:gap-8">
+      <div class="lg:col-span-3 lg:block grid gap-4 lg:gap-8">
         <div>
           <template v-if="!loading">
             <div class="divide-y divide-grey-4 font-medium">
@@ -31,15 +31,9 @@
                     {{ order.current_step?.title }}
                   </p>
                 </div>
-                <div class="grid gap-4 grid-flow-col">
-                  <div>
-                    <p class="text-grey-2">Order Date</p>
-                    <p>{{ formatTime(order.date) }}</p>
-                  </div>
-                  <div>
-                    <p class="text-grey-2">Last Updated</p>
-                    <p>{{ formatTime(order.date) }}</p>
-                  </div>
+                <div>
+                  <p class="text-grey-2">Order Date</p>
+                  <p>{{ formatTime(order.date) }}</p>
                 </div>
               </div>
             </div>
@@ -97,7 +91,7 @@
           </div>
         </div>
       </div>
-      <div class="lg:col-span-8 grid auto-rows-max gap-8">
+      <div class="lg:col-span-9 grid auto-rows-max gap-8">
         <div class="grid grid-flow-col gap-4 lg:gap-8">
           <div class="divide-y divide-grey-4 font-medium">
             <p class="font-medium pb-4 lg:text-base">Merchant</p>
@@ -163,8 +157,22 @@
           </div>
         </div>
         <div class="grid">
-          <help-table :columns="columns" :rows="items" :footer="false">
-            <template v-slot:body="{ column, data }">
+          <help-table :columns="columns" :rows="order.items" :footer="false" :loading="loading">
+            <template v-slot:body="{ column, row, data }">
+              <div v-if="column === 'item'" class="grid grid-flow-col gap-4 auto-cols-max">
+                <help-thumbnail :src="row.image_url" :width="64" :height="64" />
+                <div class="flex flex-col justify-between">
+                  <div class="grid">
+                    <p>{{ row.name }}</p>
+                    <p>{{ row.variations.map((el) => el.options[0].name).join(', ') }}</p>
+                  </div>
+                  <div>
+                    <span v-if="row.note" class="px-2 py-1 border rounded text-xsmall w-auto">
+                      {{ row.note }}
+                    </span>
+                  </div>
+                </div>
+              </div>
               <p v-if="column === 'price' || column === 'subtotal_price'">
                 Rp {{ data ? data.toLocaleString('ID') : 0 }}
               </p>
@@ -177,19 +185,20 @@
 </template>
 
 <script>
-// import HelpAvatar from '@/components/atoms/Avatar.vue';
+import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
-import API from '../../apis';
+import API from '@/apis';
 
 export default {
   name: 'OrderDetail',
   components: {
     HelpTable,
-    // HelpAvatar,
-    // HelpThumbnail,
+    HelpAvatar,
+    HelpThumbnail,
   },
   mixins: [mixin],
   setup() {
@@ -200,12 +209,11 @@ export default {
     return {
       order: {},
       loading: false,
-      items: [],
       columns: [
         { field: 'item', label: 'item' },
-        { field: 'price', label: 'item price' },
-        { field: 'qty', label: 'quantity' },
-        { field: 'subtotal_price', label: 'subtotal' },
+        { field: 'price', label: 'item price', align: 'right' },
+        { field: 'qty', label: 'quantity', align: 'center' },
+        { field: 'subtotal_price', label: 'subtotal', align: 'right' },
       ],
     };
   },
@@ -235,7 +243,6 @@ export default {
             }
           }
         }
-        this.items = this.order.items;
       } catch (error) {
         this.toast.error(error.message);
       }
