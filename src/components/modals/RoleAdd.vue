@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grid gap-6 modal-lg overflow-auto md:overflow-hidden px-1"
-    :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
-  >
+  <div class="modal-lg inner-modal-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">
         {{ roleType === 'edit' ? 'Edit a role' : 'Add a new role' }}
@@ -17,9 +14,8 @@
     </div>
 
     <form @submit.prevent="submit">
-      <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
-        <div class="md:col-span-5 md:block grid gap-2">
-          <input type="file" accept="image/*" class="hidden" ref="bannerImageInput" />
+      <div class="grid gap-4 sm:grid-flow-col grid-rows-12 sm:grid-cols-12 my-4">
+        <div class="sm:col-span-5 sm:block col-span-12 grid gap-2">
           <div>
             <help-input
               label="Role Name"
@@ -27,7 +23,7 @@
               v-model="roleName"
             />
           </div>
-          <div class="md:mt-4">
+          <div class="mt-4">
             <help-input
               label="Description"
               placeholder="Describe this role's ability"
@@ -36,31 +32,32 @@
           </div>
         </div>
 
-        <div class="md:col-span-7 md:grid template-rows-auto-1fr-auto">
+        <div class="sm:col-span-7 col-span-12 grid-row-max grid sm:template-rows-auto-1fr">
           <p class="font-medium mb-1">Permission</p>
-          <help-table
-            :footer="false"
-            :columns="columns"
-            :rows="permissions"
-            :height="screenWidth < 640 ? 64 : 80"
-            :loading="loading.permissions"
-          >
-            <template v-slot:body="{ column, data, row, loading }">
-              <div v-if="loading" class="rounded h-4 bg-grey-4 animate-pulse"></div>
-              <div v-else>
-                <p v-if="column === 'name'">{{ data }}</p>
+          <div class="overflow-hidden">
+            <help-table
+              :footer="false"
+              :columns="columns"
+              :rows="permissions"
+              :height="screenWidth < 640 ? 64 : 80"
+              :loading="loading.permissions"
+            >
+              <template v-slot:body="{ column, data, row, loading }">
+                <div v-if="loading" class="rounded h-4 bg-grey-4 animate-pulse"></div>
                 <div v-else>
-                  <help-checkbox
-                    :checked="data"
-                    @click="handleChangeAccess({ row, status: $event.target.checked })"
-                  />
+                  <p v-if="column === 'name'">{{ data }}</p>
+                  <div v-else>
+                    <help-checkbox
+                      :checked="data"
+                      @click="handleChangeAccess({ row, status: $event.target.checked })"
+                    />
+                  </div>
                 </div>
-              </div>
-            </template>
-          </help-table>
+              </template>
+            </help-table>
+          </div>
         </div>
       </div>
-
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
         <help-button
           type="button"
@@ -103,7 +100,7 @@ export default {
     return {
       columns: [
         { field: 'name', label: 'MENU' },
-        { field: 'access', label: 'ACCESS' },
+        { field: 'access', label: 'ACCESS', align: 'center' },
       ],
       roleName: '',
       description: '',
@@ -236,8 +233,15 @@ export default {
     roleType() {
       return this.$store.state.roleType;
     },
+    screenWidth() {
+      return this.$store.state.screenWidth;
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.template-rows-auto-1fr {
+  grid-template-rows: auto 1fr;
+}
+</style>
