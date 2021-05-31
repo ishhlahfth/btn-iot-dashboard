@@ -106,6 +106,7 @@ export default {
     async getRoles({ pagination }) {
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
+      this.loading = true;
       try {
         const {
           data: { data },
