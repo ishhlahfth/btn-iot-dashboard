@@ -42,11 +42,16 @@ const routes = [
   },
   {
     path: '/bns',
-    redirect: '/bns/merchant',
+    redirect: '/bns/dashboard',
     name: 'BNS',
     component: () => import('@/components/layouts/Main.vue'),
     beforeEnter: authenticate,
     children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/Dashboard.vue'),
+      },
       {
         path: 'merchant',
         name: 'Merchant',

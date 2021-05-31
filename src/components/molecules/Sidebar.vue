@@ -31,6 +31,7 @@ export default {
     return {
       collapsed: true,
       links: [
+        { path: '/bns/dashboard', label: 'Dashboard', icon: 'home' },
         { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
         { path: '/bns/order', label: 'Order', icon: 'cube' },
         { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },
