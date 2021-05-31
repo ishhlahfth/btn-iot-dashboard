@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-lg inner-modal-auto">
+  <div class="modal-lg inner-modal-auto sm:inner-modal-fixed">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">
         {{ roleType === 'edit' ? 'Edit a role' : 'Add a new role' }}
