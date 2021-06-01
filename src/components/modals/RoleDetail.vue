@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grid gap-6 modal-lg overflow-auto md:overflow-hidden px-1"
-    :class="[screenWidth < 640 ? 'inner-modal-fixed' : 'inner-modal-auto']"
-  >
+  <div class="grid sm:gap-6 modal-lg px-1 inner-modal-auto">
     <div class="grid gap-4 md:grid-flow-col md:grid-cols-12 mb-4">
       <div class="md:col-span-4">
         <div>
@@ -14,24 +11,38 @@
           <p>{{ description }}</p>
         </div>
       </div>
-      <div class="md:col-span-8 grid">
+      <div class="md:col-span-8 grid template-rows-auto-1fr">
         <p class="text-grey-2 font-medium mb-1">Permission</p>
-        <help-table
-          :footer="false"
-          :columns="columns"
-          :rows="permissions"
-          :height="screenWidth < 640 ? 64 : 80"
-          :loading="loading"
+        <div
+          :class="[
+            {
+              'overflow-y-auto': screenWidth < 640,
+            },
+            {
+              'h-64': screenWidth < 640,
+            },
+            {
+              'h-96': screenWidth >= 640,
+            },
+          ]"
         >
-          <template v-slot:body="{ column, data }">
-            <div>
-              <p v-if="column === 'name'">{{ data }}</p>
-              <div v-else>
-                <help-checkbox :checked="data" :disabled="true" />
+          <help-table
+            :footer="false"
+            :columns="columns"
+            :rows="permissions"
+            :height="screenWidth < 640 ? 64 : 96"
+            :loading="loading"
+          >
+            <template v-slot:body="{ column, data }">
+              <div>
+                <p v-if="column === 'name'">{{ data }}</p>
+                <div v-else>
+                  <help-checkbox :checked="data" :disabled="true" />
+                </div>
               </div>
-            </div>
-          </template>
-        </help-table>
+            </template>
+          </help-table>
+        </div>
       </div>
     </div>
   </div>
@@ -49,7 +60,7 @@ export default {
     return {
       columns: [
         { field: 'name', label: 'MENU' },
-        { field: 'access', label: 'ACCESS' },
+        { field: 'access', label: 'ACCESS', align: 'center' },
       ],
       roleName: '',
       description: '',
@@ -106,4 +117,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.template-rows-auto-1fr {
+  grid-template-rows: auto 1fr;
+}
+</style>
