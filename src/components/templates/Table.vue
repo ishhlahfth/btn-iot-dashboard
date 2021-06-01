@@ -156,7 +156,7 @@ export default {
       default: true,
     },
     height: {
-      type: [Number, String],
+      type: Number,
       default: 0,
     },
   },

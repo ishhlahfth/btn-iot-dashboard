@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-lg inner-modal-auto sm:inner-modal-fixed">
+  <div class="modal-lg inner-modal-auto">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">
         {{ roleType === 'edit' ? 'Edit a role' : 'Add a new role' }}
@@ -32,14 +32,26 @@
           </div>
         </div>
 
-        <div class="sm:col-span-7 col-span-12 grid-row-max grid sm:template-rows-auto-1fr">
+        <div class="sm:col-span-7 col-span-12 grid-row-max grid">
           <p class="font-medium mb-1">Permission</p>
-          <div class="overflow-hidden">
+          <div
+            :class="[
+              'overflow-auto',
+              {
+                'overflow-y-auto': screenWidth < 640,
+              },
+              {
+                'h-64': screenWidth < 640,
+              },
+              {
+                'h-80': screenWidth >= 640,
+              },
+            ]"
+          >
             <help-table
               :footer="false"
               :columns="columns"
               :rows="permissions"
-              :height="screenWidth < 640 ? 64 : 80"
               :loading="loading.permissions"
             >
               <template v-slot:body="{ column, data, row, loading }">
@@ -230,11 +242,11 @@ export default {
     },
   },
   computed: {
-    roleType() {
-      return this.$store.state.roleType;
-    },
     screenWidth() {
       return this.$store.state.screenWidth;
+    },
+    roleType() {
+      return this.$store.state.roleType;
     },
   },
 };
