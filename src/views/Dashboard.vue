@@ -68,7 +68,11 @@
           <div v-if="column === 'qty'">{{ row.qty }}</div>
         </template>
       </help-table>
-      <div></div>
+      <help-table :footer="false" :columns="columns3" :rows="rows3">
+        <template v-slot:body="{ column, row }">
+          <div v-if="column === 'qty'">{{ row.qty }}</div>
+        </template>
+      </help-table>
     </div>
   </div>
 </template>
@@ -93,6 +97,7 @@ export default {
       position: ['bottom', 'right'],
       columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'price' }],
       columns2: [{ field: 'name', label: 'Top 10 Seller Location' }, { field: 'qty' }],
+      columns3: [{ field: 'name', label: 'Top 10 Buyer Location' }, { field: 'qty' }],
       rows: [
         {
           name: 'Madam Soo Kitchen',
@@ -127,6 +132,24 @@ export default {
         {
           name: 'Kota Tanggerang',
           qty: '726',
+        },
+      ],
+      rows3: [
+        {
+          name: 'Kota Jakarta Selatan',
+          qty: '912',
+        },
+        {
+          name: 'Kota Jakarta Barat',
+          qty: '840',
+        },
+        {
+          name: 'Kota Bandung',
+          qty: '773',
+        },
+        {
+          name: 'Kota Jakarta Pusat',
+          qty: '725',
         },
       ],
     };
