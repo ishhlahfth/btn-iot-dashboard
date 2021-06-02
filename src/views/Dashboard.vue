@@ -1,94 +1,121 @@
 <template>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
-    <div class="w-full flex justify-between">
-      <p class="text-heading2 font-semibold">Dashboard</p>
-    </div>
     <div class="grid sm:grid-flow-col gap-4">
-      <div class="bg-white grid grid-flow-row gap-2 p-4">
-        <div class="grid grid-cols-3 grid-flow-row">
-          <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-purple-500 rounded-xl">
-            <help-icon color="white" name="cube" :size="8" />
-          </div>
-          <p class="col-span-2 text-sm text-gray-400">Order</p>
-          <div class="col-span-2 text-royal font-semibold text-heading4">21668</div>
-        </div>
-        <div class="flex justify-end items-center p-1">
-          <help-badge :color="'positive'" icon="chevron-up" :label="'1.901'" />
-        </div>
-        <div class="text-center flex flex-row justify-center">
-          <p class="text-royal text-xs cursor-pointer">
-            See more
-          </p>
-          <help-icon :name="'chevron-down'" />
+      <div class="w-full flex justify-between">
+        <p class="text-heading2 font-semibold">Dashboard</p>
+      </div>
+      <div class="grid sm:grid-flow-col gap-2 sm:w-1/2-screen">
+        <div class="grid gap-4 sm:flex sm:justify-end">
+          <template v-if="!loading">
+            <help-input type="date" />
+            <help-icon
+              name="minus"
+              :class="[
+                'mx-2 my-auto sm:visible',
+                {
+                  hidden: screenWidth < 640,
+                },
+              ]"
+            />
+            <help-input type="date" />
+            <div
+              :class="[
+                'relative outline-none sm:ml-2',
+                {
+                  'w-2/5': screenWidth < 640,
+                  'ml-auto': screenWidth < 640,
+                },
+              ]"
+              :tabindex="0"
+              @blur="opened = false"
+            >
+              <div
+                class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
+                :class="{ 'ring-2 ring-royal': opened }"
+                @click="opened = !opened"
+              >
+                <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
+                <help-icon name="selector" />
+              </div>
+              <help-option
+                :class="{ hidden: !opened }"
+                :options="options"
+                :position="position"
+                :selected="modelValue"
+                @changeSelected="changeSelected"
+              />
+            </div>
+          </template>
+          <template v-else>
+            <div class="h-8 animate-pulse bg-grey-4 sm:w-2/5 sm:ml-auto" />
+            <div class="h-8 animate-pulse bg-grey-4 sm:w-2/5 sm:ml-auto" />
+            <div class="h-8 animate-pulse bg-grey-4 w-2/5 ml-auto" />
+          </template>
         </div>
       </div>
-      <div class="bg-white rounded-lg grid grid-flow-row gap-2 p-4">
-        <div class="grid grid-cols-3 grid-flow-row">
-          <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-yellow-500 rounded-xl">
-            <help-icon color="white" name="cart" :size="8" />
-          </div>
-          <p class="col-span-2 text-sm text-gray-400">Delivery Fee</p>
-          <div class="col-span-2 text-royal font-semibold text-heading4">Rp 18.625.000</div>
-        </div>
-        <div class="flex justify-end items-center p-1">
-          <help-badge :color="'positive'" icon="chevron-up" :label="'1.901'" />
-        </div>
-        <div class="text-center flex flex-row justify-center">
-          <p class="text-royal text-xs font-small cursor-pointer">
-            See more
-          </p>
-          <help-icon :name="'chevron-down'" />
-        </div>
-      </div>
-      <div class="bg-white rounded-md grid grid-flow-row gap-2 p-4">
-        <div class="grid grid-cols-3 grid-flow-row">
-          <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-blue-600 rounded-xl">
-            <help-icon color="white" name="truck" :size="8" />
-          </div>
-          <p class="col-span-2 text-sm text-gray-400">Delivery Fee</p>
-          <div class="col-span-2 text-royal font-semibold text-heading4">Rp 18.625.000</div>
-        </div>
-        <div class="flex justify-end items-center p-1">
-          <help-badge :color="'positive'" icon="chevron-up" :label="'1.901'" />
-        </div>
-        <div class="text-center flex flex-row justify-center">
-          <p class="text-royal text-xs font-small cursor-pointer">
-            See more
-          </p>
-          <help-icon :name="'chevron-down'" />
-        </div>
-      </div>
-      <div class="bg-white rounded-md grid grid-flow-row gap-2 p-4">
-        <div class="grid grid-cols-3 grid-flow-row">
-          <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-orange-500 rounded-xl">
-            <help-icon name="cube" :size="8" />
-          </div>
-          <p class="col-span-2 text-sm text-gray-400">Delivery Fee</p>
-          <div class="col-span-2 text-royal font-semibold text-heading4">Rp 18.625.000</div>
-        </div>
-        <div class="flex justify-end items-center p-1">
-          <help-badge :color="'positive'" icon="chevron-up" :label="'1.901'" />
-        </div>
-        <div class="text-center flex flex-row justify-center">
-          <p class="text-royal text-xs font-small cursor-pointer">
-            See more
-          </p>
-          <help-icon :name="'chevron-down'" />
-        </div>
-      </div>
+    </div>
+    <div class="grid sm:grid-flow-col gap-4 mb-3">
+      <summary-card :loading="loading" />
     </div>
   </div>
 </template>
 
 <script>
-import HelpBadge from '@/components/atoms/Badge.vue';
+// import { VueDatePicker } from '@mathieustan/vue-datepicker';
+import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
+import HelpOption from '@/components/molecules/Option.vue';
+import HelpInput from '../components/atoms/Input.vue';
 
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      loading: false,
+      checkin: '',
+      opened: false,
+      options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
+      modelValue: 'Today',
+      position: ['bottom', 'right'],
+    };
+  },
   components: {
-    HelpBadge,
+    SummaryCard,
+    HelpOption,
     HelpIcon,
+    HelpInput,
+    // VueDatePicker,
+  },
+  computed: {
+    selected: {
+      get() {
+        return !this.modelValue
+          ? this.options.length > 0
+            ? this.options[0]
+            : null
+          : this.modelValue;
+      },
+      set(value) {
+        return value;
+      },
+    },
+    screenWidth() {
+      return this.$store.state.screenWidth;
+    },
+  },
+  methods: {
+    changeSelected(newItem) {
+      this.modelValue = newItem;
+      this.opened = false;
+      this.$emit('update:modelValue', newItem);
+    },
+    checkSelected(selected) {
+      let result = selected;
+      if (selected && typeof selected === 'object') {
+        result = selected.label;
+      }
+      return result;
+    },
   },
 };
 </script>
