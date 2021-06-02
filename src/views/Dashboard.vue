@@ -57,13 +57,17 @@
     <div class="grid sm:grid-flow-col gap-4 mb-3">
       <summary-card :loading="loading" />
     </div>
-    <div class="grid grid-flow-col gap-3">
+    <div class="grid sm:grid-flow-col gap-3">
       <help-table :footer="false" :columns="columns" :rows="rows">
         <template v-slot:body="{ column, row }">
           <div v-if="column === 'price'">{{ row.price }}</div>
         </template>
       </help-table>
-      <div></div>
+      <help-table :footer="false" :columns="columns2" :rows="rows2">
+        <template v-slot:body="{ column, row }">
+          <div v-if="column === 'qty'">{{ row.qty }}</div>
+        </template>
+      </help-table>
       <div></div>
     </div>
   </div>
@@ -88,6 +92,7 @@ export default {
       modelValue: 'Today',
       position: ['bottom', 'right'],
       columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'price' }],
+      columns2: [{ field: 'name', label: 'Top 10 Seller Location' }, { field: 'qty' }],
       rows: [
         {
           name: 'Madam Soo Kitchen',
@@ -104,6 +109,24 @@ export default {
         {
           name: 'Chatime',
           price: 'Rp 85.258.500',
+        },
+      ],
+      rows2: [
+        {
+          name: 'Kota Jakarta Selatan',
+          qty: '867',
+        },
+        {
+          name: 'Kota Jakarta Barat',
+          qty: '822',
+        },
+        {
+          name: 'Kota Bandung',
+          qty: '781',
+        },
+        {
+          name: 'Kota Tanggerang',
+          qty: '726',
         },
       ],
     };
