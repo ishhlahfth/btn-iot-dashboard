@@ -57,6 +57,15 @@
     <div class="grid sm:grid-flow-col gap-4 mb-3">
       <summary-card :loading="loading" />
     </div>
+    <div class="grid grid-flow-col gap-3">
+      <help-table :footer="false" :columns="columns" :rows="rows">
+        <template v-slot:body="{ column, row }">
+          <div v-if="column === 'price'">{{ row.price }}</div>
+        </template>
+      </help-table>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -66,6 +75,7 @@ import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpOption from '@/components/molecules/Option.vue';
 import HelpInput from '../components/atoms/Input.vue';
+import HelpTable from '../components/templates/Table.vue';
 
 export default {
   name: 'Dashboard',
@@ -77,6 +87,25 @@ export default {
       options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
       modelValue: 'Today',
       position: ['bottom', 'right'],
+      columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'price' }],
+      rows: [
+        {
+          name: 'Madam Soo Kitchen',
+          price: 'Rp 92.558.000',
+        },
+        {
+          name: 'Nasi Uduk Palagan',
+          price: 'Rp 87.205.000',
+        },
+        {
+          name: 'Arah Kopi',
+          price: 'Rp 87.111.000',
+        },
+        {
+          name: 'Chatime',
+          price: 'Rp 85.258.500',
+        },
+      ],
     };
   },
   components: {
@@ -84,7 +113,7 @@ export default {
     HelpOption,
     HelpIcon,
     HelpInput,
-    // VueDatePicker,
+    HelpTable,
   },
   computed: {
     selected: {
