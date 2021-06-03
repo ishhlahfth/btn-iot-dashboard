@@ -76,7 +76,7 @@ export default {
       opened: false,
       options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
       modelValue: 'Today',
-      position: ['bottom', 'right'],
+      position: ['bottom', 'left'],
     };
   },
   components: {
