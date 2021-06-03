@@ -54,9 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="grid sm:grid-flow-col gap-4 mb-3">
-      <summary-card :loading="loading" />
-    </div>
+    <summary-card :loading="loading" />
     <div class="grid sm:grid-flow-col gap-3">
       <help-table :footer="false" :columns="columns" :rows="rows">
         <template v-slot:body="{ column, row }">
