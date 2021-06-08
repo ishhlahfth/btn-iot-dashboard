@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="grid sm:grid-flow-col gap-4 mb-3">
-      <summary-card :loading="loading" />
+      <summary-card :loading="loading" :totalTransaction="totalTransaction" />
     </div>
   </div>
 </template>
@@ -66,6 +66,7 @@ import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpOption from '@/components/molecules/Option.vue';
 import HelpInput from '../components/atoms/Input.vue';
+import API from '../apis';
 
 export default {
   name: 'Dashboard',
@@ -77,6 +78,9 @@ export default {
       options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
       modelValue: 'Today',
       position: ['bottom', 'left'],
+      totalTransaction: {
+        order: 0,
+      },
     };
   },
   components: {
@@ -104,6 +108,17 @@ export default {
     },
   },
   methods: {
+    async getOrderTransaction() {
+      try {
+        const {
+          data: { data },
+        } = await API.get('/merchants/51/order-summary?summary_date_range=2019-05-08to2023-05-10');
+        console.log(data, 'ini hasil merchants');
+        this.totalTransaction.order = data.total_transaction;
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
     changeSelected(newItem) {
       this.modelValue = newItem;
       this.opened = false;
@@ -116,6 +131,9 @@ export default {
       }
       return result;
     },
+  },
+  mounted() {
+    this.getOrderTransaction();
   },
 };
 </script>
