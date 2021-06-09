@@ -7,7 +7,7 @@ import store from './store';
 import './registerServiceWorker';
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
-import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 const toastOption = {
   transition: 'Vue-Toastification__fade',

@@ -1,13 +1,13 @@
 <template>
   <template v-if="!loading">
     <div class="bg-white rounded-lg grid grid-flow-row gap-4 p-4">
-      <div class="grid grid-cols-4 grid-flow-row">
+      <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-purple-500 rounded-xl">
           <help-icon color="white" name="cube" :size="8" />
         </div>
         <div class="col-span-2 grid grid-flow-row gap-1 auto-cols-max">
           <p class="text-sm text-gray-400">Order</p>
-          <div class="text-royal font-semibold text-heading4 sm:text-heading3">Rp {{totalTransaction ? (totalTransaction.order).toLocaleString('ID') : 0}}</div>
+          <div class="text-royal font-semibold text-heading4 sm:text-heading3">{{totalTransaction ? (totalTransaction.order).toLocaleString('ID') : 0}}</div>
         </div>
       </div>
       <div class="flex justify-end items-center p-1">
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="bg-white rounded-lg grid grid-flow-row gap-4 p-4">
-      <div class="grid grid-cols-4 grid-flow-row">
+      <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-yellow-500 rounded-xl">
           <help-icon color="white" name="cart" :size="8" />
         </div>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="bg-white rounded-md grid grid-flow-row gap-4 p-4">
-      <div class="grid grid-cols-4 grid-flow-row">
+      <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-blue-600 rounded-xl">
           <help-icon color="white" name="truck" :size="8" />
         </div>
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="bg-white rounded-md grid grid-flow-row gap-4 p-4">
-      <div class="grid grid-cols-4 grid-flow-row">
+      <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-flame rounded-xl">
           <help-icon name="minus" color="white" :size="8" />
         </div>

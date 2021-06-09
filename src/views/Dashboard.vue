@@ -7,7 +7,7 @@
       <div class="grid sm:grid-flow-col gap-2 sm:w-1/2-screen">
         <div class="grid gap-4 sm:flex sm:justify-end">
           <template v-if="!loading">
-            <help-input type="date" />
+            <help-input type="date" v-model="dateFrom" />
             <help-icon
               name="minus"
               :class="[
@@ -17,7 +17,7 @@
                 },
               ]"
             />
-            <help-input type="date" />
+            <help-input type="date" name="dateTo" v-model="dateTo" @change="handleChangeDate" />
             <div
               :class="[
                 'relative outline-none sm:ml-2',
@@ -61,11 +61,10 @@
 </template>
 
 <script>
-// import { VueDatePicker } from '@mathieustan/vue-datepicker';
 import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpOption from '@/components/molecules/Option.vue';
-import HelpInput from '../components/atoms/Input.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import API from '../apis';
 
 export default {
@@ -78,6 +77,8 @@ export default {
       options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
       modelValue: 'Today',
       position: ['bottom', 'left'],
+      dateFrom: new Date(),
+      dateTo: new Date(),
       totalTransaction: {
         order: 0,
       },
@@ -88,7 +89,6 @@ export default {
     HelpOption,
     HelpIcon,
     HelpInput,
-    // VueDatePicker,
   },
   computed: {
     selected: {
@@ -109,6 +109,7 @@ export default {
   },
   methods: {
     async getOrderTransaction() {
+      this.loading = true;
       try {
         const {
           data: { data },
@@ -118,6 +119,7 @@ export default {
       } catch (err) {
         console.log(err.message);
       }
+      this.loading = false;
     },
     changeSelected(newItem) {
       this.modelValue = newItem;
@@ -130,6 +132,9 @@ export default {
         result = selected.label;
       }
       return result;
+    },
+    handleChangeDate(e) {
+      console.log(e, 'coba ini apa');
     },
   },
   mounted() {
