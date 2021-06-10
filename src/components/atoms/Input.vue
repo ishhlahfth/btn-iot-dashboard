@@ -45,6 +45,7 @@
           spellcheck="false"
           type="date"
           size="small"
+          format="24hr"
           :placeholder="placeholder"
           :value="modelValue"
           v-maska="mask"

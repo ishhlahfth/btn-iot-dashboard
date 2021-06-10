@@ -7,7 +7,16 @@
       <div class="grid sm:grid-flow-col gap-2 sm:w-1/2-screen">
         <div class="grid gap-4 sm:flex sm:justify-end">
           <template v-if="!loading">
-            <help-input type="date" />
+            <div>
+              <flat-pickr
+                v-model="date.start"
+                :config="config"
+                class="form-control text-center border rounded-md h-full w-full"
+                placeholder="Select date"
+                name="date"
+                @click="showButton = true"
+              />
+            </div>
             <help-icon
               name="minus"
               :class="[
@@ -17,10 +26,20 @@
                 },
               ]"
             />
-            <help-input type="date" />
+            <div>
+              <flat-pickr
+                v-model="date.end"
+                :config="config"
+                class="form-control text-center border rounded-md h-full w-full"
+                placeholder="Select date"
+                name="date"
+                @click="showButton = true"
+              />
+            </div>
+            <help-button color="white" icon="search" label="OK" @click="loadSearchDate" />
             <div
               :class="[
-                'relative outline-none sm:ml-2',
+                'relative outline-none',
                 {
                   'w-2/5': screenWidth < 640,
                   'ml-auto': screenWidth < 640,
@@ -57,62 +76,70 @@
     <div class="grid sm:grid-flow-col gap-4 mb-3">
       <summary-card :loading="loading" />
     </div>
-    <div class="grid grid-flow-col gap-3">
-      <help-table :footer="false" :columns="columns" :rows="rows">
-        <template v-slot:body="{ column, row }">
-          <div v-if="column === 'price'">{{ row.price }}</div>
-        </template>
-      </help-table>
-      <div></div>
-      <div></div>
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <help-table
+          :footer="false"
+          :columns="columns"
+          :rows="topTenMerchants"
+          :loading="loadingMerchant"
+        >
+          <template v-slot:body="{ column, row }">
+            <div class="justify-self-end" v-if="column === 'total'">
+              Rp {{ row?.total ? row.total.toLocaleString('ID') : 0 }}
+            </div>
+          </template>
+        </help-table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { VueDatePicker } from '@mathieustan/vue-datepicker';
+import { ref } from 'vue';
 import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpOption from '@/components/molecules/Option.vue';
-import HelpInput from '../components/atoms/Input.vue';
-import HelpTable from '../components/templates/Table.vue';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpTable from '@/components/templates/Table.vue';
+import API from '@/apis';
+import mixin from '@/mixin';
 
 export default {
   name: 'Dashboard',
+  mixins: [mixin],
   data() {
     return {
       loading: false,
+      loadingMerchant: false,
       checkin: '',
       opened: false,
       options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
-      modelValue: 'Today',
-      position: ['bottom', 'right'],
-      columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'price' }],
-      rows: [
-        {
-          name: 'Madam Soo Kitchen',
-          price: 'Rp 92.558.000',
-        },
-        {
-          name: 'Nasi Uduk Palagan',
-          price: 'Rp 87.205.000',
-        },
-        {
-          name: 'Arah Kopi',
-          price: 'Rp 87.111.000',
-        },
-        {
-          name: 'Chatime',
-          price: 'Rp 85.258.500',
-        },
-      ],
+      modelValue: 'Last 7 Days',
+      position: ['bottom', 'left'],
+      columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'total' }],
+      topTenMerchants: [],
+      date: {
+        start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
+        end: ref(new Date()),
+      },
+      showButton: false,
+      // Get more form https://flatpickr.js.org/options/
+      config: {
+        wrap: true, // set wrap to true only when using 'input-group'
+        // altFormat: 'y M D',
+        // altInput: true,
+        // dateFormat: 'y-m-d h:m:s',
+        locale: 'ID', // locale for this instance only,
+        enableTime: true,
+      },
     };
   },
   components: {
     SummaryCard,
     HelpOption,
     HelpIcon,
-    HelpInput,
+    HelpButton,
     HelpTable,
   },
   computed: {
@@ -137,6 +164,34 @@ export default {
       this.modelValue = newItem;
       this.opened = false;
       this.$emit('update:modelValue', newItem);
+      let date = new Date();
+      const month = new Date().getMonth();
+      switch (newItem) {
+        case 'Today':
+          date.setHours(0, 0, 0, 0);
+          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          break;
+        case 'Yesterday':
+          date.setHours(0, 0, 0, 0);
+          date = date.setDate(date.getDate() - 1);
+          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          break;
+        case 'Last 7 Days':
+          date.setHours(0, 0, 0, 0);
+          date = date.setDate(date.getDate() - 7);
+          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          break;
+        case 'Last 30 Days':
+          date.setHours(0, 0, 0, 0);
+          date = date.setDate(date.getDate() - 30);
+          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          break;
+        default:
+          date.setHours(0, 0, 0, 0);
+          date.setMonth(month, 1);
+          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          break;
+      }
     },
     checkSelected(selected) {
       let result = selected;
@@ -145,6 +200,44 @@ export default {
       }
       return result;
     },
+    loadSearchDate() {
+      const endDate = this.convertDateFormat(new Date(this.date.end), 'full');
+      const startDate = this.convertDateFormat(new Date(this.date.start), 'full');
+      console.log(startDate, 'start date');
+      this.getTopTenMerchants(startDate, endDate);
+    },
+    initiateSearchDate(start, end) {
+      const endDate = this.convertDateFormat(new Date(start), 'full');
+      const startDate = this.convertDateFormat(new Date(end), 'full');
+      this.getTopTenMerchants(startDate, endDate);
+    },
+    async getTopTenMerchants(startDate, endDate) {
+      console.log('masukkkk');
+      this.loadingMerchant = true;
+      try {
+        console.log('masuk try');
+        console.log(this.date.start, 'date start');
+        console.log(this.date.end, 'date end');
+        const {
+          data: { data },
+        } = await API.get(`/merchants-leader-board?end_time=${endDate}&start_time=${startDate}`);
+        console.log(data, 'ini data');
+        this.topTenMerchants = data;
+      } catch (error) {
+        console.log('masuk error', error);
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loadingMerchant = false;
+    },
+  },
+  mounted() {
+    const endDate = this.convertDateFormat(this.date.end, 'full');
+    const startDate = this.convertDateFormat(this.date.start, 'full');
+    this.getTopTenMerchants(startDate, endDate);
   },
 };
 </script>
