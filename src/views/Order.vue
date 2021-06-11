@@ -27,7 +27,6 @@
         :columns="columns"
         :loading="loading"
         :rows="orders"
-        :height="40"
         :pagination="orderPagination"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"
@@ -56,6 +55,9 @@
             @click="openOrderDetail(row.id)"
           >
             See Detail
+          </p>
+          <p v-if="column === 'discounts'" class="text-mint font-semibold">
+            {{ row.discounts ? `- Rp ${Number(row.discounts.slice(1)).toLocaleString('ID')}` : '' }}
           </p>
         </template>
       </help-table>
@@ -110,7 +112,9 @@ export default {
         { field: 'customer_name', label: 'buyer name', sortable: true },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
-        { field: 'delivery_price', label: 'delivery price' },
+        { field: 'initial_price', label: 'initial delivery price' },
+        { field: 'discounts', label: 'discount' },
+        { field: 'delivery_price', label: 'final delivery price' },
         { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
@@ -164,6 +168,10 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
+          discounts: el.order_type_details?.delivery_method?.discounts
+            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+            : '',
+          initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
 
         this.orderPagination = {
