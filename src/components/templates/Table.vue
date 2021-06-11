@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-x-auto overflow-y-hidden rounded-lg border border-grey-4 divide-y-2">
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" :class="heightClass">
       <table class="min-w-full bg-white">
         <thead class="border-b border-grey-4 whitespace-nowrap min-w-full">
           <tr class="bg-white uppercase">
@@ -155,6 +155,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    height: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -229,6 +233,9 @@ export default {
         return false;
       }
       return true;
+    },
+    heightClass() {
+      return this.height ? `h-${this.height} overflow-y-auto` : '';
     },
   },
   watch: {
