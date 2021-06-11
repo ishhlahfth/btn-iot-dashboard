@@ -6,7 +6,7 @@
           <help-icon color="white" name="cube" :size="8" />
         </div>
         <div class="col-span-2 grid grid-flow-row gap-1 auto-cols-max">
-          <p class="text-sm text-gray-400">Eat Transaction</p>
+          <p class="text-sm text-gray-400">Order</p>
           <div class="text-royal font-semibold text-heading4 sm:text-heading3">Rp 18.625.000</div>
         </div>
       </div>

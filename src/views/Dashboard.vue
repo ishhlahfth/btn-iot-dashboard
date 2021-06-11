@@ -62,6 +62,7 @@
                 :position="position"
                 :selected="modelValue"
                 @changeSelected="changeSelected"
+                class="overflow-y-hidden h-screen py-0"
               />
             </div>
           </template>
