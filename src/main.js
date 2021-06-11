@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import Toast from 'vue-toastification';
+import VueFlatPickr from 'vue-flatpickr-component';
 import Maska from 'maska';
 import App from './App.vue';
 import router from './router';
@@ -7,6 +8,8 @@ import store from './store';
 import './registerServiceWorker';
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
+import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
+import 'flatpickr/dist/flatpickr.css';
 
 const toastOption = {
   transition: 'Vue-Toastification__fade',
@@ -34,4 +37,5 @@ createApp(App)
   .use(store)
   .use(Toast, toastOption)
   .use(Maska)
+  .use(VueFlatPickr)
   .mount('#app');
