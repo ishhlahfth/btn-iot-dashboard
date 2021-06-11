@@ -4,80 +4,75 @@
       <div class="w-full flex justify-between">
         <p class="text-heading2 font-semibold">Dashboard</p>
       </div>
-      <div class="grid sm:grid-flow-col gap-2 sm:w-1/2-screen">
-        <div class="grid gap-4 sm:flex sm:justify-end">
-          <template v-if="!loading">
-            <div>
-              <flat-pickr
-                v-model="date.start"
-                :config="config"
-                class="form-control text-center border rounded-md h-full w-full"
-                placeholder="Select date"
-                name="date"
-                @click="showButton = true"
-              />
-            </div>
-            <help-icon
-              name="minus"
-              :class="[
-                'mx-2 my-auto sm:visible',
-                {
-                  hidden: screenWidth < 640,
-                },
-              ]"
+      <div class="grid gap-2 sm:flex sm:justify-end">
+        <div class="flex justify-around">
+          <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
+            <flat-pickr
+              v-model="date.start"
+              :config="config"
+              class="form-control text-center border rounded-md h-full w-full"
+              placeholder="Select date"
+              name="date"
+              @click="showButton = true"
             />
-            <div>
-              <flat-pickr
-                v-model="date.end"
-                :config="config"
-                class="form-control text-center border rounded-md h-full w-full"
-                placeholder="Select date"
-                name="date"
-                @click="showButton = true"
-              />
-            </div>
-            <help-button color="white" icon="search" label="OK" @click="loadSearchDate" />
-            <div
-              :class="[
-                'relative outline-none',
-                {
-                  'w-2/5': screenWidth < 640,
-                  'ml-auto': screenWidth < 640,
-                },
-              ]"
-              :tabindex="0"
-              @blur="opened = false"
-            >
-              <div
-                class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
-                :class="{ 'ring-2 ring-royal': opened }"
-                @click="opened = !opened"
-              >
-                <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
-                <help-icon name="selector" />
-              </div>
-              <help-option
-                :class="{ hidden: !opened }"
-                :options="options"
-                :position="position"
-                :selected="modelValue"
-                @changeSelected="changeSelected"
-                class="overflow-y-hidden h-screen py-0"
-              />
-            </div>
-          </template>
-          <template v-else>
-            <div class="h-8 animate-pulse bg-grey-4 sm:w-2/5 sm:ml-auto" />
-            <div class="h-8 animate-pulse bg-grey-4 sm:w-2/5 sm:ml-auto" />
-            <div class="h-8 animate-pulse bg-grey-4 w-2/5 ml-auto" />
-          </template>
+          </div>
+          <help-icon
+            name="minus"
+            :class="[
+              'mx-2 my-auto sm:visible',
+              {
+                hidden: screenWidth < 640,
+              },
+            ]"
+          />
+          <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
+            <flat-pickr
+              v-model="date.end"
+              :config="config"
+              class="form-control text-center border rounded-md h-full w-full"
+              placeholder="Select date"
+              name="date"
+              @click="showButton = true"
+            />
+          </div>
+        </div>
+        <div
+          :class="[
+            'relative outline-none',
+            {
+              'w-2/5': screenWidth < 640,
+              'ml-auto': screenWidth < 640,
+            },
+          ]"
+          :tabindex="0"
+          @blur="opened = false"
+        >
+          <div
+            class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
+            :class="{ 'ring-2 ring-royal': opened }"
+            @click="opened = !opened"
+          >
+            <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
+            <help-icon name="selector" />
+          </div>
+          <help-option
+            :class="{ hidden: !opened }"
+            :options="options"
+            :position="position"
+            :selected="modelValue"
+            @changeSelected="changeSelected"
+            class="overflow-y-hidden h-screen py-0"
+          />
+        </div>
+        <div class="flex justify-end">
+          <help-button color="white" icon="search" label="OK" @click="loadSearchDate" />
         </div>
       </div>
     </div>
     <div class="grid sm:grid-flow-col gap-4 mb-3">
       <summary-card :loading="loading" />
     </div>
-    <div class="grid grid-cols-3 gap-4">
+    <div class="sm:grid sm:grid-cols-3 gap-4">
       <div>
         <help-table
           :footer="false"
@@ -133,6 +128,7 @@ export default {
         // dateFormat: 'y-m-d h:m:s',
         locale: 'ID', // locale for this instance only,
         enableTime: true,
+        disableMobile: 'true',
       },
     };
   },
