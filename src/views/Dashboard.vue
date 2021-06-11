@@ -5,14 +5,14 @@
         <p class="text-heading2 font-semibold">Dashboard</p>
       </div>
       <div class="grid gap-2 sm:flex sm:justify-end">
-        <div class="flex justify-around">
+        <div class="flex justify-end">
           <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
             <flat-pickr
               v-model="date.start"
               :config="config"
               class="form-control text-center border rounded-md h-full w-full"
               placeholder="Select date"
-              name="date"
+              name="dateStart"
               @click="showButton = true"
             />
           </div>
@@ -31,7 +31,7 @@
               :config="config"
               class="form-control text-center border rounded-md h-full w-full"
               placeholder="Select date"
-              name="date"
+              name="dateEnd"
               @click="showButton = true"
             />
           </div>
@@ -61,7 +61,7 @@
             :position="position"
             :selected="modelValue"
             @changeSelected="changeSelected"
-            class="overflow-y-hidden h-screen py-0"
+            class="overflow-y-hidden w-auto h-screen py-0"
           />
         </div>
         <div class="flex justify-end">
@@ -93,6 +93,7 @@
 
 <script>
 import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
 import SummaryCard from '@/components/molecules/SummaryCard.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpOption from '@/components/molecules/Option.vue';
@@ -104,6 +105,10 @@ import mixin from '@/mixin';
 export default {
   name: 'Dashboard',
   mixins: [mixin],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       loading: false,
@@ -128,6 +133,7 @@ export default {
         // dateFormat: 'y-m-d h:m:s',
         locale: 'ID', // locale for this instance only,
         enableTime: true,
+        enableSeconds: true,
         disableMobile: 'true',
       },
     };
@@ -166,27 +172,37 @@ export default {
       switch (newItem) {
         case 'Today':
           date.setHours(0, 0, 0, 0);
-          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          console.log('today', date);
+          console.log('type', typeof date);
+          this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
           break;
         case 'Yesterday':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 1);
-          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          console.log('yesterday', date);
+          console.log('type', typeof date);
+          this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
           break;
         case 'Last 7 Days':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 7);
-          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          console.log('7 days ago', date);
+          console.log('type', typeof date);
+          this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
           break;
         case 'Last 30 Days':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 30);
-          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          console.log('30 days ago', date);
+          console.log('type', typeof date);
+          this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
           break;
         default:
           date.setHours(0, 0, 0, 0);
           date.setMonth(month, 1);
-          this.date.start = this.convertDateFormat(new Date(date), 'full');
+          console.log('this month', date);
+          console.log('type', typeof date);
+          this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
           break;
       }
     },
@@ -198,17 +214,14 @@ export default {
       return result;
     },
     loadSearchDate() {
-      const endDate = this.convertDateFormat(new Date(this.date.end), 'full');
-      const startDate = this.convertDateFormat(new Date(this.date.start), 'full');
-      console.log(startDate, 'start date');
-      this.getTopTenMerchants(startDate, endDate);
+      this.getTopTenMerchants();
     },
     initiateSearchDate(start, end) {
       const endDate = this.convertDateFormat(new Date(start), 'full');
       const startDate = this.convertDateFormat(new Date(end), 'full');
       this.getTopTenMerchants(startDate, endDate);
     },
-    async getTopTenMerchants(startDate, endDate) {
+    async getTopTenMerchants() {
       console.log('masukkkk');
       this.loadingMerchant = true;
       try {
@@ -217,7 +230,7 @@ export default {
         console.log(this.date.end, 'date end');
         const {
           data: { data },
-        } = await API.get(`/merchants-leader-board?end_time=${endDate}&start_time=${startDate}`);
+        } = await API.get(`/merchants-leader-board?end_time=${this.date.end}&start_time=${this.date.start}`);
         console.log(data, 'ini data');
         this.topTenMerchants = data;
       } catch (error) {
@@ -232,9 +245,9 @@ export default {
     },
   },
   mounted() {
-    const endDate = this.convertDateFormat(this.date.end, 'full');
-    const startDate = this.convertDateFormat(this.date.start, 'full');
-    this.getTopTenMerchants(startDate, endDate);
+    this.date.end = this.convertDateFormat(this.date.end, 'full');
+    this.date.start = this.convertDateFormat(this.date.start, 'full');
+    this.getTopTenMerchants();
   },
 };
 </script>
