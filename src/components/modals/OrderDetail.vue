@@ -197,9 +197,27 @@
             </template>
           </help-table>
         </div>
-        <div class="grid md:place-content-end gap-2">
+        <div class="grid md:place-content-end gap-2 mx-5">
           <div class="grid gap-8 grid-cols-2">
-            <span>Delivery fee</span>
+            <span>Initial Delivery fee</span>
+            <span v-if="!loading" class="font-medium text-right">
+              {{ convertToRp(order.order_type_details?.delivery_method.initial_price) }}
+            </span>
+            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Discount</span>
+            <span v-if="!loading" class="font-medium text-right text-mint">
+              {{
+                order.order_type_details?.delivery_method?.discounts
+                  ? `- Rp ${Number((String(order.order_type_details?.delivery_method?.discounts[0].discount)).slice(1)).toLocaleString('ID')}`
+                  : '- Rp 0'
+              }}
+            </span>
+            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Final Delivery fee</span>
             <span v-if="!loading" class="font-medium text-right">
               {{ convertToRp(order.order_type_details?.delivery_method.price) }}
             </span>
