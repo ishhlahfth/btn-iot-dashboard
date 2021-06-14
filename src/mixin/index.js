@@ -66,5 +66,29 @@ export default {
     convertToRp(value) {
       return `Rp ${this.groupDigit(value)}`;
     },
+    convertDateFormat(objDate, params) {
+      // adjust 0 before single digit date
+      const date = `0${objDate.getDate()}`.slice(-2);
+      // current month
+      const month = `0${objDate.getMonth() + 1}`.slice(-2);
+      // current year
+      const year = objDate.getFullYear();
+      // current hours
+      const hours = objDate.getHours();
+      // current minutes
+      const minutes = objDate.getMinutes();
+      // current seconds
+      const seconds = objDate.getSeconds();
+
+      console.log(hours, 'hourssss');
+      // 7 days ago
+      switch (params) {
+        case 'full':
+          // prints date & time in YYYY-MM-DD HH:MM:SS format
+          return `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+        default:
+          return `${year}-${month}-${date}`;
+      }
+    },
   },
 };
