@@ -1,42 +1,55 @@
 <template>
-  <help-modal v-model="detailModal">
-    <merchant-detail />
+  <help-modal v-model="modal.detail">
+    <role-detail />
+  </help-modal>
+  <help-modal v-model="modal.add">
+    <role-add @close="modal.add = false" @refetch="getRoles({ pagination: rolesPagination })" />
+  </help-modal>
+  <help-modal v-model="modal.edit" @editable="true">
+    <role-add @close="modal.edit = false" @refetch="getRoles({ pagination: rolesPagination })" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Role</p>
-      <help-button label="filter" />
-    </div>
-    <div>
-      <help-input v-model="searchValue" placeholder="Search role name here" right-icon="search" />
+      <help-button
+        label="add"
+        icon="plus"
+        @click="handleModal({ params: 'add', data: [], row: {} })"
+      />
     </div>
     <div class="overflow-hidden">
       <help-table
+        path="roles"
         :columns="columns"
-        :rows="roles"
-        :pagination="rolePagination"
-        @onChangePagination="getRoles($event)"
-        @sort="getRoles($event)"
+        :rows="dataRoles"
+        :loading="loading"
+        :pagination="rolesPagination"
+        @onChangePagination="getRoles({ pagination: $event })"
+        @sort="getRoles({ pagination: $event })"
       >
-        <template v-slot="{ column, row }">
-          <p v-if="column === 'permissions'" class="text-royal font-medium cursor-pointer">
+        <template v-slot:body="{ column, data, row }">
+          <p v-if="column === 'name'" class="font-medium">{{ data }}</p>
+          <p v-if="column === 'description'">{{ data }}</p>
+          <p
+            v-if="column === 'permissions'"
+            class="text-royal font-medium cursor-pointer"
+            @click="handleModal({ params: 'detail', data, row })"
+          >
             See Detail
           </p>
-
-          <div v-if="column === 'admins'" class="stacked-avatars">
-            <help-tooltip :text="adminsTooltipText(row.admins)">
-              <div
-                v-for="(admin, i) in row.admins.slice(0, 4)"
-                :key="i"
-                class="rounded-full ring-2 ring-white"
-              >
-                <help-avatar :src="admin.img_url" :size="32" :placeholder="admin.name" />
-              </div>
-            </help-tooltip>
-            <p v-if="row.admins.length > 4">{{ `+${row.admins.length - 4}` }}</p>
+          <!-- <div v-if="column === 'admin'">
+            <help-avatar />
+          </div> -->
+          <!-- <div v-if="column === 'status'">
+            <help-toggle />
+          </div> -->
+          <div v-if="column === 'actions'">
+            <help-button
+              icon-only
+              icon="edit"
+              @click="handleModal({ params: 'edit', data: row.permissions, row })"
+            />
           </div>
-
-          <help-toggle v-if="column === 'is_active'" v-model="row.is_active" />
         </template>
       </help-table>
     </div>
@@ -44,129 +57,92 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-// import axios from 'axios';
-import HelpAvatar from '@/components/atoms/Avatar.vue';
-import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
-import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
-import HelpToggle from '@/components/atoms/Toggle.vue';
-import HelpTooltip from '@/components/atoms/Tooltip.vue';
-import MerchantDetail from '@/components/modals/MerchantDetail.vue';
+import HelpModal from '@/components/templates/Modal.vue';
+import HelpButton from '@/components/atoms/Button.vue';
+// import HelpToggle from '@/components/atoms/Toggle.vue';
+// import HelpAvatar from '@/components/atoms/Avatar.vue';
+import RoleDetail from '@/components/modals/RoleDetail.vue';
+import RoleAdd from '@/components/modals/RoleAdd.vue';
 
-// = = DUMMY = =
-import { role as dummyRole } from '../../dummy.json';
-// = = DUMMY = =
+import API from '../apis';
 
 export default {
   name: 'Role',
-  components: {
-    HelpAvatar,
-    HelpButton,
-    HelpInput,
-    HelpModal,
-    HelpTable,
-    HelpToggle,
-    HelpTooltip,
-    MerchantDetail,
-  },
-  setup() {
-    // const store = inject('store');
-    const searchValue = ref('');
-    const columns = [
-      { field: 'name', label: 'role name', sortable: true },
-      { field: 'description', label: 'description' },
-      { field: 'admins', label: 'admins' },
-      {
-        field: 'permissions',
-        label: 'permission',
-        align: 'center',
-      },
-      { field: 'is_active', label: 'status', align: 'center' },
-    ];
-    const roles = ref([]);
-    const rolePagination = ref({
-      totalRows: 0,
-      rowLimit: 10,
-      page: 1,
-      sortBy: 'id',
-      order: 'asc',
-    });
-    const detailModal = ref(false);
-
-    const getRoles = async (pagination) => {
-      // = = REAL = =
-      // const limit = pagination.rowLimit || 10;
-      // const page = pagination.page || 1;
-      // const sort = pagination.sortBy || 'name';
-      // const order = pagination.order || 'asc;';
-      // = = REAL = =
-      try {
-        // = = REAL = =
-        // const response = await axios.get(
-        //   `http://localhost:3000/role?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-        // );
-        // roles.value = response.data
-        // = = REAL = =
-
-        // = = DUMMY = =
-        roles.value = dummyRole;
-        // = = DUMMY = =
-        rolePagination.value = {
-          // = = REAL = =
-          // totalRows: +response.headers['x-total-count'],
-          // = = REAL = =
-          // = = DUMMY = =
-          totalRows: dummyRole.length,
-          // = = DUMMY = =
-          rowLimit: pagination.rowLimit,
-          page: pagination.page,
-          sortBy: pagination.sortBy,
-          order: pagination.order,
-        };
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const adminsTooltipText = (raw) => {
-      const names = raw.map((el) => el.name);
-      const hidden = names.length - 4;
-      if (names.length > 4) {
-        return `${names.slice(0, 4).join(', ')} and ${hidden} other${hidden > 1 ? 's' : ''}`;
-      }
-      return names.join(', ');
-    };
-
-    onMounted(() => {
-      getRoles(rolePagination.value);
-    });
+  data() {
     return {
-      columns,
-      roles,
-      rolePagination,
-      detailModal,
-      searchValue,
-      getRoles,
-      adminsTooltipText,
+      dataRoles: [],
+      columns: [
+        { field: 'name', label: 'ROLE NAME' },
+        { field: 'description', label: 'DESCRIPTIONS' },
+        // { field: 'admin', label: 'ADMIN' },
+        { field: 'permissions', label: 'PERMISSION' },
+        // { field: 'status', label: 'STATUS' },
+        { field: 'actions', label: '', align: 'center' },
+      ],
+      rolesPagination: {
+        limit: 10,
+        offset: 0,
+      },
+      loading: false,
+      modal: {
+        detail: false,
+        add: false,
+        edit: false,
+      },
+      filterModal: false,
     };
+  },
+  components: {
+    HelpTable,
+    HelpButton,
+    // HelpToggle,
+    HelpModal,
+    // HelpAvatar,
+    RoleDetail,
+    RoleAdd,
+  },
+  methods: {
+    async getRoles({ pagination }) {
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      this.loading = true;
+      try {
+        const {
+          data: { data },
+        } = await API.get(`/roles?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD`);
+        this.dataRoles = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loading = false;
+    },
+    handleModal({ params, data, row }) {
+      this.$store.commit('SET_PERMISSIONS', data);
+      this.$store.commit('SET_ROLE_TYPE', params);
+      this.$store.commit('SET_ROLE', row);
+      switch (params) {
+        case 'detail':
+          this.modal.detail = true;
+          break;
+        case 'edit':
+          this.modal.edit = true;
+          break;
+        default:
+          this.modal.add = true;
+          break;
+      }
+    },
+  },
+  async mounted() {
+    this.loading = true;
+    await this.getRoles({ pagination: this.rolesPagination });
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.stacked-avatars {
-  display: flex;
-  align-items: center;
-  div:not(:first-child) {
-    margin-left: -10px;
-  }
-  > p {
-    @apply font-medium;
-    @apply text-grey-1;
-    @apply text-body;
-    @apply ml-1;
-  }
-}
-</style>
+<style></style>
