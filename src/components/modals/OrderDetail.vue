@@ -206,7 +206,7 @@
             <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
           </div>
           <div class="grid gap-8 grid-cols-2">
-            <span>Discount</span>
+            <span>Discount Delivery</span>
             <span v-if="!loading" class="font-medium text-right text-mint">
               {{
                 order.order_type_details?.delivery_method?.discounts

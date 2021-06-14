@@ -140,7 +140,7 @@
           </template>
         </div>
         <div class="p-3 grid grid-cols-2 gap-1">
-          <p>WeHelpYou</p>
+          <p>Wehelpyou</p>
           <p class="text-right">{{ discountDelivery ? `- ${convertToRp(discountDelivery.slice(1))}` : '- Rp 0' }}</p>
         </div>
         <div class="p-3 grid grid-cols-2 gap-1 font-bold">
