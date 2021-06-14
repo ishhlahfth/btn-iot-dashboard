@@ -14,7 +14,10 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <help-button label="filter" icon="filter" @click="filterModal = true" />
+      <div class="grid grid-flow-col gap-4">
+          <help-button label="filter" icon="filter" @click="filterModal = true" />
+          <help-button label="Export" />
+      </div>
     </div>
     <div>
       <form @submit.prevent="getOrders({ filter: orderFilter })">
@@ -27,7 +30,6 @@
         :columns="columns"
         :loading="loading"
         :rows="orders"
-        :height="40"
         :pagination="orderPagination"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"

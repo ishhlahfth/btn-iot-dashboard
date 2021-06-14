@@ -15,7 +15,16 @@
       class="grid gap-4"
     >
       <div class="w-full">
-        <help-input v-model="merchantName" label="Merchant Name" placeholder="Type a merchant" />
+        <help-select
+          v-model="selectedPayment"
+          label="Order Status"
+          :options="orderStatus"
+          :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
+        />
+      </div>
+      <div class="grid grid-flow-col gap-2 justify-between">
+        <help-input v-model="merchantName" label="Start Date" placeholder="DD-MM-YYYY" />
+        <help-input v-model="merchantName" label="End Date" placeholder="DD-MM-YYYY" />
       </div>
       <div class="w-full">
         <help-select
@@ -67,6 +76,11 @@ export default {
         { value: 'ShopeePay', label: 'ShopeePay' },
         { value: 'OVO', label: 'Ovo' },
         { value: 'Dana', label: 'Dana' },
+      ],
+      orderStatus: [
+        { value: '', label: 'All' },
+        { value: 'Sedang Dikirim', label: 'Sedang Dikirim' },
+        { value: 'Gagal', label: 'Gagal' },
       ],
     };
   },
