@@ -66,5 +66,49 @@ export default {
     convertToRp(value) {
       return `Rp ${this.groupDigit(value)}`;
     },
+    convertDateFormat(objDate) {
+      // adjust 0 before single digit date
+      const date = `0${objDate.getDate()}`.slice(-2);
+      // current month
+      const month = `0${objDate.getMonth() + 1}`.slice(-2);
+      // current year
+      const year = objDate.getFullYear();
+      // prints date & time in YYYY-MM-DD HH:MM:SS format
+      return `${year}-${month}-${date}`;
+    },
+    convertDateFormatConfig(objDate) {
+      let strDate = '';
+      if (objDate) {
+        // adjust 0 before single digit date
+        const date = `0${objDate.getDate()}`.slice(-2);
+        // current month
+        const month = `0${objDate.getMonth() + 1}`.slice(-2);
+        // current year
+        const year = objDate.getFullYear();
+        // prints date & time in YYYY-MM-DD HH:MM:SS format
+        strDate = `${date}.${month}.${year}`;
+      } else {
+        strDate = '';
+      }
+      return strDate;
+    },
+    convertDateTimeFormat(objDate) {
+      // adjust 0 before single digit date
+      const date = `0${objDate.getDate()}`.slice(-2);
+      // current month
+      const month = `0${objDate.getMonth() + 1}`.slice(-2);
+      // current year
+      const year = objDate.getFullYear();
+      // current hours
+      const hours = objDate.getHours();
+      // current minutes
+      const minutes = objDate.getMinutes();
+      // current seconds
+      const seconds = objDate.getSeconds();
+      // prints date & time in YYYY-MM-DD HH:MM:SS format
+      return `${year}-${month}-${date} ${hours < 10 ? `0${hours}` : hours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      }:${seconds < 10 ? `0${seconds}` : seconds}`;
+    },
   },
 };

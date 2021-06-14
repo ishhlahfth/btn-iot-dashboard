@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import Toast from 'vue-toastification';
 import Maska from 'maska';
+import LitepieDatepicker from 'litepie-datepicker';
+import excel from 'vue-excel-export';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -34,4 +36,6 @@ createApp(App)
   .use(store)
   .use(Toast, toastOption)
   .use(Maska)
+  .use(LitepieDatepicker)
+  .use(excel)
   .mount('#app');

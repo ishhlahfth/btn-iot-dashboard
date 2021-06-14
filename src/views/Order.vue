@@ -14,9 +14,11 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <div class="grid grid-flow-col gap-4">
-          <help-button label="filter" icon="filter" @click="filterModal = true" />
-          <help-button label="Export" />
+      <div class="grid grid-flow-col gap-2">
+        <help-button label="filter" icon="filter" @click="filterModal = true" />
+        <export-excel :data="orders" :fetch="checkExportLimit">
+          <help-button class="h-full" label="export" />
+        </export-excel>
       </div>
     </div>
     <div>
@@ -74,6 +76,9 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
+import Moment from 'moment/moment';
+import { ref } from 'vue';
+import 'flatpickr/dist/flatpickr.css';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -94,10 +99,28 @@ export default {
   },
   setup() {
     const toast = useToast();
-    return { toast };
+    const pickedStart = ref();
+    const pickedEnd = ref();
+
+    return {
+      toast,
+      pickedStart,
+      pickedEnd,
+    };
   },
   data() {
+    const min = new Date();
+    min.setDate(min.getDate() - 7);
+    min.setHours(9);
+    min.setMinutes(0);
+    min.setSeconds(0);
+    const max = new Date();
+    max.setDate(max.getDate() + 7);
+    max.setHours(18);
+    max.setMinutes(0);
+    max.setSeconds(0);
     return {
+      exportLimit: 7,
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
@@ -119,6 +142,7 @@ export default {
       transferMode: false,
       date: '',
       orders: [],
+      exportOrders: [],
       orderPagination: {
         limit: 10,
         offset: 0,
@@ -126,13 +150,38 @@ export default {
         order: 'desc',
       },
       orderFilter: {
+        orderStatus: '',
         paymentMethod: '',
         merchantName: '',
+        selectedStart: '',
+        selectedEnd: '',
+      },
+      appliedFilter: {
+        orderStatus: '',
+        paymentMethod: '',
+        merchantName: '',
+        selectedStart: '',
+        selectedEnd: '',
       },
       loading: false,
       detailModal: false,
       filterModal: false,
       statusHistoryModal: false,
+      sDate: null,
+      configStart: {
+        wrap: true, // set wrap to true only when using 'input-group'
+        altFormat: 'Y-m-d',
+        altInput: true,
+        maxDate: '',
+        dateFormat: 'Y-m-d',
+      },
+      configEnd: {
+        wrap: true, // set wrap to true only when using 'input-group'
+        altFormat: 'Y-m-d',
+        altInput: true,
+        minDate: '',
+        dateFormat: 'Y-m-d',
+      },
     };
   },
   methods: {
@@ -142,11 +191,24 @@ export default {
       const sort = pagination?.sort || 'date';
       const order = pagination?.order || 'desc';
       const search = this.searchValue || '';
-
+      let startDate;
+      let endDate;
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
+      if (filter?.selectedStart) {
+        startDate = this.convertDateFormat(filter?.selectedStart);
+      }
+      if (filter?.selectedEnd) {
+        endDate = this.convertDateFormat(filter?.selectedEnd);
+      }
+
+      console.log(`${startDate} - ${endDate}`);
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
 
       if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
       if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
 
       try {
         this.loading = true;
@@ -184,6 +246,58 @@ export default {
       }
       this.loading = false;
     },
+    async getExportedOrder({ filter }) {
+      const sort = 'date';
+      const order = 'desc';
+      const search = this.searchValue || '';
+      let startDate;
+      let endDate;
+
+      let url = `orders?offset=&sort=${sort}&order=${order}&code=${search}`;
+      if (filter?.selectedStart) {
+        startDate = this.convertDateFormat(filter?.selectedStart);
+      }
+      if (filter?.selectedEnd) {
+        endDate = this.convertDateFormat(filter?.selectedEnd);
+      }
+
+      console.log(`${startDate} - ${endDate}`);
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
+      if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
+
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.get(url);
+
+        this.exportOrders = data.map((el) => ({
+          id: el.id,
+          merchant_id: el.merchant_id,
+          code: el.code,
+          date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
+          current_step: el.current_step.title,
+          merchant_name: el.merchant?.name,
+          customer_name: el.customer?.profile?.name,
+          commission_fee: this.convertToRp(el.commission_fee),
+          subtotal_price: this.convertToRp(el.subtotal_price),
+          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
+          payment_method: el.payment.name,
+        }));
+
+        this.orderFilter = filter;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     openOrderDetail(orderId) {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
@@ -202,7 +316,11 @@ export default {
         ...this.orderFilter,
         paymentMethod: $event.paymentMethod,
         merchantName: $event.merchantName,
+        orderStatus: $event.orderStatus,
+        selectedStart: $event.selectedStart,
+        selectedEnd: $event.selectedEnd,
       };
+      this.appliedFilter = filter;
       this.getOrders({ pagination, filter });
       this.filterModal = false;
     },
@@ -212,6 +330,12 @@ export default {
         pagination: this.orderPagination,
         filter: this.orderFilter,
       });
+    },
+    changeEndMin(date) {
+      this.configEnd.minDate = date;
+    },
+    changeEndStart(date) {
+      this.configStart.maxDate = date;
     },
   },
   async mounted() {
