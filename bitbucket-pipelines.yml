@@ -12,6 +12,7 @@ definitions:
         image: node:14
         script:
           - source .env-ci-cd
+          - echo ${ENCODED_ENV_FILE} | base64 -d > .env
           - npm i
           - npm run build
         artifacts:
