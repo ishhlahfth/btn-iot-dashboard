@@ -66,6 +66,7 @@ export default {
     convertToRp(value) {
       return `Rp ${this.groupDigit(value)}`;
     },
+<<<<<<< HEAD
     convertDateFormat(objDate) {
       // adjust 0 before single digit date
       const date = `0${objDate.getDate()}`.slice(-2);
@@ -93,6 +94,9 @@ export default {
       return strDate;
     },
     convertDateTimeFormat(objDate) {
+=======
+    convertDateFormat(objDate, params) {
+>>>>>>> 0cbf8faaf7c2b75b368d140fedf55e2f04bd8aff
       // adjust 0 before single digit date
       const date = `0${objDate.getDate()}`.slice(-2);
       // current month
@@ -105,10 +109,23 @@ export default {
       const minutes = objDate.getMinutes();
       // current seconds
       const seconds = objDate.getSeconds();
+<<<<<<< HEAD
       // prints date & time in YYYY-MM-DD HH:MM:SS format
       return `${year}-${month}-${date} ${hours < 10 ? `0${hours}` : hours}:${
         minutes < 10 ? `0${minutes}` : minutes
       }:${seconds < 10 ? `0${seconds}` : seconds}`;
+=======
+
+      console.log(hours, 'hourssss');
+      // 7 days ago
+      switch (params) {
+        case 'full':
+          // prints date & time in YYYY-MM-DD HH:MM:SS format
+          return `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+        default:
+          return `${year}-${month}-${date}`;
+      }
+>>>>>>> 0cbf8faaf7c2b75b368d140fedf55e2f04bd8aff
     },
   },
 };

@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import Toast from 'vue-toastification';
+import VueFlatPickr from 'vue-flatpickr-component';
 import Maska from 'maska';
 import LitepieDatepicker from 'litepie-datepicker';
 import excel from 'vue-excel-export';
@@ -9,6 +10,8 @@ import store from './store';
 import './registerServiceWorker';
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
+import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
+import 'flatpickr/dist/flatpickr.css';
 
 const toastOption = {
   transition: 'Vue-Toastification__fade',
@@ -36,6 +39,10 @@ createApp(App)
   .use(store)
   .use(Toast, toastOption)
   .use(Maska)
+<<<<<<< HEAD
   .use(LitepieDatepicker)
   .use(excel)
+=======
+  .use(VueFlatPickr)
+>>>>>>> 0cbf8faaf7c2b75b368d140fedf55e2f04bd8aff
   .mount('#app');
