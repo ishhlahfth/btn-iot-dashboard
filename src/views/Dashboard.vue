@@ -115,7 +115,7 @@ export default {
       loadingMerchant: false,
       checkin: '',
       opened: false,
-      options: ['Today', 'Yesterday', 'This Month', 'Last 7 Days', 'Last 30 Days'],
+      options: ['Today', 'Yesterday', 'Last 7 Days', 'This Month', 'Last 30 Days'],
       modelValue: 'Last 7 Days',
       position: ['bottom', 'left'],
       columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'total' }],
