@@ -59,7 +59,7 @@
                 <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${payment.name === 'ShopeePay' ? payment.name.toUpperCase() : payment.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${payment.name.toUpperCase().toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
@@ -74,10 +74,10 @@
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.order" :key="i">
               <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${delivery.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${delivery.name.toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
@@ -193,7 +193,7 @@
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${payment.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${payment.name.toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
@@ -215,7 +215,7 @@
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${delivery.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${delivery.name.toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
@@ -338,7 +338,7 @@
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${payment.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${payment.name.toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
@@ -360,7 +360,7 @@
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${delivery.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${delivery.name.toUpperCase()}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
