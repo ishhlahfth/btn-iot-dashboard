@@ -40,9 +40,12 @@
           <!-- <div v-if="column === 'admin'">
             <help-avatar />
           </div> -->
-          <!-- <div v-if="column === 'status'">
-            <help-toggle />
-          </div> -->
+          <div v-if="column === 'is_active'">
+            <help-toggle
+              :modelValue="is_active[`${row.name}`]"
+              @change="handleActiveRole(row)"
+            />
+          </div>
           <div v-if="column === 'actions'">
             <help-button
               icon-only
@@ -60,15 +63,20 @@
 import HelpTable from '@/components/templates/Table.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
-// import HelpToggle from '@/components/atoms/Toggle.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 // import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
 
+import { useToast } from 'vue-toastification';
 import API from '../apis';
 
 export default {
   name: 'Role',
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       dataRoles: [],
@@ -77,7 +85,7 @@ export default {
         { field: 'description', label: 'DESCRIPTIONS' },
         // { field: 'admin', label: 'ADMIN' },
         { field: 'permissions', label: 'PERMISSION' },
-        // { field: 'status', label: 'STATUS' },
+        { field: 'is_active', label: 'STATUS' },
         { field: 'actions', label: '', align: 'center' },
       ],
       rolesPagination: {
@@ -91,12 +99,13 @@ export default {
         edit: false,
       },
       filterModal: false,
+      is_active: {},
     };
   },
   components: {
     HelpTable,
     HelpButton,
-    // HelpToggle,
+    HelpToggle,
     HelpModal,
     // HelpAvatar,
     RoleDetail,
@@ -112,6 +121,9 @@ export default {
           data: { data },
         } = await API.get(`/roles?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD`);
         this.dataRoles = data;
+        data.forEach((el) => {
+          this.is_active[`${el.name}`] = el.is_active;
+        });
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -135,6 +147,30 @@ export default {
         default:
           this.modal.add = true;
           break;
+      }
+    },
+    async handleActiveRole(row) {
+      this.is_active[`${row.name}`] = !this.is_active[`${row.name}`];
+      row.is_active = this.is_active[`${row.name}`] && this.is_active[`${row.name}`] === true ? 'TRUE' : 'FALSE';
+      const payload = {
+        name: row.name,
+        description: row.description,
+        permission: row.permissions.map((el) => `${el.id}`),
+        group: row.group,
+        is_active: row.is_active,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`/roles/${row.id}`, payload);
+        console.log('success', data);
+        this.toast.success(`Success ${data.is_active === true ? 'enable' : 'disable'} role status !`);
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
       }
     },
   },

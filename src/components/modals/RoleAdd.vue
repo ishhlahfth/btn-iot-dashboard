@@ -94,7 +94,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 
 import { useToast } from 'vue-toastification';
-import API from '../../apis';
+import API from '@/apis';
 
 export default {
   name: 'RoleAdd',
@@ -127,12 +127,14 @@ export default {
         permission: [],
         group: '',
       },
+      is_active: false,
     };
   },
   mounted() {
     this.roleName = this.$store.state.role.name;
     this.description = this.$store.state.role.description;
     this.access = this.$store.state.role.permissions;
+    console.log('ada ga', this.$store.role);
     if (this.roleType === 'edit') {
       this.$store.state.role.permissions.forEach((el) => {
         this.roleBody.permission.push(String(el.id));
@@ -194,6 +196,7 @@ export default {
         description: this.description,
         permission: this.roleBody.permission,
         group: 'INTERNAL_DASHBOARD',
+        is_active: 'TRUE',
       };
       this.loading.addRole = true;
       console.log(body, 'body add');
@@ -220,6 +223,7 @@ export default {
         description: this.description,
         permission: this.roleBody.permission,
         group: 'INTERNAL_DASHBOARD',
+        is_active: this.is_active && this.is_active === true ? 'TRUE' : 'FALSE',
       };
       this.loading.addRole = true;
       console.log(body, 'body edit');
