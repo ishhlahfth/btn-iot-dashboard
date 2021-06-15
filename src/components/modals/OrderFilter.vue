@@ -25,18 +25,32 @@
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
-      <div class="grid grid-flow-col gap-2 justify-between">
+      <div class="grid grid-flow-col gap-2 justify-between py-3">
         <div>
           <label><strong>Start Date</strong></label>
-            <datepicker class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg gap-2 w-full"
-            v-model="pickedStart"
-            :upper-limit="pickedEnd"/>
+            <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
+            <flat-pickr
+              v-model="pickedStart"
+              :config="config"
+              class="form-control text-center border rounded-md h-full w-full"
+              placeholder="Select date"
+              name="dateStart"
+              @click="showButton = true"
+            />
+          </div>
         </div>
         <div>
           <label><strong>End Date</strong></label>
-            <datepicker class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg gap-2 w-full"
-            v-model="pickedEnd"
-            :lower-limit="pickedStart"/>
+            <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
+            <flat-pickr
+              v-model="pickedEnd"
+              :config="config"
+              class="form-control text-center border rounded-md h-full w-full"
+              placeholder="Select date"
+              name="dateStart"
+              @click="showButton = true"
+            />
+          </div>
         </div>
       </div>
       <div class="w-full">
@@ -66,7 +80,6 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import mixin from '@/mixin';
-import Datepicker from 'vue3-datepicker';
 import { ref } from 'vue';
 
 export default {
@@ -76,11 +89,10 @@ export default {
     HelpButton,
     HelpInput,
     HelpSelect,
-    Datepicker,
   },
   setup() {
-    const pickedStart = ref(Date());
-    const pickedEnd = ref(Date());
+    const pickedStart = ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+    const pickedEnd = ref(new Date());
     return {
       pickedStart,
       pickedEnd,
@@ -117,9 +129,17 @@ export default {
         { value: 'REFUNDED', label: 'Pesanan Gagal' },
         { value: 'COMPLETED', label: 'Pesanan Selesai' },
       ],
-      date: new Date(),
+      date: {
+        start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
+        end: ref(new Date()),
+      },
       selectedStart: '',
       selectedEnd: '',
+      config: {
+        wrap: true,
+        locale: 'ID',
+        disableMobile: 'true',
+      },
     };
   },
   computed: {
@@ -135,8 +155,8 @@ export default {
     this.selectedStatus = this.orderStatus.filter(
       (el) => el.value === this.filter.orderStatus,
     )[0];
-    this.selectedStart = this.filter.pickedStart;
-    this.selectedEnd = this.convertDateFormat;
+    this.selectedStart = this.date.start;
+    this.selectedEnd = this.date.end;
   },
 };
 </script>

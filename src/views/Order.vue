@@ -16,7 +16,14 @@
       <p class="text-heading2 font-semibold">Order</p>
       <div class="grid grid-flow-col gap-2">
         <help-button label="filter" icon="filter" @click="filterModal = true" />
-        <export-excel :data="orders" :fetch="checkExportLimit">
+        <export-excel
+          :fetch="checkExportLimit"
+          :before-start="showStartExportToast"
+          :before-finish="showFinishExportToast"
+          :name="
+            `Exported_Order_${namingStart}-${namingEnd}.xls`
+          "
+        >
           <help-button class="h-full" label="export" />
         </export-excel>
       </div>
@@ -81,7 +88,6 @@ import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
 import Moment from 'moment/moment';
 import { ref } from 'vue';
-import 'flatpickr/dist/flatpickr.css';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -146,6 +152,8 @@ export default {
       ],
       transferMode: false,
       date: '',
+      namingStart: '',
+      namingEnd: '',
       orders: [],
       exportOrders: [],
       orderPagination: {
@@ -200,10 +208,10 @@ export default {
       let endDate;
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
       if (filter?.selectedStart) {
-        startDate = this.convertDateFormat(filter?.selectedStart);
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
       }
       if (filter?.selectedEnd) {
-        endDate = this.convertDateFormat(filter?.selectedEnd);
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
 
       console.log(`${startDate} - ${endDate}`);
@@ -246,6 +254,9 @@ export default {
           order,
         };
         this.orderFilter = filter;
+        if (filter) {
+          this.getExportedOrder(this.appliedFilter);
+        }
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -255,19 +266,19 @@ export default {
       }
       this.loading = false;
     },
-    async getExportedOrder({ filter }) {
+    async getExportedOrder(filter) {
       const sort = 'date';
       const order = 'desc';
       const search = this.searchValue || '';
       let startDate;
       let endDate;
 
-      let url = `orders?offset=&sort=${sort}&order=${order}&code=${search}`;
+      let url = `orders?&sort=${sort}&order=${order}&code=${search}`;
       if (filter?.selectedStart) {
-        startDate = this.convertDateFormat(filter?.selectedStart);
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
       }
       if (filter?.selectedEnd) {
-        endDate = this.convertDateFormat(filter?.selectedEnd);
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
 
       console.log(`${startDate} - ${endDate}`);
@@ -297,8 +308,6 @@ export default {
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
         }));
-
-        this.orderFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -306,6 +315,12 @@ export default {
           this.toast.error(error.message);
         }
       }
+    },
+    showStartExportToast() {
+      this.toast.success('Exporting Report...');
+    },
+    showFinishExportToast() {
+      this.toast.success('Finished Exporting, Download in progress...');
     },
     openOrderDetail(orderId) {
       this.detailModal = true;
@@ -330,6 +345,8 @@ export default {
         selectedEnd: $event.selectedEnd,
       };
       this.appliedFilter = filter;
+      this.namingStart = Moment(this.appliedFilter.selectedStart).format('D-MM-YYYY');
+      this.namingEnd = Moment(this.appliedFilter.selectedEnd).format('D-MM-YYYY');
       this.getOrders({ pagination, filter });
       this.filterModal = false;
     },
@@ -346,11 +363,34 @@ export default {
     changeEndStart(date) {
       this.configStart.maxDate = date;
     },
+    checkExportLimit() {
+      const exportEndDate = Moment(this.appliedFilter.selectedEnd);
+      const exportStartDate = this.appliedFilter.selectedStart
+        ? Moment(this.appliedFilter.selectedStart)
+        : Moment(this.appliedFilter.selectedEnd).subtract(this.exportLimit + 1, 'd');
+      const difference = Math.abs(exportEndDate.diff(exportStartDate, 'days'));
+      console.log(difference);
+      if (difference > this.exportLimit) {
+        this.toast.error(
+          `You can only export the data with maximum ${this.exportLimit} days date range.`,
+        );
+      } else if (Number.isNaN(difference)) {
+        this.toast.error(
+          `You can only export the data with maximum ${this.exportLimit} days date range.`,
+        );
+      } else {
+        return this.exportOrders;
+      }
+      return null;
+    },
   },
   async mounted() {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
+    });
+    this.getExportedOrder({
+      filter: this.appliedFilter,
     });
   },
 };
