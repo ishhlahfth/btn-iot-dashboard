@@ -69,8 +69,12 @@
         </div>
       </div>
     </div>
-    <div class="grid sm:grid-flow-col gap-4 mb-3">
-      <summary-card :loading="loading" />
+    <div class="grid sm:grid-cols-4 gap-4 mb-3">
+      <summary-card
+        :loading="loading"
+        :totalTransaction="totalTransaction"
+        :totalComparison="comparison"
+      />
     </div>
     <div class="sm:grid sm:grid-cols-3 gap-4">
       <div>
@@ -111,7 +115,12 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: {
+        order: false,
+        eat: false,
+        delivery: false,
+        commission: false,
+      },
       loadingMerchant: false,
       checkin: '',
       opened: false,
@@ -119,6 +128,17 @@ export default {
       modelValue: 'Last 7 Days',
       position: ['bottom', 'left'],
       columns: [{ field: 'name', label: 'Top 10 Merchant' }, { field: 'total' }],
+      totalTransaction: {
+        order: 0,
+        eat: 0,
+        delivery: 0,
+        commission: 0,
+      },
+      comparison: {
+        eat: 0,
+        delivery: 0,
+        commision: 0,
+      },
       topTenMerchants: [],
       date: {
         start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
@@ -131,7 +151,7 @@ export default {
         // altFormat: 'y M D',
         // altInput: true,
         // dateFormat: 'y-m-d h:m:s',
-        locale: 'ID', // locale for this instance only,
+        // locale: 'ID', // locale for this instance only,
         enableTime: true,
         enableSeconds: true,
         disableMobile: 'true',
@@ -163,6 +183,62 @@ export default {
     },
   },
   methods: {
+    async getTotalOrder() {
+      this.loading.order = true;
+      this.loading.eat = true;
+      this.loading.delivery = true;
+      this.loading.commision = true;
+      try {
+        const {
+          data: { data },
+        } = await API.get(
+          `/order/total/count?start_time=${this.date.start}&end_time=${this.date.end}`,
+        );
+        this.totalTransaction.order = data.length > 0 ? data[0].totalCount : 0;
+      } catch (error) {
+        console.log('masuk error', error);
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loading.order = false;
+      this.loading.eat = false;
+      this.loading.delivery = false;
+      this.loading.commision = false;
+    },
+    async getTotalEatDeliveryCommision(param) {
+      this.generateComparasion(param);
+      try {
+        const {
+          data: { data },
+        } = await API.get(
+          `/order/total/volume?type=${param}&start_time=${this.date.start}&end_time=${this.date.end}`,
+        );
+        console.log(data, 'data final');
+        switch (param) {
+          case 'delivery':
+            this.totalTransaction.delivery = data.length > 0 ? String(data[0].totalTransaction).slice(0, -3) : 0;
+            break;
+          case 'eat':
+            this.totalTransaction.eat = data.length > 0 ? String(data[0].totalTransaction).slice(0, -3) : 0;
+            break;
+          default:
+            this.totalTransaction.commision = data.length > 0 ? String(data[0].totalTransaction).slice(0, -3) : 0;
+            break;
+        }
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
+    generateComparasion(param) {
+      return API.get(`/order/total/volume-comparison?start_time=${this.date.start}&end_time=${this.date.end}&type=${param}`);
+    },
     changeSelected(newItem) {
       this.modelValue = newItem;
       this.opened = false;
@@ -213,8 +289,15 @@ export default {
       }
       return result;
     },
-    loadSearchDate() {
+    async loadSearchDate() {
+      this.getTotalOrder();
       this.getTopTenMerchants();
+      this.getTotalEatDeliveryCommision('delivery');
+      this.getTotalEatDeliveryCommision('eat');
+      this.getTotalEatDeliveryCommision('commision_fee');
+      this.comparison.eat = await this.generateComparasion('eat');
+      this.comparison.delivery = await this.generateComparasion('delivery');
+      this.comparison.commision = await this.generateComparasion('commision_fee');
     },
     initiateSearchDate(start, end) {
       const endDate = this.convertDateFormat(new Date(start), 'full');
@@ -222,16 +305,13 @@ export default {
       this.getTopTenMerchants(startDate, endDate);
     },
     async getTopTenMerchants() {
-      console.log('masukkkk');
       this.loadingMerchant = true;
       try {
-        console.log('masuk try');
-        console.log(this.date.start, 'date start');
-        console.log(this.date.end, 'date end');
         const {
           data: { data },
-        } = await API.get(`/merchants-leader-board?end_time=${this.date.end}&start_time=${this.date.start}`);
-        console.log(data, 'ini data');
+        } = await API.get(
+          `/merchants-leader-board?end_time=${this.date.end}&start_time=${this.date.start}`,
+        );
         this.topTenMerchants = data;
       } catch (error) {
         console.log('masuk error', error);
@@ -244,10 +324,17 @@ export default {
       this.loadingMerchant = false;
     },
   },
-  mounted() {
+  async mounted() {
     this.date.end = this.convertDateFormat(this.date.end, 'full');
     this.date.start = this.convertDateFormat(this.date.start, 'full');
     this.getTopTenMerchants();
+    this.getTotalOrder();
+    this.getTotalEatDeliveryCommision('delivery');
+    this.getTotalEatDeliveryCommision('eat');
+    this.getTotalEatDeliveryCommision('commision_fee');
+    this.comparison.eat = await this.generateComparasion('eat');
+    this.comparison.delivery = await this.generateComparasion('delivery');
+    this.comparison.commision = await this.generateComparasion('commision_fee');
   },
 };
 </script>
