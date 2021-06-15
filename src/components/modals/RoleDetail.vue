@@ -49,13 +49,17 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
-
-import API from '../../apis';
+import API from '@/apis';
 
 export default {
   name: 'RoleDetail',
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       columns: [
