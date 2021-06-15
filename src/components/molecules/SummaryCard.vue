@@ -59,7 +59,7 @@
                 <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo/${payment.name}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo/${payment.name === 'ShopeePay' ? payment.name.toUpperCase() : payment.name}-logo-circle.png`)"
                       class="mx-2"
                       :size="48"
                     />
