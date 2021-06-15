@@ -45,6 +45,7 @@
           spellcheck="false"
           type="date"
           size="small"
+          format="24hr"
           :placeholder="placeholder"
           :value="modelValue"
           v-maska="mask"
@@ -59,11 +60,11 @@
           spellcheck="false"
           type="time"
           :placeholder="placeholder"
-          :value="modelValue"
+          :value="modelValue2"
           v-maska="mask"
           @blur="onFocus = false"
           @focus="onFocus = true"
-          @input="$emit('update:modelValue', $event.target.value)"
+          @input="$emit('update:modelValue2', $event.target.value)"
         />
         <help-button
           v-if="searchBar && !modelValue"
@@ -151,6 +152,10 @@ export default {
   },
   props: {
     modelValue: {
+      type: String,
+      default: '',
+    },
+    modelValue2: {
       type: String,
       default: '',
     },
