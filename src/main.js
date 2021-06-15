@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import Toast from 'vue-toastification';
 import VueFlatPickr from 'vue-flatpickr-component';
 import Maska from 'maska';
+import excel from 'vue-excel-export';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -38,4 +39,5 @@ createApp(App)
   .use(Toast, toastOption)
   .use(Maska)
   .use(VueFlatPickr)
+  .use(excel)
   .mount('#app');

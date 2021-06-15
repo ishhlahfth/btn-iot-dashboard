@@ -34,6 +34,14 @@
           <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
         </template>
         <help-button label="filter" icon="filter" @click="filterModal = true" />
+        <export-excel
+          :fetch="exportTransfer"
+          :before-start="showStartExportToast"
+          :before-finish="showFinishExportToast"
+          :name="`Exported_Transfer_${appliedFilter.merchantName}.xls`"
+        >
+          <help-button class="h-full" label="export" />
+        </export-excel>
       </div>
     </div>
     <div>
@@ -121,6 +129,7 @@ export default {
       searchValue: '',
       transferMode: false,
       transfers: [],
+      exportedTransfer: [],
       transferPagination: {
         limit: 10,
         offset: 0,
@@ -130,6 +139,7 @@ export default {
       transferFilter: {
         merchantName: '',
       },
+      appliedFilter: {},
       loading: false,
       checkAll: false,
       confirmTransferModal: false,
@@ -221,6 +231,54 @@ export default {
           order,
         };
         this.transferFilter = filter;
+        if (filter) {
+          this.getExportedTransferData(this.appliedFilter);
+        }
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loading = false;
+    },
+    async getExportedTransferData(filter) {
+      const sort = 'order_date';
+      const order = 'desc';
+      const search = '';
+
+      let url = `transfer-queues?sort=${sort}&order=${order}&order_code=${search}`;
+
+      if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
+
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.get(url);
+
+        this.exportedTransfer = data.map((el) => ({
+          id: el.id,
+          amount: el.amount,
+          order_date: dayjs(el.order.date).format('DD-MM-YYYY HH:mm:ss'),
+          code: el.order?.code,
+          transfer_status: el.order?.transfer_status,
+          merchant_name: el.order?.merchant.name,
+          customer_name: el.order?.customer?.name,
+          subtotal_price: this.convertToRp(el.order?.subtotal_price),
+          commission_fee: this.convertToRp(el.order?.commission_fee),
+          delivery_price: this.convertToRp(el.order?.delivery_fee),
+          payment_method: el.order?.payment_method,
+          transfer_date: dayjs(el.transfer_date).format('DD-MM-YYYY HH:mm:ss'),
+          transfer_by: el.transfer_by,
+        }));
+
+        this.transferPagination = {
+          sort,
+          order,
+        };
+        this.transferFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -264,14 +322,27 @@ export default {
         ...this.transferFilter,
         merchantName: $event.merchantName,
       };
+      this.appliedFilter = filter;
       this.getTransferData({ pagination, filter });
       this.filterModal = false;
+    },
+    exportTransfer() {
+      return this.exportedTransfer;
+    },
+    changeEndMin(date) {
+      this.configEnd.minDate = date;
+    },
+    changeEndStart(date) {
+      this.configStart.maxDate = date;
     },
   },
   async mounted() {
     this.getTransferData({
       pagination: this.transferPagination,
       filter: this.transferFilter,
+    });
+    this.getExportedTransferData({
+      filter: this.appliedFilter,
     });
   },
 };
