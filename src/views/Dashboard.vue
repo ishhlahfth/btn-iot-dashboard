@@ -6,11 +6,11 @@
       </div>
       <div class="grid gap-2 sm:flex sm:justify-end">
         <div class="flex justify-end">
-          <div class="text-xs sm:text-md w-auto h-10 sm:h-full">
+          <div class="text-xs sm:text-md w-auto h-10 sm:h-full mx-2 sm:mx-0">
             <flat-pickr
               v-model="date.start"
               :config="config"
-              class="form-control text-center border rounded-md h-full w-full"
+              class="form-control text-center rounded-md h-full w-full px-2 shadow-md cursor-pointer"
               placeholder="Select date"
               name="dateStart"
               @click="showButton = true"
@@ -29,7 +29,7 @@
             <flat-pickr
               v-model="date.end"
               :config="config"
-              class="form-control text-center border rounded-md h-full w-full"
+              class="form-control text-center rounded-md h-full w-full px-2 shadow-md cursor-pointer"
               placeholder="Select date"
               name="dateEnd"
               @click="showButton = true"
@@ -40,7 +40,7 @@
           :class="[
             'relative outline-none',
             {
-              'w-2/5': screenWidth < 640,
+              'w-1/3': screenWidth < 640,
               'ml-auto': screenWidth < 640,
             },
           ]"
@@ -48,7 +48,7 @@
           @blur="opened = false"
         >
           <div
-            class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
+            class="bg-white flex justify-between items-center shadow-md py-2.5 px-3 rounded-md cursor-pointer select-none text-xs sm:text-md"
             :class="{ 'ring-2 ring-royal': opened }"
             @click="opened = !opened"
           >
@@ -65,7 +65,7 @@
           />
         </div>
         <div class="flex justify-end">
-          <help-button color="white" icon="search" label="OK" @click="loadSearchDate" />
+          <help-button color="white" class="shadow-lg rounded-md" icon="search" label="OK" @click="loadSearchDate" />
         </div>
       </div>
     </div>
@@ -79,8 +79,9 @@
       />
     </div>
     <div class="sm:grid sm:grid-cols-3 gap-4">
-      <div>
+      <div class="mb-4">
         <help-table
+          class="shadow-md border-none"
           :footer="false"
           :columns="columnsMerchant"
           :rows="topTen.merchants"
@@ -93,8 +94,9 @@
           </template>
         </help-table>
       </div>
-      <div>
+      <div class="mb-4">
         <help-table
+          class="shadow-md border-none"
           :footer="false"
           :columns="columnsSeller"
           :rows="topTen.seller"
@@ -107,8 +109,9 @@
           </template>
         </help-table>
       </div>
-      <div>
+      <div class="mb-4">
         <help-table
+          class="shadow-md border-none"
           :footer="false"
           :columns="columnsBuyer"
           :rows="topTen.buyer"
@@ -267,9 +270,11 @@ export default {
         const {
           data: { data },
         } = await API.get(`/order/total/volume/${method}?type=${param}&start_time=${this.date.start}&end_time=${this.date.end}`);
-        if (method === 'by-payment') this.paymentMethod[`${param}`] = data;
-        this.deliveryMethod[`${param}`] = data;
-        console.log(data, 'data payment order', param);
+        if (method === 'by-payment') {
+          this.paymentMethod[`${param}`] = data;
+        } else {
+          this.deliveryMethod[`${param}`] = data;
+        }
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -283,9 +288,11 @@ export default {
         const {
           data: { data },
         } = await API.get(`/order/total/${method}?start_time=${this.date.start}&end_time=${this.date.end}`);
-        if (method === 'by-payment') this.paymentMethod.order = data;
-        this.deliveryMethod.order = data;
-        console.log(data, 'data payment order');
+        if (method === 'by-payment') {
+          this.paymentMethod.order = data;
+        } else {
+          this.deliveryMethod.order = data;
+        }
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -327,7 +334,6 @@ export default {
         );
         switch (param) {
           case 'delivery':
-            console.log(data, 'coba ini apa');
             this.totalTransaction.delivery = data.length && data[0].totalTransaction ? String(data[0].totalTransaction).slice(0, -3) : 0;
             break;
           case 'eat':
