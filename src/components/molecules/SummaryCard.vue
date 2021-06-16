@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!loading?.order" class="bg-white rounded-lg grid grid-flow-row gap-4 p-4">
+    <div v-if="!loading?.order" class="bg-white shadow-md hover:shadow-lg rounded-lg grid grid-flow-row gap-4 p-4">
       <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-purple-500 rounded-xl">
           <help-icon color="white" name="cube" :size="8" />
@@ -31,7 +31,7 @@
       </div>
       <div
         :class="[
-          'text-center flex flex-row justify-center',
+          'text-center text-royal flex flex-row justify-center',
           {
             hidden: show.order,
             visible: !show.order,
@@ -39,7 +39,7 @@
         ]"
         @click="show.order = true"
       >
-        <p class="text-royal text-xs font-small cursor-pointer">
+        <p class="text-xs font-small cursor-pointer">
           See more
         </p>
         <help-icon :name="'chevron-down'" />
@@ -55,16 +55,16 @@
         <template v-if="paymentMethod?.order.length || deliveryMethod?.order.length">
           <template v-if="!next.order">
             <template v-for="(payment, i) in paymentMethod.order" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{ payment.totalCount ? payment.totalCount.toLocaleString('ID') : 0 }}
                   </p>
                 </div>
@@ -73,16 +73,16 @@
           </template>
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.order" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{
                       delivery.totalCount ? delivery.totalCount.toLocaleString('ID') : 0
                     }}
@@ -94,32 +94,32 @@
         </template>
         <div class="flex justify-between">
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.order" @click="show.order = false" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small">
+            <div v-if="!next.order" @click="show.order = false" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small">
                 Hide
               </p>
               <help-icon :name="'chevron-up'" />
             </div>
-            <div v-else class="flex cursor-pointer">
+            <div v-else class="flex cursor-pointer text-royal">
               <help-icon :name="'chevron-left'" />
-              <p class="text-royal text-xs font-small" @click="next.order = false">
+              <p class="text-xs font-small" @click="next.order = !next.order">
                 Previous
               </p>
             </div>
           </div>
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.order" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small" @click="next.order = true">
+            <div v-if="!next.order" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small" @click="next.order = !next.order">
                 Next
               </p>
               <help-icon :name="'chevron-right'" />
             </div>
             <div v-else>
               <div
-                class="text-center flex flex-row justify-center cursor-pointer"
+                class="text-center flex flex-row justify-center cursor-pointer text-royal"
                 @click="show.order = false"
               >
-                <p class="text-royal text-xs font-small">
+                <p class="text-xs font-small">
                   Hide
                 </p>
                 <help-icon :name="'chevron-up'" />
@@ -132,7 +132,7 @@
     <div v-else class="rounded-lg p-4 animate-pulse bg-grey-4 h-44"></div>
   </div>
   <div>
-    <div v-if="!loading?.eat" class="bg-white rounded-lg grid grid-flow-row gap-4 p-4">
+    <div v-if="!loading?.eat" class="bg-white shadow-md hover:shadow-lg rounded-lg grid grid-flow-row gap-4 p-4">
       <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-yellow-500 rounded-xl">
           <help-icon color="white" name="cart" :size="8" />
@@ -165,7 +165,7 @@
       </div>
       <div
         :class="[
-          'text-center flex flex-row justify-center',
+          'text-center text-royal flex flex-row justify-center',
           {
             hidden: show.eat,
             visible: !show.eat,
@@ -173,7 +173,7 @@
         ]"
         @click="show.eat = true"
       >
-        <p class="text-royal text-xs font-small cursor-pointer">
+        <p class="text-xs font-small cursor-pointer">
           See more
         </p>
         <help-icon :name="'chevron-down'" />
@@ -189,16 +189,16 @@
         <template v-if="paymentMethod?.eat.length || deliveryMethod?.eat.length">
           <template v-if="!next.eat">
             <template v-for="(payment, i) in paymentMethod.eat" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{
                       payment.totalTransaction
                         ? `Rp ${Number(String(payment.totalTransaction).slice(0, -3)).toLocaleString('ID')}`
@@ -211,16 +211,16 @@
           </template>
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.eat" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
                         ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
@@ -236,32 +236,32 @@
         </template>
         <div class="flex justify-between">
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.eat" @click="show.eat = false" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small">
+            <div v-if="!next.eat" @click="show.eat = false" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small">
                 Hide
               </p>
               <help-icon :name="'chevron-up'" />
             </div>
-            <div v-else class="flex cursor-pointer">
+            <div v-else class="flex cursor-pointer text-royal">
               <help-icon :name="'chevron-left'" />
-              <p class="text-royal text-xs font-small" @click="next.eat = false">
+              <p class="text-xs font-small" @click="next.eat = !next.eat">
                 Previous
               </p>
             </div>
           </div>
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.eat" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small" @click="next.eat = true">
+            <div v-if="!next.eat" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small" @click="next.eat = !next.eat">
                 Next
               </p>
               <help-icon :name="'chevron-right'" />
             </div>
             <div v-else>
               <div
-                class="text-center flex flex-row justify-center cursor-pointer"
+                class="text-center flex flex-row justify-center cursor-pointer text-royal"
                 @click="show.eat = false"
               >
-                <p class="text-royal text-xs font-small">
+                <p class="text-xs font-small">
                   Hide
                 </p>
                 <help-icon :name="'chevron-up'" />
@@ -274,7 +274,7 @@
     <div v-else class="rounded-lg p-4 animate-pulse bg-grey-4 h-44"></div>
   </div>
   <div>
-    <div v-if="!loading?.delivery" class="bg-white rounded-md grid grid-flow-row gap-4 p-4">
+    <div v-if="!loading?.delivery" class="bg-white shadow-md hover:shadow-lg rounded-md grid grid-flow-row gap-4 p-4">
       <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-blue-600 rounded-xl">
           <help-icon color="white" name="truck" :size="8" />
@@ -310,7 +310,7 @@
       </div>
       <div
         :class="[
-          'text-center flex flex-row justify-center',
+          'text-center text-royal flex flex-row justify-center',
           {
             hidden: show.delivery,
             visible: !show.delivery,
@@ -318,7 +318,7 @@
         ]"
         @click="show.delivery = true"
       >
-        <p class="text-royal text-xs font-small cursor-pointer">
+        <p class="text-xs font-small cursor-pointer">
           See more
         </p>
         <help-icon name="chevron-down" />
@@ -334,16 +334,16 @@
         <template v-if="paymentMethod?.delivery.length || deliveryMethod?.delivery.length">
           <template v-if="!next.delivery">
             <template v-for="(payment, i) in paymentMethod.delivery" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{
                       payment.totalTransaction
                         ? `Rp ${Number(String(payment.totalTransaction).slice(0, -3)).toLocaleString('ID')}`
@@ -356,16 +356,16 @@
           </template>
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.delivery" :key="i">
-              <div class="rounded-xl p-2 border border-gray-200 shadow-sm mb-2">
+              <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
                 <div class="w-3/4 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
-                      class="mx-2"
+                      class="mx-3"
                       :size="48"
                     />
                   </div>
-                  <p class="text-heading3 font-medium">
+                  <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
                         ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
@@ -381,32 +381,32 @@
         </template>
         <div class="flex justify-between">
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.delivery" @click="show.delivery = false" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small">
+            <div v-if="!next.delivery" @click="show.delivery = false" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small">
                 Hide
               </p>
               <help-icon :name="'chevron-up'" />
             </div>
-            <div v-else class="flex cursor-pointer">
+            <div v-else class="flex cursor-pointer text-royal">
               <help-icon :name="'chevron-left'" />
-              <p class="text-royal text-xs font-small" @click="next.delivery = false">
+              <p class="text-xs font-small" @click="next.delivery = !next.delivery">
                 Previous
               </p>
             </div>
           </div>
           <div class="text-center flex flex-row justify-center">
-            <div v-if="!next.delivery" class="flex cursor-pointer">
-              <p class="text-royal text-xs font-small" @click="next.delivery = true">
+            <div v-if="!next.delivery" class="flex cursor-pointer text-royal">
+              <p class="text-xs font-small" @click="next.delivery = !next.delivery">
                 Next
               </p>
               <help-icon :name="'chevron-right'" />
             </div>
             <div v-else>
               <div
-                class="text-center flex flex-row justify-center cursor-pointer"
+                class="text-center flex flex-row justify-center cursor-pointer text-royal"
                 @click="show.delivery = false"
               >
-                <p class="text-royal text-xs font-small">
+                <p class="text-xs font-small">
                   Hide
                 </p>
                 <help-icon :name="'chevron-up'" />
@@ -419,7 +419,7 @@
     <div v-else class="rounded-lg p-4 animate-pulse bg-grey-4 h-44"></div>
   </div>
   <div>
-    <div v-if="!loading?.commision" class="bg-white rounded-md grid grid-flow-row gap-4 p-4 h-44">
+    <div v-if="!loading?.commision" class="bg-white shadow-md hover:shadow-lg rounded-md grid grid-flow-row gap-4 p-4 h-44">
       <div class="grid grid-cols-4 grid-flow-row gap-2">
         <div class="shadow row-span-2 h-14 w-14 grid place-items-center bg-flame rounded-xl">
           <help-icon name="minus" color="white" :size="8" />
@@ -519,7 +519,7 @@ export default {
     screenWidth() {
       return this.$store.state.screenWidth;
     },
-    partnerLogo() {
+    partnerLogo2() {
       return '@/assets/logo.png';
     },
   },
