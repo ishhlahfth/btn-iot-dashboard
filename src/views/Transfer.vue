@@ -190,6 +190,7 @@ export default {
   },
   methods: {
     async getTransferData({ pagination, filter }) {
+      console.log(pagination, 'pagination');
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
       const sort = pagination?.sort || 'order_date';
@@ -232,7 +233,10 @@ export default {
         };
         this.transferFilter = filter;
         if (filter) {
-          this.getExportedTransferData(this.appliedFilter);
+          this.getExportedTransferData({
+            pagination: this.transferPagination,
+            filter: this.appliedFilter,
+          });
         }
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -243,10 +247,12 @@ export default {
       }
       this.loading = false;
     },
-    async getExportedTransferData(filter) {
-      const sort = 'order_date';
-      const order = 'desc';
-      const search = '';
+    async getExportedTransferData({ pagination, filter }) {
+      const limit = pagination?.limit || 10;
+      const offset = pagination?.offset || 0;
+      const sort = pagination?.sort || 'order_date';
+      const order = pagination?.order || 'desc';
+      const search = this.searchValue || '';
 
       let url = `transfer-queues?sort=${sort}&order=${order}&order_code=${search}`;
 
@@ -275,6 +281,8 @@ export default {
         }));
 
         this.transferPagination = {
+          limit,
+          offset,
           sort,
           order,
         };
@@ -343,6 +351,7 @@ export default {
     });
     this.getExportedTransferData({
       filter: this.appliedFilter,
+      pagination: this.transferPagination,
     });
   },
 };
