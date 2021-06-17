@@ -284,7 +284,7 @@ export default {
           order,
         };
         this.merchantFilter = filter;
-        if (filter) {
+        if (!this.checkObjectBlank(filter)) {
           this.getExportedMerchant(this.appliedFilter);
         }
       } catch (error) {
@@ -302,7 +302,6 @@ export default {
       const search = '';
 
       let url = `merchants?sort=${sort}&order=${order}&search=${search}`;
-      console.log(filter?.verificationStatus);
       if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
 
       try {
@@ -399,9 +398,6 @@ export default {
     this.getMerchants({
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
-    });
-    this.getExportedMerchant({
-      filter: this.appliedFilter,
     });
   },
 };

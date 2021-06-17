@@ -20,9 +20,7 @@
           :fetch="checkExportLimit"
           :before-start="showStartExportToast"
           :before-finish="showFinishExportToast"
-          :name="
-            `Exported_Order_${namingStart}-${namingEnd}.xls`
-          "
+          :name="`Exported_Order_${namingStart}-${namingEnd}.xls`"
         >
           <help-button class="h-full" label="export" />
         </export-excel>
@@ -254,7 +252,7 @@ export default {
           order,
         };
         this.orderFilter = filter;
-        if (filter) {
+        if (!this.checkObjectBlank(filter)) {
           this.getExportedOrder(this.appliedFilter);
         }
       } catch (error) {
@@ -280,8 +278,6 @@ export default {
       if (filter?.selectedEnd) {
         endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
-
-      console.log(`${startDate} - ${endDate}`);
       if (startDate && endDate) {
         url += `&summary_date_range=${startDate}to-${endDate}`;
       }
@@ -388,9 +384,6 @@ export default {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
-    });
-    this.getExportedOrder({
-      filter: this.appliedFilter,
     });
   },
 };
