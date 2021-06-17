@@ -48,6 +48,7 @@
         :loading="loading"
         :rows="transfers"
         :pagination="transferPagination"
+        :count="count"
         @onChangePagination="getTransferData({ pagination: $event, filter: transferFilter })"
         @sort="getTransferData({ pagination: $event, filter: transferFilter })"
       >
@@ -134,6 +135,7 @@ export default {
       checkAll: false,
       confirmTransferModal: false,
       filterModal: false,
+      count: 0,
     };
   },
   computed: {
@@ -179,6 +181,20 @@ export default {
     },
   },
   methods: {
+    async getNumRows() {
+      try {
+        const {
+          data: { data },
+        } = await API.get('/transfer-queues/count/num-rows?limit=2&offset=0');
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getTransferData({ pagination, filter }) {
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
@@ -273,6 +289,7 @@ export default {
       pagination: this.transferPagination,
       filter: this.transferFilter,
     });
+    this.getNumRows();
   },
 };
 </script>

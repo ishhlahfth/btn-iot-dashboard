@@ -68,6 +68,7 @@
         :loading="loading"
         :rows="merchants"
         :pagination="merchantPagination"
+        :count="count"
         @onChangePagination="getMerchants({ pagination: $event, filter: merchantFilter })"
         @sort="getMerchants({ pagination: $event, filter: merchantFilter })"
       >
@@ -162,6 +163,7 @@ export default {
   data() {
     return {
       searchValue: '',
+      count: 0,
       columns: [
         { field: 'name', label: 'name', sortable: true },
         { field: 'city', label: 'city', sortable: true },
@@ -204,6 +206,20 @@ export default {
     },
   },
   methods: {
+    async getNumRows() {
+      try {
+        const {
+          data: { data },
+        } = await API.get('/merchants/count/num-rows?offset=0&verify_status=SUCCESS&limit=10');
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getCommission(merchantId) {
       let commission = null;
       try {
@@ -340,6 +356,7 @@ export default {
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
     });
+    this.getNumRows();
   },
 };
 </script>

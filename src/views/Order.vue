@@ -27,8 +27,8 @@
         :columns="columns"
         :loading="loading"
         :rows="orders"
-        :height="40"
         :pagination="orderPagination"
+        :count="count"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"
       >
@@ -131,9 +131,24 @@ export default {
       detailModal: false,
       filterModal: false,
       statusHistoryModal: false,
+      count: 0,
     };
   },
   methods: {
+    async getNumRows() {
+      try {
+        const {
+          data: { data },
+        } = await API.get('/orders/count/num-rows?offset=0&limit=2&sort=customer_name&order=asc');
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getOrders({ pagination, filter }) {
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
@@ -217,6 +232,7 @@ export default {
       pagination: this.orderPagination,
       filter: this.orderFilter,
     });
+    this.getNumRows();
   },
 };
 </script>

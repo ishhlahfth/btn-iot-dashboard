@@ -5,6 +5,8 @@
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
+      of
+      <span class="font-medium">{{ count }}</span>
     </p>
 
     <div class="flex items-center text-small">
@@ -86,6 +88,10 @@ export default {
       required: true,
     },
     currentRowCount: {
+      type: Number,
+      required: true,
+    },
+    count: {
       type: Number,
       required: true,
     },
