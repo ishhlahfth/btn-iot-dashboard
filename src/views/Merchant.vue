@@ -284,7 +284,7 @@ export default {
           order,
         };
         this.merchantFilter = filter;
-        if (filter) {
+        if (!this.checkObjectBlank(filter)) {
           this.getExportedMerchant(this.appliedFilter);
         }
       } catch (error) {
@@ -399,9 +399,6 @@ export default {
     this.getMerchants({
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
-    });
-    this.getExportedMerchant({
-      filter: this.appliedFilter,
     });
   },
 };

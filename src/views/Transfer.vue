@@ -232,7 +232,8 @@ export default {
           order,
         };
         this.transferFilter = filter;
-        if (filter) {
+
+        if (this.checkObjectBlank(filter)) {
           this.getExportedTransferData({
             pagination: this.transferPagination,
             filter: this.appliedFilter,
@@ -348,10 +349,6 @@ export default {
     this.getTransferData({
       pagination: this.transferPagination,
       filter: this.transferFilter,
-    });
-    this.getExportedTransferData({
-      filter: this.appliedFilter,
-      pagination: this.transferPagination,
     });
   },
 };

@@ -20,9 +20,7 @@
           :fetch="checkExportLimit"
           :before-start="showStartExportToast"
           :before-finish="showFinishExportToast"
-          :name="
-            `Exported_Order_${namingStart}-${namingEnd}.xls`
-          "
+          :name="`Exported_Order_${namingStart}-${namingEnd}.xls`"
         >
           <help-button class="h-full" label="export" />
         </export-excel>
@@ -254,8 +252,9 @@ export default {
           order,
         };
         this.orderFilter = filter;
-        if (filter) {
+        if (!this.checkObjectBlank(filter)) {
           this.getExportedOrder(this.appliedFilter);
+          console.log('test');
         }
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -388,9 +387,6 @@ export default {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
-    });
-    this.getExportedOrder({
-      filter: this.appliedFilter,
     });
   },
 };
