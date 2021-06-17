@@ -5,21 +5,23 @@
     @mouseover="$store.commit('SET_MINI', false)"
     @mouseleave="$store.commit('SET_MINI', true)"
   >
-    <div
-      :class="
-        ('absolute-center bg-transparent row justify-center',
-        {
-          hidden: mini,
-        })
-      "
-    >
-      <img
-        alt="Help logo"
-        src="@/assets/ic-help-white.png"
-        width="145.38"
-        height="43.09"
-        class="mx-auto my-3"
-      />
+    <div class="absolute-top bg-primary" style="height: 70px">
+      <div
+        :class="
+          ('absolute-center bg-transparent row justify-center',
+          {
+            hidden: mini,
+          })
+        "
+      >
+        <img
+          alt="Help logo"
+          src="@/assets/ic-help-white.png"
+          width="145.38"
+          height="43.09"
+          class="mx-auto my-3"
+        />
+      </div>
     </div>
     <template v-for="(link, i) in links" :key="i">
       <nav-item v-if="!link.subMenu" :menu="link" />
@@ -47,6 +49,7 @@ export default {
     return {
       collapsed: true,
       links: [
+        { path: '/bns/dashboard', label: 'Dashboard', icon: 'home' },
         { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
         { path: '/bns/order', label: 'Order', icon: 'cube' },
         { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },

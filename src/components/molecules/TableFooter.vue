@@ -105,7 +105,7 @@ export default {
   computed: {
     firstRow() {
       let firstRow = 1;
-      if (this.offset !== 0) {
+      if (this.offset && this.offset !== 0) {
         firstRow = this.offset + 1;
       }
       if (!this.currentRowCount) {

@@ -171,6 +171,9 @@ export default {
       nextArrayIsEmpty: false,
     };
   },
+  mounted() {
+    console.log(this.pagination, 'pagination');
+  },
   methods: {
     columnAlignment(columnName) {
       let alignment = '';

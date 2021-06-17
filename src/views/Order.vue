@@ -14,7 +14,17 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Order</p>
-      <help-button label="filter" icon="filter" @click="filterModal = true" />
+      <div class="grid grid-flow-col gap-2">
+        <help-button label="filter" icon="filter" @click="filterModal = true" />
+        <export-excel
+          :fetch="checkExportLimit"
+          :before-start="showStartExportToast"
+          :before-finish="showFinishExportToast"
+          :name="`Exported_Order_${namingStart}-${namingEnd}.xls`"
+        >
+          <help-button class="h-full" label="export" />
+        </export-excel>
+      </div>
     </div>
     <div>
       <form @submit.prevent="getOrders({ filter: orderFilter })">
@@ -57,6 +67,9 @@
           >
             See Detail
           </p>
+          <p v-if="column === 'discounts'" class="text-mint font-semibold">
+            {{ row.discounts ? `- Rp ${Number(row.discounts.slice(1)).toLocaleString('ID')}` : '' }}
+          </p>
         </template>
       </help-table>
     </div>
@@ -72,6 +85,8 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
+import Moment from 'moment/moment';
+import { ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import dayjs from 'dayjs';
@@ -92,10 +107,28 @@ export default {
   },
   setup() {
     const toast = useToast();
-    return { toast };
+    const pickedStart = ref();
+    const pickedEnd = ref();
+
+    return {
+      toast,
+      pickedStart,
+      pickedEnd,
+    };
   },
   data() {
+    const min = new Date();
+    min.setDate(min.getDate() - 7);
+    min.setHours(9);
+    min.setMinutes(0);
+    min.setSeconds(0);
+    const max = new Date();
+    max.setDate(max.getDate() + 7);
+    max.setHours(18);
+    max.setMinutes(0);
+    max.setSeconds(0);
     return {
+      exportLimit: 7,
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
@@ -110,13 +143,18 @@ export default {
         { field: 'customer_name', label: 'buyer name', sortable: true },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
-        { field: 'delivery_price', label: 'delivery price' },
+        { field: 'initial_price', label: 'initial delivery price' },
+        { field: 'discounts', label: 'discount' },
+        { field: 'delivery_price', label: 'final delivery price' },
         { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
       transferMode: false,
       date: '',
+      namingStart: '',
+      namingEnd: '',
       orders: [],
+      exportOrders: [],
       orderPagination: {
         limit: 10,
         offset: 0,
@@ -124,22 +162,64 @@ export default {
         order: 'desc',
       },
       orderFilter: {
+        orderStatus: '',
         paymentMethod: '',
         merchantName: '',
+        selectedStart: '',
+        selectedEnd: '',
+      },
+      appliedFilter: {
+        orderStatus: '',
+        paymentMethod: '',
+        merchantName: '',
+        selectedStart: '',
+        selectedEnd: '',
       },
       loading: false,
       detailModal: false,
       filterModal: false,
       statusHistoryModal: false,
       count: 0,
+      sDate: null,
+      configStart: {
+        wrap: true, // set wrap to true only when using 'input-group'
+        altFormat: 'Y-m-d',
+        altInput: true,
+        maxDate: '',
+        dateFormat: 'Y-m-d',
+      },
+      configEnd: {
+        wrap: true, // set wrap to true only when using 'input-group'
+        altFormat: 'Y-m-d',
+        altInput: true,
+        minDate: '',
+        dateFormat: 'Y-m-d',
+      },
     };
   },
   methods: {
-    async getNumRows() {
+    async getNumRows({
+      offset, limit, sort, order, search, filter,
+    }) {
+      let startDate;
+      let endDate;
+      let url = `/orders/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      if (filter?.selectedStart) {
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
+      }
+      if (filter?.selectedEnd) {
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
+      }
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
+      if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
       try {
         const {
           data: { data },
-        } = await API.get('/orders/count/num-rows?offset=0&limit=2&sort=customer_name&order=asc');
+        } = await API.get(url);
         this.count = data;
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -155,11 +235,29 @@ export default {
       const sort = pagination?.sort || 'date';
       const order = pagination?.order || 'desc';
       const search = this.searchValue || '';
+      let startDate;
+      let endDate;
+
+      this.getNumRows({
+        offset, limit, sort, order, search, filter,
+      });
 
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
+      if (filter?.selectedStart) {
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
+      }
+      if (filter?.selectedEnd) {
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
+      }
+
+      console.log(`${startDate} - ${endDate}`);
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
 
       if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
       if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
 
       try {
         this.loading = true;
@@ -179,6 +277,10 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
+          discounts: el.order_type_details?.delivery_method?.discounts
+            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+            : '',
+          initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
 
         this.orderPagination = {
@@ -188,6 +290,9 @@ export default {
           order,
         };
         this.orderFilter = filter;
+        if (!this.checkObjectBlank(filter)) {
+          this.getExportedOrder(this.appliedFilter);
+        }
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -196,6 +301,60 @@ export default {
         }
       }
       this.loading = false;
+    },
+    async getExportedOrder(filter) {
+      const sort = 'date';
+      const order = 'desc';
+      const search = this.searchValue || '';
+      let startDate;
+      let endDate;
+
+      let url = `orders?&sort=${sort}&order=${order}&code=${search}`;
+      if (filter?.selectedStart) {
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
+      }
+      if (filter?.selectedEnd) {
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
+      }
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
+      if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
+
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.get(url);
+
+        this.exportOrders = data.map((el) => ({
+          id: el.id,
+          merchant_id: el.merchant_id,
+          code: el.code,
+          date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
+          current_step: el.current_step.title,
+          merchant_name: el.merchant?.name,
+          customer_name: el.customer?.profile?.name,
+          commission_fee: this.convertToRp(el.commission_fee),
+          subtotal_price: this.convertToRp(el.subtotal_price),
+          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
+          payment_method: el.payment.name,
+        }));
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
+    showStartExportToast() {
+      this.toast.success('Exporting Report...');
+    },
+    showFinishExportToast() {
+      this.toast.success('Finished Exporting, Download in progress...');
     },
     openOrderDetail(orderId) {
       this.detailModal = true;
@@ -215,7 +374,13 @@ export default {
         ...this.orderFilter,
         paymentMethod: $event.paymentMethod,
         merchantName: $event.merchantName,
+        orderStatus: $event.orderStatus,
+        selectedStart: $event.selectedStart,
+        selectedEnd: $event.selectedEnd,
       };
+      this.appliedFilter = filter;
+      this.namingStart = Moment(this.appliedFilter.selectedStart).format('D-MM-YYYY');
+      this.namingEnd = Moment(this.appliedFilter.selectedEnd).format('D-MM-YYYY');
       this.getOrders({ pagination, filter });
       this.filterModal = false;
     },
@@ -226,13 +391,38 @@ export default {
         filter: this.orderFilter,
       });
     },
+    changeEndMin(date) {
+      this.configEnd.minDate = date;
+    },
+    changeEndStart(date) {
+      this.configStart.maxDate = date;
+    },
+    checkExportLimit() {
+      const exportEndDate = Moment(this.appliedFilter.selectedEnd);
+      const exportStartDate = this.appliedFilter.selectedStart
+        ? Moment(this.appliedFilter.selectedStart)
+        : Moment(this.appliedFilter.selectedEnd).subtract(this.exportLimit + 1, 'd');
+      const difference = Math.abs(exportEndDate.diff(exportStartDate, 'days'));
+      console.log(difference);
+      if (difference > this.exportLimit) {
+        this.toast.error(
+          `You can only export the data with maximum ${this.exportLimit} days date range.`,
+        );
+      } else if (Number.isNaN(difference)) {
+        this.toast.error(
+          `You can only export the data with maximum ${this.exportLimit} days date range.`,
+        );
+      } else {
+        return this.exportOrders;
+      }
+      return null;
+    },
   },
   async mounted() {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
     });
-    this.getNumRows();
   },
 };
 </script>

@@ -139,6 +139,10 @@
             <div class="bg-grey-4 rounded h-4" />
           </template>
         </div>
+        <div v-if="discountDelivery" class="p-3 grid grid-cols-2 gap-1">
+          <p>Wehelpyou</p>
+          <p class="text-right">{{ discountDelivery ? `- ${convertToRp(discountDelivery.slice(1))}` : '- Rp 0' }}</p>
+        </div>
         <div class="p-3 grid grid-cols-2 gap-1 font-bold">
           <p>Subtotal Pengiriman</p>
           <p v-if="!loading" class="text-right">{{ subtotalDelivery }}</p>
@@ -197,9 +201,9 @@ export default {
       subtotalItem: '',
       deliveryName: '',
       deliveryPrice: '',
+      discountDelivery: 0,
       subtotalDelivery: '',
       totalPrice: '',
-
       notification: false,
       loading: false,
     };
@@ -210,22 +214,19 @@ export default {
         this.loading = true;
         const {
           data: { data },
-        } = await axios.get(
-          `${process.env.VUE_APP_BASE_URL}v1/orders/${this.$route.params.id}`,
-          {
-            headers: {
-              'x-api-key': `${this.$route.query.key}`,
-              'x-device-type': 'LINUX',
-              'x-device-os-version': 'Ubuntu18.04',
-              'x-device-model': '4s-dk0115AU',
-              'x-app-version': 'v1.2',
-              'x-request-id': '1234',
-              'x-device-utc-offset': '+07:00',
-              'x-device-lang': 'en',
-              'x-device-notification-code': `${this.$route.query.code}`,
-            },
+        } = await axios.get(`${process.env.VUE_APP_BASE_URL}v1/orders/${this.$route.params.id}`, {
+          headers: {
+            'x-api-key': `${this.$route.query.key}`,
+            'x-device-type': 'LINUX',
+            'x-device-os-version': 'Ubuntu18.04',
+            'x-device-model': '4s-dk0115AU',
+            'x-app-version': 'v1.2',
+            'x-request-id': '1234',
+            'x-device-utc-offset': '+07:00',
+            'x-device-lang': 'en',
+            'x-device-notification-code': `${this.$route.query.code}`,
           },
-        );
+        });
 
         this.poNumber = data.code || '-';
         this.merchantName = data.merchant.name || '-';
@@ -237,9 +238,10 @@ export default {
         this.items = data.items || [];
         this.subtotalItem = this.convertToRp(data.subtotal_price) || 'Rp 0';
         this.deliveryName = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
-        this.deliveryPrice = this.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
-        this.subtotalDelivery = this.deliveryPrice;
+        this.deliveryPrice = this.convertToRp(data.order_type_details.delivery_method.initial_price) || 'Rp 0';
+        this.subtotalDelivery = this.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
         this.totalPrice = this.convertToRp(data.total_price) || 'Rp 0';
+        this.discountDelivery = data.order_type_details.delivery_method.discounts ? String(data.order_type_details.delivery_method.discounts[0].discount) : '';
       } catch (error) {
         console.log(error);
       }

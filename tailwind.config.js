@@ -34,6 +34,7 @@ module.exports = {
       1: '0.25rem',
       1.5: '0.375rem',
       2: '0.5rem',
+      2.25: '0.6rem',
       2.5: '0.625rem',
       3: '0.75rem',
       3.5: '0.875rem',
@@ -419,7 +420,7 @@ module.exports = {
       '5/6': '83.333333%',
       full: '100%',
       screen: '100vh',
-      '100': '30rem',
+      100: '30rem',
     }),
     inset: (theme, { negative }) => ({
       auto: 'auto',

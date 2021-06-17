@@ -50,7 +50,17 @@
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Merchant</p>
-      <help-button label="filter" icon="filter" @click="filterModal = true" />
+      <div class="grid grid-flow-col gap-2">
+        <help-button label="filter" icon="filter" @click="filterModal = true" />
+        <export-excel
+          :fetch="exportMerchant"
+          :before-start="showStartExportToast"
+          :before-finish="showFinishExportToast"
+          :name="`Exported_Merchant_${merchantFilter.verificationStatus}.xls`"
+        >
+          <help-button class="h-full" label="export" />
+        </export-excel>
+      </div>
     </div>
     <div>
       <form @submit.prevent="getMerchants({ filter: merchantFilter })">
@@ -180,6 +190,7 @@ export default {
         { field: 'operational_detail', label: 'operational time', align: 'center' },
       ],
       merchants: [],
+      exportedMerchants: [],
       merchantPagination: {
         limit: 10,
         offset: 0,
@@ -187,6 +198,9 @@ export default {
         order: 'asc',
       },
       merchantFilter: {
+        verificationStatus: '',
+      },
+      appliedFilter: {
         verificationStatus: '',
       },
       loading: false,
@@ -206,11 +220,15 @@ export default {
     },
   },
   methods: {
-    async getNumRows() {
+    async getNumRows({
+      offset, limit, sort, order, search, filter,
+    }) {
+      let url = `/merchants/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
       try {
         const {
           data: { data },
-        } = await API.get('/merchants/count/num-rows?offset=0&verify_status=SUCCESS&limit=10');
+        } = await API.get(url);
         this.count = data;
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -245,6 +263,10 @@ export default {
       const sort = pagination?.sort || 'name';
       const order = pagination?.order || 'asc';
       const search = this.searchValue || '';
+
+      this.getNumRows({
+        offset, limit, sort, order, search, filter,
+      });
 
       let url = `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
 
@@ -286,6 +308,41 @@ export default {
           order,
         };
         this.merchantFilter = filter;
+        if (!this.checkObjectBlank(filter)) {
+          this.getExportedMerchant(this.appliedFilter);
+        }
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+      this.loading = false;
+    },
+    async getExportedMerchant(filter) {
+      const sort = 'name';
+      const order = 'asc';
+      const search = '';
+
+      let url = `merchants?sort=${sort}&order=${order}&search=${search}`;
+      if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
+
+      try {
+        this.loading = true;
+        const {
+          data: { data: currentMerchants },
+        } = await API.get(url);
+
+        this.exportedMerchants = currentMerchants.map((el) => ({
+          id: el.id,
+          name: el.name,
+          city: el.address.city.name,
+          verify_status: this.translateStatus(el.verify_status),
+          verify_reason: el.verify_reason,
+          verify_date: dayjs(el.verify_date).format('DD-MM-YYYY HH:mm:ss'),
+          phone_number: el.phone_number,
+        }));
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -329,6 +386,7 @@ export default {
         ...this.merchantFilter,
         verificationStatus: $event.verificationStatus,
       };
+      this.appliedFilter = filter;
       this.getMerchants({ pagination, filter });
       this.filterModal = false;
     },
@@ -350,13 +408,21 @@ export default {
         this.toast.error(error.message);
       }
     },
+    exportMerchant() {
+      return this.exportedMerchants;
+    },
+    showStartExportToast() {
+      this.toast.success('Exporting Report...');
+    },
+    showFinishExportToast() {
+      this.toast.success('Finished Exporting, Download in progress...');
+    },
   },
   mounted() {
     this.getMerchants({
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
     });
-    this.getNumRows();
   },
 };
 </script>

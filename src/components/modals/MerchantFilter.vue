@@ -39,6 +39,7 @@
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
+import { ref } from 'vue';
 
 export default {
   name: 'MerchantFilter',
@@ -52,6 +53,14 @@ export default {
       default: () => {},
     },
   },
+  setup() {
+    const pickedStart = ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+    const pickedEnd = ref(new Date());
+    return {
+      pickedStart,
+      pickedEnd,
+    };
+  },
   data() {
     return {
       selectedStatus: { value: '', label: 'All' },
@@ -62,6 +71,17 @@ export default {
         { value: 'FAIL', label: 'Verifikasi Gagal' },
         { value: 'SUSPEND', label: 'Akun Disabled' },
       ],
+      date: {
+        start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
+        end: ref(new Date()),
+      },
+      selectedStart: '',
+      selectedEnd: '',
+      config: {
+        wrap: true,
+        locale: 'ID',
+        disableMobile: 'true',
+      },
     };
   },
   computed: {
