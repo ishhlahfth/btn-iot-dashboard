@@ -302,7 +302,6 @@ export default {
       const search = '';
 
       let url = `merchants?sort=${sort}&order=${order}&search=${search}`;
-      console.log(filter?.verificationStatus);
       if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
 
       try {

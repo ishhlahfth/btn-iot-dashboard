@@ -254,7 +254,6 @@ export default {
         this.orderFilter = filter;
         if (!this.checkObjectBlank(filter)) {
           this.getExportedOrder(this.appliedFilter);
-          console.log('test');
         }
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -279,8 +278,6 @@ export default {
       if (filter?.selectedEnd) {
         endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
-
-      console.log(`${startDate} - ${endDate}`);
       if (startDate && endDate) {
         url += `&summary_date_range=${startDate}to-${endDate}`;
       }
