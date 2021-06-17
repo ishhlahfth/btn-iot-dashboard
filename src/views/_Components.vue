@@ -955,7 +955,7 @@
         :<span class="prop">loading</span>="<span class="prop">loading</span>"
         :<span class="prop">pagination</span>="<span class="prop">rolePagination</span>"
       &gt;
-        &lt;<span class="tag">template</span> <span class="prop">v-slot</span>="{ <span class="prop">column, row</span> }"&gt;
+        &lt;<span class="tag">template</span> <span class="prop">v-slot:body</span>="{ <span class="prop">column, row</span> }"&gt;
           &lt;<span class="tag">help-badge</span>
             <span class="prop">v-if</span>="<span class="prop">column</span> === <span class="string">'is_active'</span>" <span class="text-green-700">// jadi pas nama kolomnya === 'is_active' yang di-render component ini</span>
             :<span class="prop">label</span>="<span class="prop">row.is_active</span> ? '<span class="string">Active</span>' : '<span class="string">Inactive'</span>"

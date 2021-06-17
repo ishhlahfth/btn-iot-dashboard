@@ -23,6 +23,69 @@
         @input="$emit('update:modelValue', $event.target.value)"
       />
     </div>
+    <div v-if="type === 'date'">
+      <div
+        class="bg-white border border-grey-4 px-3 rounded-lg grid gap-2 w-full"
+        :class="[
+          { 'ring-2 ring-royal ring-offset-1': onFocus },
+          { 'ring-2 ring-flame ring-offset-1': hasError },
+          { 'grid-flow-col': !leftIcon && !rightIcon },
+          { 'with-left-and-right-icon': leftIcon && rightIcon },
+          { 'with-left-icon': leftIcon },
+          { 'with-right-icon': rightIcon },
+          { 'search-bar': searchBar || hasSlot },
+        ]"
+        @click="$refs.helpInput.focus()"
+        @blur="$refs.helpInput.blur()"
+      >
+        <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
+        <input
+          class="w-full py-2.5"
+          ref="helpInput"
+          spellcheck="false"
+          type="date"
+          size="small"
+          format="24hr"
+          :placeholder="placeholder"
+          :value="modelValue"
+          v-maska="mask"
+          @blur="onFocus = false"
+          @focus="onFocus = true"
+          @input="$emit('update:modelValue', $event.target.value)"
+        />
+        <p class="h-full bg-gray-300" style="width: 1px"></p>
+        <input
+          class="w-full2 py-2.5"
+          ref="helpInput"
+          spellcheck="false"
+          type="time"
+          :placeholder="placeholder"
+          :value="modelValue2"
+          v-maska="mask"
+          @blur="onFocus = false"
+          @focus="onFocus = true"
+          @input="$emit('update:modelValue2', $event.target.value)"
+        />
+        <help-button
+          v-if="searchBar && !modelValue"
+          icon-only
+          icon="search"
+          bg-color="transparent"
+          color="grey-2"
+        />
+        <help-button
+          type="button"
+          v-if="searchBar && modelValue"
+          icon-only
+          icon="close"
+          bg-color="transparent"
+          color="grey-2"
+          @click="$emit('update:modelValue', '')"
+        />
+        <icon v-if="rightIcon" :name="rightIcon" class="justify-self-center self-center" />
+        <slot></slot>
+      </div>
+    </div>
     <div
       v-else
       class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
@@ -89,6 +152,10 @@ export default {
   },
   props: {
     modelValue: {
+      type: String,
+      default: '',
+    },
+    modelValue2: {
       type: String,
       default: '',
     },

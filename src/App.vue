@@ -65,7 +65,7 @@ input:focus {
   padding-top: 8px;
   padding-bottom: 8px;
   min-height: 56px;
-  @sceen sm {
+  @screen sm {
     min-width: 480px;
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <p
-    class="rounded py-3 px-4 w-full min-w-max cursor-pointer font-medium select-none"
+    class="rounded py-2.5 px-4 w-full min-w-max cursor-pointer font-medium select-none"
     :class="selected ? 'bg-midnight text-white' : 'hover:bg-grey-6'"
   >
     {{ label }}
