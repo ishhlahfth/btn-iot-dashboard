@@ -38,6 +38,8 @@
         :loading="loading"
         :rows="orders"
         :pagination="orderPagination"
+        :count="count"
+        :isCountActive="true"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"
       >
@@ -178,6 +180,7 @@ export default {
       detailModal: false,
       filterModal: false,
       statusHistoryModal: false,
+      count: 0,
       sDate: null,
       configStart: {
         wrap: true, // set wrap to true only when using 'input-group'
@@ -196,6 +199,37 @@ export default {
     };
   },
   methods: {
+    async getNumRows({
+      offset, limit, sort, order, search, filter,
+    }) {
+      let startDate;
+      let endDate;
+      let url = `/orders/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      if (filter?.selectedStart) {
+        startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');
+      }
+      if (filter?.selectedEnd) {
+        endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
+      }
+      if (startDate && endDate) {
+        url += `&summary_date_range=${startDate}to-${endDate}`;
+      }
+      if (filter?.paymentMethod) url += `&payment_method=${filter?.paymentMethod}`;
+      if (filter?.merchantName) url += `&merchant=${filter?.merchantName}`;
+      if (filter?.orderStatus) url += `&sequence=${filter?.orderStatus}`;
+      try {
+        const {
+          data: { data },
+        } = await API.get(url);
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getOrders({ pagination, filter }) {
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
@@ -204,6 +238,11 @@ export default {
       const search = this.searchValue || '';
       let startDate;
       let endDate;
+
+      this.getNumRows({
+        offset, limit, sort, order, search, filter,
+      });
+
       let url = `orders?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&code=${search}`;
       if (filter?.selectedStart) {
         startDate = Moment(filter?.selectedStart).format('YYYY-MM-D');

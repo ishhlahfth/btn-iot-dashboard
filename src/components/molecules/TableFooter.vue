@@ -5,6 +5,10 @@
       <span class="font-medium">{{ firstRow }}</span>
       to
       <span class="font-medium">{{ lastRow }}</span>
+      <template v-if="isCountActive">
+        of
+        <span class="font-medium">{{ count }}</span>
+      </template>
     </p>
 
     <div class="flex items-center text-small">
@@ -88,6 +92,12 @@ export default {
     currentRowCount: {
       type: Number,
       required: true,
+    },
+    count: {
+      type: Number,
+    },
+    isCountActive: {
+      type: Boolean,
     },
   },
   data() {

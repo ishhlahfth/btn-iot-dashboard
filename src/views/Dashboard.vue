@@ -191,7 +191,7 @@ export default {
         delivery: [],
       },
       date: {
-        start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
+        start: ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0)),
         end: ref(new Date()),
       },
       showButton: false,
@@ -360,41 +360,42 @@ export default {
       this.opened = false;
       this.$emit('update:modelValue', newItem);
       let date = new Date();
+      let endDate = new Date();
       const month = new Date().getMonth();
       switch (newItem) {
         case 'Today':
           date.setHours(0, 0, 0, 0);
-          console.log('today', date);
-          console.log('type', typeof date);
           this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
+          this.date.end = typeof endDate === 'object' ? this.convertDateFormat(new Date(endDate), 'full') : endDate;
           break;
         case 'Yesterday':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 1);
-          console.log('yesterday', date);
-          console.log('type', typeof date);
+          endDate.setHours(23, 59, 59, 999);
+          endDate = endDate.setDate(endDate.getDate() - 1);
           this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
+          this.date.end = typeof endDate === 'object' ? this.convertDateFormat(new Date(endDate), 'full') : endDate;
           break;
         case 'Last 7 Days':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 7);
-          console.log('7 days ago', date);
-          console.log('type', typeof date);
+          endDate.setHours(23, 59, 59, 999);
           this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
+          this.date.end = typeof endDate === 'object' ? this.convertDateFormat(new Date(endDate), 'full') : endDate;
           break;
         case 'Last 30 Days':
           date.setHours(0, 0, 0, 0);
           date = date.setDate(date.getDate() - 30);
-          console.log('30 days ago', date);
-          console.log('type', typeof date);
+          endDate.setHours(23, 59, 59, 999);
           this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
+          this.date.end = typeof endDate === 'object' ? this.convertDateFormat(new Date(endDate), 'full') : endDate;
           break;
         default:
           date.setHours(0, 0, 0, 0);
           date.setMonth(month, 1);
-          console.log('this month', date);
-          console.log('type', typeof date);
+          endDate.setHours(23, 59, 59, 999);
           this.date.start = typeof date === 'object' ? this.convertDateFormat(new Date(date), 'full') : date;
+          this.date.end = typeof endDate === 'object' ? this.convertDateFormat(new Date(endDate), 'full') : endDate;
           break;
       }
     },
@@ -431,6 +432,7 @@ export default {
     },
   },
   async mounted() {
+    this.date.end.setHours(23, 59, 59, 999);
     this.date.end = this.convertDateFormat(this.date.end, 'full');
     this.date.start = this.convertDateFormat(this.date.start, 'full');
     this.getTopTenMerchants();
