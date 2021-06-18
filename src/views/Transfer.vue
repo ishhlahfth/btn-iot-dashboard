@@ -57,6 +57,7 @@
         :rows="transfers"
         :pagination="transferPagination"
         :count="count"
+        :isCountActive="true"
         @onChangePagination="getTransferData({ pagination: $event, filter: transferFilter })"
         @sort="getTransferData({ pagination: $event, filter: transferFilter })"
       >

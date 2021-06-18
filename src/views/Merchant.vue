@@ -79,6 +79,7 @@
         :rows="merchants"
         :pagination="merchantPagination"
         :count="count"
+        :isCountActive="true"
         @onChangePagination="getMerchants({ pagination: $event, filter: merchantFilter })"
         @sort="getMerchants({ pagination: $event, filter: merchantFilter })"
       >

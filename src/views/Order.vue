@@ -39,6 +39,7 @@
         :rows="orders"
         :pagination="orderPagination"
         :count="count"
+        :isCountActive="true"
         @onChangePagination="getOrders({ pagination: $event, filter: orderFilter })"
         @sort="getOrders({ pagination: $event, filter: orderFilter })"
       >

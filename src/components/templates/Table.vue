@@ -102,6 +102,7 @@
       :more-data-available="moreDataAvailable"
       :current-row-count="rows.length"
       :count="count"
+      :isCountActive="isCountActive"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -133,9 +134,12 @@ export default {
         return [];
       },
     },
+    isCountActive: {
+      type: Boolean,
+      default: false,
+    },
     count: {
       type: Number,
-      required: true,
       default: 0,
     },
     pagination: {
