@@ -1,5 +1,7 @@
 <template>
-  <help-modal v-model="detailModal"></help-modal>
+  <help-modal v-model="detailModal">
+    <admin-detail />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Admin</p>
@@ -21,7 +23,7 @@
         @sort="getAdmins($event)"
       >
         <template v-slot:body="{ column }">
-          <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">
+          <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer" @click="detailModal = true">
             See Detail
           </p>
           <div v-if="column === 'actions'">
@@ -38,6 +40,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 // import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
+import AdminDetail from '@/components/modals/AdminDetail.vue';
 import { useToast } from 'vue-toastification';
 import API from '../apis';
 
@@ -48,6 +51,7 @@ export default {
     // HelpInput,
     HelpModal,
     HelpTable,
+    AdminDetail,
   },
   setup() {
     const toast = useToast();
