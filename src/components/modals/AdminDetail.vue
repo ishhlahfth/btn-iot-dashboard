@@ -6,7 +6,7 @@
         :src="photo"
       />
     </div>
-    <div class="grid grid-rows-2 gap-4 sm:grid-cols-2">
+    <div class="grid grid-flow-row gap-4 sm:gap-0 sm:grid-cols-2">
       <div>
         <p class="font-medium text-grey-2">Name</p>
         <p class="font-medium">{{ name }}</p>
