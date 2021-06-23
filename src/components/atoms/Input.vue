@@ -23,7 +23,46 @@
         @input="$emit('update:modelValue', $event.target.value)"
       />
     </div>
-    <div v-if="type === 'date'">
+    <div
+      v-else-if="type === 'file'"
+      class="bg-white border border-grey-4 rounded-lg grid gap-2 w-full"
+      :class="[
+        { 'ring-2 ring-royal ring-offset-1': onFocus },
+        { 'ring-2 ring-flame ring-offset-1': hasError },
+        { 'grid-flow-col': !leftIcon && !rightIcon },
+        { 'with-left-and-right-icon': leftIcon && rightIcon },
+        { 'with-left-icon': leftIcon },
+        { 'with-right-icon': rightIcon },
+        { 'search-bar': searchBar || hasSlot },
+      ]"
+      @blur="$refs.helpInput.blur()"
+    >
+      <div class="flex items-center justify-between bg-grey-lighter">
+        <p class="text-grey-2 font-medium px-3" v-if="fileName">{{ fileName }}</p>
+        <p v-else></p>
+        <label
+          class="px-4 bg-midnight text-white rounded-lg shadow-lg uppercase border border-blue cursor-pointer hover:text-grey"
+        >
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            class="w-10"
+          >
+            <path
+              d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"
+            />
+          </svg>
+          <input
+            type="file"
+            class="hidden"
+            @input="$emit('update:modelValue', $event.target.files)"
+            @change="handleChange"
+          />
+        </label>
+      </div>
+    </div>
+    <div v-else-if="type === 'date'">
       <div
         class="bg-white border border-grey-4 px-3 rounded-lg grid gap-2 w-full"
         :class="[
@@ -35,7 +74,7 @@
           { 'with-right-icon': rightIcon },
           { 'search-bar': searchBar || hasSlot },
         ]"
-        @click="$refs.helpInput.focus()"
+        @click="$refs.helpInput.getElementById('selectedFile').click()"
         @blur="$refs.helpInput.blur()"
       >
         <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
@@ -205,11 +244,18 @@ export default {
     return {
       onFocus: false,
       hasError: false,
+      fileName: '',
     };
   },
   computed: {
     hasSlot() {
       return !!this.$slots.default;
+    },
+  },
+  methods: {
+    handleChange(e) {
+      console.log(e.target.files);
+      this.fileName = e.target.files[0].name;
     },
   },
 };
