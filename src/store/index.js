@@ -26,6 +26,7 @@ export default createStore({
     permissions: [],
     role: {},
     roleType: '',
+    adminDetail: {},
   },
   mutations: {
     SET_CURRENT_USER(state, payload) {
@@ -84,6 +85,9 @@ export default createStore({
     },
     SET_ROLE_TYPE(state, payload) {
       state.roleType = payload;
+    },
+    SET_ADMIN_DETAIL(state, payload) {
+      state.adminDetail = payload;
     },
   },
   actions: {

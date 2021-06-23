@@ -139,7 +139,7 @@
             <div class="bg-grey-4 rounded h-4" />
           </template>
         </div>
-        <div class="p-3 grid grid-cols-2 gap-1">
+        <div v-if="discountDelivery" class="p-3 grid grid-cols-2 gap-1">
           <p>Wehelpyou</p>
           <p class="text-right">{{ discountDelivery ? `- ${convertToRp(discountDelivery.slice(1))}` : '- Rp 0' }}</p>
         </div>

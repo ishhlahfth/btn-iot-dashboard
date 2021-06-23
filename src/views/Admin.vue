@@ -1,10 +1,12 @@
 <template>
-  <help-modal v-model="detailModal"></help-modal>
   <help-modal v-model="addModal">
     <admin-add-edit @close="handleClose" adminType="add" />
   </help-modal>
   <help-modal v-model="editModal">
     <admin-add-edit @close="handleClose" adminType="edit" />
+  </help-modal>
+  <help-modal v-model="detailModal">
+    <admin-detail :rowData="admin" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -26,14 +28,18 @@
         @onChangePagination="getAdmins($event)"
         @sort="getAdmins($event)"
       >
-        <template v-slot:body="{ data, column }">
-          <p v-if="column === 'detail'" class="text-royal font-medium cursor-pointer">
+        <template v-slot:body="{ column, row }">
+          <p
+            v-if="column === 'detail'"
+            class="text-royal font-medium cursor-pointer"
+            @click="handleDetail(row)"
+          >
             See Detail
           </p>
+          <p v-if="column === 'role'">{{ generateRoleName(row) }}</p>
           <div v-if="column === 'actions'">
             <help-button icon-only icon="edit" @click="editModal = true" />
           </div>
-          <p v-if="column === 'phone_number'">{{ escapeRegExp(data) }}</p>
           <p v-if="column === 'role'">{{ data }}</p>
         </template>
       </help-table>
@@ -47,6 +53,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
+import AdminDetail from '@/components/modals/AdminDetail.vue';
 import { useToast } from 'vue-toastification';
 import API from '../apis';
 
@@ -58,6 +65,7 @@ export default {
     HelpModal,
     HelpTable,
     AdminAddEdit,
+    AdminDetail,
   },
   setup() {
     const toast = useToast();
@@ -69,7 +77,7 @@ export default {
       columns: [
         { field: 'name', label: 'name' },
         { field: 'email', label: 'email' },
-        // { field: 'address', label: 'address' },
+        { field: 'address', label: 'address' },
         { field: 'phone_number', label: 'phone number' },
         { field: 'role', label: 'role' },
         { field: 'detail', label: 'detail' },
@@ -78,6 +86,7 @@ export default {
       ],
       admins: [],
       roles: [],
+      admin: {},
       adminPagination: {
         limit: 10,
         offset: 0,
@@ -89,8 +98,23 @@ export default {
     };
   },
   methods: {
-    getRoles(id) {
-      return API.get(`/roles/${id}`);
+    async getRoles() {
+      try {
+        const {
+          data: { data },
+        } = await API.get('/roles?offset=0&limit=10&group=INTERNAL_DASHBOARD');
+        this.roles = data.map((el) => ({
+          id: el.id,
+          name: el.name,
+        }));
+        console.log(this.roles, 'roles');
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
     },
     async getAdmins(pagination) {
       const limit = pagination.limit || 10;
@@ -99,14 +123,14 @@ export default {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(`employees?offset=${offset}&limit=${limit}`);
-        console.log('- - - -', data);
+        } = await API.get(`employees?group=INTERNAL_DASHBOARD&offset=${offset}&limit=${limit}`);
         this.admins = data.map((el) => ({
           ...el,
           name: el.profile.name,
           email: el.profile.email,
-          phone_number: el.profile.phone_number,
-          // role: this.getRoles(el.id) || '',
+          role: this.getRoles(el.id) || '',
+          phone_number: this.generatePhoneNumber(el.profile.phone_number),
+          address: el.profile.address,
         }));
 
         this.adminPagination = {
@@ -126,74 +150,25 @@ export default {
       this.addModal = false;
       this.editModal = false;
     },
-    escapeRegExp(string) {
-      const parts = string ? string.match(/.{1,4}/g) : ('000000000000').match(/.{1,4}/g);
-      const newValue = parts.join('-');
-      return newValue;
+    generateRoleName(row) {
+      const filtered = this.roles.filter((el) => el.id === row.role_id);
+      return filtered.length ? filtered[0].name : '';
+    },
+    handleDetail(row) {
+      this.detailModal = true;
+      row.role = this.generateRoleName(row);
+      this.$store.commit('SET_ADMIN_DETAIL', row);
+    },
+    generatePhoneNumber(number) {
+      const parts = number ? number.match(/.{1,4}/g) : '';
+      const newValue = parts?.join('-') || '';
+      return newValue || '';
     },
   },
-
   async mounted() {
     await this.getAdmins(this.adminPagination);
+    await this.getRoles();
   },
-  // setup() {
-  //   const getAdmins = async (pagination) => {
-  //     // = = REAL = =
-  //     // const limit = pagination.rowLimit || 10;
-  //     // const page = pagination.page || 1;
-  //     // const sort = pagination.sortBy || 'name';
-  //     // const order = pagination.order || 'asc;';
-  //     // = = REAL = =
-  //     try {
-  //       // = = REAL = =
-  //       // const response = await axios.get(
-  //       //   `http://localhost:3000/admin?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`,
-  //       // );
-  //       // admins.value = response.data
-  //       // = = REAL = =
-
-  //       // = = DUMMY = =
-  //       admins.value = dummyAdmin;
-  //       // = = DUMMY = =
-  //       adminPagination.value = {
-  //         // = = REAL = =
-  //         // totalRows: +response.headers['x-total-count'],
-  //         // = = REAL = =
-  //         // = = DUMMY = =
-  //         totalRows: dummyAdmin.length,
-  //         // = = DUMMY = =
-  //         rowLimit: pagination.rowLimit,
-  //         page: pagination.page,
-  //         sortBy: pagination.sortBy,
-  //         order: pagination.order,
-  //       };
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   const adminsTooltipText = (raw) => {
-  //     const names = raw.map((el) => el.name);
-  //     const hidden = names.length - 4;
-  //     if (names.length > 4) {
-  //       return `${names.slice(0, 4).join(', ')} and ${hidden} other${hidden > 1 ? 's' : ''}`;
-  //     }
-  //     return names.join(', ');
-  //   };
-
-  //   onMounted(() => {
-  //     getAdmins(adminPagination.value);
-  //   });
-  //   return {
-  //     columns,
-  //     admins,
-  //     adminPagination,
-  //     detailModal,
-  //     searchValue,
-  //     getAdmins,
-  //     adminsTooltipText,
-  //   };
-  // },
 };
 </script>
 
