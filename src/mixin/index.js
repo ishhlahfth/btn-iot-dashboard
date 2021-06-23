@@ -90,5 +90,14 @@ export default {
           return `${year}-${month}-${date}`;
       }
     },
+    checkObjectBlank(obj) {
+      let emptyCount = 0;
+      Object.entries(obj).forEach(([, value]) => {
+        if (value === '') emptyCount += 1;
+      });
+      const isAllKeysEmpty = emptyCount === Object.keys(obj).length;
+      console.log(isAllKeysEmpty);
+      return isAllKeysEmpty;
+    },
   },
 };

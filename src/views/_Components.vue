@@ -622,6 +622,8 @@
             <table-footer
               :limit="10"
               :offset="0"
+              :count="100"
+              :isCountActive="true"
               sort="date"
               order="desc"
               :more-data-available="false"
@@ -1931,6 +1933,21 @@ export default {
             examples: ['asc', 'desc'],
           },
           {
+            prop: 'count',
+            description:
+              'Total row di table, sifatnya tidak required. Kalo mau digunakan harus ngaktifin isCountActive dulu',
+            type: 'Number',
+            default: 'Number',
+            examples: [0],
+          },
+          {
+            prop: 'isCountActive',
+            description:
+              'Flag aktif untuk menampilkan total row',
+            type: 'Boolean',
+            default: 'false',
+          },
+          {
             prop: 'more-data-available',
             description:
               'Patokan udah mentok atau belum tablenya, karena backend nggak ngasih total row count buat patokan',
@@ -2010,6 +2027,21 @@ export default {
             description: 'Patokan muncul/enggaknya <table-footer />',
             type: 'Boolean',
             default: true,
+          },
+          {
+            prop: 'count',
+            description:
+              'Total row di table, sifatnya tidak required. Kalo mau digunakan harus ngaktifin isCountActive dulu',
+            type: 'Number',
+            default: 'Number',
+            examples: [0],
+          },
+          {
+            prop: 'isCountActive',
+            description:
+              'Flag aktif untuk menampilkan total row',
+            type: 'Boolean',
+            default: 'false',
           },
         ],
       },

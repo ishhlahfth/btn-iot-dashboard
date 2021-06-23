@@ -429,7 +429,8 @@
           <div class="text-royal font-semibold text-heading4 sm:text-heading3">
             Rp
             {{
-              Number(totalTransaction.commision).toLocaleString('ID')
+              totalTransaction.commision ?
+              Number(totalTransaction.commision).toLocaleString('ID') : 0
             }}
           </div>
         </div>
