@@ -104,5 +104,11 @@ export default {
       const newValue = parts?.join('-') || '';
       return newValue || '';
     },
+    truncate(input) {
+      if (input.length > 30) {
+        return `${input.substring(0, 30)} ...`;
+      }
+      return input;
+    },
   },
 };

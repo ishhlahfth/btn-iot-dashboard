@@ -46,6 +46,7 @@
           >
             See Detail
           </p>
+          <p v-if="column === 'address'">{{ data ? truncate(data) : '' }}</p>
           <p v-if="column === 'phone_number'">{{ generatePhoneNumber(data) }}</p>
           <p v-if="column === 'role'">{{ generateRoleName(row) }}</p>
           <div v-if="column === 'actions'">
