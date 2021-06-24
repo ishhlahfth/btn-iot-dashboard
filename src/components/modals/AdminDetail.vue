@@ -2,11 +2,11 @@
   <div class="grid grid-flow-rows sm:gap-6 gap-4 modal-md sm:p-6 p-2 mb-4 sm:mb-0">
     <div class="flex justify-center pb-6">
       <help-avatar
-        :size="160"
+        :size="180"
         :src="photo"
       />
     </div>
-    <div class="grid grid-flow-row gap-4 sm:gap-0 sm:grid-cols-2">
+    <div class="grid sm:grid-cols-2 grid-flow-row gap-4 sm:gap-0">
       <div>
         <p class="font-medium text-grey-2">Name</p>
         <p class="font-medium">{{ name }}</p>
@@ -37,10 +37,12 @@
 
 <script>
 import HelpAvatar from '@/components/atoms/Avatar.vue';
-import API from '../../apis';
+import mixin from '@/mixin';
+import API from '@/apis';
 
 export default {
   name: 'AdminDetail',
+  mixins: [mixin],
   data() {
     return {
       name: '',
@@ -76,7 +78,7 @@ export default {
   mounted() {
     this.name = this.$store.state.adminDetail.name || '';
     this.email = this.$store.state.adminDetail.email || '';
-    this.phone_number = this.$store.state.adminDetail.phone_number || '';
+    this.phone_number = this.generatePhoneNumber(this.$store.state.adminDetail.phone_number) || '';
     this.address = this.$store.state.adminDetail.address || '';
     this.role = this.$store.state.adminDetail.role || '';
     this.getProfilePicture(this.$store.state.adminDetail.id);
