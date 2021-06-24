@@ -99,5 +99,10 @@ export default {
       console.log(isAllKeysEmpty);
       return isAllKeysEmpty;
     },
+    generatePhoneNumber(number) {
+      const parts = number ? number.match(/.{1,4}/g) : '';
+      const newValue = parts?.join('-') || '';
+      return newValue || '';
+    },
   },
 };

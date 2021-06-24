@@ -1,12 +1,22 @@
 <template>
   <help-modal v-model="addModal">
-    <admin-add-edit @close="handleClose" adminType="add" />
+    <admin-add-edit
+      @close="handleClose"
+      @reload="generateFetchData"
+      adminType="add"
+      :roles="selectRoles"
+    />
   </help-modal>
   <help-modal v-model="editModal">
-    <admin-add-edit @close="handleClose" adminType="edit" />
+    <admin-add-edit
+      @close="handleClose"
+      @reload="generateFetchData"
+      adminType="edit"
+      :roles="selectRoles"
+    />
   </help-modal>
   <help-modal v-model="detailModal">
-    <admin-detail :rowData="admin" />
+    <admin-detail />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -28,19 +38,19 @@
         @onChangePagination="getAdmins($event)"
         @sort="getAdmins($event)"
       >
-        <template v-slot:body="{ column, row }">
+        <template v-slot:body="{ data, column, row }">
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
-            @click="handleDetail(row)"
+            @click="handleDetail(row, 'detail')"
           >
             See Detail
           </p>
+          <p v-if="column === 'phone_number'">{{ generatePhoneNumber(data) }}</p>
           <p v-if="column === 'role'">{{ generateRoleName(row) }}</p>
           <div v-if="column === 'actions'">
-            <help-button icon-only icon="edit" @click="editModal = true" />
+            <help-button icon-only icon="edit" @click="handleDetail(row, 'edit')" />
           </div>
-          <p v-if="column === 'role'">{{ data }}</p>
         </template>
       </help-table>
     </div>
@@ -55,10 +65,12 @@ import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
 import AdminDetail from '@/components/modals/AdminDetail.vue';
 import { useToast } from 'vue-toastification';
-import API from '../apis';
+import mixin from '@/mixin';
+import API from '@/apis';
 
 export default {
   name: 'Admin',
+  mixins: [mixin],
   components: {
     HelpButton,
     // HelpInput,
@@ -86,6 +98,7 @@ export default {
       ],
       admins: [],
       roles: [],
+      selectRoles: [],
       admin: {},
       adminPagination: {
         limit: 10,
@@ -107,6 +120,10 @@ export default {
           id: el.id,
           name: el.name,
         }));
+        this.selectRoles = data.map((el) => ({
+          value: el.id,
+          label: el.name,
+        }));
         console.log(this.roles, 'roles');
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -117,26 +134,22 @@ export default {
       }
     },
     async getAdmins(pagination) {
+      console.log(pagination, 'pagination');
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       try {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(`employees?group=INTERNAL_DASHBOARD&offset=${offset}&limit=${limit}`);
+        } = await API.get(`employees?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD`);
         this.admins = data.map((el) => ({
           ...el,
           name: el.profile.name,
           email: el.profile.email,
-          role: this.getRoles(el.id) || '',
-          phone_number: this.generatePhoneNumber(el.profile.phone_number),
+          role: el.id || '',
+          phone_number: el.profile.phone_number,
           address: el.profile.address,
         }));
-
-        this.adminPagination = {
-          limit,
-          offset,
-        };
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -147,27 +160,32 @@ export default {
       this.loading = false;
     },
     handleClose() {
-      this.addModal = false;
-      this.editModal = false;
+      if (this.addModal) {
+        this.addModal = false;
+      } else {
+        this.editModal = false;
+      }
     },
     generateRoleName(row) {
       const filtered = this.roles.filter((el) => el.id === row.role_id);
       return filtered.length ? filtered[0].name : '';
     },
-    handleDetail(row) {
-      this.detailModal = true;
+    handleDetail(row, params) {
+      if (params === 'edit') {
+        this.editModal = true;
+      } else {
+        this.detailModal = true;
+      }
       row.role = this.generateRoleName(row);
       this.$store.commit('SET_ADMIN_DETAIL', row);
     },
-    generatePhoneNumber(number) {
-      const parts = number ? number.match(/.{1,4}/g) : '';
-      const newValue = parts?.join('-') || '';
-      return newValue || '';
+    async generateFetchData() {
+      await this.getAdmins(this.adminPagination);
+      await this.getRoles();
     },
   },
-  async mounted() {
-    await this.getAdmins(this.adminPagination);
-    await this.getRoles();
+  mounted() {
+    this.generateFetchData();
   },
 };
 </script>
