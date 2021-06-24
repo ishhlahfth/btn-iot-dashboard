@@ -105,9 +105,9 @@
           @click="$emit('close')"
         />
         <help-button
-          :label="adminType === 'EDIT' ? 'save changes' : 'add'"
+          :label="adminType === 'edit' ? 'save changes' : 'add'"
           :loading="loading"
-          :loading-label="adminType === 'EDIT' ? 'saving' : 'adding'"
+          :loading-label="adminType === 'edit' ? 'saving' : 'adding'"
         />
       </div>
     </form>
