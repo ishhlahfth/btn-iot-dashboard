@@ -116,7 +116,7 @@ export default {
       try {
         const {
           data: { data },
-        } = await API.get('/roles?offset=0&limit=10&group=INTERNAL_DASHBOARD');
+        } = await API.get('/roles?offset=0&limit=100&group=INTERNAL_DASHBOARD');
         this.roles = data.map((el) => ({
           id: el.id,
           name: el.name,
