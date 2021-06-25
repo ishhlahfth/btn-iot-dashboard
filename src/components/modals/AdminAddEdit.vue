@@ -13,50 +13,79 @@
       />
     </div>
     <form class="grid gap-4" @submit.prevent="submit">
-      <help-input label="Name" type="text" placeholder="Input admin's name" v-model="form.name" />
-      <help-input
-        label="Email"
-        type="email"
-        placeholder="Input admin's email"
-        v-model="form.email"
-      />
-      <help-input
-        v-if="adminType === 'add'"
-        v-model="form.password"
-        label="Password"
-        :type="visiblePassword ? 'text' : 'password'"
-        placeholder="Input admin's password"
-      >
-        <help-button
-          type="button"
-          icon-only
-          :icon="visiblePassword ? 'eye-off' : 'eye'"
-          bg-color="transparent"
-          color="grey-3"
-          @click="visiblePassword = !visiblePassword"
+      <div class="grid auto-rows-max gap-2">
+        <help-input label="Name" type="text" placeholder="Input admin's name" v-model="form.name" />
+        <p class="text-xsmall text-flame font-medium" v-if="!form.name">
+          Your name is required
+        </p>
+      </div>
+      <div class="grid auto-rows-max gap-2">
+        <help-input
+          label="Email"
+          type="email"
+          placeholder="Input admin's email"
+          v-model="form.email"
         />
-      </help-input>
-      <help-input
-        label="Phone Number"
-        type="number"
-        placeholder="Input admin's phone number"
-        v-model="form.phone_number"
-      />
-      <help-input
-        label="Address"
-        type="textarea"
-        placeholder="Input admin's address"
-        v-model="form.address"
-      />
-      <div>
-        <label class="font-medium">Date of Birth</label>
-        <flat-pickr
-          v-model="form.date_of_birth"
-          :config="config"
-          class="form-control my-1 rounded-md w-full p-2.5 border text-md cursor-pointer"
-          placeholder="Select Date.."
-          name="dateBirth"
+        <p class="text-xsmall text-flame font-medium" v-if="!form.email">
+          Your email is required
+        </p>
+      </div>
+      <div class="grid auto-rows-max gap-2" v-if="adminType === 'add'">
+        <help-input
+          v-model="form.password"
+          label="Password"
+          :type="visiblePassword ? 'text' : 'password'"
+          placeholder="Input admin's password"
+        >
+          <help-button
+            type="button"
+            icon-only
+            :icon="visiblePassword ? 'eye-off' : 'eye'"
+            bg-color="transparent"
+            color="grey-3"
+            @click="visiblePassword = !visiblePassword"
+          />
+        </help-input>
+        <p class="text-xsmall text-flame font-medium" v-if="!form.password">
+          Your password is required
+        </p>
+      </div>
+      <div class="grid auto-rows-max gap-2">
+        <help-input
+          label="Phone Number"
+          type="number"
+          placeholder="Input admin's phone number"
+          v-model="form.phone_number"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="!form.phone_number">
+          Your phone number is required
+        </p>
+      </div>
+      <div class="grid auto-rows-max gap-2">
+        <help-input
+          label="Address"
+          type="textarea"
+          placeholder="Input admin's address"
+          v-model="form.address"
+        />
+        <p class="text-xsmall text-flame font-medium" v-if="!form.address">
+          Your address is required
+        </p>
+      </div>
+      <div class="grid auto-rows-max gap-2">
+        <div>
+          <label class="font-medium">Date of Birth</label>
+          <flat-pickr
+            v-model="form.date_of_birth"
+            :config="config"
+            class="form-control my-1 rounded-md w-full p-2.5 border text-md cursor-pointer"
+            placeholder="Select Date.."
+            name="dateBirth"
+          />
+        </div>
+        <p class="text-xsmall text-flame font-medium" v-if="!form.date_of_birth">
+          Your date birth is required
+        </p>
       </div>
       <div>
         <input
@@ -90,12 +119,17 @@
           </div>
         </div>
       </div>
-      <help-select
-        v-model="selectedStatus"
-        label="Role"
-        :options="roles"
-        :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
-      />
+      <div class="grid auto-rows-max gap-2">
+        <help-select
+          v-model="selectedStatus"
+          label="Role"
+          :options="roles"
+          :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
+        />
+        <p class="text-xsmall text-flame font-medium" v-if="!selectedStatus">
+          Your role is required
+        </p>
+      </div>
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end py-2">
         <help-button
           type="button"
@@ -191,6 +225,7 @@ export default {
       }
     },
     async submit() {
+      // if(!this.form.name)
       console.log(this.form, 'form');
       if (this.form.photo.length) {
         const file = this.form.photo[0];
@@ -205,6 +240,7 @@ export default {
         const dataToSend = {
           name: this.form.name,
           address: this.form.address,
+          email: this.form.email,
           role_id: this.form.role_id,
           is_active: 'TRUE',
           phone_number: this.form.phone_number,
