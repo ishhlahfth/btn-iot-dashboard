@@ -142,7 +142,7 @@ export default {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(`employees?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD`);
+        } = await API.get(`employees?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD&order=desc&sort=id`);
         this.admins = data.map((el) => ({
           ...el,
           name: el.profile.name,
