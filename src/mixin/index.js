@@ -101,7 +101,7 @@ export default {
     },
     generatePhoneNumber(number) {
       const parts = number ? number.match(/.{1,4}/g) : '';
-      const newValue = parts?.join('-') || '';
+      const newValue = parts ? parts?.join('-') : '';
       return newValue || '';
     },
     truncate(input) {
