@@ -191,9 +191,7 @@ export default {
     },
   },
   methods: {
-    async getNumRows({
-      offset, limit, sort, order, search, filter 
-    }) {
+    async getNumRows({ offset, limit, sort, order, search, filter }) {
       let url = `/transfer-queues/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
       if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
       try {
