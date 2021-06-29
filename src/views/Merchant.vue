@@ -78,6 +78,8 @@
         :loading="loading"
         :rows="merchants"
         :pagination="merchantPagination"
+        :count="count"
+        :isCountActive="true"
         @onChangePagination="getMerchants({ pagination: $event, filter: merchantFilter })"
         @sort="getMerchants({ pagination: $event, filter: merchantFilter })"
       >
@@ -172,6 +174,7 @@ export default {
   data() {
     return {
       searchValue: '',
+      count: 0,
       columns: [
         { field: 'name', label: 'name', sortable: true },
         { field: 'city', label: 'city', sortable: true },
@@ -218,6 +221,24 @@ export default {
     },
   },
   methods: {
+    async getNumRows({
+      offset, limit, sort, order, search, filter,
+    }) {
+      let url = `/merchants/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
+      if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
+      try {
+        const {
+          data: { data },
+        } = await API.get(url);
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getCommission(merchantId) {
       let commission = null;
       try {
@@ -243,6 +264,10 @@ export default {
       const sort = pagination?.sort || 'name';
       const order = pagination?.order || 'asc';
       const search = this.searchValue || '';
+
+      this.getNumRows({
+        offset, limit, sort, order, search, filter,
+      });
 
       let url = `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
 
@@ -284,7 +309,7 @@ export default {
           order,
         };
         this.merchantFilter = filter;
-        if (filter) {
+        if (!this.checkObjectBlank(filter)) {
           this.getExportedMerchant(this.appliedFilter);
         }
       } catch (error) {
@@ -302,7 +327,6 @@ export default {
       const search = '';
 
       let url = `merchants?sort=${sort}&order=${order}&search=${search}`;
-      console.log(filter?.verificationStatus);
       if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
 
       try {
@@ -399,9 +423,6 @@ export default {
     this.getMerchants({
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
-    });
-    this.getExportedMerchant({
-      filter: this.appliedFilter,
     });
   },
 };

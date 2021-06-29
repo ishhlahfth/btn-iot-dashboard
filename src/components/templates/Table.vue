@@ -101,6 +101,8 @@
       :order="pagination.order"
       :more-data-available="moreDataAvailable"
       :current-row-count="rows.length"
+      :count="count"
+      :isCountActive="isCountActive"
       @onChangePagination="onChangePagination"
     />
   </div>
@@ -131,6 +133,14 @@ export default {
       default() {
         return [];
       },
+    },
+    isCountActive: {
+      type: Boolean,
+      default: false,
+    },
+    count: {
+      type: Number,
+      default: 0,
     },
     pagination: {
       type: Object,

@@ -3,9 +3,8 @@
     <confirmation
       title="Transfer confirmation"
       :message="
-        `Are you sure you want to transfer to the selected orders with total amount of ${convertToRp(
-          totalAmount,
-        )}? This action cannot be undone`
+        `Are you sure you want to transfer to the selected orders with total amount of
+         ${convertToRp(totalAmount)}? This action cannot be undone`
       "
       :confirm-loading="conductTransferLoading"
       loading-label="transfering"
@@ -56,6 +55,8 @@
         :loading="loading"
         :rows="transfers"
         :pagination="transferPagination"
+        :count="count"
+        :isCountActive="true"
         @onChangePagination="getTransferData({ pagination: $event, filter: transferFilter })"
         @sort="getTransferData({ pagination: $event, filter: transferFilter })"
       >
@@ -144,6 +145,7 @@ export default {
       checkAll: false,
       confirmTransferModal: false,
       filterModal: false,
+      count: 0,
     };
   },
   computed: {
@@ -189,13 +191,40 @@ export default {
     },
   },
   methods: {
+    async getNumRows({
+      offset, limit, sort, order, search, filter,
+    }) {
+      // eslint-disable-next-line max-len
+      let url = `/transfer-queues/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
+      if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
+      try {
+        const {
+          data: { data },
+        } = await API.get(url);
+        this.count = data;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
     async getTransferData({ pagination, filter }) {
-      console.log(pagination, 'pagination');
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
       const sort = pagination?.sort || 'order_date';
       const order = pagination?.order || 'desc';
       const search = this.searchValue || '';
+
+      this.getNumRows({
+        offset,
+        limit,
+        sort,
+        order,
+        search,
+        filter,
+      });
 
       let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
 
@@ -232,7 +261,8 @@ export default {
           order,
         };
         this.transferFilter = filter;
-        if (filter) {
+
+        if (this.checkObjectBlank(filter)) {
           this.getExportedTransferData({
             pagination: this.transferPagination,
             filter: this.appliedFilter,
@@ -289,7 +319,7 @@ export default {
         this.transferFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
-          this.toast.error("Error: Check your network or it's probably a CORS error");
+          this.toast.error('Error: Check your network');
         } else {
           this.toast.error(error.message);
         }
@@ -348,10 +378,6 @@ export default {
     this.getTransferData({
       pagination: this.transferPagination,
       filter: this.transferFilter,
-    });
-    this.getExportedTransferData({
-      filter: this.appliedFilter,
-      pagination: this.transferPagination,
     });
   },
 };

@@ -90,5 +90,25 @@ export default {
           return `${year}-${month}-${date}`;
       }
     },
+    checkObjectBlank(obj) {
+      let emptyCount = 0;
+      Object.entries(obj).forEach(([, value]) => {
+        if (value === '') emptyCount += 1;
+      });
+      const isAllKeysEmpty = emptyCount === Object.keys(obj).length;
+      console.log(isAllKeysEmpty);
+      return isAllKeysEmpty;
+    },
+    generatePhoneNumber(number) {
+      const parts = number ? number.match(/.{1,4}/g) : '';
+      const newValue = parts?.join('-') || '';
+      return newValue || '';
+    },
+    truncate(input) {
+      if (input.length > 30) {
+        return `${input.substring(0, 30)} ...`;
+      }
+      return input;
+    },
   },
 };
