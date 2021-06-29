@@ -3,9 +3,8 @@
     <confirmation
       title="Transfer confirmation"
       :message="
-        `Are you sure you want to transfer to the selected orders with total amount of ${convertToRp(
-          totalAmount,
-        )}? This action cannot be undone`
+        `Are you sure you want to transfer to the selected orders with total amount of
+         ${convertToRp(totalAmount)}? This action cannot be undone`
       "
       :confirm-loading="conductTransferLoading"
       loading-label="transfering"
@@ -195,6 +194,7 @@ export default {
     async getNumRows({
       offset, limit, sort, order, search, filter,
     }) {
+      // eslint-disable-next-line max-len
       let url = `/transfer-queues/count/num-rows?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
       if (filter?.merchantName) url += `&merchant_name=${filter?.merchantName}`;
       try {
@@ -218,7 +218,12 @@ export default {
       const search = this.searchValue || '';
 
       this.getNumRows({
-        offset, limit, sort, order, search, filter,
+        offset,
+        limit,
+        sort,
+        order,
+        search,
+        filter,
       });
 
       let url = `transfer-queues?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&order_code=${search}`;
@@ -314,7 +319,7 @@ export default {
         this.transferFilter = filter;
       } catch (error) {
         if (error.message === 'Network Error') {
-          this.toast.error("Error: Check your network or it's probably a CORS error");
+          this.toast.error('Error: Check your network');
         } else {
           this.toast.error(error.message);
         }
