@@ -327,22 +327,34 @@ export default {
       this.loading = false;
     },
     async conductTransfer() {
-      this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: true });
-      if (this.queue.length) {
-        for (let i = 0; i < this.queue.length; i += 1) {
-          const {
-            data: { data },
-          } = await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
-          console.log('= = = queue = = =');
-          console.log(data);
+      try {
+        this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: true });
+        if (this.queue.length) {
+          for (let i = 0; i < this.queue.length; i += 1) {
+            const {
+              data: { data },
+            } = await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
+            console.log('= = = queue = = =');
+            console.log(data);
+          }
+        }
+        this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
+        this.getTransferData({
+          pagination: this.transferPagination,
+          filter: this.transferFilter,
+        });
+        this.confirmTransferModal = false;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+          this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
+          this.confirmTransferModal = false;
+        } else {
+          this.toast.error(error.message);
+          this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
+          this.confirmTransferModal = false;
         }
       }
-      this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });
-      this.getTransferData({
-        pagination: this.transferPagination,
-        filter: this.transferFilter,
-      });
-      this.confirmTransferModal = false;
     },
     toggleAll() {
       for (let i = 0; i < this.transfers.length; i += 1) {
