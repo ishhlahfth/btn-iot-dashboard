@@ -432,6 +432,7 @@ export default {
     },
   },
   async mounted() {
+    this.date.start = new Date(this.date.start);
     this.date.end.setHours(23, 59, 59, 999);
     this.date.end = this.convertDateFormat(this.date.end, 'full');
     this.date.start = this.convertDateFormat(this.date.start, 'full');
