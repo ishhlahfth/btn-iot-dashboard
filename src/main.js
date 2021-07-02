@@ -9,7 +9,6 @@ import store from './store';
 import './registerServiceWorker';
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
-import '@mathieustan/vue-datepicker/dist/vue-datepicker.min.css';
 import 'flatpickr/dist/flatpickr.css';
 
 const toastOption = {
