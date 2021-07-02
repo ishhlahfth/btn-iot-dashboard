@@ -23,11 +23,11 @@
       <p class="text-heading2 font-semibold">Admin</p>
       <help-button label="add" icon="plus" @click="addModal = true" />
     </div>
-    <!-- <div>
+    <div>
       <form @submit.prevent="getAdmins">
         <help-input v-model="searchValue" placeholder="Search admin name here" search-bar />
       </form>
-    </div> -->
+    </div>
     <div class="overflow-hidden">
       <help-table
         path="employees"
@@ -60,7 +60,7 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-// import HelpInput from '@/components/atoms/Input.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
@@ -74,7 +74,7 @@ export default {
   mixins: [mixin],
   components: {
     HelpButton,
-    // HelpInput,
+    HelpInput,
     HelpModal,
     HelpTable,
     AdminAddEdit,
@@ -138,11 +138,14 @@ export default {
       console.log(pagination, 'pagination');
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
+      const search = this.searchValue || '';
       try {
         this.loading = true;
         const {
           data: { data },
-        } = await API.get(`employees?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD&order=desc&sort=id`);
+        } = await API.get(
+          `employees?offset=${offset}&limit=${limit}&group=INTERNAL_DASHBOARD&order=desc&sort=id&search=${search}`,
+        );
         this.admins = data.map((el) => ({
           ...el,
           name: el.profile.name,
