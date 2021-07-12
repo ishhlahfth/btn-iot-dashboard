@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history @close="closeAndRefetch" />
+    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -59,7 +59,7 @@
                 ? 'warning'
                 : 'negative'
             "
-            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id })"
+            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id, currentStep: row.current_step })"
           />
           <p
             v-if="column === 'detail'"
@@ -129,6 +129,7 @@ export default {
     max.setMinutes(0);
     max.setSeconds(0);
     return {
+      currentPropStep: '',
       exportLimit: 7,
       searchValue: '',
       columns: [
@@ -361,7 +362,8 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
-    openStatusHistory({ id, merchantId }) {
+    openStatusHistory({ id, merchantId, currentStep }) {
+      this.currentPropStep = currentStep;
       this.statusHistoryModal = true;
       this.$store.commit('SET_ORDER_ID', id);
       this.$store.commit('SET_MERCHANT_ID', merchantId);
