@@ -98,6 +98,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    currentPropStep: {
+      type: String,
+      default: '',
+    },
   },
   setup() {
     const toast = useToast();
@@ -157,9 +161,8 @@ export default {
         const {
           data: { data },
         } = await API.get(`merchants/${this.merchantId}/order-steps`);
-
-        this.currentStep = this.history[this.history.length - 1];
-        const currentStepDetail = data.filter((el) => el.title === this.currentStep.step_title)[0];
+        const currentStepDetail = data.filter((el) => el.title.toLowerCase() === this.currentPropStep.toLowerCase())[0];
+        this.currentStep = currentStepDetail;
         this.actions = currentStepDetail.actions.length
           ? currentStepDetail.actions.map((el) => ({ value: el.id, label: el.title }))
           : [];
@@ -179,7 +182,7 @@ export default {
 
       try {
         await API.post(
-          `orders/${this.orderId}/steps/${this.currentStep.step_id}/actions/${this.selectedAction.value}/next`,
+          `orders/${this.orderId}/steps/${this.currentStep.id}/actions/${this.selectedAction.value}/next`,
           payload,
         );
         this.toast.success('Successfully updated status');
@@ -190,6 +193,7 @@ export default {
         console.log(error);
       }
       this.loading.update = false;
+      this.$emit('close');
     },
   },
   watch: {
@@ -204,7 +208,6 @@ export default {
             } = await API.get('order-cancel-reasons');
             this.reasons = data.map((el) => ({ value: el.id, label: el.reason }));
             this.selectedReason = this.reasons[0];
-            console.log(data);
           } catch (error) {
             console.log(error);
           }
