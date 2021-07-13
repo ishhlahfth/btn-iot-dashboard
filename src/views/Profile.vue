@@ -1,0 +1,218 @@
+<template>
+  <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
+    <div class="w-full grid sm:grid-flow-col gap-4">
+      <div class="w-full justify-between">
+        <p class="text-heading2 font-semibold">User Profile</p>
+      </div>
+    </div>
+    <div class="w-full grid sm:grid gap-4 bg-white p-5 my-1 rounded-lg">
+      <div>
+        <div class="flex justify-center p-5">
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              ref="bannerImageInput"
+              @input="handleChangeImg"
+            />
+            <label class="font-medium">Profile Picture</label>
+            <help-avatar :size="128" :placeholder="form.name" :src="src" />
+            <div class="grid grid-flow-col auto-cols-max gap-2 justify-end">
+              <span
+                class="text-royal cursor-pointer font-medium"
+                @click="$refs.bannerImageInput.click()"
+              >
+                Edit
+              </span>
+              <span class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
+            </div>
+          </div>
+        </div>
+        <form class="grid gap-4">
+          <div class="grid auto-rows-max gap-2">
+            <help-input label="Name" type="text" placeholder="User's name" v-model="form.name" />
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Email"
+              type="text"
+              placeholder="User's Email Address"
+              v-model="form.email"
+            />
+          </div>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              ref="bannerImageInput"
+              @input="handleChangeImg"
+            />
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Address"
+              type="text"
+              placeholder="User's Address"
+              v-model="form.address"
+            />
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Phone Number"
+              type="text"
+              placeholder="User's Phone Number"
+              v-model="form.phone_number"
+            />
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Date Of Birth"
+              type="text"
+              placeholder="User's Date Of Birth"
+              v-model="form.date_of_birth"
+            />
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Password"
+              :type="visiblePassword ? 'text' : 'password'"
+              placeholder="Password"
+              v-model="form.old_password"
+            >
+              <help-button
+                type="button"
+                icon-only
+                :icon="visiblePassword ? 'eye-off' : 'eye'"
+                bg-color="transparent"
+                color="grey-3"
+                @click="visiblePassword = !visiblePassword"
+              />
+            </help-input>
+          </div>
+          <div class="grid auto-rows-max gap-2">
+            <help-input
+              label="Password Confirmation"
+              :type="visiblePasswordRe ? 'text' : 'password'"
+              placeholder="Re Type Your Password"
+              v-model="form.repassword"
+            >
+              <help-button
+                type="button"
+                icon-only
+                :icon="visiblePasswordRe ? 'eye-off' : 'eye'"
+                bg-color="transparent"
+                color="grey-3"
+                @click="visiblePasswordRe = !visiblePasswordRe"
+              />
+            </help-input>
+          </div>
+          <div class="grid grid-flow-col gap-2 auto-cols-max justify-center py-2">
+            <help-button label="Save" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import HelpAvatar from '@/components/atoms/Avatar.vue';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
+import { useToast } from 'vue-toastification';
+import API from '@/apis';
+import mixin from '@/mixin';
+
+export default {
+  name: 'Profile',
+  mixins: [mixin],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+  data() {
+    return {
+      current_user_id: '',
+      form: {
+        name: '',
+        email: '',
+        phone_number: '',
+        address: '',
+        role_id: '',
+        photo: '',
+        password: '',
+        repassword: '',
+        date_of_birth: '',
+      },
+      currentUser: {},
+      visiblePassword: false,
+      visiblePasswordRe: false,
+    };
+  },
+  components: {
+    HelpButton,
+    HelpInput,
+    HelpAvatar,
+  },
+  methods: {
+    async getProfileData(id) {
+      try {
+        const {
+          data: { data },
+        } = await API.get(`/employees/${id}`);
+        if (data.profile) {
+          this.form.name = data.profile.name;
+          this.form.email = data.profile.email;
+          this.form.address = data.profile.address;
+          this.form.date_of_birth = data.profile.date_of_birth;
+          this.form.phone_number = data.profile.phone_number;
+        }
+        if (data.banner?.location) {
+          this.form.photo = data.banner.location;
+        }
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
+    },
+    async submit() {
+      console.log(this.form);
+      if (this.form.password) {
+        const dataToSend = {
+          name: this.form.name,
+          address: this.form.address,
+          email: this.form.email,
+          role_id: this.form.role_id,
+          is_active: 'TRUE',
+          phone_number: this.form.phone_number,
+          date_of_birth: this.form.date_of_birth,
+          password: this.form.password,
+        };
+        console.log(dataToSend, 'data to send');
+        const {
+          data: { data },
+        } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
+        console.log(data, 'data response');
+      } else {
+        const dataToSend = {
+          name: this.form.name,
+          address: this.form.address,
+          email: this.form.email,
+          role_id: this.form.role_id,
+          is_active: 'TRUE',
+          phone_number: this.form.phone_number,
+          date_of_birth: this.form.date_of_birth,
+        };
+        console.log(dataToSend, 'data to send');
+      }
+    },
+  },
+  mounted() {
+    this.getProfileData(this.$store.state.currentUser.id);
+  },
+};
+</script>
