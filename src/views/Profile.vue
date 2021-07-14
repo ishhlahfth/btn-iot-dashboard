@@ -16,22 +16,15 @@
               ref="bannerImageInput"
               @input="handleChangeImg"
             />
-            <label class="font-medium">Profile Picture</label>
-            <help-avatar :size="128" :placeholder="form.name" :src="src" />
-            <div class="grid grid-flow-col auto-cols-max gap-2 justify-end">
-              <span
-                class="text-royal cursor-pointer font-medium"
-                @click="$refs.bannerImageInput.click()"
-              >
-                Edit
-              </span>
-              <span class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
-            </div>
+            <help-avatar :size="128" :placeholder="form.name" :src="this.form.photo" />
           </div>
         </div>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="submit">
           <div class="grid auto-rows-max gap-2">
             <help-input label="Name" type="text" placeholder="User's name" v-model="form.name" />
+            <p class="text-xsmall text-flame font-medium" v-if="!form.name">
+          Your name is required
+        </p>
           </div>
           <div class="grid auto-rows-max gap-2">
             <help-input
@@ -40,15 +33,9 @@
               placeholder="User's Email Address"
               v-model="form.email"
             />
-          </div>
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              class="hidden"
-              ref="bannerImageInput"
-              @input="handleChangeImg"
-            />
+             <p class="text-xsmall text-flame font-medium" v-if="!form.email">
+          Your email is required
+        </p>
           </div>
           <div class="grid auto-rows-max gap-2">
             <help-input
@@ -74,12 +61,12 @@
               v-model="form.date_of_birth"
             />
           </div>
-          <div class="grid auto-rows-max gap-2">
+          <!-- <div class="grid auto-rows-max gap-2">
             <help-input
-              label="Password"
+              label="Change Password"
               :type="visiblePassword ? 'text' : 'password'"
               placeholder="Password"
-              v-model="form.old_password"
+              v-model="form.password"
             >
               <help-button
                 type="button"
@@ -90,26 +77,12 @@
                 @click="visiblePassword = !visiblePassword"
               />
             </help-input>
-          </div>
-          <div class="grid auto-rows-max gap-2">
-            <help-input
-              label="Password Confirmation"
-              :type="visiblePasswordRe ? 'text' : 'password'"
-              placeholder="Re Type Your Password"
-              v-model="form.repassword"
-            >
-              <help-button
-                type="button"
-                icon-only
-                :icon="visiblePasswordRe ? 'eye-off' : 'eye'"
-                bg-color="transparent"
-                color="grey-3"
-                @click="visiblePasswordRe = !visiblePasswordRe"
-              />
-            </help-input>
-          </div>
+             <p class="text-xsmall text-flame font-medium" v-if="!form.password">
+          Only fill if you want to change your password
+        </p>
+          </div> -->
           <div class="grid grid-flow-col gap-2 auto-cols-max justify-center py-2">
-            <help-button label="Save" />
+            <help-button label="Save" :loading="loading" :loading-label="'Saving'" />
           </div>
         </form>
       </div>
@@ -142,9 +115,10 @@ export default {
         role_id: '',
         photo: '',
         password: '',
-        repassword: '',
         date_of_birth: '',
       },
+      src: '',
+      currentPhoto: '',
       currentUser: {},
       visiblePassword: false,
       visiblePasswordRe: false,
@@ -167,6 +141,8 @@ export default {
           this.form.address = data.profile.address;
           this.form.date_of_birth = data.profile.date_of_birth;
           this.form.phone_number = data.profile.phone_number;
+          this.form.role_id = data.role_id;
+          this.form.photo = data.banner.location;
         }
         if (data.banner?.location) {
           this.form.photo = data.banner.location;
@@ -181,8 +157,9 @@ export default {
     },
     async submit() {
       console.log(this.form);
+      let dataToSend = {};
       if (this.form.password) {
-        const dataToSend = {
+        dataToSend = {
           name: this.form.name,
           address: this.form.address,
           email: this.form.email,
@@ -193,12 +170,8 @@ export default {
           password: this.form.password,
         };
         console.log(dataToSend, 'data to send');
-        const {
-          data: { data },
-        } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
-        console.log(data, 'data response');
       } else {
-        const dataToSend = {
+        dataToSend = {
           name: this.form.name,
           address: this.form.address,
           email: this.form.email,
@@ -208,6 +181,19 @@ export default {
           date_of_birth: this.form.date_of_birth,
         };
         console.log(dataToSend, 'data to send');
+      }
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
+        console.log(data, 'data response');
+        this.toast.success('Success updating profile !');
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
       }
     },
   },

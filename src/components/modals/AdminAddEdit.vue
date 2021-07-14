@@ -83,7 +83,7 @@
             name="dateBirth"
           />
         </div>
-        <p class="text-xsmall text-flame font-medium" v-if="!form.date_of_birth">
+        <p class="text-xsmall text-flame font-medium" v-if="!form.date_of_birth">role
           Your date birth is required
         </p>
       </div>
