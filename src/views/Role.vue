@@ -3,10 +3,10 @@
     <role-detail />
   </help-modal>
   <help-modal v-model="modal.add">
-    <role-add @close="modal.add = false" @refetch="getRoles({ pagination: rolesPagination })" />
+    <role-add @close="getRoles({ pagination: rolesPagination, modal: 'add' })" />
   </help-modal>
   <help-modal v-model="modal.edit" @editable="true">
-    <role-add @close="modal.edit = false" @refetch="getRoles({ pagination: rolesPagination })" />
+    <role-add @close="getRoles({ pagination: rolesPagination, modal: 'edit' })" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
@@ -142,7 +142,17 @@ export default {
     RoleAdd,
   },
   methods: {
-    async getRoles({ pagination }) {
+    async getRoles({ pagination, modal }) {
+      if (modal) {
+        switch (modal) {
+          case 'add':
+            this.modal.add = false;
+            break;
+          default:
+            this.modal.edit = false;
+            break;
+        }
+      }
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
       this.loading = true;
@@ -209,6 +219,7 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.getRoles({ pagination: this.rolesPagination });
     },
   },
   async mounted() {
