@@ -60,7 +60,8 @@
                   <p v-if="column === 'name'">{{ data }}</p>
                   <div v-else>
                     <help-checkbox
-                      :checked="data"
+                      v-model="row.isTrue"
+                      :checked="row.isTrue"
                       @click="handleChangeAccess({ row, status: $event.target.checked })"
                     />
                   </div>
@@ -133,8 +134,10 @@ export default {
   mounted() {
     this.roleName = this.$store.state.role.name;
     this.description = this.$store.state.role.description;
-    this.access = this.$store.state.role.permissions;
-    console.log('ada ga', this.$store.role);
+    if (this.$store.state.role.permissions) {
+      this.access = this.$store.state.role.permissions.map((el) => el.id);
+    }
+    this.is_active = this.$store.state.role.is_active;
     if (this.roleType === 'edit') {
       this.$store.state.role.permissions.forEach((el) => {
         this.roleBody.permission.push(String(el.id));
@@ -150,6 +153,10 @@ export default {
           data: { data },
         } = await API.get('/permissions');
         this.permissions = this.roleType !== 'edit' ? data : this.filterAccess(data);
+        this.permissions = this.permissions.map((el) => ({
+          ...el,
+          isTrue: this.access.includes(el.id),
+        }));
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -175,37 +182,36 @@ export default {
       return checked;
     },
     submit() {
-      if (this.roleType === 'edit') this.edit();
-      if (this.roleType === 'add') this.add();
+      const dataPermissionsToSend = [];
+      this.permissions.forEach((el) => {
+        if (el.isTrue) {
+          dataPermissionsToSend.push(`${el.id}`);
+        }
+      });
+      if (this.roleType === 'edit') this.edit(dataPermissionsToSend);
+      if (this.roleType === 'add') this.add(dataPermissionsToSend);
     },
     handleChangeAccess({ row, status }) {
-      console.log(row, 'ini row');
-      console.log(status, 'ini status');
-      if (status === true) {
-        this.roleBody.permission.push(String(row.id));
-      } else {
-        this.roleBody.permission.splice(
-          this.roleBody.permission.findIndex((el) => String(el.id) === String(row.id)),
-          1,
-        );
-      }
+      this.permissions = this.permissions.map((el) => ({
+        ...el,
+        isTrue: el.id === row.id ? status : el.isTrue,
+      }));
+      row.isTrue = status;
     },
-    async add() {
+    async add(dataPermissionsToSend) {
       const body = {
         name: this.roleName,
         description: this.description,
-        permission: this.roleBody.permission,
+        permission: dataPermissionsToSend,
         group: 'INTERNAL_DASHBOARD',
         is_active: 'TRUE',
       };
       this.loading.addRole = true;
-      console.log(body, 'body add');
       try {
         const {
           data: { data },
         } = await API.post('/roles', body);
-        this.toast.success('New role successfully created');
-        console.log(data, 'data success kirim');
+        this.toast.success(`${data.name || 'New role'} successfully created`);
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -217,22 +223,20 @@ export default {
       this.$emit('close');
       this.$emit('refetch');
     },
-    async edit() {
+    async edit(dataPermissionsToSend) {
       const body = {
         name: this.roleName,
         description: this.description,
-        permission: this.roleBody.permission,
+        permission: dataPermissionsToSend,
         group: 'INTERNAL_DASHBOARD',
-        is_active: this.is_active && this.is_active === true ? 'TRUE' : 'FALSE',
+        is_active: this.is_active ? 'TRUE' : 'FALSE',
       };
       this.loading.addRole = true;
-      console.log(body, 'body edit');
       try {
         const {
           data: { data },
         } = await API.patch(`/roles/${this.$store.state.role.id}`, body);
-        console.log(data, 'data success kirim');
-        this.toast.success('role successfully edited');
+        this.toast.success(`${data.name || 'role'} successfully edited`);
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
