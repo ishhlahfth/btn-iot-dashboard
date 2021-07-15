@@ -37,9 +37,27 @@
           >
             See Detail
           </p>
-          <!-- <div v-if="column === 'admin'">
-            <help-avatar />
-          </div> -->
+          <div v-if="column === 'admin'">
+            <div class="w-full flex gap-1">
+              <div v-for="(item, index) in employee[`${row.name}`]" :key="item">
+                <help-avatar v-if="index < max_employee"
+                :src="item.banner.location"
+                :placeholder="item.profile.name"
+                :size="32"
+                />
+                <help-tooltip
+                :text="item.profile.name"
+                />
+              </div>
+              <div v-if="employee[`${row.name}`].length > max_employee-1">
+                  <div v-if="employee[`${row.name}`].length - max_employee != 0" class="border-solid border-2 border-light-blue-500 p-1 bg-white">
+                  <p class="font-small">+ {{ employee[`${row.name}`].length - max_employee}}</p>
+                  </div>
+              </div>
+            </div>
+            <div>
+            </div>
+          </div>
           <div v-if="column === 'is_active'">
             <help-toggle
               :modelValue="is_active[`${row.name}`]"
@@ -64,7 +82,8 @@ import HelpTable from '@/components/templates/Table.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-// import HelpAvatar from '@/components/atoms/Avatar.vue';
+import HelpTooltip from '@/components/atoms/Tooltip.vue';
+import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
 
@@ -83,7 +102,7 @@ export default {
       columns: [
         { field: 'name', label: 'ROLE NAME' },
         { field: 'description', label: 'DESCRIPTIONS' },
-        // { field: 'admin', label: 'ADMIN' },
+        { field: 'admin', label: 'ADMIN' },
         { field: 'permissions', label: 'PERMISSION' },
         { field: 'is_active', label: 'STATUS' },
         { field: 'actions', label: '', align: 'center' },
@@ -100,6 +119,8 @@ export default {
       },
       filterModal: false,
       is_active: {},
+      employee: [],
+      max_employee: 4,
     };
   },
   components: {
@@ -107,9 +128,10 @@ export default {
     HelpButton,
     HelpToggle,
     HelpModal,
-    // HelpAvatar,
+    HelpAvatar,
     RoleDetail,
     RoleAdd,
+    HelpTooltip,
   },
   methods: {
     async getRoles({ pagination }) {
@@ -127,6 +149,7 @@ export default {
         this.dataRoles = data;
         data.forEach((el) => {
           this.is_active[`${el.name}`] = el.is_active;
+          this.employee[`${el.name}`] = el.employee;
         });
       } catch (error) {
         if (error.message === 'Network Error') {

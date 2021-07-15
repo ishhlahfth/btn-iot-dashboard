@@ -49,6 +49,12 @@
           <p v-if="column === 'address'">{{ data ? truncate(data) : '' }}</p>
           <p v-if="column === 'phone_number'">{{ generatePhoneNumber(data) }}</p>
           <p v-if="column === 'role'">{{ generateRoleName(row) }}</p>
+          <div v-if="column === 'is_active'">
+            <help-toggle
+            :modelValue="is_active[`${row.id}`]"
+            @change="handleActiveAdmin(row)"
+            />
+          </div>
           <div v-if="column === 'actions'">
             <help-button icon-only icon="edit" @click="handleDetail(row, 'edit')" />
           </div>
@@ -65,6 +71,7 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
 import AdminDetail from '@/components/modals/AdminDetail.vue';
+import HelpToggle from '@/components/atoms/Toggle.vue';
 import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import API from '@/apis';
@@ -78,6 +85,7 @@ export default {
     HelpModal,
     HelpTable,
     AdminAddEdit,
+    HelpToggle,
     AdminDetail,
   },
   setup() {
@@ -94,7 +102,7 @@ export default {
         { field: 'phone_number', label: 'phone number' },
         { field: 'role', label: 'role' },
         { field: 'detail', label: 'detail' },
-        // { field: 'status', label: 'status', align: 'center' },
+        { field: 'is_active', label: 'status', align: 'center' },
         { field: 'actions', label: '', align: 'center' },
       ],
       admins: [],
@@ -107,6 +115,7 @@ export default {
       },
       loading: false,
       detailModal: false,
+      is_active: {},
       addModal: false,
       editModal: false,
     };
@@ -157,7 +166,12 @@ export default {
           role: el.id || '',
           phone_number: el.profile.phone_number,
           address: el.profile.address,
+          is_active: el.is_active,
         }));
+        data.forEach((el) => {
+          this.is_active[`${el.id}`] = el.is_active;
+          console.log(el.id, 'admins');
+        });
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -186,6 +200,31 @@ export default {
       }
       row.role = this.generateRoleName(row);
       this.$store.commit('SET_ADMIN_DETAIL', row);
+    },
+    async handleActiveAdmin(row) {
+      console.log(row, 'row');
+      this.is_active[`${row.id}`] = !this.is_active[`${row.id}`];
+      row.is_active = this.is_active[`${row.id}`] && this.is_active[`${row.id}`] === true ? 'TRUE' : 'FALSE';
+      const payload = {
+        role_id: row.role_id,
+        name: row.profile.name,
+        is_active: row.is_active,
+      };
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`/employees/${row.id}`, payload);
+        console.log('success', data);
+        this.toast.success(
+          `Success ${data.is_active === true ? 'enable' : 'disable'} admin status !`,
+        );
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+        } else {
+          this.toast.error(error.message);
+        }
+      }
     },
     async generateFetchData() {
       await this.getAdmins(this.adminPagination);

@@ -92,6 +92,11 @@ const routes = [
         name: 'Role',
         component: () => import('@/views/Role.vue'),
       },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import('@/views/Profile.vue'),
+      },
     ],
   },
   {

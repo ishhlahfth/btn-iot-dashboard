@@ -333,8 +333,10 @@ export default {
 
         this.exportOrders = data.map((el) => ({
           id: el.id,
+          delivery_po_number: el.delivery_code,
           merchant_id: el.merchant_id,
           code: el.code,
+          delivery_type: el.order_type_details?.delivery_method?.name,
           date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
@@ -343,6 +345,10 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
+          discounts: el.order_type_details?.delivery_method?.discounts
+            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+            : '',
+          initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
       } catch (error) {
         if (error.message === 'Network Error') {
