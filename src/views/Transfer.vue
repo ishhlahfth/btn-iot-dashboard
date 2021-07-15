@@ -334,6 +334,7 @@ export default {
             const {
               data: { data },
             } = await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
+            this.toast.success('Transfer success !');
             console.log('= = = queue = = =');
             console.log(data);
           }
