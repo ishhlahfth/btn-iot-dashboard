@@ -40,29 +40,31 @@
           <div v-if="column === 'admin'">
             <div class="w-full flex gap-1">
               <div v-for="(item, index) in employee[`${row.name}`]" :key="item">
-                <help-avatar v-if="index < max_employee"
-                :src="item.banner.location"
-                :placeholder="item.profile.name"
-                :size="32"
-                />
-                <help-tooltip
-                :text="item.profile.name"
-                />
+                <help-avatar
+                  class="has-tooltip"
+                  v-if="index < max_employee"
+                  :src="item.banner.location"
+                  :placeholder="item.profile.name"
+                  :size="32"
+                >
+                  <span class="tooltip rounded shadow-lg p-1 bg-white-100 text-blue-500 -mt-8"
+                    >{{ item.profile.name }}</span
+                  >
+                </help-avatar>
               </div>
-              <div v-if="employee[`${row.name}`].length > max_employee-1">
-                  <div v-if="employee[`${row.name}`].length - max_employee != 0" class="border-solid border-2 border-light-blue-500 p-1 bg-white">
-                  <p class="font-small">+ {{ employee[`${row.name}`].length - max_employee}}</p>
-                  </div>
+              <div v-if="employee[`${row.name}`].length > max_employee - 1">
+                <div
+                  v-if="employee[`${row.name}`].length - max_employee != 0"
+                  class="border-solid border-2 border-light-blue-500 p-1 bg-white"
+                >
+                  <p class="font-small">+ {{ employee[`${row.name}`].length - max_employee }}</p>
+                </div>
               </div>
             </div>
-            <div>
-            </div>
+            <div></div>
           </div>
           <div v-if="column === 'is_active'">
-            <help-toggle
-              :modelValue="is_active[`${row.name}`]"
-              @change="handleActiveRole(row)"
-            />
+            <help-toggle :modelValue="is_active[`${row.name}`]" @change="handleActiveRole(row)" />
           </div>
           <div v-if="column === 'actions'">
             <help-button
@@ -76,13 +78,20 @@
     </div>
   </div>
 </template>
+<style>
+.tooltip {
+  @apply invisible absolute;
+}
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+</style>
 
 <script>
 import HelpTable from '@/components/templates/Table.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-import HelpTooltip from '@/components/atoms/Tooltip.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
@@ -131,7 +140,6 @@ export default {
     HelpAvatar,
     RoleDetail,
     RoleAdd,
-    HelpTooltip,
   },
   methods: {
     async getRoles({ pagination }) {
@@ -187,7 +195,9 @@ export default {
           data: { data },
         } = await API.patch(`/roles/${row.id}`, payload);
         console.log('success', data);
-        this.toast.success(`Success ${data.is_active === true ? 'enable' : 'disable'} role status !`);
+        this.toast.success(
+          `Success ${data.is_active === true ? 'enable' : 'disable'} role status !`,
+        );
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
