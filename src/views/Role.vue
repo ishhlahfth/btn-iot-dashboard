@@ -116,6 +116,10 @@ export default {
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
       this.loading = true;
+      this.rolesPagination = {
+        limit,
+        offset,
+      };
       try {
         const {
           data: { data },

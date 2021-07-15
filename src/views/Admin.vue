@@ -139,6 +139,10 @@ export default {
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const search = this.searchValue || '';
+      this.adminPagination = {
+        limit,
+        offset,
+      };
       try {
         this.loading = true;
         const {
