@@ -331,12 +331,11 @@ export default {
         this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: true });
         if (this.queue.length) {
           for (let i = 0; i < this.queue.length; i += 1) {
-            const {
-              data: { data },
-            } = await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
+            // const {
+            //   data: { data },
+            // } =
+            await API.post(`transfer-queues/${this.queue[i].id}/retry`, {});
             this.toast.success('Transfer success !');
-            console.log('= = = queue = = =');
-            console.log(data);
           }
         }
         this.$store.commit('SET_LOADING', { type: 'conductTransfer', payload: false });

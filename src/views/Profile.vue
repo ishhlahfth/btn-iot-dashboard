@@ -183,10 +183,10 @@ export default {
         console.log(dataToSend, 'data to send');
       }
       try {
-        const {
-          data: { data },
-        } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
-        console.log(data, 'data response');
+        // const {
+        //   data: { data },
+        // } =
+        await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
         this.toast.success('Success updating profile !');
       } catch (error) {
         if (error.message === 'Network Error') {
