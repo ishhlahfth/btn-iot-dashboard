@@ -170,7 +170,6 @@ export default {
         }));
         data.forEach((el) => {
           this.is_active[`${el.id}`] = el.is_active;
-          console.log(el.id, 'admins');
         });
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -202,7 +201,6 @@ export default {
       this.$store.commit('SET_ADMIN_DETAIL', row);
     },
     async handleActiveAdmin(row) {
-      console.log(row, 'row');
       this.is_active[`${row.id}`] = !this.is_active[`${row.id}`];
       row.is_active = this.is_active[`${row.id}`] && this.is_active[`${row.id}`] === true ? 'TRUE' : 'FALSE';
       const payload = {
@@ -214,7 +212,6 @@ export default {
         const {
           data: { data },
         } = await API.patch(`/employees/${row.id}`, payload);
-        console.log('success', data);
         this.toast.success(
           `Success ${data.is_active === true ? 'enable' : 'disable'} admin status !`,
         );
