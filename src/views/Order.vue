@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history @close="closeAndRefetch" />
+    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -59,7 +59,7 @@
                 ? 'warning'
                 : 'negative'
             "
-            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id })"
+            @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id, currentStep: row.current_step })"
           />
           <p
             v-if="column === 'detail'"
@@ -129,6 +129,7 @@ export default {
     max.setMinutes(0);
     max.setSeconds(0);
     return {
+      currentPropStep: '',
       exportLimit: 7,
       searchValue: '',
       columns: [
@@ -332,8 +333,10 @@ export default {
 
         this.exportOrders = data.map((el) => ({
           id: el.id,
+          delivery_po_number: el.delivery_code,
           merchant_id: el.merchant_id,
           code: el.code,
+          delivery_type: el.order_type_details?.delivery_method?.name,
           date: dayjs(el.date).format('DD-MM-YYYY HH:mm:ss') || '-',
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
@@ -342,6 +345,10 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
+          discounts: el.order_type_details?.delivery_method?.discounts
+            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+            : '',
+          initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -361,7 +368,8 @@ export default {
       this.detailModal = true;
       this.$store.commit('SET_ORDER_ID', orderId);
     },
-    openStatusHistory({ id, merchantId }) {
+    openStatusHistory({ id, merchantId, currentStep }) {
+      this.currentPropStep = currentStep;
       this.statusHistoryModal = true;
       this.$store.commit('SET_ORDER_ID', id);
       this.$store.commit('SET_MERCHANT_ID', merchantId);

@@ -12,6 +12,8 @@ const API = axios.create({
     'x-device-utc-offset': '+07:00',
     'x-device-lang': 'en',
     'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+    'Access-Control-Allow-Origin': '*',
+    'content-type': 'application/json',
   },
 });
 
