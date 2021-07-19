@@ -440,7 +440,6 @@ export default {
       this.toast.success('Finished Exporting, Download in progress...');
     },
     handleItemStatus() {
-      console.log('masuk sini ga see', this.merchantAccess.catalogItem.update);
       if (this.merchantAccess.catalogItem.update) {
         this.itemStatusModal = true;
       } else {
