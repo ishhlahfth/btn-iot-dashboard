@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="detailModal">
-    <merchant-detail @openItemStatusModal="itemStatusModal = true" />
+    <merchant-detail @openItemStatusModal="handleItemStatus" />
   </help-modal>
 
   <help-modal v-model="filterModal">
@@ -16,6 +16,7 @@
       @openOption="verificationOptionModal = true"
       @openConfirmSuspend="confirmSuspendModal = true"
       @close="verificationModal = false"
+      :updateAccess="merchantAccess.update"
     />
   </help-modal>
 
@@ -213,6 +214,14 @@ export default {
       commissionModal: false,
       confirmSuspendModal: false,
       itemStatusModal: false,
+      merchantAccess: {
+        update: false,
+        costumerRead: false,
+        catalogItem: {
+          read: false,
+          update: false,
+        },
+      },
     };
   },
   computed: {
@@ -354,8 +363,12 @@ export default {
       this.loading = false;
     },
     openMerchantDetail(merchantId) {
-      this.detailModal = true;
-      this.$store.commit('SET_MERCHANT_ID', merchantId);
+      if (this.merchantAccess.catalogItem.read) {
+        this.detailModal = true;
+        this.$store.commit('SET_MERCHANT_ID', merchantId);
+      } else {
+        this.toast.error('You don`t have access to read this merchant catalog`s item !');
+      }
     },
     openOpHourDetail({ opHour, merchantName }) {
       this.opHourModal = true;
@@ -363,12 +376,20 @@ export default {
       this.$store.commit('SET_MERCHANT_NAME', merchantName);
     },
     openMerchantVerivication(verifDetail) {
-      this.verificationModal = true;
-      this.$store.commit('SET_VERIF_DETAIL', verifDetail);
+      if (this.merchantAccess.costumerRead) {
+        this.verificationModal = true;
+        this.$store.commit('SET_VERIF_DETAIL', verifDetail);
+      } else {
+        this.toast.error('You don`t have access to read customer data !');
+      }
     },
     openCommissionModal(commissionDetail) {
-      this.commissionModal = true;
-      this.$store.commit('SET_COMMISSION_DETAIL', commissionDetail);
+      if (this.merchantAccess.update) {
+        this.commissionModal = true;
+        this.$store.commit('SET_COMMISSION_DETAIL', commissionDetail);
+      } else {
+        this.toast.error('You don`t have access to update merchants !');
+      }
     },
     closeAndRefetch() {
       this.getMerchants({ pagination: this.merchantPagination, filter: this.merchantFilter });
@@ -418,11 +439,42 @@ export default {
     showFinishExportToast() {
       this.toast.success('Finished Exporting, Download in progress...');
     },
+    handleItemStatus() {
+      if (this.merchantAccess.catalogItem.update) {
+        this.itemStatusModal = true;
+      } else {
+        this.toast.error('You don`t have access to update this merchant catalog`s item !');
+      }
+    },
   },
   mounted() {
     this.getMerchants({
       pagination: this.merchantPagination,
       filter: this.merchantFilter,
+    });
+    this.$store.state.access.access.permissions.forEach((el) => {
+      switch (el.module) {
+        case 'MERCHANT':
+          if (el.action === 'UPDATE' || el.id === 43) {
+            this.merchantAccess.update = true;
+          }
+          break;
+        case 'CUSTOMER':
+          if (el.action === 'READ') {
+            this.merchantAccess.costumerRead = true;
+          }
+          break;
+        case 'CATALOG-ITEM':
+          if (el.action === 'READ') {
+            this.merchantAccess.catalogItem.read = true;
+          }
+          if (el.action === 'UPDATE') {
+            this.merchantAccess.catalogItem.update = true;
+          }
+          break;
+        default:
+          break;
+      }
     });
   },
 };

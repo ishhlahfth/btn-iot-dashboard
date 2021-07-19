@@ -8,10 +8,22 @@
   <help-modal v-model="modal.edit" @editable="true">
     <role-add @close="getRoles({ pagination: rolesPagination, modal: 'edit' })" />
   </help-modal>
+  <help-modal v-model="deleteConfirmation">
+    <confirmation
+      title="Delete confirmation"
+      message="This action cannot be undone. Are you sure you want to delete this role permanently?"
+      :confirm-loading="deleteLoading"
+      loading-label="deleting"
+      @close="deleteConfirmation = false"
+      @cancel="deleteConfirmation = false"
+      @confirm="deleteRole"
+    />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Role</p>
       <help-button
+        v-if="roleAccess.create"
         label="add"
         icon="plus"
         @click="handleModal({ params: 'add', data: [], row: {} })"
@@ -66,11 +78,20 @@
           <div v-if="column === 'is_active'">
             <help-toggle :modelValue="is_active[`${row.name}`]" @change="handleActiveRole(row)" />
           </div>
-          <div v-if="column === 'actions'">
+          <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
             <help-button
+              v-if="roleAccess.update"
               icon-only
               icon="edit"
               @click="handleModal({ params: 'edit', data: row.permissions, row })"
+            />
+            <help-button
+              v-if="roleAccess.delete"
+              bg-color="flame"
+              color="white"
+              icon="trash"
+              icon-only
+              @click="openConfirmation(row.id)"
             />
           </div>
         </template>
@@ -95,6 +116,7 @@ import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 
 import { useToast } from 'vue-toastification';
 import API from '../apis';
@@ -130,6 +152,13 @@ export default {
       is_active: {},
       employee: [],
       max_employee: 4,
+      deleteConfirmation: false,
+      deleteLoading: false,
+      roleAccess: {
+        create: false,
+        update: false,
+        delete: false,
+      },
     };
   },
   components: {
@@ -140,6 +169,7 @@ export default {
     HelpAvatar,
     RoleDetail,
     RoleAdd,
+    Confirmation,
   },
   methods: {
     async getRoles({ pagination, modal }) {
@@ -177,6 +207,10 @@ export default {
         }
       }
       this.loading = false;
+    },
+    openConfirmation(roleId) {
+      this.deleteConfirmation = true;
+      this.$store.commit('SET_ROLE_ID', roleId);
     },
     handleModal({ params, data, row }) {
       this.$store.commit('SET_PERMISSIONS', data);
@@ -221,10 +255,43 @@ export default {
       }
       this.getRoles({ pagination: this.rolesPagination });
     },
+    async deleteRole() {
+      try {
+        this.deleteLoading = true;
+        await API.delete(`roles/${this.roleId}`);
+
+        this.getRoles({ pagination: this.rolesPagination });
+        this.deleteConfirmation = false;
+        this.toast.success('Role successfully deleted');
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.deleteLoading = false;
+    },
+  },
+  computed: {
+    roleId() {
+      return this.$store.state.roleId;
+    },
   },
   async mounted() {
     this.loading = true;
     await this.getRoles({ pagination: this.rolesPagination });
+    this.$store.state.access.access.permissions.forEach((el) => {
+      switch (el.id) {
+        case 80:
+          this.roleAccess.create = true;
+          break;
+        case 81:
+          this.roleAccess.update = true;
+          break;
+        case 82:
+          this.roleAccess.delete = true;
+          break;
+        default:
+          break;
+      }
+    });
   },
 };
 </script>

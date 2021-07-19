@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" />
+    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" :updateAccess="orderAccess.update" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -196,6 +196,9 @@ export default {
         altInput: true,
         minDate: '',
         dateFormat: 'Y-m-d',
+      },
+      orderAccess: {
+        update: false,
       },
     };
   },
@@ -431,6 +434,11 @@ export default {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
+    });
+    this.$store.state.access.access.permissions.forEach((el) => {
+      if (el.module === 'ORDER-TYPE' && el.action === 'UPDATE') {
+        this.orderAccess.update = true;
+      }
     });
   },
 };
