@@ -46,7 +46,6 @@ export default {
     return {
       columns: [
         { field: 'name', label: 'name' },
-        { field: 'is_active', label: 'status' },
       ],
       payments: [],
       paymentPagination: {
@@ -97,6 +96,11 @@ export default {
   mounted() {
     this.loading = true;
     this.getPayments();
+    this.$store.state.access.access.permissions.forEach((el) => {
+      if (el.module === 'PAYMENT' && el.action === 'UPDATE') {
+        this.columns.push({ field: 'is_active', label: 'status' });
+      }
+    });
   },
 };
 </script>

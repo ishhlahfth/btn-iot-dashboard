@@ -169,7 +169,6 @@ export default {
           date_of_birth: this.form.date_of_birth,
           password: this.form.password,
         };
-        console.log(dataToSend, 'data to send');
       } else {
         dataToSend = {
           name: this.form.name,
@@ -180,7 +179,6 @@ export default {
           phone_number: this.form.phone_number,
           date_of_birth: this.form.date_of_birth,
         };
-        console.log(dataToSend, 'data to send');
       }
       try {
         // const {

@@ -54,23 +54,25 @@
         ></div>
       </div>
     </div>
-    <div
-      v-if="verifDetail.verify_status !== 'Terverifikasi'"
-      class="flex flex-col sm:flex-row-reverse"
-    >
-      <help-button
-        @click="$emit('openOption')"
-        :label="verifDetail.verify_status === 'Pending Verifikasi' ? 'verify' : 'edit status'"
-        class="mb-2 sm:mb-0"
-      />
-    </div>
-    <div v-else class="flex flex-col sm:flex-row-reverse">
-      <help-button
-        @click="$emit('openConfirmSuspend')"
-        label="suspend merchant"
-        class="mb-2 sm:mb-0"
-        bg-color="flame"
-      />
+    <div v-if="updateAccess">
+      <div
+        v-if="verifDetail.verify_status !== 'Terverifikasi'"
+        class="flex flex-col sm:flex-row-reverse"
+      >
+        <help-button
+          @click="$emit('openOption')"
+          :label="verifDetail.verify_status === 'Pending Verifikasi' ? 'verify' : 'edit status'"
+          class="mb-2 sm:mb-0"
+        />
+      </div>
+      <div v-else class="flex flex-col sm:flex-row-reverse">
+        <help-button
+          @click="$emit('openConfirmSuspend')"
+          label="suspend merchant"
+          class="mb-2 sm:mb-0"
+          bg-color="flame"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -85,6 +87,12 @@ export default {
   components: {
     HelpButton,
     HelpThumbnail,
+  },
+  props: {
+    updateAccess: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['close', 'openOption', 'openConfirmSuspend'],
   data() {
