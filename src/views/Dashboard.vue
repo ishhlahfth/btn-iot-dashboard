@@ -266,6 +266,7 @@ export default {
       this.loadingMerchant = false;
     },
     async getPaymentDeliveryForDeliveryEat(method, param) {
+      this.loading.eat = true;
       try {
         const {
           data: { data },
@@ -282,8 +283,10 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.loading.eat = false;
     },
     async getPaymentDeliveryOrder(method) {
+      this.loading.delivery = true;
       try {
         const {
           data: { data },
@@ -300,12 +303,10 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.loading.delivery = false;
     },
     async getTotalOrder() {
       this.loading.order = true;
-      this.loading.eat = true;
-      this.loading.delivery = true;
-      this.loading.commision = true;
       try {
         const {
           data: { data },
@@ -321,11 +322,9 @@ export default {
         }
       }
       this.loading.order = false;
-      this.loading.eat = false;
-      this.loading.delivery = false;
-      this.loading.commision = false;
     },
     async getTotalEatDeliveryCommision(param) {
+      this.loading.commision = true;
       try {
         const {
           data: { data },
@@ -350,6 +349,7 @@ export default {
           this.toast.error(error.message);
         }
       }
+      this.loading.commision = false;
     },
     generateComparasion(param) {
       if (param === 'order') return API.get(`/order/total/comparison?start_time=${this.date.start}&end_time=${this.date.end}`);
