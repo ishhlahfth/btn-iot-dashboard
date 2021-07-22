@@ -54,14 +54,22 @@
             />
           </div>
           <div class="grid auto-rows-max gap-2">
-            <help-input
+            <!-- <help-input
               label="Date Of Birth"
               type="text"
               placeholder="User's Date Of Birth"
               v-model="form.date_of_birth"
-            />
+            /> -->
+             <label class="font-medium">Date of Birth</label>
+            <flat-pickr
+            v-model="form.date_of_birth"
+            :config="config"
+            class="form-control my-1 rounded-md w-full p-2.5 border text-md cursor-pointer"
+            placeholder="Select Date.."
+            name="dateBirth"
+          />
           </div>
-          <!-- <div class="grid auto-rows-max gap-2">
+          <div class="grid auto-rows-max gap-2">
             <help-input
               label="Change Password"
               :type="visiblePassword ? 'text' : 'password'"
@@ -80,7 +88,7 @@
              <p class="text-xsmall text-flame font-medium" v-if="!form.password">
           Only fill if you want to change your password
         </p>
-          </div> -->
+          </div>
           <div class="grid grid-flow-col gap-2 auto-cols-max justify-center py-2">
             <help-button label="Save" :loading="loading" :loading-label="'Saving'" />
           </div>
@@ -181,10 +189,10 @@ export default {
         };
       }
       try {
-        const {
-          data: { data },
-        } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
-        console.log(data, 'data response');
+        // const {
+        //   data: { data },
+        // } =
+        await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
         this.toast.success('Success updating profile !');
       } catch (error) {
         if (error.message === 'Network Error') {
