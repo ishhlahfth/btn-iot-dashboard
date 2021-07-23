@@ -28,6 +28,7 @@ export default createStore({
     },
     resetPasswordToken: '',
     permissions: [],
+    roleAdmin: [],
     role: {},
     roleType: '',
     adminDetail: {},
@@ -98,6 +99,9 @@ export default createStore({
     },
     SET_ADMIN_DETAIL(state, payload) {
       state.adminDetail = payload;
+    },
+    SET_ADMIN_LIST(state, payload) {
+      state.roleAdmin = payload;
     },
   },
   actions: {
