@@ -8,6 +8,9 @@
   <help-modal v-model="modal.edit" @editable="true">
     <role-add @close="getRoles({ pagination: rolesPagination, modal: 'edit' })" />
   </help-modal>
+  <help-modal v-model="modal.list">
+    <list-admin />
+  </help-modal>
   <help-modal v-model="deleteConfirmation">
     <confirmation
       title="Delete confirmation"
@@ -75,6 +78,13 @@
             </div>
             <div></div>
           </div>
+          <div v-if="column === 'list'">
+            <help-badge
+                  class="cursor-pointer"
+                  label="See All"
+                  @click="openListAdmin(employee[`${row.name}`])"
+                />
+          </div>
           <div v-if="column === 'is_active'">
             <help-toggle :modelValue="is_active[`${row.name}`]" @change="handleActiveRole(row)" />
           </div>
@@ -110,11 +120,13 @@
 
 <script>
 import HelpTable from '@/components/templates/Table.vue';
+import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
+import ListAdmin from '@/components/modals/ListAdmin.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 
@@ -134,6 +146,7 @@ export default {
         { field: 'name', label: 'ROLE NAME' },
         { field: 'description', label: 'DESCRIPTIONS' },
         { field: 'admin', label: 'ADMIN' },
+        { field: 'list', label: 'ADMIN LIST' },
         { field: 'permissions', label: 'PERMISSION' },
         { field: 'is_active', label: 'STATUS' },
         { field: 'actions', label: '', align: 'center' },
@@ -147,8 +160,10 @@ export default {
         detail: false,
         add: false,
         edit: false,
+        list: false,
       },
       filterModal: false,
+      listModal: false,
       is_active: {},
       employee: [],
       max_employee: 4,
@@ -165,9 +180,11 @@ export default {
     HelpTable,
     HelpButton,
     HelpToggle,
+    HelpBadge,
     HelpModal,
     HelpAvatar,
     RoleDetail,
+    ListAdmin,
     RoleAdd,
     Confirmation,
   },
@@ -212,6 +229,10 @@ export default {
       this.deleteConfirmation = true;
       this.$store.commit('SET_ROLE_ID', roleId);
     },
+    openListAdmin(roleAdmin) {
+      this.modal.list = true;
+      this.$store.commit('SET_ADMIN_LIST', roleAdmin);
+    },
     handleModal({ params, data, row }) {
       this.$store.commit('SET_PERMISSIONS', data);
       this.$store.commit('SET_ROLE_TYPE', params);
@@ -222,6 +243,9 @@ export default {
           break;
         case 'edit':
           this.modal.edit = true;
+          break;
+        case 'list':
+          this.modal.list = true;
           break;
         default:
           this.modal.add = true;
