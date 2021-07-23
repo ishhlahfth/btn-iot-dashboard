@@ -54,14 +54,22 @@
             />
           </div>
           <div class="grid auto-rows-max gap-2">
-            <help-input
+            <!-- <help-input
               label="Date Of Birth"
               type="text"
               placeholder="User's Date Of Birth"
               v-model="form.date_of_birth"
-            />
+            /> -->
+             <label class="font-medium">Date of Birth</label>
+            <flat-pickr
+            v-model="form.date_of_birth"
+            :config="config"
+            class="form-control my-1 rounded-md w-full p-2.5 border text-md cursor-pointer"
+            placeholder="Select Date.."
+            name="dateBirth"
+          />
           </div>
-          <!-- <div class="grid auto-rows-max gap-2">
+          <div class="grid auto-rows-max gap-2">
             <help-input
               label="Change Password"
               :type="visiblePassword ? 'text' : 'password'"
@@ -80,7 +88,7 @@
              <p class="text-xsmall text-flame font-medium" v-if="!form.password">
           Only fill if you want to change your password
         </p>
-          </div> -->
+          </div>
           <div class="grid grid-flow-col gap-2 auto-cols-max justify-center py-2">
             <help-button label="Save" :loading="loading" :loading-label="'Saving'" />
           </div>
@@ -169,7 +177,6 @@ export default {
           date_of_birth: this.form.date_of_birth,
           password: this.form.password,
         };
-        console.log(dataToSend, 'data to send');
       } else {
         dataToSend = {
           name: this.form.name,
@@ -180,7 +187,6 @@ export default {
           phone_number: this.form.phone_number,
           date_of_birth: this.form.date_of_birth,
         };
-        console.log(dataToSend, 'data to send');
       }
       try {
         // const {

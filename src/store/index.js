@@ -1,6 +1,8 @@
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import dayjs from 'dayjs';
 import API from '../apis';
+import access from './access';
 
 export default createStore({
   state: {
@@ -16,6 +18,8 @@ export default createStore({
     commissionDetail: {},
     orderId: 0,
     bannerId: 0,
+    roleId: 0,
+    userId: 0,
     banner: {},
     formType: '',
     loading: {
@@ -24,6 +28,7 @@ export default createStore({
     },
     resetPasswordToken: '',
     permissions: [],
+    roleAdmin: [],
     role: {},
     roleType: '',
     adminDetail: {},
@@ -65,6 +70,12 @@ export default createStore({
     SET_BANNER_ID(state, payload) {
       state.bannerId = payload;
     },
+    SET_ROLE_ID(state, payload) {
+      state.roleId = payload;
+    },
+    SET_USER_ID(state, payload) {
+      state.userId = payload;
+    },
     SET_BANNER(state, payload) {
       state.banner = payload;
     },
@@ -88,6 +99,9 @@ export default createStore({
     },
     SET_ADMIN_DETAIL(state, payload) {
       state.adminDetail = payload;
+    },
+    SET_ADMIN_LIST(state, payload) {
+      state.roleAdmin = payload;
     },
   },
   actions: {
@@ -206,5 +220,8 @@ export default createStore({
       return `Rp ${dispatch('groupDigit', value)}`;
     },
   },
-  modules: {},
+  modules: {
+    access,
+  },
+  plugins: [createPersistedState()],
 });

@@ -22,16 +22,18 @@
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Transfer</p>
       <div class="grid grid-flow-col gap-4">
-        <help-button
-          v-if="!transferMode"
-          label="transfer"
-          icon="switch-horizontal"
-          @click="transferMode = true"
-        />
-        <template v-else>
-          <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
-          <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
-        </template>
+        <div v-if="transferAccess.update" class="grid grid-flow-col gap-4">
+          <help-button
+            v-if="!transferMode"
+            label="transfer"
+            icon="switch-horizontal"
+            @click="transferMode = true"
+          />
+          <template v-else>
+            <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
+            <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
+          </template>
+        </div>
         <help-button label="filter" icon="filter" @click="filterModal = true" />
         <export-excel
           :fetch="exportTransfer"
@@ -146,6 +148,9 @@ export default {
       confirmTransferModal: false,
       filterModal: false,
       count: 0,
+      transferAccess: {
+        update: false,
+      },
     };
   },
   computed: {
@@ -390,6 +395,11 @@ export default {
     this.getTransferData({
       pagination: this.transferPagination,
       filter: this.transferFilter,
+    });
+    this.$store.state.access.access.permissions.forEach((el) => {
+      if (el.module === 'TRANSFER_QUEUES' && el.action === 'UPDATE') {
+        this.transferAccess.update = true;
+      }
     });
   },
 };
