@@ -1,11 +1,14 @@
 <template>
-  <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card" @click="expandVariant">
+  <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card">
     <template v-if="!loading">
       <img
         v-if="localImageUrl"
         :src="localImageUrl"
         alt="menu"
         class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
+        :class="[{
+          'hidden': flagOption && screenWidth < 768 && screenWidth > 640
+        }]"
       />
       <div
         v-else
@@ -13,7 +16,7 @@
       >
         No Image
       </div>
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-between" @click="expandVariant">
         <div class="grid gap-1 sm:gap-2">
           <div class="grid sm:gap-1">
             <div class="grid grid-flow-col gap-2 auto-cols-max place-items-center">
@@ -21,13 +24,6 @@
               <help-badge
                 :label="availabilityStatus"
                 :color="availabilityStatus === 'Tersedia' ? 'positive' : 'negative'"
-              />
-              <help-button
-                icon-only
-                icon="dots-vertical"
-                bg-color="transparent"
-                color="grey-1"
-                @click="openItemStatusModal"
               />
             </div>
             <p class="text-small text-grey-3">{{ category }}</p>
@@ -38,8 +34,44 @@
         </div>
         <p class="text-small font-medium">{{ convertToRp(price) }}</p>
       </div>
-      <div class="hidden h-26 sm:grid grid-flow-col place-items-center gap-2">
+      <div>
+        <div class="grid lg:grid-flow-col grid-flow-row">
         <help-button
+          :class="[{
+            'hidden': screenWidth > 768,
+          }]"
+          icon-only
+          icon="dots-vertical"
+          bg-color="transparent"
+          color="grey-1"
+          @click="openItemStatusModal"
+        />
+        <help-option-item
+          :class="[{
+            'hidden': flagOption,
+          }]"
+          v-for="(option, i) in optionItem"
+          :key="i"
+          :label="option.label"
+          @click="handleClickItem(option)"
+        />
+        <help-button
+          :class="[{
+            'hidden': screenWidth <= 768
+          }]"
+          icon-only
+          icon="dots-vertical"
+          bg-color="transparent"
+          color="grey-1"
+          @click="openItemStatusModal"
+        />
+      </div>
+      </div>
+      <div>
+        <help-button
+          :class="[{
+            'hidden': screenWidth < 640
+          }]"
           icon-only
           icon="chevron-down"
           bg-color="transparent"
@@ -105,7 +137,9 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
+import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import mixin from '@/mixin';
+// import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',
@@ -115,8 +149,9 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpRadio,
+    HelpOptionItem,
   },
-  emits: ['openItemStatusModal'],
+  emits: ['openItemStatusModal', 'deleteItemCatalog'],
   props: {
     raw: {
       type: Object,
@@ -163,6 +198,17 @@ export default {
       variantOpened: false,
       localIsActive: false,
       localImageUrl: '',
+      flagOption: true,
+      optionItem: [
+        {
+          value: 'edit',
+          label: 'Edit',
+        },
+        {
+          value: 'delete',
+          label: 'Delete',
+        },
+      ],
     };
   },
   computed: {
@@ -177,8 +223,15 @@ export default {
       }
     },
     openItemStatusModal() {
-      this.$emit('openItemStatusModal');
+      this.flagOption = !this.flagOption;
+    },
+    handleClickItem(param) {
       this.$store.commit('SET_ITEM', this.raw);
+      if (param.value === 'edit') {
+        this.$emit('openItemStatusModal');
+      } else {
+        this.$emit('deleteItemCatalog');
+      }
     },
   },
   async mounted() {
