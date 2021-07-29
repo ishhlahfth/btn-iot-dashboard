@@ -451,12 +451,8 @@ export default {
         } = await API.delete(`items/${this.item.id}`);
         console.log(data, 'ini data');
         this.deleteItem = false;
-        this.detailModal = false;
+        await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
         this.toast.success(`Successfully delete item ${this.item.name?.toLowerCase()}`);
-        this.getMerchants({
-          pagination: this.merchantPagination,
-          filter: this.merchantFilter,
-        });
       } catch (error) {
         this.toast.error(error.message);
       }
