@@ -34,40 +34,25 @@
         </div>
         <p class="text-small font-medium">{{ convertToRp(price) }}</p>
       </div>
-      <div>
+      <div class="grid grid-flow-row gap-1">
         <div class="grid lg:grid-flow-col grid-flow-row">
-        <help-button
-          :class="[{
-            'hidden': screenWidth > 768,
-          }]"
-          icon-only
-          icon="dots-vertical"
-          bg-color="transparent"
-          color="grey-1"
-          @click="openItemStatusModal"
-        />
-        <help-option-item
-          :class="[{
-            'hidden': flagOption,
-          }]"
-          v-for="(option, i) in optionItem"
-          :key="i"
-          :label="option.label"
-          @click="handleClickItem(option)"
-        />
-        <help-button
-          :class="[{
-            'hidden': screenWidth <= 768
-          }]"
-          icon-only
-          icon="dots-vertical"
-          bg-color="transparent"
-          color="grey-1"
-          @click="openItemStatusModal"
-        />
-      </div>
-      </div>
-      <div>
+          <div class="relative w-full">
+            <help-button
+            icon-only
+            icon="dots-vertical"
+            bg-color="transparent"
+            color="grey-1"
+            @click="openItemStatusModal"
+            />
+            <help-option
+            :class="{ hidden: flagOption }"
+            :options="optionItem"
+            :position="['center', 'left']"
+            :selected="valueItem"
+            @changeSelected="handleClickItem"
+            />
+          </div>
+        </div>
         <help-button
           :class="[{
             'hidden': screenWidth < 640
@@ -137,9 +122,8 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
-import HelpOptionItem from '@/components/atoms/OptionItem.vue';
 import mixin from '@/mixin';
-// import HelpOption from './Option.vue';
+import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',
@@ -149,7 +133,7 @@ export default {
     HelpButton,
     HelpCheckbox,
     HelpRadio,
-    HelpOptionItem,
+    HelpOption,
   },
   emits: ['openItemStatusModal', 'deleteItemCatalog'],
   props: {
@@ -199,6 +183,7 @@ export default {
       localIsActive: false,
       localImageUrl: '',
       flagOption: true,
+      valueItem: '',
       optionItem: [
         {
           value: 'edit',
@@ -226,6 +211,8 @@ export default {
       this.flagOption = !this.flagOption;
     },
     handleClickItem(param) {
+      console.log(param, 'param ke baca ga');
+      this.valueItem = param.value;
       this.$store.commit('SET_ITEM', this.raw);
       if (param.value === 'edit') {
         this.$emit('openItemStatusModal');
