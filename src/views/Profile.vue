@@ -76,12 +76,6 @@
             />
           </div>
           <div class="grid auto-rows-max gap-2">
-            <!-- <help-input :disabled="true"
-              label="Date Of Birth"
-              type="text"
-              placeholder="User's Date Of Birth"
-              v-model="form.date_of_birth"
-            /> -->
             <label class="font-medium">Date of Birth</label>
             <flat-pickr
               v-model="form.date_of_birth"
