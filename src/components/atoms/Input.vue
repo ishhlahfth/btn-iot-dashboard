@@ -142,12 +142,13 @@
     >
       <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
       <input
-        class="w-full"
+        class="w-full bg-white"
         ref="helpInput"
         spellcheck="false"
         :type="type"
         :placeholder="placeholder"
         :value="modelValue"
+        :disabled="disabled"
         v-maska="mask"
         @blur="onFocus = false"
         @focus="onFocus = true"
@@ -234,6 +235,10 @@ export default {
     mask: {
       type: String,
       default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     // hasError: {
     //   type: Boolean,
