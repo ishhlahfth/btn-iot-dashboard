@@ -1,6 +1,6 @@
 <template>
   <help-modal v-model="detailModal">
-    <merchant-detail @openItemStatusModal="handleItemStatus" />
+    <merchant-detail @openItemStatusModal="handleItemStatus" @deleteItemCatalog="handleDeleteItem" />
   </help-modal>
 
   <help-modal v-model="filterModal">
@@ -41,6 +41,16 @@
     <commission
       @close="commissionModal = false"
       @refetch="getMerchants({ pagination: merchantPagination, filter: merchantFilter })"
+    />
+  </help-modal>
+
+  <help-modal v-model="deleteItem">
+    <confirmation
+      title="Delete confirmation"
+      message="This action cannot be undone. Are you sure you want to delete this catalog item permanently?"
+      @close="deleteItem = false"
+      @cancel="deleteItem = false"
+      @confirm="deleteMerchantItem"
     />
   </help-modal>
 
@@ -222,11 +232,15 @@ export default {
           update: false,
         },
       },
+      deleteItem: false,
     };
   },
   computed: {
     verifDetail() {
       return this.$store.state.verifDetail;
+    },
+    item() {
+      return this.$store.state.item;
     },
   },
   methods: {
@@ -430,6 +444,19 @@ export default {
         this.toast.error(error.message);
       }
     },
+    async deleteMerchantItem() {
+      try {
+        const {
+          data: { data },
+        } = await API.delete(`items/${this.item.id}`);
+        console.log(data, 'ini data');
+        this.deleteItem = false;
+        await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+        this.toast.success(`Successfully delete item ${this.item.name?.toLowerCase()}`);
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+    },
     exportMerchant() {
       return this.exportedMerchants;
     },
@@ -445,6 +472,9 @@ export default {
       } else {
         this.toast.error('You don`t have access to update this merchant catalog`s item !');
       }
+    },
+    handleDeleteItem() {
+      this.deleteItem = true;
     },
   },
   mounted() {

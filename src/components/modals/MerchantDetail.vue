@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
+    class="grid grid-flow-row lg:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
     :class="{ 'animate-pulse': loading }"
   >
     <div class="grid gap-4 auto-rows-max overflow-auto">
@@ -110,7 +110,7 @@
         <template v-if="merchant.menu?.length">
           <div v-for="(catalog, i) in merchant.menu" :key="i">
             <p class="sm:pl-2 py-1 font-medium">{{ catalog.catalog_name }}</p>
-            <div class="divide-y divide-grey-4">
+            <div class="divide-y divide-grey-4" :key="i">
               <template v-if="catalog.items.length">
                 <menu-card
                   v-for="(item, i) in catalog.items"
@@ -125,6 +125,7 @@
                   :is-active="item.is_active"
                   :variants="item.variations"
                   @openItemStatusModal="$emit('openItemStatusModal')"
+                  @deleteItemCatalog="$emit('deleteItemCatalog')"
                 />
               </template>
               <template v-else>
@@ -163,7 +164,7 @@ import mixin from '@/mixin';
 export default {
   name: 'MerchantDetail',
   mixins: [mixin],
-  emits: ['openItemStatusModal'],
+  emits: ['openItemStatusModal', 'deleteItemCatalog'],
   components: {
     Icon,
     MenuCard,
