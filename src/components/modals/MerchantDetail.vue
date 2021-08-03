@@ -1,5 +1,10 @@
 <template>
+  <merchant-item-form
+  v-if="addProductActive"
+  @close="addProductActive = false"
+  />
   <div
+    v-else
     class="grid grid-flow-row sm:grid-flow-col gap-6 merchant-modal-content inner-modal-fixed modal-xl overflow-auto"
     :class="{ 'animate-pulse': loading }"
   >
@@ -106,6 +111,20 @@
     </div>
 
     <div class="overflow-auto hide-scrollbar">
+      <div class="divide-y divide-grey-4 pb-2">
+        <div class="grid grid-cols-2 py-2 items-center">
+          <span class="font-semibold text-heading4">PRODUCT LIST</span>
+          <div class="flex justify-end">
+            <help-button
+              bg-color="blue-500"
+              icon="plus-circle"
+              :label="screenWidth <= 780 ? 'Add' : 'Add Product'"
+              @click="addProductActive = !addProductAcrive"
+            />
+          </div>
+        </div>
+        <p></p>
+      </div>
       <template v-if="!loading">
         <template v-if="merchant.menu?.length">
           <div v-for="(catalog, i) in merchant.menu" :key="i">
@@ -157,16 +176,25 @@
 
 <script>
 import Icon from '@/components/atoms/Icon.vue';
+import HelpButton from '@/components/atoms/Button.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
+import MerchantItemForm from '@/components/molecules/MerchantItemForm.vue';
 import mixin from '@/mixin';
 
 export default {
   name: 'MerchantDetail',
   mixins: [mixin],
   emits: ['openItemStatusModal'],
+  data() {
+    return {
+      addProductActive: false,
+    };
+  },
   components: {
     Icon,
     MenuCard,
+    HelpButton,
+    MerchantItemForm,
   },
   computed: {
     merchant() {
@@ -174,6 +202,9 @@ export default {
     },
     loading() {
       return this.$store.state.loading.merchant;
+    },
+    screenWidth() {
+      return this.$store.state.screenWidth;
     },
   },
   methods: {
