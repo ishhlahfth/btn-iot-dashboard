@@ -28,9 +28,11 @@ export default createStore({
     },
     resetPasswordToken: '',
     permissions: [],
+    roleAdmin: [],
     role: {},
     roleType: '',
     adminDetail: {},
+    imageProfile: '',
   },
   mutations: {
     SET_CURRENT_USER(state, payload) {
@@ -98,6 +100,12 @@ export default createStore({
     },
     SET_ADMIN_DETAIL(state, payload) {
       state.adminDetail = payload;
+    },
+    SET_ADMIN_LIST(state, payload) {
+      state.roleAdmin = payload;
+    },
+    SET_IMAGE_PROFILE(state, payload) {
+      state.imageProfile = payload;
     },
   },
   actions: {

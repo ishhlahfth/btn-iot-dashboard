@@ -11,10 +11,26 @@
     <div class="flex justify-end items-center">
       <p class="font-medium">{{ currentUser.profile?.name }}</p>
       <help-avatar
-        src=""
+        v-if="fetchProfile"
+        :src="fetchProfile"
         :size="32"
         :tabindex="0"
+        class="ml-3 cursor-pointer relative outline-none"
+        @click="opened = !opened"
+        @blur="opened = false"
+      >
+        <help-option
+          :class="{ hidden: !opened }"
+          :options="['Profile', 'Logout']"
+          :position="['bottom', 'left']"
+          @changeSelected="navigate"
+        />
+      </help-avatar>
+      <help-avatar
+        v-else
         :placeholder="currentUser.profile?.name"
+        :size="32"
+        :tabindex="0"
         class="ml-3 cursor-pointer relative outline-none"
         @click="opened = !opened"
         @blur="opened = false"
@@ -31,6 +47,7 @@
 </template>
 
 <script>
+import API from '@/apis';
 import HelpAvatar from '../atoms/Avatar.vue';
 import HelpOption from './Option.vue';
 import Icon from '../atoms/Icon.vue';
@@ -54,6 +71,12 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    fetchProfile() {
+      return this.$store.state.imageProfile;
+    },
+  },
+  mounted() {
+    this.generateProfile();
   },
   methods: {
     navigate(menu) {
@@ -64,6 +87,14 @@ export default {
         localStorage.clear();
       } else if (menu === 'Profile') {
         this.$router.push('/bns/profile');
+      }
+    },
+    async generateProfile() {
+      const {
+        data: { data },
+      } = await API.get(`/employees/${this.currentUser.id}`);
+      if (data.banner) {
+        this.$store.commit('SET_IMAGE_PROFILE', data.banner.location);
       }
     },
   },
