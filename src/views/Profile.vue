@@ -26,8 +26,8 @@
                 @click="$refs.bannerImageInput.click()"
                 v-if="editPhoto"
                 name="camera-outline"
-                class="absolute text-midnight font-semibold cursor-pointer"
-                :size="12"
+                class="absolute text-midnight cursor-pointer"
+                :size="8"
               />
             </help-avatar>
           </div>
