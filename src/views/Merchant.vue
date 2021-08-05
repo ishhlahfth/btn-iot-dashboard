@@ -1,6 +1,6 @@
 <template>
-  <help-modal v-model="detailModal">
-    <merchant-detail @openItemStatusModal="handleItemStatus" />
+  <help-modal v-model="detailModal" permanent>
+    <merchant-detail @openItemStatusModal="handleItemStatus" @closeMerchant="detailModal = false" />
   </help-modal>
 
   <help-modal v-model="filterModal">

@@ -10,152 +10,10 @@
     />
   </help-modal>
   <div v-if="flagVarianGroup">
-    <div class="inner-modal-fixed modal-md overflow-auto px-1 grid gap-3">
-      <div class="divide-y divide-grey-4">
-        <div class="flex justify-between pb-3">
-          <span class="font-semibold text-heading4"
-            >{{ flagEditVarian ? 'EDIT' : 'ADD' }} VARIAN GROUP</span
-          >
-        </div>
-        <p></p>
-      </div>
-      <help-input
-        type="text"
-        label="Varian Group Name"
-        v-model="form.varianGroup.name"
-        placeholder="Varian group name here"
-        left-icon="clipboard-outline"
-      />
-      <template class="flex justify-between">
-        <span class="text-gray-500">Required ?</span>
-        <help-toggle
-          v-model="form.varianGroup.required"
-          @change="form.varianGroup.required = !form.varianGroup.required"
-        />
-      </template>
-      <template class="flex justify-between">
-        <span class="text-gray-500">Multiple Choice ?</span>
-        <help-toggle
-          v-model="form.varianGroup.multipleChoice"
-          @change="form.varianGroup.multipleChoice = !form.varianGroup.multipleChoice"
-        />
-      </template>
-      <div class="grid grid-flow-col divide-y divide-grey-4">
-        <p></p>
-        <div class="grid gap-2 py-3">
-          <div class="grid grid-cols-2 gap-4">
-            <label class="font-medium">Varian Item Name</label>
-            <label class="font-medium">Additional Price (Rp)</label>
-          </div>
-          <div v-for="(itemVarian, i) in itemVarians" :key="i" class="grid grid-flow-col gap-3">
-            <help-input
-              type="text"
-              placeholder="Varian item name here"
-              v-model="itemVarian.varianItemName"
-              left-icon="shopping-bag"
-            />
-            <help-input
-              type="number"
-              placeholder="Additional price here"
-              v-model="itemVarian.additionalPrice"
-              left-icon="price"
-            />
-          </div>
-        </div>
-      </div>
-      <help-button bg-color="blue-500" icon="plus-circle" icon-only @click="handleAddVarian" />
-      <div class="divide-y divide-grey-4">
-        <p></p>
-        <div class="flex justify-end pt-4">
-          <help-button
-            bg-color="bg-white"
-            color="black-500"
-            :label="flagEditVarian ? 'Cancel' : 'Reset'"
-            @click="handleResetVarian"
-          />&nbsp;
-          <help-button bg-color="blue-500" :label="screenWidth <= 780 ? 'Save' : 'Save Varian'" @click="submitVarian" />
-        </div>
-      </div>
-    </div>
+    <varian-options @closeVarian="flagVarianGroup = false" @handleAddVarian="handleAddVarian" @handleResetVarian="handleResetVarian" @submitVarian="submitVarian" :flagEditVarian="flagEditVarian" :itemVarians="itemVarians" />
   </div>
   <div v-else-if="flagItemCatalog">
-    <div class="inner-modal-fixed modal-md overflow-auto px-1 grid gap-4">
-      <div class="divide-y divide-grey-4">
-        <div class="flex justify-between pb-3">
-          <span class="font-semibold text-heading4">PRODUCT CATALOG</span>
-        </div>
-        <p></p>
-      </div>
-      <form @submit.prevent="handleAddCatalog" class="grid grid-cols-4 gap-2">
-        <help-input
-          v-model="newCatalog"
-          class="w-full col-span-3"
-          type="text"
-          placeholder="Catalog name here"
-        />
-        <help-button
-          bg-color="blue-500"
-          icon="plus-circle"
-          class="h-full w-full"
-          label="Add"
-          type="submit"
-        />
-      </form>
-      <div class="grid gap-4">
-        <template v-if="itemCatalogs.length">
-          <div v-for="(itemCatalog, i) in itemCatalogs" :key="i" class="flex items-center">
-            <help-input
-              class="w-full"
-              type="text"
-              v-model="itemCatalog.value"
-              :bgColor="itemCatalog.color"
-              :disabled="itemCatalog.disabled"
-            />
-            <div class="flex items-center">
-              <template v-if="itemCatalog.editable">
-                <icon
-                  name="plus-circle"
-                  :size="5"
-                  class="absolute right-10 cursor-pointer hover:text-blue-500"
-                  @click="handleEditCatalog(itemCatalog, 'edit-name')"
-                />
-              </template>
-              <template v-else>
-                <icon
-                  name="edit"
-                  :size="5"
-                  class="absolute right-16 cursor-pointer hover:text-mint"
-                  @click="handleEditCatalog(itemCatalog)"
-                />
-                <icon
-                  name="trash"
-                  :size="5"
-                  class="absolute right-10 cursor-pointer hover:text-red-600"
-                  @click="handleDeleteCatalog(itemCatalog)"
-                />
-              </template>
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <p class="sm:px-2 sm:ml-2 py-2 text-gold-dark bg-gold-soft rounded-sm text-center inline">
-            No variant group found please add some
-          </p>
-        </template>
-      </div>
-      <div class="divide-y divide-grey-4">
-        <p></p>
-        <div class="flex justify-end pt-3">
-          <help-button
-            bg-color="bg-white"
-            color="black-500"
-            label="Close"
-            class="border"
-            @click="flagItemCatalog = false"
-          />
-        </div>
-      </div>
-    </div>
+    <product-catalog @handleAddCatalog="handleAddCatalog" @handleEditCatalog="handleEditCatalog" @handleDeleteCatalog="handleDeleteCatalog" :itemCatalogs="itemCatalogs" @close="flagItemCatalog = false" />
   </div>
   <div v-else>
     <div class="inner-modal-fixed overflow-auto px-1">
@@ -240,6 +98,7 @@
         <help-select
           label="Stock Status"
           :options="stocks"
+          v-model="form.status"
           :position="['bottom', 'right']"
           left-icon="status-stock"
         />
@@ -248,6 +107,13 @@
           label="Minimum Order"
           placeholder="Product Minimum to Order"
           left-icon="cart-outline"
+        />
+        <help-select
+          label="Product Category"
+          :options="itemCategories"
+          v-model="form.catalog_id"
+          :position="['bottom', 'right']"
+          left-icon="tag"
         />
         <template class="grid grid-cols-4 gap-2">
           <help-select
@@ -262,26 +128,17 @@
             <label class="font-medium"></label>
             <div class="flex items-center justify-start pt-5 cursor-pointer">
               <help-button
-                v-if="screenWidth <= 768"
                 bg-color="blue-500"
                 icon="plus-circle"
                 class="h-full w-11/12 md:w-full"
-                label="Add"
-                @click="flagItemCatalog = true"
-              />
-              <help-button
-                v-else
-                bg-color="blue-500"
-                icon="plus-circle"
-                class="h-full w-11/12 md:w-full"
-                label="Add Item"
+                label="Catalog"
                 @click="flagItemCatalog = true"
               />
             </div>
           </div>
         </template>
       </div>
-      <div class="py-5 grid gap-2">
+      <div class="py-5 grid grid-flow-row gap-3">
         <span class="font-semibold text-heading5">PRODUCT VARIAN GROUP</span>
         <template v-if="payloadVarian.length">
           <div v-for="(payload, i) in payloadVarian" :key="i" class="flex items-center">
@@ -302,23 +159,15 @@
             No variant group found please add some
           </p>
         </template>
-        <help-button
-          bg-color="blue-500"
-          icon="plus-circle"
-          label="Add Varian Group"
-          @click="flagVarianGroup = !flagVarianGroup"
-        />
+        <div class="flex justify-center">
+          <span @click="flagVarianGroup = !flagVarianGroup" class="font-medium bg-blue-500 shadow-sm py-2 px-6 rounded-2xl text-white cursor-pointer hover:bg-blue-400">Set Variation Options</span>
+        </div>
       </div>
       <div class="divide-y divide-grey-4">
         <p></p>
-        <div class="flex justify-end pt-4">
-          <help-button
-            bg-color="bg-white"
-            color="black-500"
-            label="Reset"
-            @click="$emit('close')"
-          />&nbsp;
-          <help-button bg-color="blue-500" :label="screenWidth <= 780 ? 'Save' : 'Save Product'" @click="$emit('close')" />
+        <div class="flex justify-end py-4">
+          <span @click="$emit('close')" class="font-medium shadow-sm py-2 px-6 rounded-2xl cursor-pointer border hover:shadow-md">Cancel</span>&nbsp;
+          <span @click="$emit('close')" class="font-medium bg-blue-500 shadow-sm py-2 px-6 rounded-2xl text-white cursor-pointer border hover:shadow-md">Save Product</span>
         </div>
       </div>
     </div>
@@ -329,13 +178,15 @@
 import Icon from '@/components/atoms/Icon.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
-import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
+import VarianOptions from '@/components/sub-components/VarianOptions.vue';
+import ProductCatalog from '@/components/sub-components/ProductCatalog.vue';
 import mixin from '@/mixin';
 import { uuid } from 'uuidv4';
+import API from '@/apis';
 
 export default {
   name: 'MerchantItemForm',
@@ -348,18 +199,19 @@ export default {
     HelpSelect,
     HelpModal,
     Confirmation,
-    HelpToggle,
+    VarianOptions,
+    ProductCatalog,
   },
   data() {
     return {
       stocks: [
         {
-          value: 'stock 1',
-          label: 'stock 1',
+          value: 'AVAILABLE',
+          label: 'Tersedia',
         },
         {
-          value: 'stock 2',
-          label: 'stock 2',
+          value: 'UNAVAILABLE',
+          label: 'Habis',
         },
       ],
       imageFile: null,
@@ -367,6 +219,8 @@ export default {
       form: {
         src: '',
         productCatalog: 'Pilih Katalog',
+        catalog_id: 'Pilih Kategori',
+        status: 'Pilih Status',
         varianGroup: {
           name: '',
           required: false,
@@ -374,34 +228,35 @@ export default {
         },
       },
       productImages: [],
+      itemCategories: [],
       itemCatalogs: [
         {
           value: 'Paket Nasi',
           label: 'Paket Nasi',
           disabled: true,
           editable: false,
-          color: 'gray-100',
+          color: 'grey-7',
         },
         {
           value: 'Paket Minuman',
           label: 'Paket Minuman',
           disabled: true,
           editable: false,
-          color: 'gray-100',
+          color: 'grey-7',
         },
         {
           value: 'Paket Dessert',
           label: 'Paket Dessert',
           disabled: true,
           editable: false,
-          color: 'gray-100',
+          color: 'grey-7',
         },
         {
           value: 'Paket Beverages',
           label: 'Paket Beverages',
           disabled: true,
           editable: false,
-          color: 'gray-100',
+          color: 'grey-7',
         },
       ],
       itemVarians: [
@@ -437,6 +292,22 @@ export default {
     },
   },
   methods: {
+    async generateCatalogs() {
+      const {
+        data: { data },
+      } = await API.get('item-groups');
+      this.itemCategories = data.map((el) => ({
+        ...el,
+        value: el.id,
+        label: el.name,
+      }));
+    },
+    async generateVarians() {
+      const {
+        data: { data },
+      } = await API.get('variations');
+      console.log(data, 'tes');
+    },
     handleChangeImg(e) {
       if (e.target.files.length) {
         const file = e.target.files[0];
@@ -550,6 +421,10 @@ export default {
         payload.disabled = false;
       }
     },
+  },
+  mounted() {
+    this.generateCatalogs();
+    this.generateVarians();
   },
 };
 </script>

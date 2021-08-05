@@ -118,9 +118,10 @@
             <help-button
               bg-color="blue-500"
               icon="plus-circle"
-              :label="screenWidth <= 780 ? 'Add' : 'Add Product'"
+              :label="screenWidth <= 780 ? 'Add' : 'Product'"
               @click="addProductActive = !addProductAcrive"
-            />
+            />&nbsp;
+            <help-button @click="$emit('closeMerchant')" bg-color="blue-500" icon="close" label="Close" />
           </div>
         </div>
         <p></p>
