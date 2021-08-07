@@ -48,7 +48,7 @@
     <confirmation
       title="Delete confirmation"
       message="This action cannot be undone. Are you sure you want to delete this catalog item permanently?"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="deleteItem = false"
       @cancel="deleteItem = false"
       @confirm="deleteMerchantItem"

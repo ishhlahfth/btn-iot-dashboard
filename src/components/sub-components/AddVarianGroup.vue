@@ -3,7 +3,7 @@
     <confirmation
       title="Delete Option Varian"
       message="Are you sure you want to delete this option varian ?"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="deleteOption"
@@ -13,7 +13,7 @@
     <confirmation
       title="Delete Varian Group"
       :message="`Are you sure you want to delete ${data.name} ?`"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.varian = false"
       @cancel="modal.varian = false"
       @confirm="deleteVarianGroup"
@@ -55,7 +55,7 @@
           placeholder="Catalog name here"
           v-model="el.name"
           :disabled="el.disable"
-          :bgColor="el.bgColor"
+          :bg-color="el.bgColor"
         >
           <template v-slot>
             <div class="flex items-center justify-end">

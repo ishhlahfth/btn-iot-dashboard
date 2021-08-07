@@ -3,7 +3,7 @@
     <confirmation
       title="Delete Photo Product"
       message="Are you sure you want to delete this photo product ?"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="confirmDelete"
@@ -13,7 +13,7 @@
     <confirmation
       title="Add Product Confirmation"
       message="This action cannot be undone. Are you sure want to create this item product ?"
-      bgColor="blue-500"
+      bg-color="blue-500"
       @close="modal.create = false"
       @cancel="modal.create = false"
       @confirm="postItemProduct"
@@ -24,7 +24,7 @@
     <confirmation
       title="Cancel Add Product"
       :message="`Are you sure you want to cancel add item product ?`"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.close = false"
       @cancel="modal.close = false"
       @confirm="$emit('close')"

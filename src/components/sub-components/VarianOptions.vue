@@ -3,7 +3,7 @@
     <confirmation
       title="Delete Varian Group"
       :message="`Are you sure you want to delete this ${payloadVarian?.name} group ?`"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="handleDeleteVarian"
@@ -13,7 +13,7 @@
     <confirmation
       title="Cancel Add Varian Group"
       :message="`Are you sure you want to cancel add varian group ?`"
-      bgColor="red-500"
+      bg-color="red-500"
       @close="modal.close = false"
       @cancel="modal.close = false"
       @confirm="$emit('closeVarian')"
