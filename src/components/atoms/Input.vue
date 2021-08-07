@@ -127,8 +127,9 @@
     </div>
     <div
       v-else
-      class="bg-white border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
+      class="border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
       :class="[
+        `bg-${bgColor}`,
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
         { 'grid-flow-col': !leftIcon && !rightIcon },
@@ -140,15 +141,18 @@
       @click="$refs.helpInput.focus()"
       @blur="$refs.helpInput.blur()"
     >
-      <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
+      <icon v-if="leftIcon" :name="leftIcon" class="justify-self-start self-center" />
       <input
-        class="w-full bg-white"
+        :disabled="disabled"
+        class="w-full"
+        :class="[`bg-${bgColor}`, {
+          'cursor-pointer': pointer,
+        }]"
         ref="helpInput"
         spellcheck="false"
         :type="type"
         :placeholder="placeholder"
         :value="modelValue"
-        :disabled="disabled"
         v-maska="mask"
         @blur="onFocus = false"
         @focus="onFocus = true"
@@ -192,7 +196,7 @@ export default {
   },
   props: {
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     modelValue2: {
@@ -236,7 +240,15 @@ export default {
       type: String,
       default: '',
     },
+    bgColor: {
+      type: String,
+      default: 'white',
+    },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    pointer: {
       type: Boolean,
       default: false,
     },

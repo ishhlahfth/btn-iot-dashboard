@@ -3,12 +3,15 @@
     <label class="font-medium">{{ label }}</label>
     <div class="relative w-full outline-none" :tabindex="0" @blur="opened = false">
       <div
-        class="bg-white flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
-        :class="{ 'ring-2 ring-royal': opened }"
+        class="flex justify-between items-center border border-grey-4 py-2.5 px-3 rounded-lg cursor-pointer select-none"
+        :class="[`bg-${bgColor}`, { 'ring-2 ring-royal': opened }]"
         @click="opened = !opened"
       >
-        <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
-        <icon name="selector" />
+        <div class="grid grid-flow-col gap-3">
+          <icon v-if="leftIcon" :name="leftIcon" class="justify-self-center self-center" />
+          <p class="mr-2 truncate">{{ checkSelected(selected) }}</p>
+        </div>
+        <icon :name="iconName" />
       </div>
       <help-option
         :class="{ hidden: !opened }"
@@ -44,11 +47,23 @@ export default {
       type: Array,
       required: true,
     },
+    leftIcon: {
+      type: String,
+      default: '',
+    },
     position: {
       type: Array,
       default() {
         return ['bottom', 'right'];
       },
+    },
+    bgColor: {
+      type: String,
+      default: 'white',
+    },
+    iconName: {
+      type: String,
+      default: 'selector',
     },
   },
   data() {

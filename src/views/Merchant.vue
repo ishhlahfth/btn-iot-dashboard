@@ -1,6 +1,6 @@
 <template>
-  <help-modal v-model="detailModal">
-    <merchant-detail @openItemStatusModal="handleItemStatus" @deleteItemCatalog="handleDeleteItem" />
+  <help-modal v-model="detailModal" permanent>
+    <merchant-detail @openItemStatusModal="handleItemStatus" @closeMerchant="detailModal = false" @deleteItemCatalog="handleDeleteItem" />
   </help-modal>
 
   <help-modal v-model="filterModal">
@@ -48,6 +48,7 @@
     <confirmation
       title="Delete confirmation"
       message="This action cannot be undone. Are you sure you want to delete this catalog item permanently?"
+      bgColor="red-500"
       @close="deleteItem = false"
       @cancel="deleteItem = false"
       @confirm="deleteMerchantItem"
@@ -76,6 +77,7 @@
     <div>
       <form @submit.prevent="getMerchants({ filter: merchantFilter })">
         <help-input
+          type="text"
           v-model="searchValue"
           placeholder="Search merchant name OR phone number here"
           search-bar
