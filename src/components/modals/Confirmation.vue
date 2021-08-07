@@ -24,7 +24,7 @@
         color="grey-1"
       />
       <help-button
-        :bg-color="bgColor"
+        bg-color="blue-500"
         @click="$emit('confirm')"
         label="yes i'm sure"
         class="mb-2 sm:mb-0"
@@ -56,10 +56,6 @@ export default {
     loadingLabel: {
       type: String,
       default: '',
-    },
-    bgColor: {
-      type: String,
-      default: 'blue-500',
     },
   },
   components: {

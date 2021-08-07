@@ -40,11 +40,19 @@
       <div class="animate-pulse h-20 w-full bg-grey-4 rounded-md"></div>
     </div>
     <div
+      v-if="isChanged"
+      @click="handleChangeVarian(false)"
       class="w-full flex justify-center items-center bg-blue-500 my-10 py-2 px-2 cursor-pointer rounded-2xl text-white hover:shadow-md"
     >
-      <help-button bg-color="blue-500" icon="plus-circle" icon-only v-if="isChanged" />
-      <span v-if="isChanged" class="text-center text-small font-medium" @click="handleChangeVarian(false)">Add Variation Group</span>
-      <span v-if="!isChanged" class="text-center text-small font-medium" @click="isChanged = !isChanged">Change Variation Group</span>
+      <help-button bg-color="blue-500" icon="plus-circle" icon-only />
+      <span class="text-center text-small font-medium">Add Variation Group</span>
+    </div>
+    <div
+      v-if="!isChanged"
+      @click="isChanged = !isChanged"
+      class="w-full flex justify-center items-center bg-blue-500 my-10 py-2 px-2 cursor-pointer rounded-2xl text-white hover:shadow-md"
+    >
+      <span class="text-center text-small font-medium">Change Variation Group</span>
     </div>
   </div>
 </template>
