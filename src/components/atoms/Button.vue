@@ -4,7 +4,7 @@
     :disabled="loading || disabled"
     class="flex items-center justify-center font-semibold transition-all"
     :class="[
-      `bg-${bgColor ? bgColor : 'blue-500'} text-${color}`,
+      `bg-${bgColor} text-${color}`,
       iconOnly ? 'p-1 rounded-full' : 'py-2 px-4 rounded-lg',
       bgColor === 'transparent' ? 'hover:bg-grey-4 hover:bg-opacity-70' : 'hover:bg-opacity-80',
       { 'cursor-not-allowed bg-opacity-80': loading || disabled },
@@ -35,7 +35,7 @@ export default {
   props: {
     bgColor: {
       type: String,
-      default: 'midnight',
+      default: 'blue-500',
     },
     color: {
       type: String,
