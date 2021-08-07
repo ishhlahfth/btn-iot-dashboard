@@ -24,7 +24,7 @@
         color="grey-1"
       />
       <help-button
-        :bg-color="bgColor"
+        :bg-color="bgColor ? bgColor : 'blue-500'"
         @click="$emit('confirm')"
         label="yes i'm sure"
         class="mb-2 sm:mb-0"
