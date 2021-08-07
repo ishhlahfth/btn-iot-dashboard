@@ -8,7 +8,7 @@
       <div class="grid grid-flow-row sm:grid-cols-2 py-2 items-center">
         <span class="font-semibold text-heading4 text-center sm:text-left">MERCHANT DETAIL</span>
         <div class="flex justify-center pt-3 sm:pt-0 sm:justify-end">
-          <span @click="addProductActive = !addProductAcrive" class="font-medium shadow-sm py-2 px-6 rounded-2xl cursor-pointer border hover:shadow-md flex items-center"><icon name="plus-circle" :size="6" />&nbsp;<p class="md:text-medium text-small">Add Product</p></span>&nbsp;
+          <span @click="addProductActive = !addProductActive" class="font-medium shadow-sm py-2 px-6 rounded-2xl cursor-pointer border hover:shadow-md flex items-center"><icon name="plus-circle" :size="6" />&nbsp;<p class="md:text-medium text-small">Add Product</p></span>&nbsp;
           <span @click="$emit('closeMerchant')" class="font-medium bg-red-600 shadow-sm py-2 px-6 rounded-2xl text-white cursor-pointer border hover:shadow-md flex items-center"><icon name="close" :size="5" />&nbsp;<p class="md:text-medium text-small">Close</p></span>
         </div>
       </div>
@@ -140,6 +140,7 @@
                     :is-active="item.is_active"
                     :variants="item.variations"
                     @openItemStatusModal="$emit('openItemStatusModal')"
+                    @deleteItemCatalog="$emit('deleteItemCatalog')"
                   />
                 </template>
                 <template v-else>
@@ -181,7 +182,7 @@ import mixin from '@/mixin';
 export default {
   name: 'MerchantDetail',
   mixins: [mixin],
-  emits: ['openItemStatusModal', 'closeMerchant'],
+  emits: ['openItemStatusModal', 'closeMerchant', 'deleteItemCatalog'],
   data() {
     return {
       addProductActive: false,
