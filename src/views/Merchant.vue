@@ -66,6 +66,7 @@
     <div>
       <form @submit.prevent="getMerchants({ filter: merchantFilter })">
         <help-input
+          type="text"
           v-model="searchValue"
           placeholder="Search merchant name OR phone number here"
           search-bar

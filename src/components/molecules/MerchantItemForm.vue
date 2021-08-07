@@ -9,11 +9,32 @@
       @confirm="confirmDelete"
     />
   </help-modal>
+  <help-modal v-model="modal.create" permanent>
+    <confirmation
+      title="Add Product Confirmation"
+      message="This action cannot be undone. Are you sure want to create this item product ?"
+      bgColor="blue-500"
+      @close="modal.create = false"
+      @cancel="modal.create = false"
+      @confirm="postItemProduct"
+      :confirmLoading="loadingAdd"
+    />
+  </help-modal>
+  <help-modal v-model="modal.close" permanent>
+    <confirmation
+      title="Cancel Add Product"
+      :message="`Are you sure you want to cancel add item product ?`"
+      bgColor="red-500"
+      @close="modal.close = false"
+      @cancel="modal.close = false"
+      @confirm="$emit('close')"
+    />
+  </help-modal>
   <div v-if="flagVarianGroup">
-    <varian-options @closeVarian="flagVarianGroup = false" @handleAddVarian="handleAddVarian" @handleResetVarian="handleResetVarian" @submitVarian="submitVarian" :flagEditVarian="flagEditVarian" :itemVarians="itemVarians" />
+    <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" />
   </div>
   <div v-else-if="flagItemCatalog">
-    <product-catalog @handleAddCatalog="handleAddCatalog" @handleEditCatalog="handleEditCatalog" @handleDeleteCatalog="handleDeleteCatalog" :itemCatalogs="itemCatalogs" @close="flagItemCatalog = false" />
+    <product-catalog @handleAddCatalog="generateCatalogs(merchant.merchant_id)" :itemCatalogs="itemCatalogs" @close="flagItemCatalog = false" />
   </div>
   <div v-else>
     <div class="inner-modal-fixed overflow-auto px-1">
@@ -43,7 +64,7 @@
               height="100%"
               :src="
                 productImage
-                  ? productImage
+                  ? productImage.src
                   : 'https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg'
               "
             />
@@ -82,76 +103,73 @@
           label="Product Name"
           placeholder="Product Name here"
           left-icon="template-outline"
+          v-model="payloadToSend.name"
         />
         <help-input
-          type="text"
+          type="textarea"
+          :rows="3"
           label="Product Description"
           placeholder="Product Description here"
           left-icon="description"
+          v-model="payloadToSend.description"
         />
         <help-input
           type="number"
           label="Product Price (Rp)"
           placeholder="Rp 1.000.000"
           left-icon="price"
+          v-model="payloadToSend.price"
         />
         <help-select
           label="Stock Status"
           :options="stocks"
-          v-model="form.status"
           :position="['bottom', 'right']"
           left-icon="status-stock"
+          v-model="payloadToSend.status"
         />
         <help-input
           type="number"
           label="Minimum Order"
           placeholder="Product Minimum to Order"
           left-icon="cart-outline"
+          v-model="payloadToSend.min_buy_qty"
         />
         <help-select
           label="Product Category"
           :options="itemCategories"
-          v-model="form.catalog_id"
           :position="['bottom', 'right']"
           left-icon="tag"
+          v-model="payloadToSend.group_id"
         />
-        <template class="grid grid-cols-4 gap-2">
+        <div class="flex items-center relative">
           <help-select
-            class="col-span-3"
+            class="w-11/12 mr-12"
             label="Product Catalog"
             :options="itemCatalogs"
-            v-model="form.productCatalog"
+            v-model="payloadToSend.catalog_id"
             :position="['bottom', 'right']"
             left-icon="catalog"
           />
-          <div class="w-full outline-none grid">
-            <label class="font-medium"></label>
-            <div class="flex items-center justify-start pt-5 cursor-pointer">
-              <help-button
-                bg-color="blue-500"
-                icon="plus-circle"
-                class="h-full w-11/12 md:w-full"
-                label="Catalog"
-                @click="flagItemCatalog = true"
-              />
-            </div>
-          </div>
-        </template>
+          <icon @click="flagItemCatalog = true" class="absolute items-center right-0 mt-6 p-1 rounded-md cursor-pointer text-blue-500 shadow-md hover:shadow-lg" name="plus-circle" :size="10" />
+        </div>
       </div>
       <div class="py-5 grid grid-flow-row gap-3">
         <span class="font-semibold text-heading5">PRODUCT VARIAN GROUP</span>
-        <template v-if="payloadVarian.length">
-          <div v-for="(payload, i) in payloadVarian" :key="i" class="flex items-center">
-            <help-input
-              class="w-full"
-              type="text"
-              v-model="payload.name"
-              :bgColor="'gray-100'"
-              :disabled="true"
-              right-icon="chevron-right"
-              :pointer="true"
-              @click="handleEditVarian(payload, i)"
-            />
+        <template v-if="payloadToSend.variations.length">
+          <div v-for="(itemVarian, i) in payloadToSend.variations" :key="i" class="flex items-center">
+            <div
+              class="py-2 px-2 sm:py-3 sm:px-3 w-full rounded-md flex justify-between items-center hover:shadow-md"
+              style="background: #F6F6F6"
+            >
+              <div class="grid grid-flow-row gap-1">
+                <span class="font-medium text-blue-500">{{ itemVarian.name }}</span>
+                <span v-for="(item) in itemVarian?.options" :key="item.id" class="text-gray-500">{{ item.name }}</span>
+              </div>
+              <div class="grid grid-flow-row gap-1">
+                <span class="font-medium text-blue-500">{{ itemVarian.is_mandatory ? 'Wajib' : '' }}{{ itemVarian.is_mandatory ? ',' : '' }} {{ itemVarian.multiple_choice ? 'Pilih lebih dari 1' : 'Hanya pilih 1' }}</span>
+                <span v-for="(item) in itemVarian?.options" :key="item.id" class="text-gray-500 text-right">+ {{ item.price }}</span>
+              </div>
+            </div>
           </div>
         </template>
         <template v-else>
@@ -165,9 +183,9 @@
       </div>
       <div class="divide-y divide-grey-4">
         <p></p>
-        <div class="flex justify-end py-4">
-          <span @click="$emit('close')" class="font-medium shadow-sm py-2 px-6 rounded-2xl cursor-pointer border hover:shadow-md">Cancel</span>&nbsp;
-          <span @click="$emit('close')" class="font-medium bg-blue-500 shadow-sm py-2 px-6 rounded-2xl text-white cursor-pointer border hover:shadow-md">Save Product</span>
+        <div class="flex justify-end py-5">
+          <span @click="modal.close = true" class="font-medium shadow-sm py-2 px-6 rounded-2xl cursor-pointer border hover:shadow-md">Cancel</span>&nbsp;
+          <span @click="modal.create = true" class="font-medium bg-blue-500 shadow-sm py-2 px-6 rounded-2xl text-white cursor-pointer border hover:shadow-md">Save Product</span>
         </div>
       </div>
     </div>
@@ -175,6 +193,10 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
+import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import Icon from '@/components/atoms/Icon.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
@@ -191,6 +213,7 @@ import API from '@/apis';
 export default {
   name: 'MerchantItemForm',
   mixins: [mixin],
+  emits: ['close'],
   components: {
     Icon,
     HelpButton,
@@ -201,6 +224,10 @@ export default {
     Confirmation,
     VarianOptions,
     ProductCatalog,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -229,55 +256,36 @@ export default {
       },
       productImages: [],
       itemCategories: [],
-      itemCatalogs: [
-        {
-          value: 'Paket Nasi',
-          label: 'Paket Nasi',
-          disabled: true,
-          editable: false,
-          color: 'grey-7',
-        },
-        {
-          value: 'Paket Minuman',
-          label: 'Paket Minuman',
-          disabled: true,
-          editable: false,
-          color: 'grey-7',
-        },
-        {
-          value: 'Paket Dessert',
-          label: 'Paket Dessert',
-          disabled: true,
-          editable: false,
-          color: 'grey-7',
-        },
-        {
-          value: 'Paket Beverages',
-          label: 'Paket Beverages',
-          disabled: true,
-          editable: false,
-          color: 'grey-7',
-        },
-      ],
-      itemVarians: [
-        {
-          varianItemName: '',
-          additionalPrice: '',
-        },
-      ],
+      itemCatalogs: [],
+      itemVarians: [],
       payloadVarian: [],
       index: 0,
       photoHover: {},
       modal: {
         sm: false,
+        close: false,
+        create: false,
       },
-      payloadPhoto: '',
+      payloadPhoto: {},
       isExistVarian: false,
       flagVarianGroup: false,
       flagEditVarian: false,
       flagItemCatalog: false,
       colorItem: 'gray-100',
       newCatalog: '',
+      payloadToSend: {
+        catalog_id: 'Pilih Katalog',
+        group_id: 'Pilih Kategori',
+        name: '',
+        status: 'Pilih Status',
+        sort_no: 1,
+        price: null,
+        description: '',
+        min_buy_qty: null,
+        variations: [],
+      },
+      loadingAdd: false,
+      S3BaseURL: process.env.VUE_APP_S3_BASE_URL,
     };
   },
   computed: {
@@ -290,9 +298,49 @@ export default {
     screenWidth() {
       return this.$store.state.screenWidth;
     },
+    s3() {
+      return new S3Client({
+        region: 'ap-southeast-1',
+        credentials: fromCognitoIdentityPool({
+          client: new CognitoIdentityClient({ region: 'ap-southeast-1' }),
+          identityPoolId: process.env.VUE_APP_ID_POOL_ID,
+        }),
+      });
+    },
   },
   methods: {
-    async generateCatalogs() {
+    async postItemProduct() {
+      this.loadingAdd = true;
+      this.payloadToSend = {
+        ...this.payloadToSend,
+        price: +this.payloadToSend.price,
+        min_buy_qty: +this.payloadToSend.min_buy_qty,
+        status: this.payloadToSend.status.value,
+        catalog_id: this.payloadToSend.catalog_id.id,
+        group_id: this.payloadToSend.group_id.id,
+      };
+      const payloadToSend = this.payloadToSend;
+      try {
+        const {
+          data: { data },
+        } = await API.post('items', payloadToSend);
+        console.log(data, 'success add item');
+        if (this.imageFile) {
+          console.log('masuk sini ga', this.imageFile);
+          this.imageFile.forEach((el) => {
+            this.handleAddPhoto(data, el);
+          });
+        }
+        setTimeout(async () => {
+          this.toast.success(`Item ${data.name} has been created successfully !`);
+          this.$emit('close');
+          await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+        }, 1000);
+      } catch (error) {
+        this.toast.error(error.response.data.meta.message);
+      }
+    },
+    async generateCategories() {
       const {
         data: { data },
       } = await API.get('item-groups');
@@ -302,30 +350,43 @@ export default {
         label: el.name,
       }));
     },
-    async generateVarians() {
+    async generateCatalogs(id) {
       const {
         data: { data },
-      } = await API.get('variations');
-      console.log(data, 'tes');
+      } = await API.get(`merchants/${id}/catalogs`);
+      this.itemCatalogs = data.map((el) => ({
+        ...el,
+        value: el.id,
+        label: el.name,
+        disabled: true,
+        editable: false,
+        color: 'grey-7',
+      }));
     },
     handleChangeImg(e) {
       if (e.target.files.length) {
         const file = e.target.files[0];
         const fileName = `${uuid()}.${e.target.files[0].type.split('/')[1]}`;
         const url = `${this.S3BaseURL}/${fileName}`;
-        this.productImages.push(URL.createObjectURL(file));
+        this.productImages.push({
+          url,
+          src: URL.createObjectURL(file),
+        });
+        // this.productImages.push(URL.createObjectURL(file));
         this.photoHover[`${this.productImages.length - 1}`] = false;
         this.index += 1;
-        this.imageFile = { file, fileName, url };
+        if (!this.imageFile) {
+          this.imageFile = [{ file, fileName, url }];
+        } else {
+          this.imageFile.push({ file, fileName, url });
+        }
+        // this.imageFile = { file, fileName, url };
         this.imageIsChanged = true;
       }
     },
     handleDeletePhoto(payload) {
       this.modal.sm = true;
       this.payloadPhoto = payload;
-    },
-    handleDeleteCatalog(payload) {
-      this.itemCatalogs = this.itemCatalogs.filter((el) => el.value !== payload.value);
     },
     handleAddCatalog() {
       this.itemCatalogs.unshift({
@@ -384,8 +445,6 @@ export default {
         });
       } else {
         this.payloadVarian.forEach((el) => {
-          console.log(el.id);
-          console.log(id);
           if (el.id === id) {
             el.name = name;
             el.multipleChoice = multipleChoice;
@@ -401,30 +460,99 @@ export default {
     confirmDelete() {
       if (this.productImages.length === 0) {
         this.productImages = [];
+        this.imageFile = [];
       } else {
-        this.productImages = this.productImages.filter((el) => el !== this.payloadPhoto);
+        this.productImages = this.productImages.filter((el) => el.src !== this.payloadPhoto.src);
+        this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
       }
       this.modal.sm = false;
     },
     handleHover(index, param) {
       this.photoHover[`${index}`] = param;
     },
-    handleEditCatalog(payload, param) {
-      payload.label = payload.value;
-      if (param === 'edit-name') {
-        payload.color = 'gray-100';
-        payload.editable = false;
-        payload.disabled = true;
+    submitSelectVarian(payload) {
+      console.log(payload, 'dari bawah');
+      const finalPayload = payload.map((el) => ({
+        ...el,
+        options: el.options.filter((e) => e.picked),
+      }));
+      console.log(finalPayload, 'masuk ke atas');
+      this.payloadToSend.variations = finalPayload;
+    },
+    // percobaan
+    async uploadS3(imageFile, callback) {
+      if (imageFile.file.size > 2000000) {
+        this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
-        payload.color = 'white';
-        payload.editable = true;
-        payload.disabled = false;
+        const S3Params = {
+          Bucket: 'help-bns-bucket',
+          Key: imageFile.fileName,
+          Body: imageFile.file,
+          ContentType: imageFile.type,
+        };
+
+        try {
+          const S3Response = await this.s3.send(new PutObjectCommand(S3Params));
+          if (S3Response) {
+            callback(S3Response);
+          }
+        } catch (error) {
+          this.toast.error(error.message);
+        }
       }
+    },
+    handleAddPhoto(payload, imageFile) {
+      this.uploadS3(imageFile, async (S3Response) => {
+        const BNSParams = {
+          title: payload.name,
+          hyperlink: imageFile.url,
+          bannerable: {
+            id: payload.id,
+            type: 'CATALOG_ITEM',
+          },
+          group: 'COVER',
+          provider: {
+            name: 'S3',
+            sort_no: payload.sort_no,
+            config: {
+              location: imageFile.url,
+              etag: S3Response.ETag.slice(1, -1),
+              bucket: 'help-bns-bucket',
+              key: imageFile.fileName,
+            },
+          },
+        };
+
+        try {
+          const {
+            data: { data },
+          } = await API.post('/banners', BNSParams);
+          console.log(data);
+        } catch (error) {
+          this.toast.error(error.message);
+        }
+      });
+      this.loading = false;
+    },
+    async patchBNS(payload) {
+      try {
+        this.loading = true;
+        const {
+          data: { data },
+        } = await API.patch(`banners/${this.$store.state.adminDetail.banner.id}`, payload);
+        this.$emit('reload');
+        this.$emit('close');
+        console.log(data);
+        this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.loading = false;
     },
   },
   mounted() {
-    this.generateCatalogs();
-    this.generateVarians();
+    this.generateCategories();
+    this.generateCatalogs(this.merchant.merchant_id);
   },
 };
 </script>
