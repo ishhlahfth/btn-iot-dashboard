@@ -129,7 +129,7 @@
       v-else
       class="border border-grey-4 py-2.5 px-3 rounded-lg grid gap-2 w-full"
       :class="[
-        `bg-${bgColor}`,
+        `bg-${background}`,
         { 'ring-2 ring-royal ring-offset-1': onFocus },
         { 'ring-2 ring-flame ring-offset-1': hasError },
         { 'grid-flow-col': !leftIcon && !rightIcon },
@@ -145,7 +145,7 @@
       <input
         :disabled="disabled"
         class="w-full"
-        :class="[`bg-${bgColor}`, {
+        :class="[`bg-${background}`, {
           'cursor-pointer': pointer,
         }]"
         ref="helpInput"
@@ -240,7 +240,7 @@ export default {
       type: String,
       default: '',
     },
-    bgColor: {
+    background: {
       type: String,
       default: 'white',
     },
