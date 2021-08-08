@@ -38,7 +38,7 @@
             class="w-full"
             type="text"
             v-model="itemCatalog.label"
-            :bg-color="itemCatalog.color"
+            :background="itemCatalog.color"
             :disabled="itemCatalog.disabled"
           >
             <template v-slot>

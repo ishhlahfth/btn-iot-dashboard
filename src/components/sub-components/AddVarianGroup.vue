@@ -53,7 +53,7 @@
           placeholder="Catalog name here"
           v-model="el.name"
           :disabled="el.disable"
-          :bg-color="el.bgColor"
+          :background="el.bgColor"
         >
           <template v-slot>
             <div class="flex items-center justify-end">
