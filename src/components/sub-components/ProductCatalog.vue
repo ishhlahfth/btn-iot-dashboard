@@ -3,7 +3,6 @@
     <confirmation
       title="Delete Item Catalog"
       :message="`Are you sure you want to delete item ${payloadCatalog.name} ?`"
-      bg-color="red-500"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="deleteCatalog"
@@ -39,7 +38,7 @@
             class="w-full"
             type="text"
             v-model="itemCatalog.label"
-            :bg-color="itemCatalog.color"
+            :background="itemCatalog.color"
             :disabled="itemCatalog.disabled"
           >
             <template v-slot>
