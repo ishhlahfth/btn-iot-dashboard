@@ -3,6 +3,7 @@
     <confirmation
       title="Delete Item Catalog"
       :message="`Are you sure you want to delete item ${payloadCatalog.name} ?`"
+      bg-color="red-500"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="deleteCatalog"
