@@ -3,7 +3,7 @@
     <confirmation
       title="Delete Option Varian"
       message="Are you sure you want to delete this option varian ?"
-      bg-color="red-500"
+      bg-color="red-600"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="deleteOption"
@@ -13,7 +13,7 @@
     <confirmation
       title="Delete Varian Group"
       :message="`Are you sure you want to delete ${data.name} ?`"
-      bg-color="red-500"
+      bg-color="red-600"
       @close="modal.varian = false"
       @cancel="modal.varian = false"
       @confirm="deleteVarianGroup"
