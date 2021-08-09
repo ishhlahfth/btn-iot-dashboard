@@ -22,6 +22,7 @@
     @closeSelectVarian="flagSelectVarianGroup = false"
     @selectVarian="handleSelectVarian"
     :data="payloadVarianGroup"
+    :isEdit="isEdit"
   />
   <div v-else class="inner-modal-fixed overflow-auto modal-md px-1">
     <div class="divide-y divide-grey-4 pb-3">
@@ -164,6 +165,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -204,11 +213,23 @@ export default {
       return this.$store.state.screenWidth;
     },
   },
+  mounted() {
+    if (this.data.length) {
+      this.selectVarians = this.data.map((el) => ({
+        ...el,
+        options: el.options.map((e) => ({
+          ...e,
+          picked: true,
+        })),
+      }));
+      this.payloadVarianGroup = this.selectVarians;
+    }
+  },
   methods: {
     handleSelectVarian(payload) {
       if (this.isAdded) {
         this.indexAdded += 1;
-        this.selectVarians[this.indexAdded] = payload;
+        this.selectVarians.push(payload);
       } else {
         this.selectVarians[this.indexAdded] = payload;
       }

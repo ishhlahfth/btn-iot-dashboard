@@ -17,7 +17,7 @@
         :class="{ hidden: !opened }"
         :options="options"
         :position="position"
-        :selected="modelValue"
+        :selected="typeof modelValue === 'object' ? modelValue.value : modelValue"
         @changeSelected="changeSelected"
       />
     </div>

@@ -1,6 +1,8 @@
 <template>
   <merchant-item-form
   v-if="addProductActive"
+  :isEditProduct="isEditProduct"
+  :data="dataProduct"
   @close="addProductActive = false"
   />
   <template v-else>
@@ -141,6 +143,7 @@
                     :variants="item.variations"
                     @openItemStatusModal="$emit('openItemStatusModal')"
                     @deleteItemCatalog="$emit('deleteItemCatalog')"
+                    @activeAddProduct="handleEditProduct(item)"
                   />
                 </template>
                 <template v-else>
@@ -186,6 +189,8 @@ export default {
   data() {
     return {
       addProductActive: false,
+      isEditProduct: false,
+      dataProduct: {},
     };
   },
   components: {
@@ -210,6 +215,12 @@ export default {
       window.open(
         `https://www.google.com/maps/search/?api=1&query=${this.merchant.location[0]},${this.merchant.location[1]}`,
       );
+    },
+    handleEditProduct(payload) {
+      this.addProductActive = true;
+      this.isEditProduct = true;
+      this.dataProduct = payload;
+      console.log(payload, 'dapet payload ga');
     },
   },
   async mounted() {

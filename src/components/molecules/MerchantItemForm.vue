@@ -22,13 +22,14 @@
     <confirmation
       title="Cancel Add Product"
       :message="`Are you sure you want to cancel add item product ?`"
+      bg-color="red-500"
       @close="modal.close = false"
       @cancel="modal.close = false"
       @confirm="$emit('close')"
     />
   </help-modal>
   <div v-if="flagVarianGroup">
-    <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" />
+    <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" :data="payloadToSend.variations" :isEdit="isEditProduct" />
   </div>
   <div v-else-if="flagItemCatalog">
     <product-catalog @handleAddCatalog="generateCatalogs(merchant.merchant_id)" :itemCatalogs="itemCatalogs" @close="flagItemCatalog = false" />
@@ -222,6 +223,16 @@ export default {
     VarianOptions,
     ProductCatalog,
   },
+  props: {
+    isEditProduct: {
+      type: Boolean,
+      default: false,
+    },
+    data: {
+      type: Object,
+      default: () => {},
+    },
+  },
   setup() {
     const toast = useToast();
     return { toast };
@@ -324,8 +335,8 @@ export default {
         console.log(data, 'success add item');
         if (this.imageFile) {
           console.log('masuk sini ga', this.imageFile);
-          this.imageFile.forEach((el) => {
-            this.handleAddPhoto(data, el);
+          this.imageFile.forEach((el, i) => {
+            this.handleAddPhoto(data, el, i);
           });
         }
         setTimeout(async () => {
@@ -498,7 +509,7 @@ export default {
         }
       }
     },
-    handleAddPhoto(payload, imageFile) {
+    handleAddPhoto(payload, imageFile, index) {
       this.uploadS3(imageFile, async (S3Response) => {
         const BNSParams = {
           title: payload.name,
@@ -510,7 +521,7 @@ export default {
           group: 'COVER',
           provider: {
             name: 'S3',
-            sort_no: payload.sort_no,
+            sort_no: index + 1,
             config: {
               location: imageFile.url,
               etag: S3Response.ETag.slice(1, -1),
@@ -550,6 +561,36 @@ export default {
   mounted() {
     this.generateCategories();
     this.generateCatalogs(this.merchant.merchant_id);
+    if (this.isEditProduct) {
+      const catalog = {
+        ...this.data.catalog,
+        label: this.data.catalog.name,
+        value: this.data.catalog.id,
+      };
+      const group = {
+        ...this.data.group,
+        label: this.data.group.name,
+        value: this.data.group.id,
+      };
+      this.payloadToSend = {
+        catalog_id: catalog,
+        group_id: group,
+        name: this.data.name,
+        status: {
+          label: this.data.status === 'AVAILABLE' ? 'Tersedia' : 'Habis',
+          value: this.data.status,
+        },
+        sort_no: this.data.sort_no,
+        price: this.data.price,
+        description: this.data.description,
+        min_buy_qty: this.data.min_buy_qty,
+        variations: this.data.variations,
+      };
+      this.productImages = this.data.banners.map((el) => ({
+        ...el,
+        src: el.image_url,
+      }));
+    }
   },
 };
 </script>

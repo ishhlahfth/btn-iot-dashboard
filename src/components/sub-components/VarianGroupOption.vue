@@ -77,6 +77,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const toast = useToast();
@@ -130,7 +134,11 @@ export default {
   mounted() {
     this.generateVarians(this.merchant.merchant_id);
     console.log('masuk sini', this.data);
-    this.tempSelectedVarian = this.data.map((el) => el.id);
+    if (this.isEdit) {
+      this.tempSelectedVarian = this.data.map((el) => el.variation_id);
+    } else {
+      this.tempSelectedVarian = this.data.map((el) => el.id);
+    }
   },
 };
 </script>
