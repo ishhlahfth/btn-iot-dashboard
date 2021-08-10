@@ -3,6 +3,7 @@
     <confirmation
       title="Delete Varian Group"
       :message="`Are you sure you want to delete this ${payloadVarian?.name} group ?`"
+      bg-color="red-600"
       @close="modal.sm = false"
       @cancel="modal.sm = false"
       @confirm="handleDeleteVarian"
@@ -12,6 +13,7 @@
     <confirmation
       title="Cancel Add Varian Group"
       :message="`Are you sure you want to cancel add varian group ?`"
+      bg-color="red-600"
       @close="modal.close = false"
       @cancel="modal.close = false"
       @confirm="$emit('closeVarian')"
@@ -215,6 +217,7 @@ export default {
   },
   mounted() {
     if (this.data.length) {
+      this.indexAdded = this.data.length - 1;
       this.selectVarians = this.data.map((el) => ({
         ...el,
         options: el.options.map((e) => ({
@@ -229,11 +232,21 @@ export default {
     handleSelectVarian(payload) {
       if (this.isAdded) {
         this.indexAdded += 1;
+        if (!this.isEdit) {
+          this.selectVarians[this.indexAdded] = payload;
+        }
         this.selectVarians.push(payload);
+        this.selectVarians = this.selectVarians.filter((el, index) => this.selectVarians.findIndex((e) => e.id === el.id) === index);
       } else {
-        this.selectVarians[this.indexAdded] = payload;
+        switch (this.selectVarians.length) {
+          case 1:
+            this.selectVarians = [payload];
+            break;
+          default:
+            this.selectVarians[this.selectVarians.findIndex((el) => el.id === this.tempFlag.id)] = payload;
+            break;
+        }
       }
-      console.log(payload, 'select varian');
       if (this.payloadVarianGroup.length === 0) {
         this.payloadVarianGroup.push(payload);
       } else {

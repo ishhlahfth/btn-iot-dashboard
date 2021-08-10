@@ -24,10 +24,10 @@
         color="grey-1"
       />
       <help-button
+        :bg-color="bgColor"
         @click="$emit('confirm')"
         label="yes i'm sure"
         class="mb-2 sm:mb-0"
-        :bg-color="bgColor"
         :loading="confirmLoading"
         :loading-label="loadingLabel"
       />
