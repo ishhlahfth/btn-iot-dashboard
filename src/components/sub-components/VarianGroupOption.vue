@@ -9,7 +9,7 @@
           class="text-blue-500 cursor-pointer"
           :size="10"
         />
-        <span class="font-semibold text-heading4">Select Varian Group</span>
+        <span class="font-semibold text-heading4">{{ isChanged ? 'Change' : 'Select' }} Varian Group</span>
         <span></span>
       </div>
       <p></p>
@@ -77,6 +77,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const toast = useToast();
@@ -129,8 +133,11 @@ export default {
   },
   mounted() {
     this.generateVarians(this.merchant.merchant_id);
-    console.log('masuk sini', this.data);
-    this.tempSelectedVarian = this.data.map((el) => el.id);
+    if (this.isEdit) {
+      this.tempSelectedVarian = this.data.map((el) => el.variation_id || el.id);
+    } else {
+      this.tempSelectedVarian = this.data.map((el) => el.id);
+    }
   },
 };
 </script>

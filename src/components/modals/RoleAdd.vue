@@ -14,17 +14,19 @@
     </div>
 
     <form @submit.prevent="submit">
-      <div class="grid gap-4 sm:grid-flow-col grid-rows-12 sm:grid-cols-12 my-4">
+      <div class="grid gap-3 sm:gap-4 sm:grid-flow-col grid-rows-12 sm:grid-cols-12 my-4">
         <div class="sm:col-span-5 sm:block col-span-12 grid gap-2">
           <div>
             <help-input
+              type="text"
               label="Role Name"
               placeholder="Type a name that represents this role"
               v-model="roleName"
             />
           </div>
-          <div class="mt-4">
+          <div class="sm:mt-3">
             <help-input
+              type="textarea"
               label="Description"
               placeholder="Describe this role's ability"
               v-model="description"

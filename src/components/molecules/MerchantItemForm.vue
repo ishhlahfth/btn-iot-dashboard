@@ -11,11 +11,11 @@
   </help-modal>
   <help-modal v-model="modal.create" permanent>
     <confirmation
-      title="Add Product Confirmation"
-      message="This action cannot be undone. Are you sure want to create this item product ?"
+      :title="`${isEditProduct ? 'Edit' : 'Add'} Product Confirmation`"
+      :message="`This action cannot be undone. Are you sure want to ${isEditProduct ? 'edit' : 'create'} this item product ?`"
       @close="modal.create = false"
       @cancel="modal.create = false"
-      @confirm="postItemProduct"
+      @confirm="confirmSubmit"
       :confirmLoading="loadingAdd"
     />
   </help-modal>
@@ -30,7 +30,7 @@
     />
   </help-modal>
   <div v-if="flagVarianGroup">
-    <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" />
+    <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" :data="payloadToSend.variations" :isEdit="isEditProduct" />
   </div>
   <div v-else-if="flagItemCatalog">
     <product-catalog @handleAddCatalog="generateCatalogs(merchant.merchant_id)" :itemCatalogs="itemCatalogs" @close="flagItemCatalog = false" />
@@ -51,7 +51,7 @@
           <div
             v-for="(productImage, i) in productImages"
             :key="i"
-            class="bg-grey-4 flex items-center justify-center rounded-md lg:w-full lg:h-full"
+            class="bg-grey-4 flex items-center justify-center rounded-md w-16 h-16 lg:h-20 lg:w-20 xl:w-26 xl:h-26"
             @mouseover="handleHover(i, true)"
             @mouseleave="handleHover(i, false)"
           >
@@ -94,6 +94,9 @@
             />
           </div>
         </div>
+        <p class="text-xsmall text-flame font-medium" v-if="!imageFile && productImages.length === 0">
+          Product images is required, and image file size cannot be larger than 2MB
+        </p>
       </div>
       <div class="grid gap-2">
         <span class="font-semibold text-heading5">PRODUCT DETAIL</span>
@@ -104,6 +107,9 @@
           left-icon="template-outline"
           v-model="payloadToSend.name"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="!payloadToSend.name">
+          Product name is required
+        </p>
         <help-input
           type="textarea"
           :rows="3"
@@ -112,6 +118,9 @@
           left-icon="description"
           v-model="payloadToSend.description"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="!payloadToSend.description">
+          Product description is required
+        </p>
         <help-input
           type="number"
           label="Product Price (Rp)"
@@ -119,6 +128,9 @@
           left-icon="price"
           v-model="payloadToSend.price"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="!payloadToSend.price">
+          Product price is required
+        </p>
         <help-select
           label="Stock Status"
           :options="stocks"
@@ -126,6 +138,9 @@
           left-icon="status-stock"
           v-model="payloadToSend.status"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="payloadToSend.status === 'Pilih Status'">
+          Status stock must be selected
+        </p>
         <help-input
           type="number"
           label="Minimum Order"
@@ -133,6 +148,9 @@
           left-icon="cart-outline"
           v-model="payloadToSend.min_buy_qty"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="!payloadToSend.price">
+          Minimum order is required
+        </p>
         <help-select
           label="Product Category"
           :options="itemCategories"
@@ -140,6 +158,9 @@
           left-icon="tag"
           v-model="payloadToSend.group_id"
         />
+        <p class="text-xsmall text-flame font-medium" v-if="payloadToSend.group_id === 'Pilih Kategori'">
+          Product Category must be selected
+        </p>
         <div class="flex items-center relative">
           <help-select
             class="w-11/12 mr-12"
@@ -152,6 +173,9 @@
           <icon @click="flagItemCatalog = true" class="absolute items-center right-0 mt-6 p-1 rounded-md cursor-pointer text-blue-500 shadow-md hover:shadow-lg" name="plus-circle" :size="10" />
         </div>
       </div>
+      <p class="text-xsmall text-flame font-medium" v-if="payloadToSend.catalog_id === 'Pilih Katalog'">
+        Product Category must be selected
+      </p>
       <div class="py-5 grid grid-flow-row gap-3">
         <span class="font-semibold text-heading5">PRODUCT VARIAN GROUP</span>
         <template v-if="payloadToSend.variations.length">
@@ -223,6 +247,16 @@ export default {
     Confirmation,
     VarianOptions,
     ProductCatalog,
+  },
+  props: {
+    isEditProduct: {
+      type: Boolean,
+      default: false,
+    },
+    data: {
+      type: Object,
+      default: () => {},
+    },
   },
   setup() {
     const toast = useToast();
@@ -308,6 +342,83 @@ export default {
     },
   },
   methods: {
+    confirmSubmit() {
+      // payloadToSend: {
+      //   catalog_id: 'Pilih Katalog',
+      //   group_id: 'Pilih Kategori',
+      //   name: '',
+      //   status: 'Pilih Status',
+      //   sort_no: 1,
+      //   price: null,
+      //   description: '',
+      //   min_buy_qty: null,
+      //   variations: [],
+      // },
+      if (
+        this.productImages.length === 0
+        || !this.payloadToSend.name
+        || !this.payloadToSend.description
+        || !this.payloadToSend.price
+        || this.payloadToSend.price === 0
+        || this.payloadToSend.status === 'Pilih Status'
+        || this.payloadToSend.catalog_id === 'Pilih Katalog'
+        || this.payloadToSend.group_id === 'Pilih Kategori'
+        || !this.payloadToSend.min_buy_qty
+      ) {
+        this.toast.error('Please fill required form !');
+      } else {
+        if (this.isEditProduct) {
+          this.patchItemProduct();
+        }
+        if (!this.isEditProduct) {
+          this.postItemProduct();
+        }
+      }
+    },
+    async patchItemProduct() {
+      this.loadingAdd = true;
+      this.payloadToSend = {
+        ...this.payloadToSend,
+        price: +this.payloadToSend.price,
+        min_buy_qty: +this.payloadToSend.min_buy_qty,
+        status: this.payloadToSend.status.value,
+        catalog_id: this.payloadToSend.catalog_id.id,
+        group_id: this.payloadToSend.group_id.id,
+        variations: this.payloadToSend.variations.map((el) => ({
+          ...el,
+          id: el.variation_id || el.id,
+          options: el.options.map((e) => ({
+            ...e,
+            id: e.option_id || e.id,
+          })),
+        })),
+      };
+      const payloadToSend = this.payloadToSend;
+      try {
+        const {
+          data: { data },
+        } = await API.patch(`items/${this.data.id}`, payloadToSend);
+        if (this.imageFile) {
+          this.imageFile.forEach((el) => {
+            this.handleAddPhoto(data, el);
+          });
+        }
+        setTimeout(async () => {
+          this.toast.success(`Item ${data.name} has been updated successfully !`);
+          this.$emit('close');
+          await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+        }, 1000);
+      } catch (error) {
+        this.toast.error(error.response.data.meta.message);
+      }
+    },
+    async deletePhoto(id) {
+      try {
+        await API.delete(`banners/${id}`);
+      } catch (error) {
+        this.toast.error(error.response.data.meta.message);
+      }
+    },
     async postItemProduct() {
       this.loadingAdd = true;
       this.payloadToSend = {
@@ -323,11 +434,9 @@ export default {
         const {
           data: { data },
         } = await API.post('items', payloadToSend);
-        console.log(data, 'success add item');
         if (this.imageFile) {
-          console.log('masuk sini ga', this.imageFile);
-          this.imageFile.forEach((el) => {
-            this.handleAddPhoto(data, el);
+          this.imageFile.forEach((el, i) => {
+            this.handleAddPhoto(data, el, i);
           });
         }
         setTimeout(async () => {
@@ -371,15 +480,17 @@ export default {
           url,
           src: URL.createObjectURL(file),
         });
-        // this.productImages.push(URL.createObjectURL(file));
         this.photoHover[`${this.productImages.length - 1}`] = false;
         this.index += 1;
         if (!this.imageFile) {
-          this.imageFile = [{ file, fileName, url }];
+          this.imageFile = [{
+            file, fileName, url, sort_no: 1,
+          }];
         } else {
-          this.imageFile.push({ file, fileName, url });
+          this.imageFile.push({
+            file, fileName, url, sort_no: this.imageFile.length + 1,
+          });
         }
-        // this.imageFile = { file, fileName, url };
         this.imageIsChanged = true;
       }
     },
@@ -462,7 +573,14 @@ export default {
         this.imageFile = [];
       } else {
         this.productImages = this.productImages.filter((el) => el.src !== this.payloadPhoto.src);
-        this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
+        if (!this.isEditProduct || this.imageFile) {
+          this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
+        }
+      }
+      if (this.isEditProduct) {
+        if (this.payloadPhoto.id) {
+          this.deletePhoto(this.payloadPhoto.id);
+        }
       }
       this.modal.sm = false;
     },
@@ -470,17 +588,14 @@ export default {
       this.photoHover[`${index}`] = param;
     },
     submitSelectVarian(payload) {
-      console.log(payload, 'dari bawah');
       const finalPayload = payload.map((el) => ({
         ...el,
         options: el.options.filter((e) => e.picked),
       }));
-      console.log(finalPayload, 'masuk ke atas');
       this.payloadToSend.variations = finalPayload;
     },
-    // percobaan
     async uploadS3(imageFile, callback) {
-      if (imageFile.file.size > 2000000) {
+      if (typeof imageFile.file === 'object' && imageFile.file.size > 2000000) {
         this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
         const S3Params = {
@@ -512,7 +627,7 @@ export default {
           group: 'COVER',
           provider: {
             name: 'S3',
-            sort_no: payload.sort_no,
+            sort_no: imageFile.sort_no,
             config: {
               location: imageFile.url,
               etag: S3Response.ETag.slice(1, -1),
@@ -533,25 +648,40 @@ export default {
       });
       this.loading = false;
     },
-    async patchBNS(payload) {
-      try {
-        this.loading = true;
-        const {
-          data: { data },
-        } = await API.patch(`banners/${this.$store.state.adminDetail.banner.id}`, payload);
-        this.$emit('reload');
-        this.$emit('close');
-        console.log(data);
-        this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
-      } catch (error) {
-        this.toast.error(error.message);
-      }
-      this.loading = false;
-    },
   },
   mounted() {
     this.generateCategories();
     this.generateCatalogs(this.merchant.merchant_id);
+    if (this.isEditProduct) {
+      const catalog = {
+        ...this.data.catalog,
+        label: this.data.catalog.name,
+        value: this.data.catalog.id,
+      };
+      const group = {
+        ...this.data.group,
+        label: this.data.group.name,
+        value: this.data.group.id,
+      };
+      this.payloadToSend = {
+        catalog_id: catalog,
+        group_id: group,
+        name: this.data.name,
+        status: {
+          label: this.data.status === 'AVAILABLE' ? 'Tersedia' : 'Habis',
+          value: this.data.status,
+        },
+        sort_no: this.data.sort_no,
+        price: this.data.price,
+        description: this.data.description,
+        min_buy_qty: this.data.min_buy_qty,
+        variations: this.data.variations,
+      };
+      this.productImages = this.data.banners.map((el) => ({
+        ...el,
+        src: el.image_url,
+      }));
+    }
   },
 };
 </script>

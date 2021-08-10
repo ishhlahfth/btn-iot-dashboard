@@ -24,6 +24,7 @@
     @closeSelectVarian="flagSelectVarianGroup = false"
     @selectVarian="handleSelectVarian"
     :data="payloadVarianGroup"
+    :isEdit="isEdit"
   />
   <div v-else class="inner-modal-fixed overflow-auto modal-md px-1">
     <div class="divide-y divide-grey-4 pb-3">
@@ -166,6 +167,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Array,
+      default: () => [],
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -206,15 +215,38 @@ export default {
       return this.$store.state.screenWidth;
     },
   },
+  mounted() {
+    if (this.data.length) {
+      this.indexAdded = this.data.length - 1;
+      this.selectVarians = this.data.map((el) => ({
+        ...el,
+        options: el.options.map((e) => ({
+          ...e,
+          picked: true,
+        })),
+      }));
+      this.payloadVarianGroup = this.selectVarians;
+    }
+  },
   methods: {
     handleSelectVarian(payload) {
       if (this.isAdded) {
         this.indexAdded += 1;
-        this.selectVarians[this.indexAdded] = payload;
+        if (!this.isEdit) {
+          this.selectVarians[this.indexAdded] = payload;
+        }
+        this.selectVarians.push(payload);
+        this.selectVarians = this.selectVarians.filter((el, index) => this.selectVarians.findIndex((e) => e.id === el.id) === index);
       } else {
-        this.selectVarians[this.indexAdded] = payload;
+        switch (this.selectVarians.length) {
+          case 1:
+            this.selectVarians = [payload];
+            break;
+          default:
+            this.selectVarians[this.selectVarians.findIndex((el) => el.id === this.tempFlag.id)] = payload;
+            break;
+        }
       }
-      console.log(payload, 'select varian');
       if (this.payloadVarianGroup.length === 0) {
         this.payloadVarianGroup.push(payload);
       } else {

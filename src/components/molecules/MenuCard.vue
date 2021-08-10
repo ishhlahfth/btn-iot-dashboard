@@ -135,7 +135,7 @@ export default {
     HelpRadio,
     HelpOption,
   },
-  emits: ['openItemStatusModal', 'deleteItemCatalog'],
+  emits: ['openItemStatusModal', 'deleteItemCatalog', 'activeAddProduct'],
   props: {
     raw: {
       type: Object,
@@ -193,6 +193,10 @@ export default {
           value: 'delete',
           label: 'Delete',
         },
+        {
+          value: 'item_status',
+          label: 'Item Status',
+        },
       ],
     };
   },
@@ -214,10 +218,12 @@ export default {
       console.log(param, 'param ke baca ga');
       this.valueItem = param.value;
       this.$store.commit('SET_ITEM', this.raw);
-      if (param.value === 'edit') {
+      if (param.value === 'item_status') {
         this.$emit('openItemStatusModal');
-      } else {
+      } else if (param.value === 'delete') {
         this.$emit('deleteItemCatalog');
+      } else {
+        this.$emit('activeAddProduct');
       }
     },
   },
