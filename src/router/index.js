@@ -97,6 +97,11 @@ const routes = [
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
       },
+      {
+        path: 'copy_merchant',
+        name: 'Copy Merchant',
+        component: () => import('@/views/CopyMerchant.vue'),
+      },
     ],
   },
   {

@@ -163,6 +163,7 @@ export default {
             break;
         }
       });
+      this.links.push({ path: '/bns/copy_merchant', label: 'Copy Merchant', icon: 'copy' });
     }
   },
 };
