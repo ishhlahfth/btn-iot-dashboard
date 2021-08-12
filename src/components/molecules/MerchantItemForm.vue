@@ -174,7 +174,7 @@
         </div>
       </div>
       <p class="text-xsmall text-flame font-medium" v-if="payloadToSend.catalog_id === 'Pilih Katalog'">
-        Product Category must be selected
+        Product Catalog must be selected
       </p>
       <div class="py-5 grid grid-flow-row gap-3">
         <span class="font-semibold text-heading5">PRODUCT VARIAN GROUP</span>
