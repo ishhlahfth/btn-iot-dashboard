@@ -16,6 +16,8 @@ export default createStore({
     commissionDetail: {},
     orderId: 0,
     bannerId: 0,
+    roleId: 0,
+    userId: 0,
     banner: {},
     formType: '',
     loading: {
@@ -24,9 +26,11 @@ export default createStore({
     },
     resetPasswordToken: '',
     permissions: [],
+    roleAdmin: [],
     role: {},
     roleType: '',
     adminDetail: {},
+    imageProfile: '',
   },
   mutations: {
     SET_CURRENT_USER(state, payload) {
@@ -65,6 +69,12 @@ export default createStore({
     SET_BANNER_ID(state, payload) {
       state.bannerId = payload;
     },
+    SET_ROLE_ID(state, payload) {
+      state.roleId = payload;
+    },
+    SET_USER_ID(state, payload) {
+      state.userId = payload;
+    },
     SET_BANNER(state, payload) {
       state.banner = payload;
     },
@@ -89,6 +99,12 @@ export default createStore({
     SET_ADMIN_DETAIL(state, payload) {
       state.adminDetail = payload;
     },
+    SET_ADMIN_LIST(state, payload) {
+      state.roleAdmin = payload;
+    },
+    SET_IMAGE_PROFILE(state, payload) {
+      state.imageProfile = payload;
+    },
   },
   actions: {
     async loadMerchant({ commit, dispatch }, merchantId) {
@@ -100,6 +116,7 @@ export default createStore({
         } = await API.get(`merchants/${merchantId}`);
 
         merchant = {
+          merchant_id: data.id,
           name: data.name,
           phoneNumber: data.phone_number,
           address: `${data.address?.line_address}, ${data.address?.district}, ${data.address?.city.name}, ${data.address?.state} ${data.address?.zip_code}`,
@@ -206,5 +223,4 @@ export default createStore({
       return `Rp ${dispatch('groupDigit', value)}`;
     },
   },
-  modules: {},
 });
