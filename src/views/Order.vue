@@ -8,7 +8,7 @@
   </help-modal>
 
   <help-modal v-model="statusHistoryModal">
-    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" />
+    <status-history @close="closeAndRefetch" :currentPropStep="currentPropStep" :updateAccess="orderAccess.update" />
   </help-modal>
 
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
@@ -197,6 +197,9 @@ export default {
         minDate: '',
         dateFormat: 'Y-m-d',
       },
+      orderAccess: {
+        update: false,
+      },
     };
   },
   methods: {
@@ -279,8 +282,8 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
-          discounts: el.order_type_details?.delivery_method?.discounts
-            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+          discounts: el.discounts
+            ? String(el.discounts?.total)
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
@@ -431,6 +434,11 @@ export default {
     this.getOrders({
       pagination: this.orderPagination,
       filter: this.orderFilter,
+    });
+    this.$store.state.access.access.permissions.forEach((el) => {
+      if (el.module === 'ORDER-TYPE' && el.action === 'UPDATE') {
+        this.orderAccess.update = true;
+      }
     });
   },
 };
