@@ -29,6 +29,32 @@
       @confirm="$emit('close')"
     />
   </help-modal>
+  <help-modal v-model="dialog" permanent>
+    <div class="modal-md">
+      <div>
+        <VueCropper
+          v-show="selectedFile"
+          ref="cropper"
+          :src="selectedFile"
+          alt="Source Image"
+          drag-mode="crop"
+          :aspectRatio="1/1"
+          :initialAspectRatio="1/1"
+          :maxCropBoxWidth="defaultSizeCrop"
+          :maxCropBoxHeight="defaultSizeCrop"
+          :minCropBoxWidth="defaultSizeCrop"
+          :minCropBoxHeight="defaultSizeCrop"
+          :cropBoxResizable="false"
+          :img-style="{ 'width': defaultSizeCrop, 'height': defaultSizeCrop }"
+        ></VueCropper>
+      </div>
+      <div class="flex justify-end pt-3">
+        <button class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg cursor-pointer" @click="saveImage(), (dialog = false)">Crop</button>
+        &nbsp;&nbsp;
+        <button class="px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white border cursor-pointer" @click="dialog = false">Cancel</button>
+      </div>
+    </div>
+  </help-modal>
   <div v-if="flagVarianGroup">
     <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" :data="payloadToSend.variations" :isEdit="isEditProduct" />
   </div>
@@ -67,6 +93,11 @@
                   : 'https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg'
               "
             />
+            <!-- <div>
+              <v-img :src="image_name" class="profile-img"></v-img>
+              <button class="icon primary white--text" @click="$refs.FileInput.click()">upload</button>
+              <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
+            </div> -->
             <help-button
               :key="i"
               v-if="photoHover[`${i}`]"
@@ -90,8 +121,9 @@
               type="file"
               accept="image/*"
               class="h-full w-full opacity-0 hidden"
-              @input="handleChangeImg"
+              @change="onFileSelect"
             />
+            <!-- @input="handleChangeImg"  -->
           </div>
         </div>
         <p class="text-xsmall text-flame font-medium" v-if="!imageFile && productImages.length === 0">
@@ -232,6 +264,8 @@ import ProductCatalog from '@/components/sub-components/ProductCatalog.vue';
 import mixin from '@/mixin';
 import { uuid } from 'uuidv4';
 import API from '@/apis';
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 export default {
   name: 'MerchantItemForm',
@@ -247,6 +281,7 @@ export default {
     Confirmation,
     VarianOptions,
     ProductCatalog,
+    VueCropper,
   },
   props: {
     isEditProduct: {
@@ -264,6 +299,14 @@ export default {
   },
   data() {
     return {
+      mime_type: '',
+      cropedImage: '',
+      autoCrop: false,
+      selectedFile: '',
+      image: '',
+      dialog: false,
+      files: '',
+      defaultSizeCrop: 0,
       stocks: [
         {
           value: 'AVAILABLE',
@@ -342,18 +385,34 @@ export default {
     },
   },
   methods: {
+    onFileSelect(e) {
+      console.log(e.target.files, 'cek image');
+      const file = e.target.files[0];
+      const url = window.URL || window.webkitURL;
+      const img = new Image();
+      const objectUrl = url.createObjectURL(file);
+      img.onload = function () {
+        console.log(this.width, 'width');
+        console.log(this.height, 'height');
+        this.defaultSizeCrop = this.width > this.height ? this.width : this.height;
+        url.revokeObjectURL(objectUrl);
+      };
+      img.src = objectUrl;
+      this.mime_type = file.type;
+      console.log(this.mime_type);
+      if (typeof FileReader === 'function') {
+        this.dialog = !this.dialog;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          this.selectedFile = event.target.result;
+          this.$refs.cropper.replace(this.selectedFile);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.log('Sorry, FileReader API not supported');
+      }
+    },
     confirmSubmit() {
-      // payloadToSend: {
-      //   catalog_id: 'Pilih Katalog',
-      //   group_id: 'Pilih Kategori',
-      //   name: '',
-      //   status: 'Pilih Status',
-      //   sort_no: 1,
-      //   price: null,
-      //   description: '',
-      //   min_buy_qty: null,
-      //   variations: [],
-      // },
       if (
         this.productImages.length === 0
         || !this.payloadToSend.name
@@ -474,6 +533,7 @@ export default {
     handleChangeImg(e) {
       if (e.target.files.length) {
         const file = e.target.files[0];
+        console.log(e.target.files, 'cek image');
         const fileName = `${uuid()}.${e.target.files[0].type.split('/')[1]}`;
         const url = `${this.S3BaseURL}/${fileName}`;
         this.productImages.push({
