@@ -59,7 +59,7 @@ export default {
     },
     bgColor: {
       type: String,
-      default: 'blue-500',
+      default: 'midnight',
     },
   },
   components: {
