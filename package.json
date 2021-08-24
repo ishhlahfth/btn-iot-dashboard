@@ -15,6 +15,7 @@
     "@tailwindcss/postcss7-compat": "2.0.2",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
+    "browser-image-compression": "^1.0.15",
     "buefy": "^0.9.7",
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.12",

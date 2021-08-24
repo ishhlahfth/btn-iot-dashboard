@@ -40,16 +40,14 @@
           drag-mode="crop"
           :aspectRatio="1/1"
           :initialAspectRatio="1/1"
-          :maxCropBoxWidth="defaultSizeCrop"
-          :maxCropBoxHeight="defaultSizeCrop"
-          :minCropBoxWidth="defaultSizeCrop"
-          :minCropBoxHeight="defaultSizeCrop"
+          :auto-crop-area="2"
           :cropBoxResizable="false"
-          :img-style="{ 'width': defaultSizeCrop, 'height': defaultSizeCrop }"
+          :min-container-width="defaultSizeCrop"
+          :min-container-height="defaultSizeCrop"
         ></VueCropper>
       </div>
       <div class="flex justify-end pt-3">
-        <button class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg cursor-pointer" @click="saveImage(), (dialog = false)">Crop</button>
+        <button class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg cursor-pointer" @click="saveImage">Crop</button>
         &nbsp;&nbsp;
         <button class="px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white border cursor-pointer" @click="dialog = false">Cancel</button>
       </div>
@@ -72,7 +70,7 @@
       <div class="py-2 lg:py-5 grid gap-2">
         <span class="font-semibold text-heading5">PRODUCT IMAGES (0/5)</span>
         <div
-          class="py-2 lg:py-3 h-20 lg:h-26 xl:h-32 px-2 lg:px-3 border border-grey-4 rounded grid grid-cols-5 gap-1 md:gap-2 lg:gap-2"
+          class="py-2 lg:py-3 h-20 lg:h-26 xl:h-32 px-2 lg:px-3 border border-grey-4 rounded grid grid-cols-5 gap-3 md:gap-2 lg:gap-2"
         >
           <div
             v-for="(productImage, i) in productImages"
@@ -93,11 +91,6 @@
                   : 'https://www.couvee.co.id/wp-content/uploads/2019/11/CF4566E9-0DC2-43F1-ABC9-F1BED1F0A9CE-768x768.jpg'
               "
             />
-            <!-- <div>
-              <v-img :src="image_name" class="profile-img"></v-img>
-              <button class="icon primary white--text" @click="$refs.FileInput.click()">upload</button>
-              <input ref="FileInput" type="file" style="display: none;" @change="onFileSelect" />
-            </div> -->
             <help-button
               :key="i"
               v-if="photoHover[`${i}`]"
@@ -261,11 +254,11 @@ import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 import VarianOptions from '@/components/sub-components/VarianOptions.vue';
 import ProductCatalog from '@/components/sub-components/ProductCatalog.vue';
+import imageCompression from 'browser-image-compression';
 import mixin from '@/mixin';
 import { uuid } from 'uuidv4';
 import API from '@/apis';
 import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
 
 export default {
   name: 'MerchantItemForm',
@@ -362,6 +355,7 @@ export default {
       },
       loadingAdd: false,
       S3BaseURL: process.env.VUE_APP_S3_BASE_URL,
+      tempSrc: null,
     };
   },
   computed: {
@@ -385,33 +379,6 @@ export default {
     },
   },
   methods: {
-    onFileSelect(e) {
-      console.log(e.target.files, 'cek image');
-      const file = e.target.files[0];
-      const url = window.URL || window.webkitURL;
-      const img = new Image();
-      const objectUrl = url.createObjectURL(file);
-      img.onload = function () {
-        console.log(this.width, 'width');
-        console.log(this.height, 'height');
-        this.defaultSizeCrop = this.width > this.height ? this.width : this.height;
-        url.revokeObjectURL(objectUrl);
-      };
-      img.src = objectUrl;
-      this.mime_type = file.type;
-      console.log(this.mime_type);
-      if (typeof FileReader === 'function') {
-        this.dialog = !this.dialog;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          this.selectedFile = event.target.result;
-          this.$refs.cropper.replace(this.selectedFile);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        console.log('Sorry, FileReader API not supported');
-      }
-    },
     confirmSubmit() {
       if (
         this.productImages.length === 0
@@ -530,28 +497,87 @@ export default {
         color: 'grey-7',
       }));
     },
-    handleChangeImg(e) {
-      if (e.target.files.length) {
-        const file = e.target.files[0];
-        console.log(e.target.files, 'cek image');
-        const fileName = `${uuid()}.${e.target.files[0].type.split('/')[1]}`;
-        const url = `${this.S3BaseURL}/${fileName}`;
-        this.productImages.push({
-          url,
-          src: URL.createObjectURL(file),
-        });
+    saveImage() {
+      this.cropedImage = this.$refs.cropper.getCroppedCanvas().toDataURL();
+      this.dialog = !this.dialog;
+      const canvas = this.$refs.cropper.getCroppedCanvas({
+        width: this.defaultSizeCrop,
+        height: this.defaultSizeCrop,
+      });
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        initialQuality: 0.8,
+      };
+      canvas.toBlob(async (blob) => {
+        // Pass the image file name as the third parameter if necessary.
+        let compressedFile = null;
+        if ((blob.size / 1024 / 1024) > 1) {
+          compressedFile = await imageCompression(blob, options);
+        }
+        if (!this.productImages) {
+          this.productImages = [{
+            url: this.cropedImage,
+            src: this.cropedImage,
+          }];
+        } else {
+          this.productImages.push({
+            url: this.cropedImage,
+            src: this.cropedImage,
+          });
+        }
+        if (this.imageFile.length < 2) {
+          this.imageFile[0].file = compressedFile || blob;
+        } else {
+          this.imageFile[this.imageFile.length].file = compressedFile || blob;
+        }
         this.photoHover[`${this.productImages.length - 1}`] = false;
         this.index += 1;
+      });
+    },
+    async onFileSelect(e) {
+      const file = e.target.files[0];
+      let compressedFile = file;
+      const fileName = `${uuid()}.${file.type.split('/')[1]}`;
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        initialQuality: 0.4,
+      };
+      if ((file.size / 1024 / 1024) > 1) {
+        compressedFile = await imageCompression(file, options);
+      }
+      const url = `${this.S3BaseURL}/${fileName}`;
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(compressedFile);
+      this.tempSrc = url;
+      img.onload = () => {
+        this.defaultSizeCrop = this.width > this.height ? this.width : this.height;
+      };
+      img.src = objectUrl;
+      this.mime_type = compressedFile.type;
+
+      if (typeof FileReader === 'function') {
+        this.dialog = !this.dialog;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          this.selectedFile = event.target.result;
+          this.$refs.cropper.replace(this.selectedFile);
+        };
+        reader.readAsDataURL(compressedFile);
         if (!this.imageFile) {
           this.imageFile = [{
-            file, fileName, url, sort_no: 1,
+            file: compressedFile, fileName, url, sort_no: 1,
           }];
         } else {
           this.imageFile.push({
-            file, fileName, url, sort_no: this.imageFile.length + 1,
+            file: compressedFile, fileName, url, sort_no: this.imageFile.length + 1,
           });
         }
-        this.imageIsChanged = true;
+      } else {
+        this.toast.error('Sorry, FileReader API not supported');
       }
     },
     handleDeletePhoto(payload) {
@@ -658,6 +684,7 @@ export default {
       if (typeof imageFile.file === 'object' && imageFile.file.size > 2000000) {
         this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
+        console.log(imageFile, 'image file yg dikirim');
         const S3Params = {
           Bucket: 'help-bns-bucket',
           Key: imageFile.fileName,
