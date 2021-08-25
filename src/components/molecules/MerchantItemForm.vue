@@ -501,6 +501,7 @@ export default {
     saveImage() {
       this.cropedImage = this.$refs.cropper.getCroppedCanvas().toDataURL();
       this.dialog = !this.dialog;
+      this.isBiggerSize = false;
       const canvas = this.$refs.cropper.getCroppedCanvas({
         width: this.defaultSizeCrop,
         height: this.defaultSizeCrop,
