@@ -30,8 +30,8 @@
     />
   </help-modal>
   <help-modal v-model="dialog" permanent>
-    <div class="modal-md">
-      <div>
+    <div class="slide-up modal-md">
+      <div :class="isBiggerSize ? 'w-3/4' : 'w-full'">
         <VueCropper
           v-show="selectedFile"
           ref="cropper"
@@ -49,7 +49,7 @@
       <div class="flex justify-end pt-3">
         <button class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg cursor-pointer" @click="saveImage">Crop</button>
         &nbsp;&nbsp;
-        <button class="px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white border cursor-pointer" @click="dialog = false">Cancel</button>
+        <button class="px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white border cursor-pointer" @click="cancelCrop">Cancel</button>
       </div>
     </div>
   </help-modal>
@@ -114,7 +114,7 @@
               type="file"
               accept="image/*"
               class="h-full w-full opacity-0 hidden"
-              @change="onFileSelect"
+              @change="confirmImage"
             />
             <!-- @input="handleChangeImg"  -->
           </div>
@@ -292,6 +292,7 @@ export default {
   },
   data() {
     return {
+      isBiggerSize: false,
       mime_type: '',
       cropedImage: '',
       autoCrop: false,
@@ -547,6 +548,7 @@ export default {
         initialQuality: 0.4,
       };
       if ((file.size / 1024 / 1024) > 1) {
+        this.isBiggerSize = true;
         compressedFile = await imageCompression(file, options);
       }
       const url = `${this.S3BaseURL}/${fileName}`;
@@ -579,6 +581,19 @@ export default {
       } else {
         this.toast.error('Sorry, FileReader API not supported');
       }
+    },
+    confirmImage(e) {
+      const file = e.target.files[0];
+      console.log(file, 'ini file');
+      if (file.size > 2000000) {
+        this.toast.error('Oops, your image cannot be larger than 2MB');
+      } else {
+        this.onFileSelect(e);
+      }
+    },
+    cancelCrop() {
+      this.dialog = false;
+      this.isBiggerSize = false;
     },
     handleDeletePhoto(payload) {
       this.modal.sm = true;
