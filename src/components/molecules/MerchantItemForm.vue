@@ -68,7 +68,7 @@
         <p></p>
       </div>
       <div class="py-2 lg:py-5 grid gap-2">
-        <span class="font-semibold text-heading5">PRODUCT IMAGES (0/5)</span>
+        <span class="font-semibold text-heading5">PRODUCT IMAGES {{ `(${!productImages ? 0 : productImages.length}/5)` }}</span>
         <div
           class="py-2 lg:py-3 h-20 lg:h-26 xl:h-32 px-2 lg:px-3 border border-grey-4 rounded grid grid-cols-5 gap-3 md:gap-2 lg:gap-2"
         >
@@ -593,6 +593,12 @@ export default {
       }
     },
     cancelCrop() {
+      if (this.productImages.length === 0) {
+        this.productImages = [];
+        this.imageFile = [];
+      } else {
+        this.imageFile.pop();
+      }
       this.dialog = false;
       this.isBiggerSize = false;
     },
