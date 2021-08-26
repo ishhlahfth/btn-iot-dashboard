@@ -133,7 +133,7 @@
                     v-for="(item, i) in catalog.items"
                     :key="i"
                     :raw="item"
-                    :image-url="item.banners.length ? item.banners[0].url : ''"
+                    :image-url="item.banners.length ? item.banners[0].image_url : ''"
                     :name="item.name"
                     :category="item.group.name"
                     :description="item.description"
