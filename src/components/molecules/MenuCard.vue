@@ -127,6 +127,7 @@ import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',
+  inheritAttrs: false,
   mixins: [mixin],
   components: {
     HelpBadge,
