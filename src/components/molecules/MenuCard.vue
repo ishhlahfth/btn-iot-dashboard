@@ -34,7 +34,7 @@
         </div>
         <p class="text-small font-medium">{{ convertToRp(price) }}</p>
       </div>
-      <div class="grid grid-flow-row gap-1">
+      <div v-if="isForProduct" class="grid grid-flow-row gap-1">
         <div class="grid lg:grid-flow-col grid-flow-row">
           <div class="relative w-full">
             <help-button
@@ -127,6 +127,7 @@ import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',
+  inheritAttrs: false,
   mixins: [mixin],
   components: {
     HelpBadge,
@@ -175,6 +176,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    isForProduct: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
