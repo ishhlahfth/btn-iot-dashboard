@@ -10,6 +10,7 @@ import './registerServiceWorker';
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
 import 'flatpickr/dist/flatpickr.css';
+import 'cropperjs/dist/cropper.css';
 
 const toastOption = {
   transition: 'Vue-Toastification__fade',
