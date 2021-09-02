@@ -186,7 +186,7 @@ export default {
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
-          const response = await this.$store.dispatch('loadImage', data[i].url);
+          const response = await this.$store.dispatch('loadImage', data[i].image_url);
           this.banners[i].image_url = response;
         }
         this.bannerPagination = {

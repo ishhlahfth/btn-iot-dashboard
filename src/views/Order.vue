@@ -281,7 +281,7 @@ export default {
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
-          payment_method: el.payment.name,
+          payment_method: el.payment?.name,
           discounts: el.discounts
             ? String(el.discounts?.total)
             : '',
