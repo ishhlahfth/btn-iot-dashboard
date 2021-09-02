@@ -304,7 +304,7 @@ export default {
         for (let i = 0; i < data.items.length; i += 1) {
           if (data.items[i].banners) {
             for (let j = 0; j < data.items[i].banners.length; j += 1) {
-              const image = await this.$store.dispatch('loadImage', data.items[i].banners[j].url);
+              const image = await this.$store.dispatch('loadImage', data.items[i].banners[j].image_url);
               this.order.items[i].image_url = image;
             }
           }
