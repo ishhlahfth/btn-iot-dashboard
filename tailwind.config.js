@@ -89,6 +89,7 @@ module.exports = {
       'grey-4': '#D2D6DB',
       'grey-5': '#F4F5F6',
       'grey-6': '#F2F2F2',
+      'grey-7': '#F6F6F6',
       'midnight-dark': '#003168',
       flame: '#FF5630',
       'flame-soft': '#F7E6E8',

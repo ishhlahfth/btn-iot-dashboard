@@ -282,8 +282,8 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
-          discounts: el.order_type_details?.delivery_method?.discounts
-            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+          discounts: el.discounts
+            ? String(el.discounts?.total)
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));

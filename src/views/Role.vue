@@ -5,7 +5,7 @@
   <help-modal v-model="modal.add">
     <role-add @close="getRoles({ pagination: rolesPagination, modal: 'add' })" />
   </help-modal>
-  <help-modal v-model="modal.edit" @editable="true">
+  <help-modal v-model="modal.edit">
     <role-add @close="getRoles({ pagination: rolesPagination, modal: 'edit' })" />
   </help-modal>
   <help-modal v-model="modal.list">
@@ -53,7 +53,7 @@
             See Detail
           </p>
           <div v-if="column === 'admin'">
-            <div class="w-full flex gap-1">
+            <div class="relative flex gap-1">
               <div v-for="(item, index) in employee[`${row.name}`]" :key="item">
                 <help-avatar
                   class="has-tooltip"

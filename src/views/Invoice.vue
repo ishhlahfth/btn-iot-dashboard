@@ -110,6 +110,11 @@
               {{ convertToRp(item.subtotal_price) }}
             </p>
           </div>
+          <div v-if="discountOrder" class="p-3 grid grid-cols-2 gap-1 text-red-600">
+            <p>Wehelpyou</p>
+            <p v-if="!loading" class="text-right">{{ discountOrder ? `- ${convertToRp(discountOrder.substring(1))}` : '- Rp 0' }}</p>
+            <div v-else class="bg-grey-4 rounded h-4" />
+          </div>
         </template>
         <template v-else>
           <div v-for="i in 2" :key="i" class="p-3 grid grid-cols-8 gap-2">
@@ -119,8 +124,8 @@
             <div class="col-span-2 bg-grey-4 rounded h-4" />
           </div>
         </template>
-        <div class="p-3 grid grid-cols-4 gap-1 font-bold">
-          <p class="col-span-3 text-right">Subtotal Harga Barang</p>
+        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
+          <p>Subtotal Harga Barang</p>
           <p v-if="!loading" class="text-right">{{ subtotalItem }}</p>
           <div v-else class="bg-grey-4 rounded h-4" />
         </div>
@@ -139,9 +144,10 @@
             <div class="bg-grey-4 rounded h-4" />
           </template>
         </div>
-        <div v-if="discountDelivery" class="p-3 grid grid-cols-2 gap-1">
+        <div v-if="discountDelivery" class="p-3 grid grid-cols-2 gap-1 text-red-600">
           <p>Wehelpyou</p>
-          <p class="text-right">{{ discountDelivery ? `- ${convertToRp(discountDelivery.slice(1))}` : '- Rp 0' }}</p>
+          <p v-if="!loading" class="text-right">{{ discountDelivery ? `- ${convertToRp(discountDelivery.substring(1))}` : '- Rp 0' }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
         </div>
         <div class="p-3 grid grid-cols-2 gap-1 font-bold">
           <p>Subtotal Pengiriman</p>
@@ -153,6 +159,11 @@
 
     <div class="w-full">
       <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
+        <div v-if="discountTotal" class="p-3 grid grid-cols-2 gap-1 text-red-600">
+          <p>Wehelpyou</p>
+          <p v-if="!loading" class="text-right">{{ discountTotal ? `- ${convertToRp(discountTotal.substring(1))}` : '- Rp 0' }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
+        </div>
         <div class="p-3 grid grid-cols-2 gap-1 font-bold">
           <p>Total Pembayaran</p>
           <p v-if="!loading" class="text-right">{{ totalPrice }}</p>
@@ -202,6 +213,8 @@ export default {
       deliveryName: '',
       deliveryPrice: '',
       discountDelivery: 0,
+      discountOrder: 0,
+      discountTotal: 0,
       subtotalDelivery: '',
       totalPrice: '',
       notification: false,
@@ -236,12 +249,16 @@ export default {
         this.addressFull = data.order_type_details.shipping_address.line_address || '-';
         this.phoneNumber = data.order_type_details.shipping_address.contact_person_hp || '-';
         this.items = data.items || [];
-        this.subtotalItem = this.convertToRp(data.subtotal_price) || 'Rp 0';
+        this.subtotalItem = this.convertToRp(data.total_price_without_tax) || 'Rp 0';
         this.deliveryName = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
         this.deliveryPrice = this.convertToRp(data.order_type_details.delivery_method.initial_price) || 'Rp 0';
         this.subtotalDelivery = this.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
         this.totalPrice = this.convertToRp(data.total_price) || 'Rp 0';
-        this.discountDelivery = data.order_type_details.delivery_method.discounts ? String(data.order_type_details.delivery_method.discounts[0].discount) : '';
+        if (data.discounts) {
+          this.discountDelivery = data.discounts.detail[0].type === 2 ? String(data.discounts.detail[0].value.discount) : '';
+          this.discountOrder = data.discounts.detail[0].type === 3 ? String(data.discounts.detail[0].value.discount) : '';
+          this.discountTotal = data.discounts.detail[0].type === 4 ? String(data.discounts.detail[0].value.discount) : '';
+        }
       } catch (error) {
         console.log(error);
       }

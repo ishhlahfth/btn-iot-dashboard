@@ -1,6 +1,6 @@
 <template>
-  <help-modal v-model="detailModal">
-    <merchant-detail @openItemStatusModal="handleItemStatus" @deleteItemCatalog="handleDeleteItem" />
+  <help-modal v-model="detailModal" permanent>
+    <merchant-detail @openItemStatusModal="handleItemStatus" @closeMerchant="detailModal = false" @deleteItemCatalog="handleDeleteItem" />
   </help-modal>
 
   <help-modal v-model="filterModal">
@@ -76,6 +76,7 @@
     <div>
       <form @submit.prevent="getMerchants({ filter: merchantFilter })">
         <help-input
+          type="text"
           v-model="searchValue"
           placeholder="Search merchant name OR phone number here"
           search-bar

@@ -118,6 +118,7 @@ export default createStore({
         } = await API.get(`merchants/${merchantId}`);
 
         merchant = {
+          merchant_id: data.id,
           name: data.name,
           phoneNumber: data.phone_number,
           address: `${data.address?.line_address}, ${data.address?.district}, ${data.address?.city.name}, ${data.address?.state} ${data.address?.zip_code}`,
@@ -138,7 +139,7 @@ export default createStore({
           menu: [],
         };
         if (data.banners?.length) {
-          merchant.imageUrl = await dispatch('loadImage', data.banners[0].url);
+          merchant.imageUrl = await dispatch('loadImage', data.banners[0].image_url);
         }
 
         const {

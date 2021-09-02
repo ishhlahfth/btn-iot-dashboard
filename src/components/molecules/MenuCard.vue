@@ -34,7 +34,7 @@
         </div>
         <p class="text-small font-medium">{{ convertToRp(price) }}</p>
       </div>
-      <div class="grid grid-flow-row gap-1">
+      <div v-if="isForProduct" class="grid grid-flow-row gap-1">
         <div class="grid lg:grid-flow-col grid-flow-row">
           <div class="relative w-full">
             <help-button
@@ -127,6 +127,7 @@ import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',
+  inheritAttrs: false,
   mixins: [mixin],
   components: {
     HelpBadge,
@@ -135,7 +136,7 @@ export default {
     HelpRadio,
     HelpOption,
   },
-  emits: ['openItemStatusModal', 'deleteItemCatalog'],
+  emits: ['openItemStatusModal', 'deleteItemCatalog', 'activeAddProduct'],
   props: {
     raw: {
       type: Object,
@@ -176,6 +177,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isForProduct: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -192,6 +197,10 @@ export default {
         {
           value: 'delete',
           label: 'Delete',
+        },
+        {
+          value: 'item_status',
+          label: 'Item Status',
         },
       ],
     };
@@ -214,10 +223,12 @@ export default {
       console.log(param, 'param ke baca ga');
       this.valueItem = param.value;
       this.$store.commit('SET_ITEM', this.raw);
-      if (param.value === 'edit') {
+      if (param.value === 'item_status') {
         this.$emit('openItemStatusModal');
-      } else {
+      } else if (param.value === 'delete') {
         this.$emit('deleteItemCatalog');
+      } else {
+        this.$emit('activeAddProduct');
       }
     },
   },
