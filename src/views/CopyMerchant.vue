@@ -5,8 +5,8 @@
         <p class="text-heading2 font-semibold">Copy Merchant</p>
       </div>
     </div>
-    <div class="w-full grid sm:flex gap-4 p-5 my-1 rounded-md">
-      <section class="auto-rows-max grid grid-flow-row rounded-md shadow-md px-4 bg-gray-300 w-full">
+    <div class="w-full grid sm:flex gap-4 p-3 my-1 rounded-md">
+      <section class="auto-rows-max grid grid-flow-row rounded-md shadow-md border border-gray-300 px-4 bg-gray-300 w-full">
         <div class="p-5 flex justify-center">
           <h1 class="font-medium text-subheading">Merchant A</h1>
         </div>
@@ -43,54 +43,54 @@
             <p class="text-heading1">404</p>
             <p>Merchant Sources Not Found</p>
           </div>
-          <div class="flex py-2 cursor-pointer" v-for="(merchant, i) in merchantA" :key="i">
-            <div class="grid w-full place-items-start antialiased text-gray-900 gap-4 sm:gap-6 rounded-lg" :class="{
+          <div class="flex py-2 cursor-pointer w-full" v-for="(merchant, i) in merchantA" :key="i">
+            <div class="rounded-lg grid place-items-center antialiased text-gray-900 gap-4 sm:gap-6 w-full" :class="{
             'bg-blue-50': merchant.checked,
               'bg-white': !merchant.checked,
             }">
               <div class="w-full relative rounded-lg">
-                <div class="sm:flex relative">
+                <div class="sm:flex relative w-full">
                   <help-badge class="absolute top-2 left-2" :label="merchant.status" :color="merchant.status === 'OPEN' ? 'positive' : 'negative'" />
                   <img
                     :src="merchant.banners.length ? merchant.banners[0].image_url : `${require('../assets/no_image.png')}`"
                     alt="random imgee"
-                    class="object-cover object-center shadow-md sm:w-44 h-44 w-full rounded-tl-lg"
+                    class="object-cover object-center shadow-md sm:w-44 h-44 w-full rounded-t-lg"
                   />
                   <div class="py-3 px-6">
-                    <h4 class="my-1 text-xl font-semibold uppercase leading-tight truncate">
+                    <h4 class="my-1 text-subheading font-semibold uppercase leading-tight truncate">
                       {{ merchant.name }}
                     </h4>
-                    <div class="my-1 flex justify-center items-center">
+                    <div class="my-1 grid grid-flow-col justify-start items-center">
                       <icon name="location-marker" />&nbsp;
-                      <span class="text-gray-600 text-sm"> {{ `${merchant.address?.line_address}, ${merchant.address?.district}, ${merchant.address?.city.name}, ${merchant.address?.state} ${merchant.address?.zip_code}` }}</span>
+                      <span class="text-gray-600 text-xs"> {{ `${merchant.address?.line_address}, ${merchant.address?.district}, ${merchant.address?.city.name}, ${merchant.address?.state} ${merchant.address?.zip_code}` }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="phone" />&nbsp;
-                      <span class="text-sm text-gray-600">{{ merchant.phone_number }}</span>
+                      <span class="text-xs text-gray-600">{{ merchant.phone_number }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="bank" />&nbsp;
-                      <span class="text-sm text-gray-600">{{ `${merchant.account.bank.name} - ${merchant.account.no} (${merchant.account.name})` }}</span>
+                      <span class="text-xs text-gray-600">{{ `${merchant.account.bank.name} - ${merchant.account.no} (${merchant.account.name})` }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="badge-checked" />&nbsp;
-                      <span class="text-sm" :class="{ 'text-mint' : merchant.verify_status === 'SUCCESS', 'text-flame' : merchant.verify_status !== 'SUCCESS' }">{{ merchant.verify_status }}</span>
+                      <span class="text-xs" :class="{ 'text-mint' : merchant.verify_status === 'SUCCESS', 'text-flame' : merchant.verify_status !== 'SUCCESS' }">{{ merchant.verify_status }}</span>
                     </div>
-                    <div class="flex w-full">
-                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 sm:p-2 rounded-xl shadow-md hover:shadow-lg bg-white" @click="handleMerchantDetail(merchant, 'A')">
+                    <div class="flex justify-between w-full">
+                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 px-4 py-2 rounded-xl shadow-md hover:shadow-lg bg-white" @click="handleMerchantDetail(merchant, 'A')">
                         <icon :name="merchant.modal ? 'double-chevron-up' : 'double-chevron-down'" />&nbsp;
-                        <p class="text-small text-gray-600">Detail Product</p>
+                        <p class="text-small text-gray-600">{{generateName('Detail')}}</p>
                       </div>&nbsp;
-                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 sm:p-2 rounded-xl shadow-md hover:shadow-lg bg-blue-500" @click="handleCheckMerchantA(merchant)">
+                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 px-4 py-2 rounded-xl shadow-md hover:shadow-lg bg-blue-500" @click="handleCheckMerchantA(merchant)">
                         <icon name="check-circle" color="white" />&nbsp;
-                        <p class="text-small text-white">Select Product</p>
+                        <p class="text-small text-white">{{merchant.checked ? generateName('Unselect') : generateName('Select')}}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div v-if="merchant.modal" class="bg-white rounded-md shadow-md w-full px-4 pb-4">
-                <div class="overflow-auto hide-scrollbar">
+                <div class="overflow-y-auto">
                   <template v-if="!loading.productA">
                     <template v-if="merchant.items && merchant.items.length">
                       <div v-for="(catalog, i) in merchant.items" :key="i">
@@ -101,6 +101,7 @@
                               v-for="(item, i) in catalog.items"
                               :key="i"
                               :raw="item"
+                              :is-edit="false"
                               :image-url="item.banners.length ? item.banners[0].image_url : ''"
                               :name="item.name"
                               :category="item.group.name"
@@ -108,6 +109,7 @@
                               :price="item.price"
                               :is-active="item.is_active"
                               :variants="item.variations"
+                              style="width: 75vw"
                             />
                           </template>
                           <template v-else>
@@ -130,7 +132,7 @@
                         <div class="rounded bg-grey-4 h-4 w-32"></div>
                       </div>
                       <div class="divide-y divide-grey-4">
-                        <menu-card v-for="i in 5" :key="i" :loading="true" />
+                        <menu-card :is-edit="false" v-for="i in 5" :key="i" :loading="true"  style="width: 75vw" />
                       </div>
                     </div>
                   </template>
@@ -140,9 +142,12 @@
           </div>
         </section>
       </section>
-      <icon
+      <div class="bg-white flex items-center justify-center rounded-md cursor-pointer shadow-md hover:shadow-lg self-center p-4" @click="copyMerchantAtoB">
+        <help-button :loading="loading.transfering" :icon-size="6" bg-color="white" icon-only :icon="screenWidth > 640 ? 'double-chevron-right' : 'double-chevron-down'" class="items-center p-1 text-flame" />
+      </div>
+      <!-- <icon
         v-if="screenWidth > 640"
-        class="bg-white items-center p-1 rounded-md cursor-pointer text-flame shadow-md hover:shadow-lg self-center w-10"
+        class="bg-white iems-center p-1 rounded-md cursor-pointer text-flame shadow-md hover:shadow-lg self-center w-10"
         :name="loading.transfering ? 'loading' : 'double-chevron-right'"
         :size="14"
         @click="copyMerchantAtoB"
@@ -155,7 +160,7 @@
         :size="14"
         @click="copyMerchantAtoB"
         :class="{ 'animate-spin': loading.transfering }"
-      />
+      /> -->
       <section class="auto-rows-max grid grid-flow-row rounded-md shadow-md px-4 bg-white w-full">
         <div class="p-5 text-center">
           <h1 class="font-medium text-subheading">Merchant B</h1>
@@ -193,54 +198,54 @@
             <p class="text-heading1">404</p>
             <p>Merchant Destination Not Found</p>
           </div>
-          <div class="flex py-2 cursor-pointer px-2" v-for="(merchant, i) in merchantB" :key="i">
+          <div class="flex py-2 cursor-pointer w-full rounded-t-lg" v-for="(merchant, i) in merchantB" :key="i">
             <div class="grid place-items-center antialiased text-gray-900 gap-4 sm:gap-6 w-full" :class="{
               'bg-blue-50': merchant.checked,
               'bg-white': !merchant.checked,
             }">
               <div class="w-full relative rounded-lg" :class="{ 'shadow-lg': !merchant.modal }">
-                <div class="sm:flex relative">
+                <div class="sm:flex relative w-full">
                   <help-badge class="absolute top-2 left-2" :label="merchant.status" :color="merchant.status === 'OPEN' ? 'positive' : 'negative'" />
                   <img
                     :src="merchant.banners.length ? merchant.banners[0].image_url : `${require('../assets/no_image.png')}`"
                     alt="random imgee"
-                    class="object-cover object-center shadow-md sm:w-44 h-44 w-full rounded-tl-lg"
+                    class="object-cover object-center shadow-md sm:w-44 h-44 w-full rounded-t-lg"
                   />
                   <div class="py-3 px-6">
-                    <h4 class="my-1 text-xl font-semibold uppercase leading-tight truncate">
+                    <h4 class="my-1 text-subheading font-semibold uppercase leading-tight truncate">
                       {{ merchant.name }}
                     </h4>
-                    <div class="my-1 flex justify-center items-center">
+                    <div class="my-1 grid grid-flow-col justify-start items-center">
                       <icon name="location-marker" />&nbsp;
-                      <span class="text-gray-600 text-sm"> {{ `${merchant.address?.line_address}, ${merchant.address?.district}, ${merchant.address?.city.name}, ${merchant.address?.state} ${merchant.address?.zip_code}` }}</span>
+                      <span class="text-gray-600 text-xs"> {{ `${merchant.address?.line_address}, ${merchant.address?.district}, ${merchant.address?.city.name}, ${merchant.address?.state} ${merchant.address?.zip_code}` }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="phone" />&nbsp;
-                      <span class="text-sm text-gray-600">{{ merchant.phone_number }}</span>
+                      <span class="text-xs text-gray-600">{{ merchant.phone_number }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="bank" />&nbsp;
-                      <span class="text-sm text-gray-600">{{ `${merchant.account.bank.name} - ${merchant.account.no} (${merchant.account.name})` }}</span>
+                      <span class="text-xs text-gray-600">{{ `${merchant.account.bank.name} - ${merchant.account.no} (${merchant.account.name})` }}</span>
                     </div>
                     <div class="my-1 flex items-center">
                       <icon name="badge-checked" />&nbsp;
-                      <span class="text-sm" :class="{ 'text-mint' : merchant.verify_status === 'SUCCESS', 'text-flame' : merchant.verify_status !== 'SUCCESS' }">{{ merchant.verify_status }}</span>
+                      <span class="text-xs" :class="{ 'text-mint' : merchant.verify_status === 'SUCCESS', 'text-flame' : merchant.verify_status !== 'SUCCESS' }">{{ merchant.verify_status }}</span>
                     </div>
-                    <div class="flex w-full">
-                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 sm:p-2 rounded-xl shadow-md hover:shadow-lg bg-white" @click="handleMerchantDetail(merchant, 'B')">
+                    <div class="flex justify-between w-full">
+                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 px-4 py-2 rounded-xl shadow-md hover:shadow-lg bg-white" @click="handleMerchantDetail(merchant, 'B')">
                         <icon :name="merchant.modal ? 'double-chevron-up' : 'double-chevron-down'" />&nbsp;
-                        <p class="text-small text-gray-600">Detail Product</p>
+                        <p class="text-small text-gray-600">{{generateName('Detail')}}</p>
                       </div>&nbsp;
-                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 sm:p-2 rounded-xl shadow-md hover:shadow-lg bg-blue-500" @click="handleCheckMerchantB(merchant)">
+                      <div class="flex justify-center items-center cursor-pointer m-2 p-1 px-4 py-2 rounded-xl shadow-md hover:shadow-lg bg-blue-500" @click="handleCheckMerchantB(merchant)">
                         <icon name="check-circle" color="white" />&nbsp;
-                        <p class="text-small text-white">Select Product</p>
+                        <p class="text-small text-white">{{merchant.checked ? generateName('Unselect') : generateName('Select')}}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div v-if="merchant.modal" class="bg-white rounded-md shadow-md w-full px-4 pb-4">
-                <div class="overflow-auto hide-scrollbar">
+                <div class="overflow-y-auto">
                   <template v-if="!loading.productB">
                     <template v-if="merchant.items && merchant.items.length">
                       <div v-for="(catalog, i) in merchant.items" :key="i">
@@ -251,6 +256,7 @@
                               v-for="(item, i) in catalog.items"
                               :key="i"
                               :raw="item"
+                              :is-edit="false"
                               :image-url="item.banners.length ? item.banners[0].image_url : ''"
                               :name="item.name"
                               :category="item.group.name"
@@ -258,6 +264,7 @@
                               :price="item.price"
                               :is-active="item.is_active"
                               :variants="item.variations"
+                               style="width: 75vw"
                             />
                           </template>
                           <template v-else>
@@ -280,7 +287,7 @@
                         <div class="rounded bg-grey-4 h-4 w-32"></div>
                       </div>
                       <div class="divide-y divide-grey-4">
-                        <menu-card v-for="i in 5" :key="i" :loading="true" />
+                        <menu-card :is-edit="false" v-for="i in 5" :key="i" :loading="true"  style="width: 75vw" />
                       </div>
                     </div>
                   </template>
@@ -299,6 +306,7 @@ import { useToast } from 'vue-toastification';
 import Icon from '@/components/atoms/Icon.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import HelpButton from '@/components/atoms/Button.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import API from '../apis';
 
@@ -309,6 +317,7 @@ export default {
     Icon,
     MenuCard,
     HelpBadge,
+    HelpButton,
   },
   computed: {
     screenWidth() {
@@ -347,6 +356,9 @@ export default {
     return { toast };
   },
   methods: {
+    generateName(param) {
+      return this.screenWidth < 640 ? param : `${param} Product`;
+    },
     async searchMerchantA() {
       this.loading.merchantA = true;
       try {

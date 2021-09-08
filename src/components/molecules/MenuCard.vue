@@ -38,6 +38,7 @@
         <div class="grid lg:grid-flow-col grid-flow-row">
           <div class="relative w-full">
             <help-button
+            v-if="isEdit"
             icon-only
             icon="dots-vertical"
             bg-color="transparent"
@@ -178,6 +179,10 @@ export default {
       default: false,
     },
     isForProduct: {
+      type: Boolean,
+      default: true,
+    },
+    isEdit: {
       type: Boolean,
       default: true,
     },
