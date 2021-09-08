@@ -12,10 +12,10 @@
   >
     <div class="grid grid-flow-col auto-cols-max gap-2">
       <div v-if="icon" class="h-full w-full flex items-center justify-center">
-        <icon :name="loading ? 'loading' : icon" :class="{ 'animate-spin': loading }" />
+        <icon :size="iconSize" :name="loading ? 'loading' : icon" :class="{ 'animate-spin': loading }" />
       </div>
       <div v-if="!icon && loading" class="h-full w-full flex items-center justify-center">
-        <icon name="loading" :class="{ 'animate-spin': loading }" />
+        <icon :size="iconSize" name="loading" :class="{ 'animate-spin': loading }" />
       </div>
       <div v-if="label" class="h-full w-full flex items-center">
         <p v-if="!loading" class="text-body">{{ buttonLabel }}</p>
@@ -68,6 +68,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    iconSize: {
+      type: [String, Number],
+      default: 4,
     },
   },
   components: {
