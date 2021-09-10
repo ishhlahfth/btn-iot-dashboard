@@ -68,7 +68,7 @@
           >
             See Detail
           </p>
-          <p v-if="column === 'discounts'" class="text-mint font-semibold">
+          <p v-if="column === 'discounts'" class="text-flame font-semibold">
             {{ row.discounts ? `- Rp ${Number(row.discounts.slice(1)).toLocaleString('ID')}` : '' }}
           </p>
         </template>
