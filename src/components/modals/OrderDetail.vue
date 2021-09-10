@@ -199,34 +199,16 @@
         </div>
         <div class="grid md:place-content-end gap-2 mx-5">
           <div class="grid gap-8 grid-cols-2">
-            <span>Initial Delivery fee</span>
-            <span v-if="!loading" class="font-medium text-right">
-              {{ convertToRp(order.order_type_details?.delivery_method.initial_price) }}
-            </span>
-            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
-          </div>
-          <div class="grid gap-8 grid-cols-2">
-            <span>Discount Delivery</span>
-            <span v-if="!loading" class="font-medium text-right text-mint">
-              {{
-                order.order_type_details?.delivery_method?.discounts
-                  ? `- Rp ${Number((String(order.order_type_details?.delivery_method?.discounts[0].discount)).slice(1)).toLocaleString('ID')}`
-                  : '- Rp 0'
-              }}
-            </span>
-            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
-          </div>
-          <div class="grid gap-8 grid-cols-2">
-            <span>Final Delivery fee</span>
-            <span v-if="!loading" class="font-medium text-right">
-              {{ convertToRp(order.order_type_details?.delivery_method.price) }}
-            </span>
-            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
-          </div>
-          <div class="grid gap-8 grid-cols-2">
             <span>Item total price</span>
             <span v-if="!loading" class="font-medium text-right">
               {{ convertToRp(order?.subtotal_price) }}
+            </span>
+            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
+          </div>
+          <div class="grid gap-8 grid-cols-2">
+            <span>Delivery fee</span>
+            <span v-if="!loading" class="font-medium text-right">
+              {{ convertToRp(order.order_type_details?.delivery_method.price) }}
             </span>
             <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
           </div>
@@ -238,6 +220,17 @@
             <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
           </div>
           <div class="grid gap-8 grid-cols-2">
+            <span>Wehelpyou</span>
+            <span v-if="!loading" class="font-medium text-right text-flame">
+              {{
+                order.discounts
+                  ? `- Rp ${Number((String(order.discounts?.total)).slice(1)).toLocaleString('ID')}`
+                  : '- Rp 0'
+              }}
+            </span>
+            <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
+          </div>
+          <div class="grid gap-8 grid-cols-2 border-t border-grey-4 pt-2">
             <span>Grand total</span>
             <span v-if="!loading" class="font-bold text-right">
               {{ convertToRp(order?.total_price) }}
