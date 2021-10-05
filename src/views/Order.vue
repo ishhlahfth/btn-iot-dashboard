@@ -78,6 +78,10 @@
 </template>
 
 <script>
+import Moment from 'moment/moment';
+import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -86,11 +90,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
-import Moment from 'moment/moment';
-import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
 import API from '../apis';
 
 export default {
@@ -348,8 +348,8 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
-          discounts: el.order_type_details?.delivery_method?.discounts
-            ? String(el.order_type_details?.delivery_method?.discounts[0].discount)
+          discounts: el.discounts
+            ? String(el.discounts?.total)
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
