@@ -98,7 +98,7 @@
               icon="trash"
               bg-color="red-600"
               class="absolute top-34"
-              @click="handleDeletePhoto(productImage)"
+              @click="handleDeletePhoto(productImage, i)"
             />
           </div>
           <div
@@ -602,8 +602,9 @@ export default {
       this.dialog = false;
       this.isBiggerSize = false;
     },
-    handleDeletePhoto(payload) {
+    handleDeletePhoto(payload, idx) {
       this.modal.sm = true;
+      payload.index = idx;
       this.payloadPhoto = payload;
     },
     handleAddCatalog() {
@@ -682,7 +683,8 @@ export default {
       } else {
         this.productImages = this.productImages.filter((el) => el.src !== this.payloadPhoto.src);
         if (!this.isEditProduct || this.imageFile) {
-          this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
+          this.imageFile.splice(this.payloadPhoto.index, 1);
+          // this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
         }
       }
       if (this.isEditProduct) {
