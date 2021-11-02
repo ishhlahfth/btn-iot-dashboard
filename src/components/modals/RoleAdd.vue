@@ -89,12 +89,12 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 
-import { useToast } from 'vue-toastification';
 import API from '@/apis';
 
 export default {

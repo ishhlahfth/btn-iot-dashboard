@@ -25,9 +25,9 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
-import { useToast } from 'vue-toastification';
 import API from '../../apis';
 
 export default {

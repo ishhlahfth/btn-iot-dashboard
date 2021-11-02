@@ -73,10 +73,10 @@ import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
+import axios from 'axios';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-import axios from 'axios';
 
 export default {
   name: 'Login',
@@ -104,7 +104,7 @@ export default {
     const resetPasswordModal = ref(false);
     const resetPasswordLoading = ref(false);
 
-    const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+    const auth = `Basic ${Buffer.from(process.env.VUE_APP_BASIC_AUTH).toString('base64')}`;
 
     const sendVerifyEmail = async () => {
       try {

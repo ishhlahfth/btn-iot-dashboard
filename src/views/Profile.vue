@@ -117,11 +117,11 @@ import { uuid } from 'uuidv4';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { useToast } from 'vue-toastification';
 import Icon from '@/components/atoms/Icon.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
-import { useToast } from 'vue-toastification';
 import API from '@/apis';
 import mixin from '@/mixin';
 

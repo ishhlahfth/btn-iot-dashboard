@@ -186,11 +186,11 @@
 
 <script>
 import axios from 'axios';
+import dayjs from 'dayjs';
+import html2pdf from 'html2pdf.js';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
-import html2pdf from 'html2pdf.js';
 
 export default {
   name: 'Invoice',

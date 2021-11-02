@@ -78,16 +78,9 @@
     </div>
   </div>
 </template>
-<style>
-.tooltip {
-  @apply invisible absolute;
-}
-.has-tooltip:hover .tooltip {
-  @apply visible z-50;
-}
-</style>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import HelpButton from '@/components/atoms/Button.vue';
@@ -96,7 +89,6 @@ import HelpAvatar from '@/components/atoms/Avatar.vue';
 import RoleDetail from '@/components/modals/RoleDetail.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
 
-import { useToast } from 'vue-toastification';
 import API from '../apis';
 
 export default {
@@ -229,4 +221,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.tooltip {
+  @apply invisible absolute;
+}
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+</style>
