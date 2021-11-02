@@ -129,6 +129,8 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import Commission from '@/components/modals/Commission.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
@@ -143,9 +145,7 @@ import MerchantDetail from '@/components/modals/MerchantDetail.vue';
 import MerchantFilter from '@/components/modals/MerchantFilter.vue';
 import MerchantVerification from '@/components/modals/MerchantVerification.vue';
 import MerchantVerificationOption from '@/components/modals/MerchantVerificationOption.vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
 import API from '../apis';
 
 export default {

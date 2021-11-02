@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -72,7 +73,6 @@ import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
 import AdminDetail from '@/components/modals/AdminDetail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import API from '@/apis';
 
