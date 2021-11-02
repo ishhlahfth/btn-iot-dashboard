@@ -11,7 +11,6 @@
     "@aws-sdk/client-cognito-identity": "^3.13.0",
     "@aws-sdk/client-s3": "^3.13.0",
     "@aws-sdk/credential-provider-cognito-identity": "^3.13.0",
-    "@mathieustan/vue-datepicker": "^0.2.11",
     "@tailwindcss/postcss7-compat": "2.0.2",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
