@@ -104,7 +104,7 @@ export default {
     const resetPasswordModal = ref(false);
     const resetPasswordLoading = ref(false);
 
-    const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+    const auth = `Basic ${Buffer.from(process.env.VUE_APP_BASIC_AUTH).toString('base64')}`;
 
     const sendVerifyEmail = async () => {
       try {
