@@ -288,7 +288,7 @@ export default {
           subtotal_price: this.convertToRp(el.subtotal_price),
           total_price: this.convertToRp(el.total_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
-          payment_method: el.payment.name,
+          payment_method: el.payment?.name,
           discounts: el.discounts
             ? String(el.discounts?.total)
             : '',
@@ -356,9 +356,9 @@ export default {
           total_price: this.convertToRp(el.total_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
-          discounts: el.discounts
+          discounts: el.discounts?.total
             ? String(el.discounts?.total)
-            : '',
+            : '0',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
         }));
       } catch (error) {

@@ -1,6 +1,8 @@
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import dayjs from 'dayjs';
 import API from '../apis';
+import access from './access';
 
 export default createStore({
   state: {
@@ -137,7 +139,7 @@ export default createStore({
           menu: [],
         };
         if (data.banners?.length) {
-          merchant.imageUrl = await dispatch('loadImage', data.banners[0].url);
+          merchant.imageUrl = await dispatch('loadImage', data.banners[0].image_url);
         }
 
         const {
@@ -223,4 +225,8 @@ export default createStore({
       return `Rp ${dispatch('groupDigit', value)}`;
     },
   },
+  modules: {
+    access,
+  },
+  plugins: [createPersistedState()],
 });

@@ -34,7 +34,7 @@
           <help-button label="cancel" bg-color="flame" @click="reorderMode = false" />
           <help-button label="save" bg-color="mint" />
         </template>
-        <help-button label="add" icon="plus" @click="addBanner" />
+        <help-button label="add" icon="plus" @click="addBanner" v-if="bannerAccess.create" />
       </div>
     </div>
     <div class="overflow-hidden">
@@ -86,6 +86,7 @@
               @click="editBanner(row)"
             />
             <help-button
+              v-if="bannerAccess.delete"
               bg-color="flame"
               color="white"
               icon="trash"
@@ -156,6 +157,11 @@ export default {
       bannerDetail: false,
       bannerForm: false,
       deleteConfirmation: false,
+      bannerAccess: {
+        create: false,
+        update: false,
+        delete: false,
+      },
     };
   },
   computed: {
@@ -180,7 +186,7 @@ export default {
           image_url: '',
         }));
         for (let i = 0; i < data.length; i += 1) {
-          const response = await this.$store.dispatch('loadImage', data[i].url);
+          const response = await this.$store.dispatch('loadImage', data[i].image_url);
           this.banners[i].image_url = response;
         }
         this.bannerPagination = {
@@ -249,6 +255,18 @@ export default {
   },
   mounted() {
     this.getBanners(this.bannerPagination);
+    this.$store.state.access.access.permissions.forEach((el) => {
+      switch (el.id) {
+        case 49:
+          this.bannerAccess.create = true;
+          break;
+        case 50:
+          this.bannerAccess.delete = true;
+          break;
+        default:
+          break;
+      }
+    });
   },
 };
 </script>

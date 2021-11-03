@@ -18,10 +18,21 @@
   <help-modal v-model="detailModal">
     <admin-detail />
   </help-modal>
+  <help-modal v-model="deleteConfirmation">
+    <confirmation
+      title="Delete confirmation"
+      message="This action cannot be undone. Are you sure you want to delete this user permanently?"
+      :confirm-loading="deleteLoading"
+      loading-label="deleting"
+      @close="deleteConfirmation = false"
+      @cancel="deleteConfirmation = false"
+      @confirm="deleteUser"
+    />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Admin</p>
-      <help-button label="add" icon="plus" @click="addModal = true" />
+      <help-button label="add" icon="plus" @click="addModal = true" v-if="adminAccess.create" />
     </div>
     <div>
       <form @submit.prevent="getAdmins">
@@ -55,8 +66,15 @@
             @change="handleActiveAdmin(row)"
             />
           </div>
-          <div v-if="column === 'actions'">
-            <help-button icon-only icon="edit" @click="handleDetail(row, 'edit')" />
+          <div v-if="column === 'actions'" class="grid grid-flow-col gap-1 auto-cols-max">
+            <help-button icon-only icon="edit" @click="handleDetail(row, 'edit')" v-if="adminAccess.update" />
+            <help-button
+            v-if="adminAccess.delete"
+            bg-color="flame"
+            color="white"
+            icon="trash"
+            icon-only
+            @click="openConfirmation(row.id)" />
           </div>
         </template>
       </help-table>
@@ -73,6 +91,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
 import AdminDetail from '@/components/modals/AdminDetail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 import mixin from '@/mixin';
 import API from '@/apis';
 
@@ -87,6 +106,7 @@ export default {
     AdminAddEdit,
     HelpToggle,
     AdminDetail,
+    Confirmation,
   },
   setup() {
     const toast = useToast();
@@ -118,6 +138,13 @@ export default {
       is_active: {},
       addModal: false,
       editModal: false,
+      adminAccess: {
+        create: false,
+        update: false,
+        delete: false,
+      },
+      deleteConfirmation: false,
+      deleteLoading: false,
     };
   },
   methods: {
@@ -180,6 +207,23 @@ export default {
       }
       this.loading = false;
     },
+    async deleteUser() {
+      try {
+        this.deleteLoading = true;
+        await API.delete(`employees/${this.userId}`);
+
+        this.getAdmins(this.adminPagination);
+        this.deleteConfirmation = false;
+        this.toast.success('User successfully deleted');
+      } catch (error) {
+        this.toast.error(error.message);
+      }
+      this.deleteLoading = false;
+    },
+    openConfirmation(userId) {
+      this.deleteConfirmation = true;
+      this.$store.commit('SET_USER_ID', userId);
+    },
     handleClose() {
       if (this.addModal) {
         this.addModal = false;
@@ -230,6 +274,26 @@ export default {
   },
   mounted() {
     this.generateFetchData();
+    this.$store.state.access.access.permissions.forEach((el) => {
+      switch (el.id) {
+        case 84:
+          this.adminAccess.create = true;
+          break;
+        case 85:
+          this.adminAccess.update = true;
+          break;
+        case 86:
+          this.adminAccess.delete = true;
+          break;
+        default:
+          break;
+      }
+    });
+  },
+  computed: {
+    userId() {
+      return this.$store.state.userId;
+    },
   },
 };
 </script>

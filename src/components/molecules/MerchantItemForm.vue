@@ -31,15 +31,15 @@
   </help-modal>
   <help-modal v-model="dialog" permanent>
     <div class="slide-up modal-md">
-      <div :class="isBiggerSize ? 'w-3/4' : 'w-full'">
+      <div class="w-full sm:max-h-100 overflow-y-auto">
         <VueCropper
           v-show="selectedFile"
           ref="cropper"
           :src="selectedFile"
           alt="Source Image"
           drag-mode="crop"
-          :aspectRatio="1/1"
-          :initialAspectRatio="1/1"
+          :aspectRatio="1 / 1"
+          :initialAspectRatio="1 / 1"
           :auto-crop-area="2"
           :cropBoxResizable="false"
           :min-container-width="defaultSizeCrop"
@@ -53,6 +53,7 @@
       </div>
     </div>
   </help-modal>
+
   <div v-if="flagVarianGroup">
     <varian-options @closeVarian="flagVarianGroup = false" @getSelectVarian="submitSelectVarian" :flagEditVarian="flagEditVarian" :data="payloadToSend.variations" :isEdit="isEditProduct" />
   </div>
@@ -75,7 +76,7 @@
           <div
             v-for="(productImage, i) in productImages"
             :key="i"
-            class="bg-grey-4 flex items-center justify-center rounded-md w-16 h-16 lg:h-20 lg:w-20 xl:w-26 xl:h-26"
+            class="bg-grey-4 flex items-center justify-center rounded-md w-16 h-16 lg:h-20 lg:w-20 xl:w-26 xl:h-26 relative"
             @mouseover="handleHover(i, true)"
             @mouseleave="handleHover(i, false)"
           >
@@ -98,7 +99,7 @@
               icon="trash"
               bg-color="red-600"
               class="absolute top-34"
-              @click="handleDeletePhoto(productImage)"
+              @click="handleDeletePhoto(productImage, i)"
             />
           </div>
           <div
@@ -245,6 +246,9 @@ import { useToast } from 'vue-toastification';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import imageCompression from 'browser-image-compression';
+import { uuid } from 'uuidv4';
+import VueCropper from 'vue-cropperjs';
 import Icon from '@/components/atoms/Icon.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
@@ -254,11 +258,8 @@ import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 import VarianOptions from '@/components/sub-components/VarianOptions.vue';
 import ProductCatalog from '@/components/sub-components/ProductCatalog.vue';
-import imageCompression from 'browser-image-compression';
 import mixin from '@/mixin';
-import { uuid } from 'uuidv4';
 import API from '@/apis';
-import VueCropper from 'vue-cropperjs';
 
 export default {
   name: 'MerchantItemForm',
@@ -602,8 +603,9 @@ export default {
       this.dialog = false;
       this.isBiggerSize = false;
     },
-    handleDeletePhoto(payload) {
+    handleDeletePhoto(payload, idx) {
       this.modal.sm = true;
+      payload.index = idx;
       this.payloadPhoto = payload;
     },
     handleAddCatalog() {
@@ -682,7 +684,8 @@ export default {
       } else {
         this.productImages = this.productImages.filter((el) => el.src !== this.payloadPhoto.src);
         if (!this.isEditProduct || this.imageFile) {
-          this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
+          this.imageFile.splice(this.payloadPhoto.index, 1);
+          // this.imageFile = this.imageFile.filter((el) => el.url !== this.payloadPhoto.url);
         }
       }
       if (this.isEditProduct) {

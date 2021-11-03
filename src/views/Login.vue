@@ -60,7 +60,7 @@
         >
           Forgot your password?
         </p>
-        <help-button label="sign in" :loading="loading" loading-label="signing in" />
+        <help-button label="sign in" :loading="loadingBackdrop" loading-label="signing in" />
       </form>
     </div>
   </div>
@@ -77,6 +77,7 @@ import axios from 'axios';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
+// import API from '../apis';
 
 export default {
   name: 'Login',
@@ -103,6 +104,7 @@ export default {
     const loading = ref(false);
     const resetPasswordModal = ref(false);
     const resetPasswordLoading = ref(false);
+    const loadingBackdrop = ref(false);
 
     const auth = `Basic ${Buffer.from(process.env.VUE_APP_BASIC_AUTH).toString('base64')}`;
 
@@ -147,6 +149,66 @@ export default {
       }
     });
 
+    const getRoleById = async (id, token) => {
+      try {
+        const {
+          data: { data },
+        } = await axios(`${process.env.VUE_APP_BASE_URL}v1/roles/${id}`, {
+          headers: {
+            'x-device-type': 'LINUX',
+            'x-device-os-version': 'Ubuntu18.04',
+            'x-device-model': '4s-dk0115AU',
+            'x-app-version': 'v1.2',
+            'x-request-id': '1234',
+            'x-device-utc-offset': '+07:00',
+            'x-device-lang': 'en',
+            'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
+            'x-api-key': `${token}`,
+          },
+        });
+        const dataToSend = {
+          ...data,
+          permissions: data.permissions.map((el) => {
+            switch (el.module.toLowerCase()) {
+              case 'dashboard':
+                el.dummySequence = 1;
+                break;
+              case 'order-type':
+                el.dummySequence = 3;
+                break;
+              case 'payment':
+                el.dummySequence = 5;
+                break;
+              case 'merchant':
+                el.dummySequence = 2;
+                break;
+              case 'banner':
+                el.dummySequence = 6;
+                break;
+              case 'role':
+                el.dummySequence = 8;
+                break;
+              case 'user':
+                el.dummySequence = 7;
+                break;
+              case 'transfer_queues':
+                el.dummySequence = 4;
+                break;
+              default:
+                break;
+            }
+            return el;
+          }),
+        };
+        store.commit('setAccess', dataToSend);
+        store.commit('setRedirect', data.permissions);
+        router.push('/bns');
+        loadingBackdrop.value = false;
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     const signIn = async () => {
       if (!email.value) invalid.value.email = true;
       if (!password.value) invalid.value.password = true;
@@ -163,7 +225,9 @@ export default {
           } = await axios.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload, {
             headers: { authorization: auth },
           });
-
+          getRoleById(data.role_id, data.access_token);
+          loadingBackdrop.value = true;
+          console.log(data, 'ini hasil login');
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
             user = Base64.stringify(user);
@@ -172,7 +236,6 @@ export default {
               cookieValue: user,
               expiresIn: 3,
             });
-            router.push('/bns');
           }
         } catch (error) {
           toast.error(error.response.data.meta.message);
@@ -213,6 +276,7 @@ export default {
       signIn,
       visiblePassword,
       loading,
+      loadingBackdrop,
       resetPasswordModal,
       resetPasswordLoading,
       sendVerifyEmail,
