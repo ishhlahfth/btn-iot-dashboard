@@ -48,22 +48,120 @@ export default {
   data() {
     return {
       collapsed: true,
+      menu: {
+        dashboard: false,
+        merchant: {
+          update: false,
+          delete: false,
+        },
+        order: {
+          update: false,
+          delete: false,
+        },
+        transfer: {
+          update: false,
+          delete: false,
+        },
+        payment: {
+          update: false,
+          delete: false,
+        },
+        banner: {
+          create: false,
+          update: false,
+          delete: false,
+        },
+        admin: {
+          create: false,
+          update: false,
+          delete: false,
+        },
+      },
       links: [
-        { path: '/bns/dashboard', label: 'Dashboard', icon: 'home' },
-        { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
-        { path: '/bns/order', label: 'Order', icon: 'cube' },
-        { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },
-        { path: '/bns/payment', label: 'Payment', icon: 'credit-card' },
-        { path: '/bns/banner', label: 'Banner', icon: 'photograph' },
-        { path: '/bns/admin', label: 'Admin', icon: 'shield' },
-        { path: '/bns/role', label: 'Role', icon: 'user-group' },
+        // { path: '/bns/dashboard', label: 'Dashboard', icon: 'home' },
+        // { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
+        // { path: '/bns/order', label: 'Order', icon: 'cube' },
+        // { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },
+        // { path: '/bns/payment', label: 'Payment', icon: 'credit-card' },
+        // { path: '/bns/banner', label: 'Banner', icon: 'photograph' },
+        // { path: '/bns/admin', label: 'Admin', icon: 'shield' },
+        // { path: '/bns/role', label: 'Role', icon: 'user-group' },
       ],
     };
+  },
+  methods: {
+    getCookie(cname) {
+      const name = `${cname}=`;
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i += 1) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    },
   },
   computed: {
     mini() {
       return this.$store.state.mini;
     },
+  },
+  mounted() {
+    const permission = this.$store.state.access.access;
+    const tempFilter = permission.permissions.filter((el) => el.dummySequence).sort((a, b) => a.dummySequence - b.dummySequence);
+    console.log(tempFilter, 'bisa ga');
+    if (tempFilter) {
+      tempFilter.forEach((el) => {
+        switch (el.module.toLowerCase()) {
+          case 'dashboard':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/dashboard', label: 'Dashboard', icon: 'home' });
+            }
+            break;
+          case 'order-type':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/order', label: 'Order', icon: 'cube' });
+            }
+            break;
+          case 'payment':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/payment', label: 'Payment', icon: 'credit-card' });
+            }
+            break;
+          case 'merchant':
+            if (el.action === 'READ' && el.id === 42) {
+              this.links.push({ path: '/bns/merchant', label: 'Merchant', icon: 'user' });
+            }
+            break;
+          case 'banner':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/banner', label: 'Banner', icon: 'photograph' });
+            }
+            break;
+          case 'role':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/role', label: 'Role', icon: 'user-group' });
+            }
+            break;
+          case 'user':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/admin', label: 'Admin', icon: 'shield' });
+            }
+            break;
+          case 'transfer_queues':
+            if (el.action === 'READ') {
+              this.links.push({ path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' });
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    }
   },
 };
 </script>

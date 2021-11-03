@@ -20,6 +20,7 @@
 <script>
 export default {
   name: 'HelpModal',
+  emits: ['update'],
   props: {
     modelValue: {
       type: Boolean,

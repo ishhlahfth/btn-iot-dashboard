@@ -1,4 +1,16 @@
 <template>
+  <help-modal v-model="modal.deletePhoto" permanent>
+    <confirmation
+      :title="`Delete Confirmation`"
+      :message="`This action cannot be undone, and the picture will permanently deleted, are you sure want to delete ?`"
+      @close="modal.deletePhoto = false"
+      @cancel="modal.deletePhoto = false"
+      @confirm="deletePhoto"
+      :confirmLoading="loadingDelete"
+      labelOk="Delete"
+      labelCancel="Cancel"
+    />
+  </help-modal>
   <div class="modal-md inner-modal-fixed overflow-auto grid gap-6 p-1">
     <div class="flex justify-between items-center">
       <p class="text-heading4 font-semibold">
@@ -115,7 +127,8 @@
             >
               Edit
             </span>
-            <span class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
+            <span v-if="adminType !== 'edit'" class="text-flame cursor-pointer font-medium" @click="src = ''">Remove</span>
+            <span v-if="adminType === 'edit'" class="text-flame cursor-pointer font-medium" @click="modal.deletePhoto = true">Remove</span>
           </div>
         </div>
       </div>
@@ -158,6 +171,8 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
+import HelpModal from '@/components/templates/Modal.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 import API from '../../apis';
 
 export default {
@@ -205,14 +220,22 @@ export default {
         disableMobile: 'true',
       },
       visiblePassword: false,
+      modal: {
+        deletePhoto: false,
+      },
+      loadingDelete: false,
+      bannerID: null,
     };
   },
   components: {
     HelpInput,
     HelpButton,
     HelpSelect,
+    HelpModal,
     HelpThumbnail,
+    Confirmation,
   },
+
   methods: {
     handleChangeImg(e) {
       if (e.target.files.length) {
@@ -223,6 +246,19 @@ export default {
         this.imageFile = { file, fileName, url };
         this.imageIsChanged = true;
       }
+    },
+    async deletePhoto() {
+      this.loadingDelete = true;
+      try {
+        await API.delete(`banners/${this.bannerID}`);
+        this.toast.success('Product images successfully deleted !');
+        this.bannerID = null;
+      } catch (error) {
+        this.toast.error(error.response?.data?.meta?.message);
+      }
+      this.src = '';
+      this.modal.deletePhoto = false;
+      this.loadingDelete = false;
     },
     async submit() {
       // if(!this.form.name)
@@ -246,12 +282,22 @@ export default {
           phone_number: this.form.phone_number,
           date_of_birth: this.form.date_of_birth,
         };
-        console.log(dataToSend, 'data to send');
-        const {
-          data: { data },
-        } = await API.patch(`/employees/${this.$store.state.adminDetail.id}`, dataToSend);
-        console.log(data);
-        this.handleEditAdmin(data.id);
+        try {
+          const {
+            data: { data },
+          } = await API.patch(`/employees/${this.$store.state.adminDetail.id}`, dataToSend);
+          if (this.bannerID) {
+            this.handleEditAdmin(data.id);
+          } else {
+            this.handleAddAdmin(data.id, `${this.form.name}'s profile has been successfully edited !`);
+          }
+        } catch (error) {
+          if (error.response?.data?.meta) {
+            this.toast.error(error.response.data.meta.message);
+          } else {
+            this.toast.error(error.message);
+          }
+        }
       } else {
         this.form.role_id = this.selectedStatus.value;
         const dataToSend = {
@@ -263,7 +309,7 @@ export default {
         const {
           data: { data },
         } = await API.post('/employees', dataToSend);
-        this.handleAddAdmin(data.id);
+        this.handleAddAdmin(data.id, 'success create admin');
       }
     },
     async uploadS3(callback) {
@@ -288,7 +334,7 @@ export default {
         }
       }
     },
-    handleAddAdmin(id) {
+    handleAddAdmin(id, successMessage) {
       this.uploadS3(async (S3Response) => {
         const BNSParams = {
           title: this.form.name,
@@ -317,7 +363,7 @@ export default {
           this.$emit('reload');
           this.$emit('close');
           console.log(data);
-          this.toast.success('success create admin');
+          this.toast.success(successMessage);
         } catch (error) {
           this.toast.error(error.message);
         }
@@ -352,11 +398,12 @@ export default {
       }
     },
     async patchBNS(payload) {
+      console.log(this.$store.state.adminDetail, 'ngetes');
       try {
         this.loading = true;
         const {
           data: { data },
-        } = await API.patch(`banners/${this.$store.state.adminDetail.banner.id}`, payload);
+        } = await API.patch(`banners/${this.bannerID}`, payload);
         this.$emit('reload');
         this.$emit('close');
         console.log(data);
@@ -369,6 +416,7 @@ export default {
   },
   mounted() {
     if (this.adminType === 'edit') {
+      this.bannerID = this.$store.state.adminDetail.banner.id;
       this.form.name = this.$store.state.adminDetail.name || '';
       this.form.email = this.$store.state.adminDetail.email || '';
       this.form.phone_number = this.$store.state.adminDetail.phone_number || '';

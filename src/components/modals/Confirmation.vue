@@ -15,20 +15,21 @@
       <p>{{ message }}</p>
     </div>
 
-    <div class="flex flex-col sm:flex-row-reverse">
-      <help-button
-        @click="$emit('confirm')"
-        label="yes i'm sure"
-        class="mb-2 sm:mb-0"
-        :loading="confirmLoading"
-        :loading-label="loadingLabel"
-      />
+    <div class="flex flex-row justify-end">
       <help-button
         @click="$emit('cancel')"
         label="cancel"
         class="mb-2 sm:mb-0 sm:mr-2"
         bg-color="transparent"
         color="grey-1"
+      />
+      <help-button
+        :bg-color="bgColor"
+        @click="$emit('confirm')"
+        label="yes i'm sure"
+        class="mb-2 sm:mb-0"
+        :loading="confirmLoading"
+        :loading-label="loadingLabel"
       />
     </div>
   </div>
@@ -55,6 +56,10 @@ export default {
     loadingLabel: {
       type: String,
       default: '',
+    },
+    bgColor: {
+      type: String,
+      default: 'midnight',
     },
   },
   components: {

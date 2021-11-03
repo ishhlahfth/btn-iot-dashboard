@@ -47,7 +47,7 @@
         </template>
       </template>
     </div>
-    <form @submit.prevent="updateStatus" class="grid gap-4" v-if="actions.length">
+    <form @submit.prevent="updateStatus" class="grid gap-4" v-if="actions.length && updateAccess">
       <div class="w-full">
         <help-select
           v-model="selectedAction"
@@ -101,6 +101,10 @@ export default {
     currentPropStep: {
       type: String,
       default: '',
+    },
+    updateAccess: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
