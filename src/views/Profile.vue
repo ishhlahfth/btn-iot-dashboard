@@ -343,7 +343,6 @@ export default {
         const {
           data: { data },
         } = await API.patch(`banners/${this.bannerId}`, payload);
-        console.log(data, 'result banner');
         this.$store.commit('SET_IMAGE_PROFILE', data.image_url);
         this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
       } catch (error) {

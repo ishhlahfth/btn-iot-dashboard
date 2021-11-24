@@ -51,7 +51,6 @@
       <div class="w-full">
         <help-select
           v-model="selectedAction"
-          @input="handleSelectAction"
           label="Choose action"
           :options="actions"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
@@ -168,7 +167,7 @@ export default {
         }));
         this.history = this.history.filter((el, i) => this.history.findIndex((e) => e.step_title === el.step_title) === i);
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.history = false;
     },
@@ -185,7 +184,7 @@ export default {
           : [];
         this.selectedAction = this.actions.length ? this.actions[0] : {};
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.steps = false;
     },
@@ -210,13 +209,10 @@ export default {
         this.getOrderSteps();
       } catch (error) {
         this.toast.error(error);
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.update = false;
       this.$emit('close');
-    },
-    handleSelectAction() {
-      console.log(this.selectedAction, 'kebaca ga');
     },
   },
   watch: {
@@ -233,7 +229,7 @@ export default {
             this.reasons = data.map((el) => ({ value: el.id, label: el.reason }));
             this.selectedReason = this.reasons[0];
           } catch (error) {
-            console.log(error);
+            this.toast.error(error.message);
           }
         } else if (this.selectedAction.label === 'Tolak Pesanan') {
           this.needsReason.merchant = true;
@@ -245,7 +241,7 @@ export default {
             this.reasons = data.map((el) => ({ value: el.id, label: el.reason }));
             this.selectedReason = this.reasons[0];
           } catch (error) {
-            console.log(error);
+            this.toast.error(error.message);
           }
         } else {
           this.needsReason.customer = false;

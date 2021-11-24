@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import API from '../../apis';
@@ -95,6 +96,10 @@ export default {
     },
   },
   emits: ['close', 'openOption', 'openConfirmSuspend'],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       loading: '',
@@ -122,8 +127,6 @@ export default {
           data: { data },
         } = await API.get(`merchants/${this.verifDetail.id}/sellers`);
 
-        console.log('K T P', data);
-
         this.idNumber = data[0]?.profile.identity_number || '-';
 
         if (data[0]?.banners.length) {
@@ -133,7 +136,7 @@ export default {
           );
         }
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },
