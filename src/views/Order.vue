@@ -68,7 +68,7 @@
           >
             See Detail
           </p>
-          <p v-if="column === 'discounts'" class="text-mint font-semibold">
+          <p v-if="column === 'discounts'" class="text-flame font-semibold">
             {{ row.discounts ? `- Rp ${Number(row.discounts.slice(1)).toLocaleString('ID')}` : '' }}
           </p>
         </template>
@@ -78,6 +78,10 @@
 </template>
 
 <script>
+import Moment from 'moment/moment';
+import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -86,11 +90,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
-import Moment from 'moment/moment';
-import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
 import API from '../apis';
 
 export default {
@@ -134,7 +134,7 @@ export default {
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
-        { field: 'code', label: 'po number' },
+        { field: 'code', label: 'po number', align: 'center' },
         {
           field: 'current_step',
           label: 'status',
@@ -143,12 +143,18 @@ export default {
         },
         { field: 'merchant_name', label: 'merchant name', sortable: true },
         { field: 'customer_name', label: 'buyer name', sortable: true },
-        { field: 'subtotal_price', label: 'item price' },
-        { field: 'commission_fee', label: 'commission' },
-        { field: 'initial_price', label: 'initial delivery price' },
-        { field: 'discounts', label: 'discount' },
-        { field: 'delivery_price', label: 'final delivery price' },
-        { field: 'payment_method', label: 'payment method', sortable: true },
+        { field: 'subtotal_price', label: 'item price', align: 'center' },
+        { field: 'commission_fee', label: 'commission', align: 'center' },
+        { field: 'initial_price', label: 'initial delivery price', align: 'center' },
+        { field: 'discounts', label: 'discount', align: 'center' },
+        { field: 'delivery_price', label: 'final delivery price', align: 'center' },
+        { field: 'total_price', label: 'total payment', align: 'center' },
+        {
+          field: 'payment_method',
+          label: 'payment method',
+          sortable: true,
+          align: 'center',
+        },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
       transferMode: false,
@@ -255,7 +261,6 @@ export default {
         endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
 
-      console.log(`${startDate} - ${endDate}`);
       if (startDate && endDate) {
         url += `&summary_date_range=${startDate}to-${endDate}`;
       }
@@ -280,6 +285,7 @@ export default {
           customer_name: el.customer?.profile?.name,
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
+          total_price: this.convertToRp(el.total_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment?.name,
           discounts: el.discounts
@@ -346,6 +352,7 @@ export default {
           customer_name: el.customer?.profile?.name,
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
+          total_price: this.convertToRp(el.total_price),
           delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment.name,
           discounts: el.discounts?.total
@@ -415,7 +422,6 @@ export default {
         ? Moment(this.appliedFilter.selectedStart)
         : Moment(this.appliedFilter.selectedEnd).subtract(this.exportLimit + 1, 'd');
       const difference = Math.abs(exportEndDate.diff(exportStartDate, 'days'));
-      console.log(difference);
       if (difference > this.exportLimit) {
         this.toast.error(
           `You can only export the data with maximum ${this.exportLimit} days date range.`,

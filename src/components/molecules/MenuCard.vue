@@ -225,7 +225,6 @@ export default {
       this.flagOption = !this.flagOption;
     },
     handleClickItem(param) {
-      console.log(param, 'param ke baca ga');
       this.valueItem = param.value;
       this.$store.commit('SET_ITEM', this.raw);
       if (param.value === 'item_status') {

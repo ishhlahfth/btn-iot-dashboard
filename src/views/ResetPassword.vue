@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
+import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 
 export default {
   name: 'ResetPassword',

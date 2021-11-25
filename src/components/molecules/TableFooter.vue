@@ -9,6 +9,7 @@
         of
         <span class="font-medium">{{ count }}</span>
       </template>
+      <span class="hidden sm:inline"> results</span>
     </p>
 
     <div class="flex items-center text-small">
