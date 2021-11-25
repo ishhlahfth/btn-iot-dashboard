@@ -26,6 +26,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { useToast } from 'vue-toastification';
 import axios from 'axios';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
@@ -44,6 +45,10 @@ export default {
       files: '',
     };
   },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   computed: {
     ...mapState(['user']),
   },
@@ -58,14 +63,13 @@ export default {
           .post(`/api/user/${userId}/profile-photo`, formData)
           .then(() => {})
           .catch((error) => {
-            console.log(error);
+            this.toast.error(error.message);
           });
       }, this.mime_type);
     },
     onFileSelect(e) {
       const file = e.target.files[0];
       this.mime_type = file.type;
-      console.log(this.mime_type);
       if (typeof FileReader === 'function') {
         this.dialog = true;
         const reader = new FileReader();
@@ -75,7 +79,7 @@ export default {
         };
         reader.readAsDataURL(file);
       } else {
-        console.log('Sorry, FileReader API not supported');
+        this.toast.error('Sorry, FileReader API not supported');
       }
     },
   },

@@ -161,7 +161,6 @@ export default {
           value: el.id,
           label: el.name,
         }));
-        console.log(this.roles, 'roles');
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -171,7 +170,6 @@ export default {
       }
     },
     async getAdmins(pagination) {
-      console.log(pagination, 'pagination');
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const search = this.searchValue || '';

@@ -586,7 +586,6 @@ export default {
     },
     confirmImage(e) {
       const file = e.target.files[0];
-      console.log(file, 'ini file');
       if (file.size > 2000000) {
         this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
@@ -709,7 +708,6 @@ export default {
       if (typeof imageFile.file === 'object' && imageFile.file.size > 2000000) {
         this.toast.error('Oops, your image cannot be larger than 2MB');
       } else {
-        console.log(imageFile, 'image file yg dikirim');
         const S3Params = {
           Bucket: 'help-bns-bucket',
           Key: imageFile.fileName,
@@ -750,10 +748,7 @@ export default {
         };
 
         try {
-          const {
-            data: { data },
-          } = await API.post('/banners', BNSParams);
-          console.log(data);
+          await API.post('/banners', BNSParams);
         } catch (error) {
           this.toast.error(error.message);
         }

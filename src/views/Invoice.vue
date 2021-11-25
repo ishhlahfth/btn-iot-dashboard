@@ -185,6 +185,7 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import html2pdf from 'html2pdf.js';
@@ -198,6 +199,10 @@ export default {
   components: {
     HelpButton,
     HelpModal,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -260,7 +265,7 @@ export default {
           this.discountTotal = data.discounts.detail[0].type === 4 ? String(data.discounts.detail[0].value.discount) : '';
         }
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },
@@ -281,7 +286,6 @@ export default {
     },
     calculateItemPrice(item) {
       let subtotal = item.price;
-      console.log(subtotal);
       if (item.variations.length) {
         for (let i = 0; i < item.variations.length; i += 1) {
           for (let j = 0; j < item.variations[i].options.length; j += 1) {

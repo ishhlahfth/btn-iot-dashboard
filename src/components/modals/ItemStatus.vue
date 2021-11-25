@@ -91,7 +91,7 @@ export default {
         this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
         this.$emit('close');
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },

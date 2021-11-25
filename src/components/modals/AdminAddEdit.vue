@@ -262,14 +262,12 @@ export default {
     },
     async submit() {
       // if(!this.form.name)
-      console.log(this.form, 'form');
       if (this.form.photo.length) {
         const file = this.form.photo[0];
         const fileName = `${uuid()}.${this.form.photo[0].type.split('/')[1]}`;
         const url = `${this.S3BaseURL}/${fileName}`;
         this.hyperlink = url;
         this.imageFile = { file, fileName, url };
-        console.log(this.imageFile, 'imagefile');
       }
       if (this.adminType === 'edit') {
         this.form.role_id = this.selectedStatus.value || this.form.role_id;
@@ -305,7 +303,6 @@ export default {
           group: 'INTERNAL_DASHBOARD',
           is_active: 'TRUE',
         };
-        console.log(dataToSend, 'data to send');
         const {
           data: { data },
         } = await API.post('/employees', dataToSend);
@@ -357,12 +354,9 @@ export default {
 
         try {
           this.loading = true;
-          const {
-            data: { data },
-          } = await API.post('/banners', BNSParams);
+          await API.post('/banners', BNSParams);
           this.$emit('reload');
           this.$emit('close');
-          console.log(data);
           this.toast.success(successMessage);
         } catch (error) {
           this.toast.error(error.message);
@@ -398,15 +392,11 @@ export default {
       }
     },
     async patchBNS(payload) {
-      console.log(this.$store.state.adminDetail, 'ngetes');
       try {
         this.loading = true;
-        const {
-          data: { data },
-        } = await API.patch(`banners/${this.bannerID}`, payload);
+        await API.patch(`banners/${this.bannerID}`, payload);
         this.$emit('reload');
         this.$emit('close');
-        console.log(data);
         this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
       } catch (error) {
         this.toast.error(error.message);

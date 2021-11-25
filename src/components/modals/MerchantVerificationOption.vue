@@ -93,15 +93,10 @@ export default {
         this.$emit('closeAndRefetch');
         this.toast.success(`Successully updated ${data.name}`);
       } catch (error) {
-        this.toast.error(error);
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },
-  // mounted() {
-  //   console.log('🌛', this.verifDetail);
-  //   this.selectedStatus = this.statuses.filter((el) => el.label === this.verifDetail.verify_status)[0];
-  // },
 };
 </script>
 

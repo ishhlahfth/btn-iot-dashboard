@@ -258,7 +258,6 @@ export default {
         const {
           data: { data },
         } = await API.patch(`/roles/${row.id}`, payload);
-        console.log('success', data);
         this.toast.success(
           `Success ${data.is_active === true ? 'enable' : 'disable'} role status !`,
         );

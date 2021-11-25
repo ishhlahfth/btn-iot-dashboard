@@ -261,7 +261,6 @@ export default {
         endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
 
-      console.log(`${startDate} - ${endDate}`);
       if (startDate && endDate) {
         url += `&summary_date_range=${startDate}to-${endDate}`;
       }
@@ -423,7 +422,6 @@ export default {
         ? Moment(this.appliedFilter.selectedStart)
         : Moment(this.appliedFilter.selectedEnd).subtract(this.exportLimit + 1, 'd');
       const difference = Math.abs(exportEndDate.diff(exportStartDate, 'days'));
-      console.log(difference);
       if (difference > this.exportLimit) {
         this.toast.error(
           `You can only export the data with maximum ${this.exportLimit} days date range.`,

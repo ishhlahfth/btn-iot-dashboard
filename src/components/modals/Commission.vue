@@ -82,7 +82,7 @@ export default {
           }
         }
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },
@@ -103,7 +103,7 @@ export default {
         this.$emit('refetch');
         this.toast.success(`Successfully updated ${this.merchantName}`);
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading = false;
     },

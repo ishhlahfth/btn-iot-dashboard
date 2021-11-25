@@ -205,7 +205,7 @@ export default {
         router.push('/bns');
         loadingBackdrop.value = false;
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     };
 
@@ -227,7 +227,6 @@ export default {
           });
           getRoleById(data.role_id, data.access_token);
           loadingBackdrop.value = true;
-          console.log(data, 'ini hasil login');
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
             user = Base64.stringify(user);
