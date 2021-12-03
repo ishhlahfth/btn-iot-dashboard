@@ -110,7 +110,7 @@ export default createStore({
     },
   },
   actions: {
-    async loadMerchant({ commit, dispatch }, merchantId) {
+    async loadMerchant({ commit }, merchantId) {
       commit('SET_LOADING', { type: 'merchant', payload: true });
       let merchant = {};
       try {
@@ -140,7 +140,7 @@ export default createStore({
           menu: [],
         };
         if (data.banners?.length) {
-          merchant.imageUrl = await dispatch('loadImage', data.banners[0].image_url);
+          merchant.imageUrl = data.banners[0].image_url;
         }
 
         const {
