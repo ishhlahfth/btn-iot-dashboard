@@ -223,9 +223,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
-                        ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
-                            'ID',
-                          )}`
+                        ? `Rp ${Number(delivery.totalTransaction).toLocaleString('ID')}`
                         : 0
                     }}
                   </p>
@@ -346,7 +344,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       payment.totalTransaction
-                        ? `Rp ${Number(String(payment.totalTransaction).slice(0, -3)).toLocaleString('ID')}`
+                        ? `Rp ${Number(payment.totalTransaction).toLocaleString('ID')}`
                         : 0
                     }}
                   </p>
@@ -368,7 +366,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
-                        ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
+                        ? `Rp ${Number(delivery.totalTransaction).toLocaleString(
                             'ID',
                           )}`
                         : 0
