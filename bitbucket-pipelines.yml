@@ -1,5 +1,12 @@
 definitions:
   steps:
+    - step: &install-dependencies
+        name: Install dependencies
+        image: node:14
+        caches:
+          - node
+        script:
+          - npm i
     - step: &set-environment
         name: Set environment
         script:
@@ -7,13 +14,21 @@ definitions:
           - cat .env-ci-cd
         artifacts:
           - .env-ci-cd
-    - step: &build-app
+    - step: &test
+        name: Test app
+        image: node:14
+        caches:
+          - node
+        script:
+          - npm t
+    - step: &build
         name: Build app
         image: node:14
+        caches:
+          - node
         script:
           - source .env-ci-cd
           - echo ${ENCODED_ENV_FILE} | base64 -d > .env
-          - npm i
           - npm run build
         artifacts:
           - dist/**
@@ -43,22 +58,31 @@ definitions:
               COMMAND: "scripts/deploy-${BITBUCKET_DEPLOYMENT_ENVIRONMENT}.sh"
 
 pipelines:
+  pull-requests:
+    '{bugfix/*,feature/*,hotfix/*,release/*}':
+    - step: *install-dependencies
+    - parallel:
+      - step: *test
+      - step: *build
   branches:
     development:
+      - step: *install-dependencies
       - step:
           <<: *set-environment
           deployment: test
-      - step: *build-app
+      - step: *build
       - step: *deploy-scp
     staging:
+      - step: *install-dependencies
       - step:
           <<: *set-environment
           deployment: staging
-      - step: *build-app
+      - step: *build
       - step: *deploy-scp
     main:
+      - step: *install-dependencies
       - step:
           <<: *set-environment
           deployment: production
-      - step: *build-app
+      - step: *build
       - step: *deploy-scp
