@@ -190,7 +190,7 @@
           <template v-if="!next.eat">
             <template v-for="(payment, i) in paymentMethod.eat" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
@@ -212,7 +212,7 @@
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.eat" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
@@ -333,7 +333,7 @@
           <template v-if="!next.delivery">
             <template v-for="(payment, i) in paymentMethod.delivery" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
@@ -355,7 +355,7 @@
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.delivery" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
