@@ -459,6 +459,7 @@
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
+import store from '@/store';
 
 export default {
   name: 'SummaryCard',
@@ -516,7 +517,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     partnerLogo2() {
       return '@/assets/logo.png';

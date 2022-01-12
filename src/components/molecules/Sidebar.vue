@@ -38,6 +38,7 @@
 <script>
 import NavExpandableItem from '../atoms/NavExpandableItem.vue';
 import NavItem from '../atoms/NavItem.vue';
+import store from '@/store';
 
 export default {
   name: 'HelpSidebar',
@@ -107,11 +108,11 @@ export default {
   },
   computed: {
     mini() {
-      return this.$store.state.mini;
+      return store.state.mini;
     },
   },
   mounted() {
-    const permission = this.$store.state.access.access;
+    const permission = store.state.access.access;
     const tempFilter = permission.permissions.filter((el) => el.dummySequence).sort((a, b) => a.dummySequence - b.dummySequence);
     if (tempFilter) {
       tempFilter.forEach((el) => {

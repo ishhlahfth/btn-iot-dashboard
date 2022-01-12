@@ -15,7 +15,7 @@
       class="grid gap-4"
     >
       <div class="w-full">
-        <help-input v-model="merchantName" label="Merchant Name" placeholder="Type a merchant" />
+        <help-input v-model="merchantName" label="Merchant Name" placeholder="Type a merchant" type="text" />
       </div>
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
         <help-button

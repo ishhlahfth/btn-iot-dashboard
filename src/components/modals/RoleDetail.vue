@@ -53,6 +53,7 @@ import { useToast } from 'vue-toastification';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import API from '@/apis';
+import store from '@/store';
 
 export default {
   name: 'RoleDetail',
@@ -78,9 +79,9 @@ export default {
     HelpCheckbox,
   },
   mounted() {
-    this.roleName = this.$store.state.role.name;
-    this.description = this.$store.state.role.description;
-    this.access = this.$store.state.permissions;
+    this.roleName = store.state.role.name;
+    this.description = store.state.role.description;
+    this.access = store.state.permissions;
     this.getPermissions();
   },
   methods: {
@@ -104,7 +105,7 @@ export default {
       this.loading = false;
     },
     flagging(row) {
-      let checked = this.$store.state.permissions.filter((e) => row.id === e.id);
+      let checked = store.state.permissions.filter((e) => row.id === e.id);
       if (checked.length && checked.length > 0) {
         checked = true;
       } else {
@@ -115,7 +116,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
 };

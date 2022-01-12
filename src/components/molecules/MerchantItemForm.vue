@@ -260,6 +260,7 @@ import VarianOptions from '@/components/sub-components/VarianOptions.vue';
 import ProductCatalog from '@/components/sub-components/ProductCatalog.vue';
 import mixin from '@/mixin';
 import API from '@/apis';
+import store from '@/store';
 
 export default {
   name: 'MerchantItemForm',
@@ -362,13 +363,13 @@ export default {
   },
   computed: {
     merchant() {
-      return this.$store.state.merchant;
+      return store.state.merchant;
     },
     loading() {
-      return this.$store.state.loading.merchant;
+      return store.state.loading.merchant;
     },
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     s3() {
       return new S3Client({
@@ -434,7 +435,7 @@ export default {
         setTimeout(async () => {
           this.toast.success(`Item ${data.name} has been updated successfully !`);
           this.$emit('close');
-          await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+          await store.dispatch('loadMerchant', store.state.merchantId);
         }, 1000);
       } catch (error) {
         this.toast.error(error.response.data.meta.message);
@@ -470,7 +471,7 @@ export default {
         setTimeout(async () => {
           this.toast.success(`Item ${data.name} has been created successfully !`);
           this.$emit('close');
-          await this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+          await store.dispatch('loadMerchant', store.state.merchantId);
         }, 1000);
       } catch (error) {
         this.toast.error(error.response.data.meta.message);

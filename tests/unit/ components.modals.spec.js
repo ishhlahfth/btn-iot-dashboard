@@ -18,6 +18,7 @@ import RoleDetail from '@/components/modals/RoleDetail.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
 import TransferFilter from '@/components/modals/TransferFilter.vue';
 import { shallowMount } from '@vue/test-utils';
+import store from '../../src/store';
 
 describe('AdminAddEdit.vue', () => {
   it('should render correctly', () => {
@@ -57,6 +58,30 @@ describe('BannerForm.vue', () => {
   it('should render name BannerForm', () => {
     expect(BannerForm.name).toBe('BannerForm');
   });
+
+  it('should check mounted data',() => {
+    let tempData
+    beforeEach(() => {
+      tempData = {
+        title: '',
+        hyperlink: '',
+        startDate: '',
+        endDate: '',
+        isPermanent: false,
+        src: '',
+        isActive: true,
+        loading: false,
+        imageFile: null,
+        S3BaseURL: process.env.VUE_APP_S3_BASE_URL,
+        imageIsChanged: false,
+      }
+    })
+    const wrapper = shallowMount(BannerForm, {
+      data: tempData,
+    });
+
+    expect(wrapper.vm.screenWidth).toEqual(expect.any(Number));
+  });
 });
 
 describe('Commission.vue', () => {
@@ -87,6 +112,11 @@ describe('ItemStatus.vue', () => {
   it('should render name ItemStatus', () => {
     expect(ItemStatus.name).toBe('ItemStatus');
   });
+
+  it('should check computed data', () => {
+    const wrapper = shallowMount(ItemStatus);
+    expect(wrapper.vm.screenWidth).toEqual(expect.any(Number));
+  });
 });
 
 describe('ListAdmin.vue', () => {
@@ -96,6 +126,44 @@ describe('ListAdmin.vue', () => {
 
   it('should render name ListAdmin', () => {
     expect(ListAdmin.name).toBe('ListAdmin');
+  });
+
+  it('should check props', () => {
+    beforeEach(() => {
+      store.commit('SET_ADMIN_LIST', [
+        {
+          banner: {
+            location: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+          },
+          profile: {
+            name: 'Waluyo'
+          }
+        }
+      ])
+    });
+    const wrapper = shallowMount(ListAdmin, {
+      props: {
+        filter: {}
+      }
+    });
+    expect(wrapper.props().filter).toEqual(expect.any(Object));
+  });
+
+  it('should check computed data', () => {
+    beforeEach(() => {
+      store.commit('SET_ADMIN_LIST', [
+        {
+          banner: {
+            location: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+          },
+          profile: {
+            name: 'Waluyo'
+          }
+        }
+      ])
+    });
+    const wrapper = shallowMount(ListAdmin);
+    expect(wrapper.vm.screenWidth).toEqual(expect.any(Number));
   });
 });
 
@@ -167,6 +235,21 @@ describe('OrderFilter.vue', () => {
   it('should render name OrderFilter', () => {
     expect(OrderFilter.name).toBe('OrderFilter');
   });
+
+  const wrapper = shallowMount(OrderFilter, {
+    props: {
+      filter: {
+        merchantName: 'Hello',
+        orderStatus: 'PENDING',
+        paymentMethod: 'OVO'
+      },
+    },
+  });
+  expect(wrapper.props().filter).toMatchObject({
+    merchantName: expect.any(String),
+    orderStatus: expect.any(String),
+    paymentMethod: expect.any(String),
+  });
 });
 
 describe('RoleAdd.vue', () => {
@@ -176,6 +259,39 @@ describe('RoleAdd.vue', () => {
 
   it('should render name RoleAdd', () => {
     expect(RoleAdd.name).toBe('RoleAdd');
+  });
+
+  it('should return flagging methods', () => {
+    const wrapper = shallowMount(RoleAdd);
+    const row = {
+      id: 28,
+    };
+    expect(wrapper.vm.flagging(row)).toBeFalsy();
+  });
+
+  it('should return filter access to be array', () => {
+    const wrapper = shallowMount(RoleAdd);
+    const arr = [
+      {
+        "id": 1,
+        "code": "",
+        "name": "Dashboard Read",
+        "description": "Access for read dashboard data",
+        "module": "DASHBOARD",
+        "action": "READ",
+        "required": []
+      },
+      {
+        "id": 2,
+        "code": "",
+        "name": "Customer Read",
+        "description": "Access for read customer data",
+        "module": "CUSTOMER",
+        "action": "READ",
+        "required": []
+      },
+    ]
+    expect(wrapper.vm.filterAccess(arr)).toEqual(expect.any(Array));
   });
 });
 
@@ -187,6 +303,14 @@ describe('RoleDetail.vue', () => {
   it('should render name RoleDetail', () => {
     expect(RoleDetail.name).toBe('RoleDetail');
   });
+
+  it('should return flagging methods', () => {
+    const wrapper = shallowMount(RoleDetail);
+    const row = {
+      id: 28,
+    };
+    expect(wrapper.vm.flagging(row)).toBeFalsy();
+  });
 });
 
 describe('StatusHistory.vue', () => {
@@ -197,6 +321,23 @@ describe('StatusHistory.vue', () => {
   it('should render name StatusHistory', () => {
     expect(StatusHistory.name).toBe('StatusHistory');
   });
+
+  it('should render props history', () => {
+    const wrapper = shallowMount(StatusHistory, {
+      props: {
+        filter: {
+          merchantName: 'Hello',
+        },
+        currentPropStep: 'in-progress',
+        updateAccess: false,
+      },
+    });
+    expect(wrapper.props().currentPropStep).toMatch('');
+    expect(wrapper.props().updateAccess).toBeFalsy();
+    expect(wrapper.props().filter).toMatchObject({
+      merchantName: expect.any(String),
+    });
+  });
 });
 
 describe('TransferFilter.vue', () => {
@@ -206,5 +347,16 @@ describe('TransferFilter.vue', () => {
 
   it('should render name TransferFilter', () => {
     expect(TransferFilter.name).toBe('TransferFilter');
+  });
+
+  it('should render return exist screenWidth', () => {
+    const wrapper = shallowMount(TransferFilter, {
+      props: {
+        filter: {
+          merchantName: 'Hello',
+        },
+      },
+    });
+    expect(wrapper.find('.screenWidth').exists()).toBeFalsy();
   });
 });

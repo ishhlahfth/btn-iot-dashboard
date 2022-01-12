@@ -51,6 +51,7 @@ import API from '@/apis';
 import HelpAvatar from '../atoms/Avatar.vue';
 import HelpOption from './Option.vue';
 import Icon from '../atoms/Icon.vue';
+import store from '@/store';
 
 export default {
   name: 'HelpNavbar',
@@ -66,13 +67,13 @@ export default {
   },
   computed: {
     mini() {
-      return this.$store.state.mini;
+      return store.state.mini;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return store.state.currentUser;
     },
     fetchProfile() {
-      return this.$store.state.imageProfile;
+      return store.state.imageProfile;
     },
   },
   mounted() {
@@ -93,7 +94,7 @@ export default {
         data: { data },
       } = await API.get(`/employees/${this.currentUser.id}`);
       if (data.banner) {
-        this.$store.commit('SET_IMAGE_PROFILE', data.banner.location);
+        store.commit('SET_IMAGE_PROFILE', data.banner.location);
       }
     },
   },

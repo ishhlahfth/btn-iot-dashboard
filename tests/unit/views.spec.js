@@ -15,6 +15,8 @@ import CopyMerchant from '@/views/CopyMerchant.vue';
 import InvoiceDownload from '@/views/InvoiceDownload.vue';
 import TermsConditions from '@/views/TermsConditions.vue';
 import _Components from '@/views/_Components.vue';
+import { shallowMount } from '@vue/test-utils';
+import store from '../../src/store';
 
 describe('Login.vue', () => {
   it('has the expected html structure', () => {
@@ -104,6 +106,15 @@ describe('ResetPassword.vue', () => {
   it('should have "ResetPassword" as name', () => {
     expect(ResetPassword.name).toBe('ResetPassword');
   });
+
+  it('should check reset password token', () => {
+    beforeEach(() => {
+      store.commit('SET_RESET_PASSWORD_TOKEN', 'apa aja yang penting bener');
+    });
+
+    const wrapper = shallowMount(ResetPassword);
+    expect(wrapper.vm.resetPasswordToken).toMatch('');
+  })
 });
 
 describe('Home.vue', () => {
@@ -153,6 +164,22 @@ describe('CopyMerchant.vue', () => {
 
   it('should have "CopyMerchant" as name', () => {
     expect(CopyMerchant.name).toBe('CopyMerchant');
+  });
+
+  it('expect check method generate name', () => {
+    beforeEach(() => {
+      store.commit('SET_SCREEN_WIDTH', 560)
+    });
+    const wrapper = shallowMount(CopyMerchant);
+    expect(wrapper.vm.generateName('Halo')).toMatch('Halo');
+  });
+
+  it('expect check method generate name', () => {
+    beforeEach(() => {
+      store.commit('SET_SCREEN_WIDTH', 560)
+    });
+    const wrapper = shallowMount(CopyMerchant);
+    expect(wrapper.vm.screenWidth).toBe(560);
   });
 });
 
