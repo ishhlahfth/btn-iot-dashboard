@@ -4,8 +4,6 @@ module.exports = {
     '^.+\\.vue$': 'vue-jest',
   },
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.{js,vue}',
-    '!src/main.js',
-  ],
+  collectCoverageFrom: ['src/**/*.{js,vue}', '!src/main.js'],
+  setupFiles: ['jest-canvas-mock'],
 };

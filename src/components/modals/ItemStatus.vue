@@ -31,7 +31,7 @@ import HelpSelect from '@/components/molecules/Select.vue';
 import API from '../../apis';
 
 export default {
-  name: 'MerchantVerification',
+  name: 'ItemStatus',
   components: {
     HelpButton,
     HelpSelect,

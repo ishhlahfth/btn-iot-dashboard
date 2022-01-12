@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddVarianGroup.vue should render correctly 1`] = `undefined`;
+
+exports[`ProductCatalog.vue should render correctly 1`] = `undefined`;
+
+exports[`VarianGroupOption.vue should render correctly 1`] = `undefined`;
+
+exports[`VarianOptions.vue should render correctly 1`] = `undefined`;
