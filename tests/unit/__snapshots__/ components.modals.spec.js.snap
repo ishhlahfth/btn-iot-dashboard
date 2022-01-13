@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdminAddEdit.vue should render correctly 1`] = `undefined`;
+
+exports[`AdminDetail.vue should render correctly 1`] = `undefined`;
+
+exports[`BannerDetail.vue should render correctly 1`] = `undefined`;
+
+exports[`BannerForm.vue should render correctly 1`] = `undefined`;
+
+exports[`Commission.vue should render correctly 1`] = `undefined`;
+
+exports[`Confirmation.vue should render correctly 1`] = `undefined`;
+
+exports[`ItemStatus.vue should render correctly 1`] = `undefined`;
+
+exports[`ListAdmin.vue should render correctly 1`] = `undefined`;
+
+exports[`MerchantDetail.vue should render correctly 1`] = `undefined`;
+
+exports[`MerchantFilter.vue should render correctly 1`] = `undefined`;
+
+exports[`MerchantVerification.vue should render correctly 1`] = `undefined`;
+
+exports[`MerchantVerificationOption.vue should render correctly 1`] = `undefined`;
+
+exports[`OperationalHour.vue should render correctly 1`] = `undefined`;
+
+exports[`OrderDetail.vue should render correctly 1`] = `undefined`;
+
+exports[`OrderFilter.vue should render correctly 1`] = `undefined`;
+
+exports[`RoleAdd.vue should render correctly 1`] = `undefined`;
+
+exports[`RoleDetail.vue should render correctly 1`] = `undefined`;
+
+exports[`StatusHistory.vue should render correctly 1`] = `undefined`;
+
+exports[`TransferFilter.vue should render correctly 1`] = `undefined`;

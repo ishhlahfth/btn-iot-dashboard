@@ -69,6 +69,7 @@ import { useToast } from 'vue-toastification';
 import axios from 'axios';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import store from '@/store';
 
 export default {
   name: 'ResetPassword',
@@ -97,7 +98,7 @@ export default {
   },
   computed: {
     resetPasswordToken() {
-      return this.$store.state.resetPasswordToken;
+      return store.state.resetPasswordToken;
     },
   },
   watch: {

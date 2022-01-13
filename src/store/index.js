@@ -178,7 +178,7 @@ export default createStore({
         } = await API.get(bnsURL);
         imageURL = responseURL;
       } catch (error) {
-        useToast().error(error.message);
+        useToast().error(`${error.message} - assadsadsad`);
       }
       return imageURL;
     },

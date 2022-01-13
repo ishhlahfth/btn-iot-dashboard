@@ -309,6 +309,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
 import API from '../apis';
+import store from '@/store';
 
 export default {
   name: 'CopyMerchant',
@@ -321,7 +322,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   data() {

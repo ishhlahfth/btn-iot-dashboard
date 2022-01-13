@@ -100,6 +100,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 import API from '../../apis';
+import store from '@/apis';
 
 export default {
   name: 'ProductCatalog',
@@ -136,10 +137,10 @@ export default {
   },
   computed: {
     merchant() {
-      return this.$store.state.merchant;
+      return store.state.merchant;
     },
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   methods: {

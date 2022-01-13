@@ -125,6 +125,7 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import mixin from '@/mixin';
 import HelpOption from './Option.vue';
+import store from '@/store';
 
 export default {
   name: 'MenuCard',
@@ -212,7 +213,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   methods: {
@@ -226,7 +227,7 @@ export default {
     },
     handleClickItem(param) {
       this.valueItem = param.value;
-      this.$store.commit('SET_ITEM', this.raw);
+      store.commit('SET_ITEM', this.raw);
       if (param.value === 'item_status') {
         this.$emit('openItemStatusModal');
       } else if (param.value === 'delete') {
@@ -238,7 +239,7 @@ export default {
   },
   async mounted() {
     this.localIsActive = this.isActive;
-    // this.localImageUrl = await this.$store.dispatch('loadImage', this.imageUrl);
+    // this.localImageUrl = await store.dispatch('loadImage', this.imageUrl);
   },
 };
 </script>

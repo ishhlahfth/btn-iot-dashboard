@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`_Component.vue should render correctly 1`] = `undefined`;
+
+exports[`Modal.vue should render correctly 1`] = `undefined`;
+
+exports[`Table.vue should render correctly 1`] = `undefined`;

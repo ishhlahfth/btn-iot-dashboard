@@ -15,7 +15,7 @@
       class="grid gap-4"
     >
     <div class="w-full">
-      <help-input v-model="merchantName" label="Merchant Name" placeholder="Merchant Name To Be Filtered" />
+      <help-input type="text" v-model="merchantName" label="Merchant Name" placeholder="Merchant Name To Be Filtered" />
     </div>
       <div class="w-full">
         <help-select
@@ -77,10 +77,12 @@
 
 <script>
 import { ref } from 'vue';
+import FlatPickr from 'vue-flatpickr-component';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import mixin from '@/mixin';
+import store from '@/store';
 
 export default {
   name: 'OrderFilter',
@@ -89,6 +91,7 @@ export default {
     HelpButton,
     HelpInput,
     HelpSelect,
+    FlatPickr,
   },
   setup() {
     const pickedStart = ref(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
@@ -144,7 +147,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   mounted() {

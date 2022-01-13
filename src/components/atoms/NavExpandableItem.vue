@@ -38,12 +38,14 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
 import Icon from './Icon.vue';
 
 export default {
   name: 'HelpNavExpandableItem',
   components: {
     Icon,
+    RouterLink,
   },
   props: {
     menu: {

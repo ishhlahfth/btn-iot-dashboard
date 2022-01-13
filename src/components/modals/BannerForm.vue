@@ -27,23 +27,27 @@
             @input="handleChangeImg"
           />
           <help-input
+            type="text"
             v-model="form.title"
             label="Title"
             placeholder="Give your banner a distinctive title"
           />
           <help-input
+            type="text"
             v-model="form.hyperlink"
             label="Redirect URL"
             placeholder="http://www.redirect-here.wehelpyou.xyz"
           />
           <div class="grid gap-4" :class="{ 'md:grid-cols-2': !form.isPermanent }">
             <help-input
+              type="text"
               v-model="form.startDate"
               mask="##-##-####"
               label="Starts at"
               placeholder="DD-MM-YYYY"
             />
             <help-input
+              type="text"
               v-if="!form.isPermanent"
               v-model="form.endDate"
               mask="##-##-####"
@@ -119,6 +123,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
 import API from '../../apis';
+import store from '@/store';
 
 dayjs.extend(customParseFormat);
 
@@ -154,13 +159,13 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     formType() {
-      return this.$store.state.formType;
+      return store.state.formType;
     },
     banner() {
-      return this.$store.state.banner;
+      return store.state.banner;
     },
     s3() {
       return new S3Client({
