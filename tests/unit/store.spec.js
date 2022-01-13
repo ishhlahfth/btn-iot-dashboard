@@ -1,4 +1,4 @@
-import store from './../../src/store';
+import store from '../../src/store';
 
 describe('mutations', () => {
   it('INCREMENT', () => {
@@ -12,10 +12,11 @@ describe('mutations', () => {
     expect(store.state.roleId).toBe(1);
     expect(store.state.bannerId).toBe(1);
     expect(store.state.loading.merchant).toBe(true);
-    expect(store.state.currentUser).toMatchObject(expect.objectContaining({
-      name: expect.any(String)
-    }));
-    expect(store.state.screenWidth).toEqual(expect.any(Number))
+    expect(store.state.currentUser).toMatchObject(
+      expect.objectContaining({
+        name: expect.any(String),
+      }),
+    );
+    expect(store.state.screenWidth).toEqual(expect.any(Number));
   });
 });
-

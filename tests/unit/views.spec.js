@@ -99,6 +99,12 @@ describe('Invoice.vue', () => {
 });
 
 describe('ResetPassword.vue', () => {
+  // const factory = (values = {}) => {
+  //   return shallowMount(ResetPassword, {
+  //     data: { ...values  }
+  //   })
+  // }
+
   it('has the expected html structure', () => {
     expect(ResetPassword.$el).toMatchSnapshot();
   });
@@ -107,14 +113,14 @@ describe('ResetPassword.vue', () => {
     expect(ResetPassword.name).toBe('ResetPassword');
   });
 
-  it('should check reset password token', () => {
-    beforeEach(() => {
-      store.commit('SET_RESET_PASSWORD_TOKEN', 'apa aja yang penting bener');
-    });
+  // it('should check reset password token', () => {
+  //   const wrapper = factory();
 
-    const wrapper = shallowMount(ResetPassword);
-    expect(wrapper.vm.resetPasswordToken).toMatch('');
-  })
+  //   // wrapper.vm.confirmationPassword('haiguys')
+
+  //   expect(wrapper.find('.password').text()).toEqual('');
+  //   // expect(wrapper.vm.resetPasswordToken).toMatch('apa aja');
+  // });
 });
 
 describe('Home.vue', () => {
@@ -168,7 +174,7 @@ describe('CopyMerchant.vue', () => {
 
   it('expect check method generate name', () => {
     beforeEach(() => {
-      store.commit('SET_SCREEN_WIDTH', 560)
+      store.commit('SET_SCREEN_WIDTH', 560);
     });
     const wrapper = shallowMount(CopyMerchant);
     expect(wrapper.vm.generateName('Halo')).toMatch('Halo');
@@ -176,7 +182,7 @@ describe('CopyMerchant.vue', () => {
 
   it('expect check method generate name', () => {
     beforeEach(() => {
-      store.commit('SET_SCREEN_WIDTH', 560)
+      store.commit('SET_SCREEN_WIDTH', 560);
     });
     const wrapper = shallowMount(CopyMerchant);
     expect(wrapper.vm.screenWidth).toBe(560);
@@ -212,4 +218,3 @@ describe('_Components.vue', () => {
     expect(_Components.name).toBe('Components');
   });
 });
-

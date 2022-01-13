@@ -30,8 +30,7 @@ describe('mixin', () => {
   });
 
   it('test function truncate', () => {
-    const sampleInput =
-      'Something has always existed. According to physics, there can never be true physical nothingness—though there can be times when existence resembles nothing, such as a vacuum (the state of minimum possible energy) (Phys.org). Creating a space where there are no quantum fluctuations requires an enormous amount of energy, and there would be a remnant of that energy in that space afterwards if the fluctuations were flushed out, plus an unstable environment (1veritasium). Even on computers, deleted data is not actually tossed away, by rather written over. The fact that there can never be nothingness means the universe, and anything possibly beyond it, is eternal, as something has always been around. Whatever we consider to be before the Big Bang—God, the universe in infinitesimal form, or both—one thing is certain: it was there';
+    const sampleInput = 'Something has always existed. According to physics, there can never be true physical nothingness—though there can be times when existence resembles nothing';
     const sampleOutput = 'Something has always existed';
     expect(mixin.default.methods.truncate(sampleInput)).toMatch(sampleOutput);
   });

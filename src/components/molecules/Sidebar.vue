@@ -36,9 +36,9 @@
 </template>
 
 <script>
+import store from '@/store';
 import NavExpandableItem from '../atoms/NavExpandableItem.vue';
 import NavItem from '../atoms/NavItem.vue';
-import store from '@/store';
 
 export default {
   name: 'HelpSidebar',

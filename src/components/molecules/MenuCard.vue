@@ -124,8 +124,8 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import mixin from '@/mixin';
-import HelpOption from './Option.vue';
 import store from '@/store';
+import HelpOption from './Option.vue';
 
 export default {
   name: 'MenuCard',

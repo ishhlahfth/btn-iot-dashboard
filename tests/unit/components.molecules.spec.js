@@ -141,8 +141,8 @@ describe('Select.vue', () => {
       props: {
         label: '',
         modelValue: 10,
-        options: []
-      }
+        options: [],
+      },
     });
     expect(wrapper.props().options).toEqual(expect.any(Array));
   });
@@ -178,7 +178,7 @@ describe('TableFooter.vue', () => {
         currentRowCount: 20,
         count: 10,
         isCountActive: false,
-      }
+      },
     });
     expect(wrapper.props().offset).toEqual(expect.any(Number));
   });
@@ -194,7 +194,7 @@ describe('TableFooter.vue', () => {
         currentRowCount: 20,
         count: 10,
         isCountActive: false,
-      }
+      },
     });
     expect(wrapper.find('.firstRow').exists()).toStrictEqual(expect.any(Boolean));
   });
@@ -210,8 +210,8 @@ describe('TableFooter.vue', () => {
         currentRowCount: 20,
         count: 10,
         isCountActive: false,
-      }
+      },
     });
     expect(wrapper.vm.lastRow).toEqual(expect.any(Number));
-  })
+  });
 });
