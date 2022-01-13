@@ -48,10 +48,10 @@
 
 <script>
 import API from '@/apis';
+import store from '@/store';
 import HelpAvatar from '../atoms/Avatar.vue';
 import HelpOption from './Option.vue';
 import Icon from '../atoms/Icon.vue';
-import store from '@/store';
 
 export default {
   name: 'HelpNavbar',

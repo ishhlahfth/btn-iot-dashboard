@@ -122,8 +122,8 @@ import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
-import API from '../../apis';
 import store from '@/store';
+import API from '../../apis';
 
 dayjs.extend(customParseFormat);
 

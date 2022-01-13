@@ -106,8 +106,8 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
-import API from '../../apis';
 import store from '@/store';
+import API from '../../apis';
 
 export default {
   name: 'AddVarianGroup',

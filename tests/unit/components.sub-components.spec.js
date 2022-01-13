@@ -68,20 +68,6 @@ describe('ProductCatalog.vue', () => {
         itemCatalogs: [],
       },
     });
-    let tempData;
-    beforeEach(() => {
-      tempData = {
-        newCatalog: '',
-        modal: {
-          sm: false,
-        },
-        payloadCatalog: {},
-        loading: {
-          delete: false,
-          add: false,
-        },
-      };
-    });
     expect(wrapper.find('.payloadCatalog').exists()).not.toBe(true);
   });
 });

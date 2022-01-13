@@ -59,8 +59,8 @@ describe('BannerForm.vue', () => {
     expect(BannerForm.name).toBe('BannerForm');
   });
 
-  it('should check mounted data',() => {
-    let tempData
+  it('should check mounted data', () => {
+    let tempData;
     beforeEach(() => {
       tempData = {
         title: '',
@@ -74,8 +74,8 @@ describe('BannerForm.vue', () => {
         imageFile: null,
         S3BaseURL: process.env.VUE_APP_S3_BASE_URL,
         imageIsChanged: false,
-      }
-    })
+      };
+    });
     const wrapper = shallowMount(BannerForm, {
       data: tempData,
     });
@@ -133,18 +133,19 @@ describe('ListAdmin.vue', () => {
       store.commit('SET_ADMIN_LIST', [
         {
           banner: {
-            location: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            location:
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
           },
           profile: {
-            name: 'Waluyo'
-          }
-        }
-      ])
+            name: 'Waluyo',
+          },
+        },
+      ]);
     });
     const wrapper = shallowMount(ListAdmin, {
       props: {
-        filter: {}
-      }
+        filter: {},
+      },
     });
     expect(wrapper.props().filter).toEqual(expect.any(Object));
   });
@@ -154,13 +155,14 @@ describe('ListAdmin.vue', () => {
       store.commit('SET_ADMIN_LIST', [
         {
           banner: {
-            location: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            location:
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
           },
           profile: {
-            name: 'Waluyo'
-          }
-        }
-      ])
+            name: 'Waluyo',
+          },
+        },
+      ]);
     });
     const wrapper = shallowMount(ListAdmin);
     expect(wrapper.vm.screenWidth).toEqual(expect.any(Number));
@@ -241,7 +243,7 @@ describe('OrderFilter.vue', () => {
       filter: {
         merchantName: 'Hello',
         orderStatus: 'PENDING',
-        paymentMethod: 'OVO'
+        paymentMethod: 'OVO',
       },
     },
   });
@@ -273,24 +275,24 @@ describe('RoleAdd.vue', () => {
     const wrapper = shallowMount(RoleAdd);
     const arr = [
       {
-        "id": 1,
-        "code": "",
-        "name": "Dashboard Read",
-        "description": "Access for read dashboard data",
-        "module": "DASHBOARD",
-        "action": "READ",
-        "required": []
+        id: 1,
+        code: '',
+        name: 'Dashboard Read',
+        description: 'Access for read dashboard data',
+        module: 'DASHBOARD',
+        action: 'READ',
+        required: [],
       },
       {
-        "id": 2,
-        "code": "",
-        "name": "Customer Read",
-        "description": "Access for read customer data",
-        "module": "CUSTOMER",
-        "action": "READ",
-        "required": []
+        id: 2,
+        code: '',
+        name: 'Customer Read',
+        description: 'Access for read customer data',
+        module: 'CUSTOMER',
+        action: 'READ',
+        required: [],
       },
-    ]
+    ];
     expect(wrapper.vm.filterAccess(arr)).toEqual(expect.any(Array));
   });
 });
