@@ -220,7 +220,6 @@ export default {
       this.addProductActive = true;
       this.isEditProduct = true;
       this.dataProduct = payload;
-      console.log(payload, 'dapet payload ga');
     },
     handleAddProduct() {
       this.addProductActive = true;

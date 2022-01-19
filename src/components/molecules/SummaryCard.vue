@@ -525,7 +525,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.totalComparison);
     this.show.order = false;
     this.show.eat = false;
     this.show.delivery = false;

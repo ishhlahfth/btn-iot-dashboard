@@ -25,9 +25,9 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
-import { useToast } from 'vue-toastification';
 import API from '../../apis';
 
 export default {
@@ -91,7 +91,7 @@ export default {
         this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
         this.$emit('close');
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },
