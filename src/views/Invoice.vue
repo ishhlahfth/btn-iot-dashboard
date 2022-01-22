@@ -159,6 +159,26 @@
 
     <div class="w-full">
       <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
+        <div class="p-3 grid grid-cols-2 gap-1">
+          <template v-if="!loading">
+            <p>Biaya Layanan</p>
+            <p class="text-right">{{ serviceFee }}</p>
+          </template>
+          <template v-else>
+            <div class="bg-grey-4 rounded h-4 w-32" />
+            <div class="bg-grey-4 rounded h-4" />
+          </template>
+        </div>
+        <div class="p-3 grid grid-cols-2 gap-1 font-bold">
+          <p>Subtotal Biaya Layanan</p>
+          <p v-if="!loading" class="text-right">{{ serviceFee }}</p>
+          <div v-else class="bg-grey-4 rounded h-4" />
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full">
+      <div class="rounded-lg border border-grey-1 text-xsmall divide-y divide-grey-1">
         <div v-if="discountTotal" class="p-3 grid grid-cols-2 gap-1 text-red-600">
           <p>Wehelpyou</p>
           <p v-if="!loading" class="text-right">{{ discountTotal ? `- ${convertToRp(discountTotal.substring(1))}` : '- Rp 0' }}</p>
@@ -216,6 +236,7 @@ export default {
       discountOrder: 0,
       discountTotal: 0,
       subtotalDelivery: '',
+      serviceFee: '',
       totalPrice: '',
       notification: false,
       loading: false,
@@ -252,7 +273,11 @@ export default {
         this.subtotalItem = this.convertToRp(data.total_price_without_tax) || 'Rp 0';
         this.deliveryName = data.order_type_details.delivery_method.name || 'Unknown Delivery Method';
         this.deliveryPrice = this.convertToRp(data.order_type_details.delivery_method.initial_price) || 'Rp 0';
-        this.subtotalDelivery = this.convertToRp(data.order_type_details.delivery_method.price) || 'Rp 0';
+        this.subtotalDelivery = this.convertToRp(
+          data.order_type_details.delivery_method.price
+          - (Number(data.order_type_details?.delivery_method?.service_fee) || 0),
+        ) || 'Rp 0';
+        this.serviceFee = this.convertToRp(data.order_type_details?.delivery_method?.service_fee) || 'Rp 0';
         this.totalPrice = this.convertToRp(data.total_price) || 'Rp 0';
         if (data.discounts) {
           this.discountDelivery = data.discounts.detail[0].type === 2 ? String(data.discounts.detail[0].value.discount) : '';
