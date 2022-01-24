@@ -78,6 +78,10 @@
 </template>
 
 <script>
+import Moment from 'moment/moment';
+import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
@@ -86,11 +90,7 @@ import HelpTable from '@/components/templates/Table.vue';
 import OrderDetail from '@/components/modals/OrderDetail.vue';
 import OrderFilter from '@/components/modals/OrderFilter.vue';
 import StatusHistory from '@/components/modals/StatusHistory.vue';
-import Moment from 'moment/moment';
-import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
 import API from '../apis';
 
 export default {
@@ -134,7 +134,7 @@ export default {
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
-        { field: 'code', label: 'po number' },
+        { field: 'code', label: 'po number', align: 'center' },
         {
           field: 'current_step',
           label: 'status',
@@ -255,7 +255,6 @@ export default {
         endDate = Moment(filter?.selectedEnd).format('YYYY-MM-D');
       }
 
-      console.log(`${startDate} - ${endDate}`);
       if (startDate && endDate) {
         url += `&summary_date_range=${startDate}to-${endDate}`;
       }
@@ -415,7 +414,6 @@ export default {
         ? Moment(this.appliedFilter.selectedStart)
         : Moment(this.appliedFilter.selectedEnd).subtract(this.exportLimit + 1, 'd');
       const difference = Math.abs(exportEndDate.diff(exportStartDate, 'days'));
-      console.log(difference);
       if (difference > this.exportLimit) {
         this.toast.error(
           `You can only export the data with maximum ${this.exportLimit} days date range.`,

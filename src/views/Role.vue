@@ -109,16 +109,9 @@
     </div>
   </div>
 </template>
-<style>
-.tooltip {
-  @apply invisible absolute;
-}
-.has-tooltip:hover .tooltip {
-  @apply visible z-50;
-}
-</style>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -130,7 +123,6 @@ import ListAdmin from '@/components/modals/ListAdmin.vue';
 import RoleAdd from '@/components/modals/RoleAdd.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
 
-import { useToast } from 'vue-toastification';
 import API from '../apis';
 
 export default {
@@ -266,7 +258,6 @@ export default {
         const {
           data: { data },
         } = await API.patch(`/roles/${row.id}`, payload);
-        console.log('success', data);
         this.toast.success(
           `Success ${data.is_active === true ? 'enable' : 'disable'} role status !`,
         );
@@ -320,4 +311,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.tooltip {
+  @apply invisible absolute;
+}
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+</style>
