@@ -59,7 +59,7 @@
                 <div class="w-1/2 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().replace(/[^\w ]/, '')}-logo-circle.png`)"
                       class="mx-3"
                       :size="48"
                     />
@@ -193,7 +193,7 @@
                 <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().replace(/[^\w ]/, '')}-logo-circle.png`)"
                       class="mx-3"
                       :size="48"
                     />
@@ -336,7 +336,7 @@
                 <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
-                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase()}-logo-circle.png`)"
+                      :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().replace(/[^\w ]/, '')}-logo-circle.png`)"
                       class="mx-3"
                       :size="48"
                     />
