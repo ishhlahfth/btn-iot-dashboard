@@ -68,7 +68,7 @@
           >
             See Detail
           </p>
-          <p v-if="column === 'discounts'" class="text-mint font-semibold">
+          <p v-if="column === 'discounts'" class="text-flame font-semibold">
             {{ row.discounts ? `- Rp ${Number(row.discounts.slice(1)).toLocaleString('ID')}` : '' }}
           </p>
         </template>
@@ -145,9 +145,9 @@ export default {
         { field: 'customer_name', label: 'buyer name', sortable: true },
         { field: 'subtotal_price', label: 'item price' },
         { field: 'commission_fee', label: 'commission' },
-        { field: 'initial_price', label: 'initial delivery price' },
+        { field: 'initial_price', label: 'delivery price' },
         { field: 'discounts', label: 'discount' },
-        { field: 'delivery_price', label: 'final delivery price' },
+        { field: 'service_fee', label: 'service fee' },
         { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
@@ -280,12 +280,12 @@ export default {
           customer_name: el.customer?.profile?.name,
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
-          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
           payment_method: el.payment?.name,
           discounts: el.discounts
             ? String(el.discounts?.total)
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
+          service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
         }));
 
         this.orderPagination = {
@@ -344,14 +344,14 @@ export default {
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
-          commission_fee: this.convertToRp(el.commission_fee),
-          subtotal_price: this.convertToRp(el.subtotal_price),
-          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.price),
-          payment_method: el.payment.name,
-          discounts: el.discounts?.total
+          item_price: this.convertToRp(el.subtotal_price),
+          commission: this.convertToRp(el.commission_fee),
+          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
+          discount: el.discounts?.total
             ? String(el.discounts?.total)
             : '0',
-          initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
+          service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
+          payment_method: el.payment.name,
         }));
       } catch (error) {
         if (error.message === 'Network Error') {
