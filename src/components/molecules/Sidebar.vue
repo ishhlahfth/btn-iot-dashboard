@@ -113,7 +113,6 @@ export default {
   mounted() {
     const permission = this.$store.state.access.access;
     const tempFilter = permission.permissions.filter((el) => el.dummySequence).sort((a, b) => a.dummySequence - b.dummySequence);
-    console.log(tempFilter, 'bisa ga');
     if (tempFilter) {
       tempFilter.forEach((el) => {
         switch (el.module.toLowerCase()) {
@@ -161,7 +160,6 @@ export default {
             break;
         }
       });
-      this.links.push({ path: '/bns/copy_merchant', label: 'Copy Merchant', icon: 'copy' });
     }
   },
 };

@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import Icon from '@/components/atoms/Icon.vue';
 import TableFooter from '@/components/molecules/TableFooter.vue';
 import API from '../../apis';
@@ -169,6 +170,10 @@ export default {
       type: Number,
       default: 0,
     },
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
   },
   data() {
     return {
@@ -254,18 +259,20 @@ export default {
       const limit = this.pagination.limit || 10;
       const offset = this.pagination.offset || 0;
 
-      try {
-        const {
-          data: { data },
-        } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
+      if (this.path) {
+        try {
+          const {
+            data: { data },
+          } = await API.get(`${this.path}?offset=${offset + limit}&limit=${limit}`);
 
-        if (data.length === 0) {
-          this.nextArrayIsEmpty = true;
-        } else {
-          this.nextArrayIsEmpty = false;
+          if (data.length === 0) {
+            this.nextArrayIsEmpty = true;
+          } else {
+            this.nextArrayIsEmpty = false;
+          }
+        } catch (error) {
+          this.toast.error(error.message);
         }
-      } catch (error) {
-        console.log(error);
       }
     },
   },

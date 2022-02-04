@@ -108,6 +108,8 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import BannerDetail from '@/components/modals/BannerDetail.vue';
 import BannerForm from '@/components/modals/BannerForm.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
@@ -117,8 +119,6 @@ import HelpModal from '@/components/templates/Modal.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
-import { useToast } from 'vue-toastification';
-import dayjs from 'dayjs';
 import API from '../apis';
 
 export default {

@@ -265,12 +265,12 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
-import dayjs from 'dayjs';
 import API from '@/apis';
 
 export default {
