@@ -191,9 +191,19 @@
                   </div>
                 </div>
               </div>
-              <p v-if="column === 'price' || column === 'subtotal_price'">
-                Rp {{ data ? data.toLocaleString('ID') : 0 }}
-              </p>
+              <div v-if="column === 'price'" class="grid">
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+                <div class="grid" v-if="row.variations.length > 0">
+                {{ row.variations ? `${row.variations.map((el) => el.options[0].name)} + Rp ${row.variations.map((el) => el.options[0].price).toLocaleString('ID')}` : '' }}
+                </div>
+              </div>
+              <div v-if="column === 'subtotal_price'" >
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+              </div>
             </template>
           </help-table>
         </div>

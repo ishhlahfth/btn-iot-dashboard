@@ -61,6 +61,9 @@
             "
             @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id, currentStep: row.current_step })"
           />
+          <p v-if="column === 'type'">
+            {{ row.order_category }}
+          </p>
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
@@ -135,6 +138,7 @@ export default {
       columns: [
         { field: 'date', label: 'order date', sortable: true },
         { field: 'code', label: 'po number' },
+        { field: 'type', label: 'order type' },
         {
           field: 'current_step',
           label: 'status',
@@ -278,6 +282,7 @@ export default {
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
+          order_category: el.order_category,
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
           payment_method: el.payment?.name,
