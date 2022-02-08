@@ -180,9 +180,13 @@
                 <div class="flex flex-col justify-between">
                   <div class="grid">
                     <p class="font-medium text-grey-1">{{ row.name }}</p>
-                    <p class="textxsm">
-                      {{ row.variations.map((el) => el.options[0].name).join(', ') }}
-                    </p>
+                    <div class="grid" v-if="row.variations.length > 0">
+                    <div v-for="variation in row.variations" :key="variation.id">
+                      <div v-for="each in variation.options" :key="each.id">
+                        {{ each.name }}
+                      </div>
+                    </div>
+                </div>
                   </div>
                   <div>
                     <span v-if="row.note" class="px-2 py-1 border rounded text-xsmall w-auto">
@@ -191,9 +195,23 @@
                   </div>
                 </div>
               </div>
-              <p v-if="column === 'price' || column === 'subtotal_price'">
-                Rp {{ data ? data.toLocaleString('ID') : 0 }}
-              </p>
+              <div v-if="column === 'price'" class="grid">
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+                <div class="grid" v-if="row.variations.length > 0">
+                <div v-for="variation in row.variations" :key="variation.id">
+                  <div v-for="each in variation.options" :key="each.id">
+                    + Rp {{ each.price.toLocaleString('ID') }}
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div v-if="column === 'subtotal_price'" >
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+              </div>
             </template>
           </help-table>
         </div>
