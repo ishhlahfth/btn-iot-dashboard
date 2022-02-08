@@ -96,6 +96,13 @@
               <p class="font-bold">
                 {{ item.name }}
               </p>
+              <div class="grid" v-if="item.variations.length > 0">
+                <div v-for="variation in item.variations" :key="variation.id">
+                  <p  v-for="each in variation.options" :key="each.id">
+                    {{each.name}}
+                  </p>
+                </div>
+              </div>
               <p>
                 {{ item.variations.map((el) => el.options[0].name).join(', ') }}
               </p>
@@ -103,9 +110,18 @@
             <p class="col-span-1 text-right">
               {{ groupDigit(item.qty) }}
             </p>
-            <p class="col-span-2 text-right">
-              {{ convertToRp(calculateItemPrice(item)) }}
-            </p>
+            <div class="col-span-2 text-right">
+              <p>
+                {{ convertToRp(calculateItemPrice(item)) }}
+              </p>
+              <div class="grid" v-if="item.variations.length > 0">
+                <div v-for="variation in item.variations" :key="variation.id">
+                  <p  v-for="each in variation.options" :key="each.id">
+                    + {{ convertToRp(each.price) }}
+                  </p>
+                </div>
+              </div>
+            </div>
             <p class="col-span-2 text-right">
               {{ convertToRp(item.subtotal_price) }}
             </p>
