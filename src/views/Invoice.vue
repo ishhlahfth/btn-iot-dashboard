@@ -103,9 +103,6 @@
                   </p>
                 </div>
               </div>
-              <p>
-                {{ item.variations.map((el) => el.options[0].name).join(', ') }}
-              </p>
             </div>
             <p class="col-span-1 text-right">
               {{ groupDigit(item.qty) }}
