@@ -148,6 +148,7 @@ export default {
         { field: 'initial_price', label: 'delivery price' },
         { field: 'discounts', label: 'discount' },
         { field: 'service_fee', label: 'service fee' },
+        { field: 'total_price', label: 'total price' },
         { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
@@ -285,6 +286,7 @@ export default {
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
+          total_price: this.convertToRp(el.total_price),
         }));
 
         this.orderPagination = {
