@@ -130,7 +130,7 @@ export default {
     max.setSeconds(0);
     return {
       currentPropStep: '',
-      exportLimit: 7,
+      exportLimit: 31,
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
@@ -352,6 +352,7 @@ export default {
             ? String(el.discounts?.total)
             : '0',
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
+          total_price: this.convertToRp(el.total_price),
           payment_method: el.payment.name,
         }));
       } catch (error) {
