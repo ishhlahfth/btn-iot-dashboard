@@ -16,7 +16,7 @@
       >
         <img
           alt="Help logo"
-          src="@/assets/ic-help-white.png"
+          src="@/assets/why-white.png"
           width="145.38"
           height="43.09"
           class="mx-auto my-3"
@@ -112,55 +112,121 @@ export default {
   },
   mounted() {
     const permission = this.$store.state.access.access;
-    const tempFilter = permission.permissions.filter((el) => el.dummySequence).sort((a, b) => a.dummySequence - b.dummySequence);
+    const tempFilter = permission.permissions
+      .filter((el) => el.dummySequence)
+      .sort((a, b) => a.dummySequence - b.dummySequence);
+    console.log(tempFilter, 'bisa ga');
     if (tempFilter) {
       tempFilter.forEach((el) => {
         switch (el.module.toLowerCase()) {
           case 'dashboard':
             if (el.action === 'READ') {
-              this.links.push({ path: '/bns/dashboard', label: 'Dashboard', icon: 'home' });
-            }
-            break;
-          case 'order-type':
-            if (el.action === 'READ') {
-              this.links.push({ path: '/bns/order', label: 'Order', icon: 'cube' });
-            }
-            break;
-          case 'payment':
-            if (el.action === 'READ') {
-              this.links.push({ path: '/bns/payment', label: 'Payment', icon: 'credit-card' });
+              this.links.push({
+                path: '/bns/dashboard',
+                label: 'Dashboard',
+                icon: 'home',
+                sort: 1,
+              });
             }
             break;
           case 'merchant':
             if (el.action === 'READ' && el.id === 42) {
-              this.links.push({ path: '/bns/merchant', label: 'Merchant', icon: 'user' });
+              this.links.push({
+                path: '/bns/merchant',
+                label: 'Merchant',
+                icon: 'merchant',
+                sort: 2,
+              });
             }
             break;
-          case 'banner':
+          case 'order-type':
             if (el.action === 'READ') {
-              this.links.push({ path: '/bns/banner', label: 'Banner', icon: 'photograph' });
-            }
-            break;
-          case 'role':
-            if (el.action === 'READ') {
-              this.links.push({ path: '/bns/role', label: 'Role', icon: 'user-group' });
-            }
-            break;
-          case 'user':
-            if (el.action === 'READ') {
-              this.links.push({ path: '/bns/admin', label: 'Admin', icon: 'shield' });
+              this.links.push({
+                path: '/bns/order',
+                label: 'Order',
+                icon: 'cube',
+                sort: 4,
+              });
             }
             break;
           case 'transfer_queues':
             if (el.action === 'READ') {
-              this.links.push({ path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' });
+              this.links.push({
+                path: '/bns/transfer',
+                label: 'Transfer',
+                icon: 'switch-horizontal',
+                sort: 5,
+                subMenu: [
+                  {
+                    path: '/bns/transfer',
+                    label: 'Transfer Merchant',
+                  },
+                  {
+                    path: '/bns/transfer-agent',
+                    label: 'Transfer Agent',
+                  },
+                ],
+              });
+            }
+            break;
+          case 'payment':
+            if (el.action === 'READ') {
+              this.links.push({
+                path: '/bns/payment',
+                label: 'Payment',
+                icon: 'credit-card',
+                sort: 7,
+              });
+            }
+            break;
+          case 'banner':
+            if (el.action === 'READ') {
+              this.links.push({
+                path: '/bns/banner',
+                label: 'Banner',
+                icon: 'photograph',
+                sort: 8,
+              });
+            }
+            break;
+          case 'user':
+            if (el.action === 'READ') {
+              this.links.push({
+                path: '/bns/admin',
+                label: 'Admin',
+                icon: 'shield',
+                sort: 9,
+              });
+            }
+            break;
+          case 'role':
+            if (el.action === 'READ') {
+              this.links.push({
+                path: '/bns/role',
+                label: 'Role',
+                icon: 'user-group',
+                sort: 10,
+              });
             }
             break;
           default:
             break;
         }
       });
+      this.links.push({
+        path: '/bns/copy_merchant',
+        label: 'Copy Merchant',
+        icon: 'copy',
+        sort: 11,
+      });
+      this.links.push({
+        path: '/bns/agents',
+        label: 'Agents',
+        icon: 'user',
+        sort: 3,
+      });
     }
+    this.links.sort((a, b) => a.sort - b.sort);
   },
 };
 </script>
