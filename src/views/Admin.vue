@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
@@ -91,7 +92,6 @@ import AdminAddEdit from '@/components/modals/AdminAddEdit.vue';
 import AdminDetail from '@/components/modals/AdminDetail.vue';
 import HelpToggle from '@/components/atoms/Toggle.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import API from '@/apis';
 
@@ -161,7 +161,6 @@ export default {
           value: el.id,
           label: el.name,
         }));
-        console.log(this.roles, 'roles');
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -171,7 +170,6 @@ export default {
       }
     },
     async getAdmins(pagination) {
-      console.log(pagination, 'pagination');
       const limit = pagination.limit || 10;
       const offset = pagination.offset || 0;
       const search = this.searchValue || '';
