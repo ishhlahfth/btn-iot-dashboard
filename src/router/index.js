@@ -58,6 +58,11 @@ const routes = [
         component: () => import('@/views/Merchant.vue'),
       },
       {
+        path: 'agents',
+        name: 'Agents',
+        component: () => import('@/views/Agents.vue'),
+      },
+      {
         path: 'admin',
         name: 'Admin',
         component: () => import('@/views/Admin.vue'),
@@ -76,6 +81,11 @@ const routes = [
         path: 'transfer',
         name: 'Transfer',
         component: () => import('@/views/Transfer.vue'),
+      },
+      {
+        path: 'transfer-agent',
+        name: 'Transfer Agent',
+        component: () => import('@/views/TransferAgents.vue'),
       },
       {
         path: 'payment',
