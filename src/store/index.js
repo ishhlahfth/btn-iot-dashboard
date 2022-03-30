@@ -11,6 +11,7 @@ export default createStore({
     screenWidth: 0,
     mini: true,
     merchantId: 0,
+    agentId: 0,
     merchantName: '',
     merchant: {},
     item: {},
@@ -47,6 +48,9 @@ export default createStore({
     },
     SET_MERCHANT_ID(state, payload) {
       state.merchantId = payload;
+    },
+    SET_AGENT_ID(state, payload) {
+      state.agentId = payload;
     },
     SET_MERCHANT_NAME(state, payload) {
       state.merchantName = payload;
