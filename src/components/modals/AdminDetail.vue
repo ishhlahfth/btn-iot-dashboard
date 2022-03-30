@@ -65,7 +65,6 @@ export default {
         if (data.banner?.location) {
           this.photo = data.banner.location;
         }
-        console.log(data, 'ini data');
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
