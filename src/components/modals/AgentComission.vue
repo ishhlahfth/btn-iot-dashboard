@@ -21,16 +21,17 @@
         <div v-else class="rounded bg-grey-4 h-4 animate-pulse"></div>
       </div>
       <div class="sm:col-span-2">
-        <form @submit.prevent="proceed" class="grid gap-4">
+        <div class="grid gap-4">
           <help-input
             label="New Commission"
             label-class="text-grey-2"
-            type="number"
+            type="text"
             v-model="newCommission"
             placeholder="Type new commission value here"
+            mask="##"
           />
           <help-button label="save changes" :loading="loading" loadingLabel="Saving Changes" @click="updateCommission" />
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -40,15 +41,16 @@
 import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
+import mixin from '@/mixin';
 import API from '../../apiext';
 
 export default {
   name: 'Commission',
+  mixins: [mixin],
   components: {
     HelpButton,
     HelpInput,
   },
-  emits: ['closeAndRefetch', 'close', 'refetch'],
   setup() {
     const toast = useToast();
     return { toast };
@@ -92,16 +94,16 @@ export default {
     async updateCommission() {
       this.loading = true;
       const payload = {
-        commission: this.newCommission,
+        commission: parseInt(this.newCommission, 10),
       };
       const url = `agents/${this.agentId}`;
       try {
         const {
           data: { data },
         } = await API.patch(url, payload);
-        this.loadingVerify = false;
+        this.loading = false;
         this.toast.success(
-          `Komisi ${data.name} berhasil dirubah menjadi ${this.selectedStatus.label} %`,
+          `Komisi ${data.name} berhasil dirubah menjadi ${this.newCommission} %`,
         );
         this.$emit('finish');
       } catch (error) {
