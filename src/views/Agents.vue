@@ -9,7 +9,7 @@
     <agent-verification @close="modals.verify = false" @finish="closeVerifyAgent" />
   </help-modal>
   <help-modal v-model="modals.comission" class="modal-md" permanent>
-    <agent-commission @close="modals.comission = false" @finish="closeComission" />
+    <agent-commission @close="modals.comission = false" @finish="closeCommission" />
   </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
