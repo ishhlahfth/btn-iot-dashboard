@@ -119,10 +119,10 @@
   </div>
 </template>
 <script>
+import { useToast } from 'vue-toastification';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
-import { useToast } from 'vue-toastification';
 import mixin from '@/mixin';
 import ApiAgent from '../../apiext';
 
