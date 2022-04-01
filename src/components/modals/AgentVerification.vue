@@ -157,7 +157,7 @@ export default {
         verification_status_id: this.selectedStatus.value,
       };
       if (this.isReject) {
-        payload.push({ verification_reason: this.verificationReason });
+        payload.verification_reason = this.agentDetail.verificationReason;
       }
       const url = `agents/${this.agentId}`;
       try {
