@@ -11,12 +11,9 @@
       />
     </div>
     <form
-      @submit.prevent="$emit('apply', { merchantName, paymentMethod: selectedPayment.value, orderStatus: selectedStatus.value,selectedStart: pickedStart, selectedEnd: pickedEnd })"
+      @submit.prevent="$emit('apply', { merchantName, verificationStatus: selectedStatus?.value })"
       class="grid gap-4"
     >
-    <div class="w-full">
-      <help-input v-model="merchantName" label="Agent Name" placeholder="Agent Name To Be Filtered" />
-    </div>
       <div class="w-full">
         <help-select
           v-model="selectedStatus"
@@ -41,7 +38,6 @@
 
 <script>
 import HelpButton from '@/components/atoms/Button.vue';
-import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import mixin from '@/mixin';
 
@@ -50,7 +46,6 @@ export default {
   mixins: [mixin],
   components: {
     HelpButton,
-    HelpInput,
     HelpSelect,
   },
   props: {
@@ -65,10 +60,10 @@ export default {
       selectedStatus: { value: '', label: 'All' },
       agentStatus: [
         { value: '', label: 'All' },
-        { value: 'VERIFIED', label: 'Terverifikasi' },
-        { value: 'PENDING', label: 'Pending' },
-        { value: 'FAILED VERIFICATION', label: 'Verifikasi Gagal' },
-        { value: 'DISABLED', label: 'Akun Disabled' },
+        { value: '2', label: 'Terverifikasi' },
+        { value: '1', label: 'Pending' },
+        { value: '3', label: 'Verifikasi Gagal' },
+        { value: '4', label: 'Akun Disabled' },
       ],
       config: {
         wrap: true,
