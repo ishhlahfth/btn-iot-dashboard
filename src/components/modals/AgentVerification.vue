@@ -30,6 +30,13 @@
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
+      <div>
+        <help-input
+          v-if="isReject"
+          v-model="agentDetail.verificationReason"
+          type="textarea"
+        />
+      </div>
       <div class="grid grid-flow-col gap-2 auto-cols-max justify-end">
         <help-button label="Proceed" class="w-full" :loading="loadingVerify" :loadingLabel="'Memproses'" @click="verifyAgent" />
       </div>
@@ -40,6 +47,7 @@
 <script>
 import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
+import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import mixin from '@/mixin';
 import ApiAgent from '../../apiext';
@@ -49,6 +57,7 @@ export default {
   mixins: [mixin],
   components: {
     HelpButton,
+    HelpInput,
     HelpSelect,
   },
   props: {
@@ -71,12 +80,31 @@ export default {
         { value: 3, label: 'Verifikasi Gagal' },
         { value: 4, label: 'Akun Disabled' },
       ],
+      isReject: false,
       config: {
         wrap: true,
         locale: 'ID',
         disableMobile: 'true',
       },
-      agentDetail: {},
+      agentDetail: {
+        statusName: '',
+        statusId: '',
+        fullName: '',
+        email: '',
+        phone: '',
+        birthDate: '',
+        bank: '',
+        accountNumber: '',
+        accountName: '',
+        srcKtp: '',
+        srcSelfie: '',
+        address: '',
+        locationDetail: '',
+        district: '',
+        city: '',
+        postalCode: '',
+        verificationReason: '',
+      },
       loadingVerify: false,
     };
   },
@@ -111,8 +139,10 @@ export default {
         this.agentDetail.district = data.district;
         this.agentDetail.city = data.city;
         this.agentDetail.postalCode = data.zip_code;
+        this.agentDetail.verificationReason = data.verification_reason;
         this.selectedStatus.value = this.agentDetail.statusId;
         this.selectedStatus.label = this.agentDetail.statusName;
+        this.handleFail();
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -126,6 +156,9 @@ export default {
       const payload = {
         verification_status_id: this.selectedStatus.value,
       };
+      if (this.isReject) {
+        payload.verification_reason = this.agentDetail.verificationReason;
+      }
       const url = `agents/${this.agentId}`;
       try {
         const {
@@ -143,6 +176,18 @@ export default {
           this.toast.error(error.response?.data?.errors[0]);
         }
       }
+    },
+    handleFail() {
+      if (this.selectedStatus.value === 3) {
+        this.isReject = true;
+      } else {
+        this.isReject = false;
+      }
+    },
+  },
+  watch: {
+    selectedStatus() {
+      this.handleFail();
     },
   },
   mounted() {
