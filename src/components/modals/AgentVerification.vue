@@ -25,7 +25,7 @@
       <div class="w-full">
         <help-select
           v-model="selectedStatus"
-          label="Verify status to:"
+          label="Verify status to"
           :options="agentStatus"
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
@@ -33,6 +33,8 @@
       <div>
         <help-input
           v-if="isReject"
+          label="Reason"
+          placeholder="Type failure reason here"
           v-model="agentDetail.verificationReason"
           type="textarea"
         />

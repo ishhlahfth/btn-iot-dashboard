@@ -2,8 +2,8 @@
   <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card">
     <template v-if="!loading">
       <img
-        v-if="localImageUrl"
-        :src="localImageUrl"
+        v-if="imageUrl"
+        :src="imageUrl"
         alt="menu"
         class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
         :class="[{
@@ -225,7 +225,6 @@ export default {
       this.flagOption = !this.flagOption;
     },
     handleClickItem(param) {
-      console.log(param, 'param ke baca ga');
       this.valueItem = param.value;
       this.$store.commit('SET_ITEM', this.raw);
       if (param.value === 'item_status') {
@@ -239,7 +238,7 @@ export default {
   },
   async mounted() {
     this.localIsActive = this.isActive;
-    this.localImageUrl = await this.$store.dispatch('loadImage', this.imageUrl);
+    // this.localImageUrl = await this.$store.dispatch('loadImage', this.imageUrl);
   },
 };
 </script>

@@ -73,10 +73,10 @@ import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import Base64 from 'crypto-js/enc-base64';
 import Utf8 from 'crypto-js/enc-utf8';
+import axios from 'axios';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpModal from '@/components/templates/Modal.vue';
-import axios from 'axios';
 // import API from '../apis';
 
 export default {
@@ -106,7 +106,7 @@ export default {
     const resetPasswordLoading = ref(false);
     const loadingBackdrop = ref(false);
 
-    const auth = `Basic ${Buffer.from('CMS:12345').toString('base64')}`;
+    const auth = `Basic ${Buffer.from(process.env.VUE_APP_BASIC_AUTH).toString('base64')}`;
 
     const sendVerifyEmail = async () => {
       try {
@@ -205,7 +205,7 @@ export default {
         router.push('/bns');
         loadingBackdrop.value = false;
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     };
 
@@ -227,7 +227,6 @@ export default {
           });
           getRoleById(data.role_id, data.access_token);
           loadingBackdrop.value = true;
-          console.log(data, 'ini hasil login');
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
             user = Base64.stringify(user);

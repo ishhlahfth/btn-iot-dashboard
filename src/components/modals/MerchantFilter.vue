@@ -37,9 +37,9 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
-import { ref } from 'vue';
 
 export default {
   name: 'MerchantFilter',
