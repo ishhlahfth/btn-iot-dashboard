@@ -34,7 +34,7 @@
         <help-input
           type="text"
           v-model="searchValue"
-          placeholder="Search agent name OR agent's phone number here"
+          placeholder="Search agent's phone number"
           search-bar
         />
       </form>
