@@ -68,11 +68,11 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpThumbnail from '@/components/atoms/Thumbnail.vue';
 import Icon from '@/components/atoms/Icon.vue';
-import { useToast } from 'vue-toastification';
-import dayjs from 'dayjs';
 import API from '../../apis';
 
 export default {

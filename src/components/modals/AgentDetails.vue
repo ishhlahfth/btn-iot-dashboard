@@ -14,7 +14,7 @@
       />
       </div>
     </div>
-    <div class="grid grid-cols-3 gap-2 py-4">
+    <div class="grid grid-cols-3 gap-2 py-2">
       <div>
         <div class="grid w-full gap-2 py-2">
           <p class="font-semibold text-gray-400">Status</p>
@@ -28,6 +28,10 @@
                 : 'negative'
           "
           />
+        </div>
+        <div class="grid w-full gap-2 py-2" v-if="agentDetail.statusId === 3">
+          <p class="font-semibold text-gray-400">Cause Of Failure</p>
+          <p class="font-semibold">{{ agentDetail.verificationReason }}</p>
         </div>
         <div class="grid w-full gap-2 py-2">
           <p class="font-semibold text-gray-400">Full Name (Based On KTP)</p>
@@ -134,6 +138,7 @@ export default {
       agentDetail: {
         statusName: '',
         statusId: '',
+        verificationReason: '-',
         fullName: '',
         email: '',
         phone: '',
@@ -172,7 +177,11 @@ export default {
         const {
           data: { data },
         } = await ApiAgent.get(url);
+        this.agentDetail.statusId = data.verification_status.id;
         this.agentDetail.statusName = data.verification_status.name;
+        if (data.verification_reason) {
+          this.agentDetail.verificationReason = data.verification_reason;
+        }
         this.agentDetail.fullName = data.name;
         this.agentDetail.email = data.email;
         this.agentDetail.phone = data.phone_number;

@@ -80,7 +80,6 @@ export default {
   },
   methods: {
     navigate(menu) {
-      console.log('🔰', menu);
       if (menu === 'Logout') {
         document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
         this.$router.push('/');
