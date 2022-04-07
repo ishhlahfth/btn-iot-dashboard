@@ -11,6 +11,9 @@
   <help-modal v-model="modals.comission" class="modal-md" permanent>
     <agent-commission @close="modals.comission = false" @finish="closeCommission" />
   </help-modal>
+  <help-modal v-model="modals.minvaltrx" class="modal-md" permanent>
+    <agent-min-transaction @close="modals.minvaltrx = false" @finish="closeMinValTrx" />
+  </help-modal>
   <div class="p-4 sm:p-6 grid gap-4 sm:gap-6">
     <div class="w-full flex justify-between">
       <p class="text-heading2 font-semibold">Agents</p>
@@ -66,6 +69,16 @@
               @click="openComissionAgent(row.uuid)"
             />
           </div>
+          <div v-if="column === 'min_value_trx'" class="grid grid-flow-col gap-2 place-items-center">
+            <p>{{ row.min_value_trx }}</p>
+            <help-button
+              icon-only
+              icon="dots-vertical"
+              bg-color="transparent"
+              color="grey-1"
+              @click="openMinValTrx(row.uuid)"
+            />
+          </div>
           <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
           <help-badge
             v-if="column === 'status'"
@@ -104,6 +117,7 @@ import AgentFilter from '@/components/modals/AgentFilter.vue';
 import AgentDetails from '@/components/modals/AgentDetails.vue';
 import AgentVerification from '@/components/modals/AgentVerification.vue';
 import AgentCommission from '@/components/modals/AgentComission.vue';
+import AgentMinTransaction from '@/components/modals/AgentMinTransaction.vue';
 import mixin from '@/mixin';
 // import dayjs from 'dayjs';
 import ApiAgent from '../apiext';
@@ -121,6 +135,7 @@ export default {
     AgentDetails,
     AgentVerification,
     AgentCommission,
+    AgentMinTransaction,
   },
   setup() {
     const toast = useToast();
@@ -140,7 +155,8 @@ export default {
           sortable: true,
         },
         { field: 'updated_at', label: 'status last updated', sortable: true },
-        { field: 'commission', label: 'commission (%)', align: 'right' },
+        { field: 'commission', label: 'commission', align: 'right' },
+        { field: 'min_value_trx', label: 'minimum value transaction', align: 'right' },
         { field: 'agent_detail', label: 'Agent Detail', align: 'center' },
       ],
       agents: [],
@@ -156,16 +172,19 @@ export default {
         detail: false,
         verify: false,
         comission: false,
+        minvaltrx: false,
       },
       agentDetails: null,
       agentFilter: {
         status: '',
       },
       appliedFilter: {},
+      loading: false,
     };
   },
   methods: {
     async getAgents({ pagination, filter }) {
+      this.loading = true;
       const limit = pagination?.limit || 10;
       const offset = pagination?.offset || 0;
       const sort = pagination?.sort || 'DESC';
@@ -193,14 +212,17 @@ export default {
           status: el.verification_status?.name,
           updated_at: Moment(el.updated_at).format('D-MM-YYYY HH:mm:ss'),
           commission: el.commission,
+          min_value_trx: this.convertToRp(el.min_value_trx),
         }));
 
-        console.log('lastRowLen', this.agentsPagination.rowLength);
+        this.loading = false;
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
+          this.loading = false;
         } else {
           this.toast.error(error.response?.data?.errors[0]);
+          this.loading = false;
         }
       }
     },
@@ -271,6 +293,14 @@ export default {
       this.modals.detail = false;
       this.modals.verify = true;
     },
+    openComissionAgent(id) {
+      this.$store.commit('SET_AGENT_ID', id);
+      this.modals.comission = true;
+    },
+    openMinValTrx(id) {
+      this.$store.commit('SET_AGENT_ID', id);
+      this.modals.minvaltrx = true;
+    },
     closeVerifyAgent() {
       this.modals.verify = false;
       this.getAgents(this.agentsPagination);
@@ -279,10 +309,9 @@ export default {
       this.modals.comission = false;
       this.getAgents(this.agentsPagination);
     },
-    openComissionAgent(id) {
-      console.log('ini ID ku', id);
-      this.$store.commit('SET_AGENT_ID', id);
-      this.modals.comission = true;
+    closeMinValTrx() {
+      this.modals.minvaltrx = false;
+      this.getAgents(this.agentsPagination);
     },
   },
   mounted() {
