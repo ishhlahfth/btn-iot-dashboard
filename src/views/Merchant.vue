@@ -78,7 +78,7 @@
         <help-input
           type="text"
           v-model="searchValue"
-          placeholder="Search merchant name OR phone number here"
+          placeholder="Search merchant by name, phone number, email or bank account here"
           search-bar
         />
       </form>

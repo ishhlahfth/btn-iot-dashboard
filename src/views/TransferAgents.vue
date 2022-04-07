@@ -51,8 +51,21 @@
         @onChangePagination="getTransactions({pagination: $event, filter: agentFilter})"
         @sort="getTransactions({pagination: $event, filter: agentFilter})"
       >
+        <template v-slot:header="{ column: { field } }">
+          <help-checkbox
+            v-if="field === 'is_checked'"
+            v-model:checked="checkAll"
+            @click="toggleAll"
+          />
+        </template>
         <template v-slot:body="{ column, row }">
-          <help-toggle v-if="column === 'is_hidden'" v-model="row.is_hidden" />
+          <template v-if="column === 'is_checked'">
+            <help-checkbox
+              v-if="row.transfer_status !== 'SUCCESS'"
+              v-model:checked="row.is_checked.val"
+            />
+            <div v-else class="h-5 w-5"></div>
+          </template>
           <help-badge
             v-if="column === 'transfer_status'"
             :label="row.transfer_status"
@@ -140,6 +153,7 @@ export default {
         filter: false,
       },
       appliedFilter: {},
+      checkAll: false,
     };
   },
   methods: {
@@ -175,6 +189,7 @@ export default {
           item_price: this.convertToRp(el.amount),
           transfer_by: el.trf_by,
           log: JSON.stringify(el.log),
+          is_checked: el.order?.transfer_status !== 'SUCCESS' ? { val: false } : { val: null },
         }));
         this.loading = false;
       } catch (error) {
@@ -207,6 +222,13 @@ export default {
     },
     showFinishExportToast() {
       this.toast.success('Finished Exporting, Download in progress...');
+    },
+    toggleAll() {
+      for (let i = 0; i < this.transfers.length; i += 1) {
+        if (this.transfers[i].is_checked.val !== null) {
+          this.transfers[i].is_checked.val = !this.checkAll;
+        }
+      }
     },
   },
   mounted() {
