@@ -256,11 +256,7 @@ export default {
         } = await API.get(url);
         this.count = data;
       } catch (error) {
-        if (error.message === 'Network Error') {
-          this.toast.error("Error: Check your network or it's probably a CORS error");
-        } else {
-          this.toast.error(error.message);
-        }
+        console.log('failed get numrows');
       }
     },
     async getCommission(merchantId) {
