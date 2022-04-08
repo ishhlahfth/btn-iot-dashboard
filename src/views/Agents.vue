@@ -60,7 +60,8 @@
             See Detail
           </p>
           <div v-if="column === 'commission'" class="grid grid-flow-col gap-2 place-items-center">
-            <p>{{ row.commission }}</p>
+            <p v-if="row.commission_type === 'NOMINAL'">{{ convertToRp(row.commission) }}</p>
+            <p v-else>{{ row.commission }}%</p>
             <help-button
               icon-only
               icon="dots-vertical"
@@ -212,6 +213,7 @@ export default {
           status: el.verification_status?.name,
           updated_at: Moment(el.updated_at).format('D-MM-YYYY HH:mm:ss'),
           commission: el.commission,
+          commission_type: el.commission_type,
           min_value_trx: this.convertToRp(el.min_value_trx),
         }));
 
