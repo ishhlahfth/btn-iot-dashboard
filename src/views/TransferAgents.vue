@@ -1,4 +1,18 @@
 <template>
+  <help-modal v-model="modals.confirmTransfer" permanent>
+    <confirmation
+      title="Transfer confirmation"
+      :message="
+        `Are you sure you want to transfer to the selected orders with total amount of
+         ${convertToRp(totalAmounts)}? This action cannot be undone`
+      "
+      :confirm-loading="conductTransferLoading"
+      loading-label="transfering"
+      @close="modals.confirmTransfer = false"
+      @cancel="modals.confirmTransfer = false"
+      @confirm="conductTransfer"
+    />
+  </help-modal>
   <help-modal v-model="modals.filter" permanent>
     <transfer-agents-filter :filter="transactionFilter" @apply="applyFilter" @close="modals.filter = false" />
   </help-modal>
@@ -15,7 +29,7 @@
           />
           <template v-else>
             <help-button label="cancel" bg-color="flame" @click="transferMode = false" />
-            <help-button label="transfer" bg-color="mint" @click="confirmTransferModal = true" />
+            <help-button label="transfer" bg-color="mint" @click="modals.confirmTransfer = true" />
           </template>
         </div>
         <help-button label="filter" icon="filter" @click="modals.filter = true" />
@@ -89,9 +103,11 @@ import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import TransferAgentsFilter from '@/components/modals/TransferAgentsFilter.vue';
+import Confirmation from '@/components/modals/Confirmation.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpTable from '@/components/templates/TableNew.vue';
+import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import mixin from '@/mixin';
 // import dayjs from 'dayjs';
 import ApiAgent from '../apiext';
@@ -105,6 +121,8 @@ export default {
     HelpTable,
     HelpBadge,
     HelpModal,
+    HelpCheckbox,
+    Confirmation,
     TransferAgentsFilter,
   },
   setup() {
@@ -121,23 +139,6 @@ export default {
       },
       transferMode: false,
       confirmTransferModal: false,
-      columns: [
-        { field: 'order_date', label: 'Order Date', sortable: true },
-        { field: 'transfer_date', label: 'Transfer Date', sortable: true },
-        {
-          field: 'transfer_status',
-          label: 'Transfer Status',
-          align: 'center',
-          sortable: true,
-        },
-        { field: 'merchant_name', label: 'Merchant Name', align: 'center' },
-        { field: 'agent_name', label: 'Agent Name', align: 'center' },
-        { field: 'agent_phone_number', label: 'Agent Phone Number', align: 'center' },
-        { field: 'item_price', label: 'Item Price', align: 'center' },
-        { field: 'agent_commision', label: 'Agent Commision', align: 'center' },
-        { field: 'transfer_by', label: 'Transferred By', align: 'center' },
-        { field: 'log', label: 'Log', align: 'left' },
-      ],
       transactions: [],
       exportedAgents: [],
       transactionFilter: {
@@ -154,7 +155,43 @@ export default {
       },
       appliedFilter: {},
       checkAll: false,
+      conductTransferLoading: false,
     };
+  },
+  computed: {
+    columns() {
+      const columns = [
+        { field: 'order_date', label: 'Order Date', sortable: true },
+        { field: 'transfer_date', label: 'Transfer Date', sortable: true },
+        {
+          field: 'transfer_status',
+          label: 'Transfer Status',
+          align: 'center',
+          sortable: true,
+        },
+        { field: 'merchant_name', label: 'Merchant Name', align: 'center' },
+        { field: 'agent_name', label: 'Agent Name', align: 'center' },
+        { field: 'agent_phone_number', label: 'Agent Phone Number', align: 'center' },
+        { field: 'item_price', label: 'Item Price', align: 'center' },
+        { field: 'agent_commision', label: 'Agent Commision', align: 'center' },
+        { field: 'transfer_by', label: 'Transferred By', align: 'center' },
+        { field: 'log', label: 'Log', align: 'left' },
+      ];
+      if (this.transferMode) {
+        columns.unshift({ field: 'is_checked', label: 'checkbox', align: 'center' });
+      }
+      return columns;
+    },
+    queue() {
+      return this.transactions.filter((el) => el.is_checked.val);
+    },
+    totalAmounts() {
+      let sumTransferAmount = 0;
+      for (let i = 0; i < this.queue.length; i += 1) {
+        sumTransferAmount += this.queue[i].amount;
+      }
+      return sumTransferAmount;
+    },
   },
   methods: {
     async getTransactions({ pagination, filter }) {
@@ -179,17 +216,18 @@ export default {
         this.transactionsPagination.rowLength = data.rowLength;
         this.transactions = data.row.map((el) => ({
           uuid: el.uuid,
-          order_date: Moment(el.order_date).format('D-MM-YYYY'),
-          transfer_date: Moment(el.trf_date).format('D-MM-YYYY'),
+          amount: el.agent_commision,
+          order_date: Moment(el.order_date).format('DD-MM-YYYY hh:mm:ss'),
+          transfer_date: Moment(el.trf_date).format('DD-MM-YYYY hh:mm:ss'),
           transfer_status: el.trf_status,
           merchant_name: el.agent_seller?.merchant_name,
-          agent_commision: this.convertToRp((el.agent_commision / 100) * el.amount),
+          agent_commision: this.convertToRp(el.agent_commision),
           agent_name: el.agent?.name,
           agent_phone_number: el.agent?.phone_number,
           item_price: this.convertToRp(el.amount),
           transfer_by: el.trf_by,
           log: JSON.stringify(el.log),
-          is_checked: el.order?.transfer_status !== 'SUCCESS' ? { val: false } : { val: null },
+          is_checked: el.trf_status !== 'SUCCESS' ? { val: false } : { val: null },
         }));
         this.loading = false;
       } catch (error) {
@@ -199,6 +237,34 @@ export default {
         } else {
           this.toast.error(error.response?.data?.errors[0]);
           this.loading = false;
+        }
+      }
+    },
+    async conductTransfer() {
+      this.conductTransferLoading = true;
+      console.log(this.queue);
+      const payload = {
+        items: [],
+      };
+      for (let i = 0; i < this.queue.length; i += 1) {
+        payload.items.push({ uuid: this.queue[i].uuid });
+      }
+      const url = 'agents/transfer_transactions';
+      try {
+        const {
+          data: { data },
+        } = await ApiAgent.post(url, payload);
+        console.log(data);
+        this.toast.success('Successfully updated');
+        this.getTransactions(this.transactionsPagination);
+        this.conductTransferLoading = false;
+      } catch (error) {
+        if (error.message === 'Network Error') {
+          this.toast.error("Error: Check your network or it's probably a CORS error");
+          this.conductTransferLoading = false;
+        } else {
+          this.toast.error(error.response?.data?.errors[0]);
+          this.conductTransferLoading = false;
         }
       }
     },
@@ -224,9 +290,9 @@ export default {
       this.toast.success('Finished Exporting, Download in progress...');
     },
     toggleAll() {
-      for (let i = 0; i < this.transfers.length; i += 1) {
-        if (this.transfers[i].is_checked.val !== null) {
-          this.transfers[i].is_checked.val = !this.checkAll;
+      for (let i = 0; i < this.transactions.length; i += 1) {
+        if (this.transactions[i].is_checked.val !== null) {
+          this.transactions[i].is_checked.val = !this.checkAll;
         }
       }
     },
