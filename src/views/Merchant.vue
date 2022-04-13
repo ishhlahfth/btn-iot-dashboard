@@ -67,9 +67,10 @@
           :fetch="exportMerchant"
           :before-start="showStartExportToast"
           :before-finish="showFinishExportToast"
+          type="xls"
           :name="`Exported_Merchant_${merchantFilter.verificationStatus}.xls`"
         >
-          <help-button class="h-full" label="export" />
+          <help-button class="h-full" label="export" :loading="exportLoading" loadingLabel="Exporting Data" />
         </export-excel>
       </div>
     </div>
@@ -187,6 +188,7 @@ export default {
     return {
       searchValue: '',
       count: 0,
+      exportLoading: false,
       columns: [
         { field: 'name', label: 'name', sortable: true },
         { field: 'city', label: 'city', sortable: true },
@@ -346,9 +348,11 @@ export default {
     async getExportedMerchant(filter) {
       const sort = 'name';
       const order = 'asc';
-      const search = '';
+      const search = this.searchValue || '';
+      const offset = 0;
+      const limit = this.count || 10;
 
-      let url = `merchants?sort=${sort}&order=${order}&search=${search}`;
+      let url = `merchants?offset=${offset}&limit=${limit}&sort=${sort}&order=${order}&search=${search}`;
       if (filter?.verificationStatus) url += `&verify_status=${filter?.verificationStatus}`;
 
       try {
@@ -457,9 +461,11 @@ export default {
       return this.exportedMerchants;
     },
     showStartExportToast() {
+      this.exportLoading = true;
       this.toast.success('Exporting Report...');
     },
     showFinishExportToast() {
+      this.exportLoading = false;
       this.toast.success('Finished Exporting, Download in progress...');
     },
     handleItemStatus() {

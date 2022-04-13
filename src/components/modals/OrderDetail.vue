@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div class="divide-y divide-grey-4">
+        <div class="divide-y divide-grey-4" v-if="order.order_type_details?.delivery_method">
           <p class="font-medium pb-4">Delivery</p>
           <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4">
             <div>
@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <div class="divide-y divide-grey-4 font-medium">
+          <div class="divide-y divide-grey-4 font-medium" v-if="order.order_type_details?.shipping_address">
             <p class="font-medium pb-4">Recipient</p>
             <div class="pt-4 grid gap-4">
               <div class="grid grid-flow-row gap-4">
@@ -155,11 +155,11 @@
                   <tempalte v-if="!loading">
                     <p>
                       {{
-                        `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
+                        `${order.order_type_details?.shipping_address?.line_address}, ${order.order_type_details?.shipping_address?.district}, ${order.order_type_details?.shipping_address?.city}`
                       }}
                     </p>
                     <p class="font-light text-grey-2">
-                      {{ order.order_type_details?.shipping_address.location.coordinates }}
+                      {{ order.order_type_details?.shipping_address?.location.coordinates }}
                     </p>
                   </tempalte>
                   <template v-else>
@@ -224,28 +224,28 @@
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Delivery Fee</span>
               <span v-if="!loading" class="font-medium text-right">
-                {{ convertToRp(order.order_type_details?.delivery_method.initial_price) }}
+                {{ convertToRp(order.order_type_details?.delivery_method?.initial_price) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Commission</span>
               <span v-if="!loading" class="font-medium text-right">
                 {{ convertToRp(order?.commission_fee) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Service Fee</span>
               <span v-if="!loading" class="font-medium text-right">
-                {{ convertToRp(order.order_type_details?.delivery_method.service_fee) }}
+                {{ convertToRp(order.order_type_details?.delivery_method?.service_fee) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Discount</span>
               <span v-if="!loading" class="font-medium text-right text-flame">
                 {{
