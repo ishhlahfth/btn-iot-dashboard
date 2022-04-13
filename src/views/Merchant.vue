@@ -78,7 +78,7 @@
         <help-input
           type="text"
           v-model="searchValue"
-          placeholder="Search merchant name OR phone number here"
+          placeholder="Search merchant by name, phone number, email or bank account here"
           search-bar
         />
       </form>
@@ -190,7 +190,8 @@ export default {
       columns: [
         { field: 'name', label: 'name', sortable: true },
         { field: 'city', label: 'city', sortable: true },
-        { field: 'phone_number', label: 'phone number' },
+        { field: 'phone_number', label: 'phone number', align: 'center' },
+        { field: 'email', label: 'email', align: 'center' },
         {
           field: 'verify_status',
           label: 'verification status',
@@ -256,11 +257,7 @@ export default {
         } = await API.get(url);
         this.count = data;
       } catch (error) {
-        if (error.message === 'Network Error') {
-          this.toast.error("Error: Check your network or it's probably a CORS error");
-        } else {
-          this.toast.error(error.message);
-        }
+        console.log('failed get numrows');
       }
     },
     async getCommission(merchantId) {
@@ -309,6 +306,7 @@ export default {
           city: el.address.city.name,
           verify_status: this.translateStatus(el.verify_status),
           verify_reason: el.verify_reason,
+          email: el.email,
           verify_date: dayjs(el.verify_date).format('DD-MM-YYYY HH:mm:ss'),
           phone_number: el.phone_number,
           operational_hours: el.operational_hours.map(
