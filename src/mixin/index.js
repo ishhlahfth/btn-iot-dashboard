@@ -24,7 +24,6 @@ export default {
       return translated;
     },
     translateItemStatus(value) {
-      console.log('TRANSLATE', value);
       let translated = '';
       if (value) {
         switch (value) {
@@ -80,7 +79,6 @@ export default {
       // current seconds
       const seconds = objDate.getSeconds();
 
-      console.log(hours, 'hourssss');
       // 7 days ago
       switch (params) {
         case 'full':
@@ -96,7 +94,6 @@ export default {
         if (value === '') emptyCount += 1;
       });
       const isAllKeysEmpty = emptyCount === Object.keys(obj).length;
-      console.log(isAllKeysEmpty);
       return isAllKeysEmpty;
     },
     generatePhoneNumber(number) {
