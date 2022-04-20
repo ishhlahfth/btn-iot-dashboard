@@ -61,6 +61,9 @@
             "
             @click="openStatusHistory({ id: row.id, merchantId: row.merchant_id, currentStep: row.current_step })"
           />
+          <p v-if="column === 'type'">
+            {{ row.order_category }}
+          </p>
           <p
             v-if="column === 'detail'"
             class="text-royal font-medium cursor-pointer"
@@ -134,7 +137,8 @@ export default {
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
-        { field: 'code', label: 'po number', align: 'center' },
+        { field: 'code', label: 'po number' },
+        { field: 'type', label: 'order type' },
         {
           field: 'current_step',
           label: 'status',
@@ -148,7 +152,6 @@ export default {
         { field: 'initial_price', label: 'delivery price' },
         { field: 'discounts', label: 'discount' },
         { field: 'service_fee', label: 'service fee' },
-        { field: 'total_price', label: 'total price' },
         { field: 'payment_method', label: 'payment method', sortable: true },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
@@ -278,6 +281,7 @@ export default {
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
+          order_category: el.order_category,
           commission_fee: this.convertToRp(el.commission_fee),
           subtotal_price: this.convertToRp(el.subtotal_price),
           payment_method: el.payment?.name,
@@ -286,7 +290,6 @@ export default {
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
-          total_price: this.convertToRp(el.total_price),
         }));
 
         this.orderPagination = {
@@ -352,7 +355,6 @@ export default {
             ? String(el.discounts?.total)
             : '0',
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
-          total_price: this.convertToRp(el.total_price),
           payment_method: el.payment.name,
         }));
       } catch (error) {

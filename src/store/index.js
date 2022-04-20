@@ -11,6 +11,7 @@ export default createStore({
     screenWidth: 0,
     mini: true,
     merchantId: 0,
+    agentId: 0,
     merchantName: '',
     merchant: {},
     item: {},
@@ -47,6 +48,9 @@ export default createStore({
     },
     SET_MERCHANT_ID(state, payload) {
       state.merchantId = payload;
+    },
+    SET_AGENT_ID(state, payload) {
+      state.agentId = payload;
     },
     SET_MERCHANT_NAME(state, payload) {
       state.merchantName = payload;
@@ -122,9 +126,11 @@ export default createStore({
           merchant_id: data.id,
           name: data.name,
           phoneNumber: data.phone_number,
+          email: data.email,
           address: `${data.address?.line_address}, ${data.address?.district}, ${data.address?.city.name}, ${data.address?.state} ${data.address?.zip_code}`,
           location: data.location.coordinates,
           bank: data.account?.bank.name,
+          bankAccount: data.account?.no,
           verificationStatus: data.verify_status,
           verificationDate: dayjs(data.verify_date).format('DD-MM-YYYY HH:mm:ss'),
           summary: {

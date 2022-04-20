@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div class="divide-y divide-grey-4">
+        <div class="divide-y divide-grey-4" v-if="order.order_type_details?.delivery_method">
           <p class="font-medium pb-4">Delivery</p>
           <div class="pt-4 grid grid-cols-2 lg:grid-cols-none gap-4">
             <div>
@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <div class="divide-y divide-grey-4 font-medium">
+          <div class="divide-y divide-grey-4 font-medium" v-if="order.order_type_details?.shipping_address">
             <p class="font-medium pb-4">Recipient</p>
             <div class="pt-4 grid gap-4">
               <div class="grid grid-flow-row gap-4">
@@ -155,11 +155,11 @@
                   <tempalte v-if="!loading">
                     <p>
                       {{
-                        `${order.order_type_details?.shipping_address.line_address}, ${order.order_type_details?.shipping_address.district}, ${order.order_type_details?.shipping_address.city}`
+                        `${order.order_type_details?.shipping_address?.line_address}, ${order.order_type_details?.shipping_address?.district}, ${order.order_type_details?.shipping_address?.city}`
                       }}
                     </p>
                     <p class="font-light text-grey-2">
-                      {{ order.order_type_details?.shipping_address.location.coordinates }}
+                      {{ order.order_type_details?.shipping_address?.location.coordinates }}
                     </p>
                   </tempalte>
                   <template v-else>
@@ -180,9 +180,13 @@
                 <div class="flex flex-col justify-between">
                   <div class="grid">
                     <p class="font-medium text-grey-1">{{ row.name }}</p>
-                    <p class="textxsm">
-                      {{ row.variations.map((el) => el.options[0].name).join(', ') }}
-                    </p>
+                    <div class="grid" v-if="row.variations.length > 0">
+                    <div v-for="variation in row.variations" :key="variation.id">
+                      <div v-for="each in variation.options" :key="each.id">
+                        {{ each.name }}
+                      </div>
+                    </div>
+                </div>
                   </div>
                   <div>
                     <span v-if="row.note" class="px-2 py-1 border rounded text-xsmall w-auto">
@@ -191,9 +195,23 @@
                   </div>
                 </div>
               </div>
-              <p v-if="column === 'price' || column === 'subtotal_price'">
-                Rp {{ data ? data.toLocaleString('ID') : 0 }}
-              </p>
+              <div v-if="column === 'price'" class="grid">
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+                <div class="grid" v-if="row.variations.length > 0">
+                <div v-for="variation in row.variations" :key="variation.id">
+                  <div v-for="each in variation.options" :key="each.id">
+                    + Rp {{ each.price.toLocaleString('ID') }}
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div v-if="column === 'subtotal_price'" >
+                <div>
+                  Rp {{ data ? data.toLocaleString('ID') : 0 }}
+                </div>
+              </div>
             </template>
           </help-table>
         </div>
@@ -206,28 +224,28 @@
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Delivery Fee</span>
               <span v-if="!loading" class="font-medium text-right">
-                {{ convertToRp(order.order_type_details?.delivery_method.initial_price) }}
+                {{ convertToRp(order.order_type_details?.delivery_method?.initial_price) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Commission</span>
               <span v-if="!loading" class="font-medium text-right">
                 {{ convertToRp(order?.commission_fee) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Service Fee</span>
               <span v-if="!loading" class="font-medium text-right">
-                {{ convertToRp(order.order_type_details?.delivery_method.service_fee) }}
+                {{ convertToRp(order.order_type_details?.delivery_method?.service_fee) }}
               </span>
               <div v-else class="h-4 rounded bg-grey-4 animate-pulse" />
             </div>
-            <div class="grid gap-8 grid-cols-2">
+            <div class="grid gap-8 grid-cols-2" v-if="order.order_type_details?.delivery_method">
               <span>Discount</span>
               <span v-if="!loading" class="font-medium text-right text-flame">
                 {{
@@ -241,7 +259,7 @@
           </div>
           <div class="pt-4">
             <div class="grid gap-8 grid-cols-2">
-              <span>Grand Total</span>
+              <span>Grand total</span>
               <span v-if="!loading" class="font-bold text-right">
                 {{ convertToRp(order?.total_price) }}
               </span>

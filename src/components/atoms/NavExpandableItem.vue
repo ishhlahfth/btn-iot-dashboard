@@ -5,7 +5,7 @@
   >
     <div class="flex items-center whitespace-nowrap select-none">
       <div class="w-6 h-5 flex items-center justify-center mr-2">
-        <icon name="photograph" :size="5" />
+        <icon :name="menu.icon" :size="5" />
       </div>
       <div>
         <p class="font-medium">{{ menu.label }}</p>

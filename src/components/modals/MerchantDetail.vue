@@ -55,8 +55,12 @@
             </p>
             <p class="text-grey-2">Phone No.</p>
             <p>{{ merchant.phoneNumber }}</p>
+            <p class="text-grey-2">Email</p>
+            <p>{{ merchant.email }}</p>
             <p class="text-grey-2">Bank</p>
             <p>{{ merchant.bank }}</p>
+            <p class="text-grey-2">Bank Account No.</p>
+            <p>{{ merchant.bankAccount }}</p>
             <p class="text-grey-2">ID No. (KTP)</p>
             <p>{{ merchant.idNumber }}</p>
             <p class="text-grey-2">Verification Status</p>
