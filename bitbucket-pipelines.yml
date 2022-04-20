@@ -7,7 +7,13 @@ definitions:
           - cat .env-ci-cd
         artifacts:
           - .env-ci-cd
-    - step: &build-app
+    - step: &test
+        name: Test app
+        image: node:14
+        script:
+          - npm i
+          - npm t
+    - step: &build
         name: Build app
         image: node:14
         script:
@@ -43,22 +49,34 @@ definitions:
               COMMAND: "scripts/deploy-${BITBUCKET_DEPLOYMENT_ENVIRONMENT}.sh"
 
 pipelines:
+  pull-requests:
+    '{bugfix/*,feature/*,hotfix/*,release/*}':
+    - step: *set-environment
+    - parallel:
+      - step: *test
+      - step: *build
   branches:
     development:
       - step:
           <<: *set-environment
           deployment: test
-      - step: *build-app
+      - parallel:
+        - step: *test
+        - step: *build
       - step: *deploy-scp
     staging:
       - step:
           <<: *set-environment
           deployment: staging
-      - step: *build-app
+      - parallel:
+        - step: *test
+        - step: *build
       - step: *deploy-scp
     main:
       - step:
           <<: *set-environment
           deployment: production
-      - step: *build-app
+      - parallel:
+        - step: *test
+        - step: *build
       - step: *deploy-scp

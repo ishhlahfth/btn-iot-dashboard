@@ -2,8 +2,8 @@
   <div class="grid grid-flow-col gap-x-4 py-2 sm:p-2 menu-card">
     <template v-if="!loading">
       <img
-        v-if="localImageUrl"
-        :src="localImageUrl"
+        v-if="imageUrl"
+        :src="imageUrl"
         alt="menu"
         class="w-20 h-20 sm:w-26 sm:h-26 object-cover rounded"
         :class="[{
@@ -124,6 +124,7 @@ import HelpButton from '@/components/atoms/Button.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 import HelpRadio from '@/components/atoms/Radio.vue';
 import mixin from '@/mixin';
+import store from '@/store';
 import HelpOption from './Option.vue';
 
 export default {
@@ -212,7 +213,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   methods: {
@@ -225,9 +226,8 @@ export default {
       this.flagOption = !this.flagOption;
     },
     handleClickItem(param) {
-      console.log(param, 'param ke baca ga');
       this.valueItem = param.value;
-      this.$store.commit('SET_ITEM', this.raw);
+      store.commit('SET_ITEM', this.raw);
       if (param.value === 'item_status') {
         this.$emit('openItemStatusModal');
       } else if (param.value === 'delete') {
@@ -239,7 +239,7 @@ export default {
   },
   async mounted() {
     this.localIsActive = this.isActive;
-    this.localImageUrl = await this.$store.dispatch('loadImage', this.imageUrl);
+    // this.localImageUrl = await store.dispatch('loadImage', this.imageUrl);
   },
 };
 </script>

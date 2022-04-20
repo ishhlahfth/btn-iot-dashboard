@@ -106,6 +106,7 @@ import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpModal from '@/components/templates/Modal.vue';
 import Confirmation from '@/components/modals/Confirmation.vue';
+import store from '@/store';
 import API from '../../apis';
 
 export default {
@@ -152,10 +153,10 @@ export default {
   },
   computed: {
     merchant() {
-      return this.$store.state.merchant;
+      return store.state.merchant;
     },
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   methods: {

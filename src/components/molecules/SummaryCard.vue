@@ -190,7 +190,7 @@
           <template v-if="!next.eat">
             <template v-for="(payment, i) in paymentMethod.eat" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().replace(/[^\w ]/, '')}-logo-circle.png`)"
@@ -212,7 +212,7 @@
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.eat" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
@@ -223,9 +223,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
-                        ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
-                            'ID',
-                          )}`
+                        ? `Rp ${Number(delivery.totalTransaction).toLocaleString('ID')}`
                         : 0
                     }}
                   </p>
@@ -335,7 +333,7 @@
           <template v-if="!next.delivery">
             <template v-for="(payment, i) in paymentMethod.delivery" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${payment.name.toUpperCase().replace(/[^\w ]/, '')}-logo-circle.png`)"
@@ -346,7 +344,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       payment.totalTransaction
-                        ? `Rp ${Number(String(payment.totalTransaction).slice(0, -3)).toLocaleString('ID')}`
+                        ? `Rp ${Number(payment.totalTransaction).toLocaleString('ID')}`
                         : 0
                     }}
                   </p>
@@ -357,7 +355,7 @@
           <template v-else>
             <template v-for="(delivery, i) in deliveryMethod.delivery" :key="i">
               <div class="rounded-xl p-2 hover:shadow-lg shadow-md mb-2">
-                <div class="w-3/4 flex flex-row items-center justify-between">
+                <div class="pr-5 flex flex-row items-center justify-between">
                   <div>
                     <help-avatar
                       :src="require(`@/assets/partnerlogo2/${delivery.name.toUpperCase()}-logo-circle.png`)"
@@ -368,7 +366,7 @@
                   <p class="text-heading4 font-medium">
                     {{
                       delivery.totalTransaction
-                        ? `Rp ${Number(String(delivery.totalTransaction).slice(0, -3)).toLocaleString(
+                        ? `Rp ${Number(delivery.totalTransaction).toLocaleString(
                             'ID',
                           )}`
                         : 0
@@ -461,6 +459,7 @@
 import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpIcon from '@/components/atoms/Icon.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
+import store from '@/store';
 
 export default {
   name: 'SummaryCard',
@@ -518,14 +517,13 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     partnerLogo2() {
       return '@/assets/logo.png';
     },
   },
   mounted() {
-    console.log(this.totalComparison);
     this.show.order = false;
     this.show.eat = false;
     this.show.delivery = false;

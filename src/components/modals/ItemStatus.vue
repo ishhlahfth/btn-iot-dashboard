@@ -25,13 +25,14 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
-import { useToast } from 'vue-toastification';
+import store from '@/store';
 import API from '../../apis';
 
 export default {
-  name: 'MerchantVerification',
+  name: 'ItemStatus',
   components: {
     HelpButton,
     HelpSelect,
@@ -55,10 +56,10 @@ export default {
   },
   computed: {
     item() {
-      return this.$store.state.item;
+      return store.state.item;
     },
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   methods: {
@@ -88,10 +89,10 @@ export default {
         } = await API.patch(`items/${this.item.id}`, payload);
 
         this.toast.success(`Successfully updated ${data.name}`);
-        this.$store.dispatch('loadMerchant', this.$store.state.merchantId);
+        store.dispatch('loadMerchant', store.state.merchantId);
         this.$emit('close');
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },

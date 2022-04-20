@@ -270,7 +270,6 @@ export default {
   },
   methods: {
     handleChange(e) {
-      console.log(e.target.files);
       this.fileName = e.target.files[0].name;
     },
   },

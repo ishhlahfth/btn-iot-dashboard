@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import store from '@/store';
 import NavExpandableItem from '../atoms/NavExpandableItem.vue';
 import NavItem from '../atoms/NavItem.vue';
 
@@ -107,15 +108,12 @@ export default {
   },
   computed: {
     mini() {
-      return this.$store.state.mini;
+      return store.state.mini;
     },
   },
   mounted() {
-    const permission = this.$store.state.access.access;
-    const tempFilter = permission.permissions
-      .filter((el) => el.dummySequence)
-      .sort((a, b) => a.dummySequence - b.dummySequence);
-    console.log(tempFilter, 'bisa ga');
+    const permission = store.state.access.access;
+    const tempFilter = permission.permissions.filter((el) => el.dummySequence).sort((a, b) => a.dummySequence - b.dummySequence);
     if (tempFilter) {
       tempFilter.forEach((el) => {
         switch (el.module.toLowerCase()) {

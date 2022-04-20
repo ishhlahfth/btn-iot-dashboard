@@ -91,13 +91,14 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpTable from '@/components/templates/Table.vue';
 import HelpCheckbox from '@/components/atoms/Checkbox.vue';
 
-import { useToast } from 'vue-toastification';
 import API from '@/apis';
+import store from '@/store';
 
 export default {
   name: 'RoleAdd',
@@ -134,14 +135,14 @@ export default {
     };
   },
   mounted() {
-    this.roleName = this.$store.state.role.name;
-    this.description = this.$store.state.role.description;
-    if (this.$store.state.role.permissions) {
-      this.access = this.$store.state.role.permissions.map((el) => el.id);
+    this.roleName = store.state.role.name;
+    this.description = store.state.role.description;
+    if (store.state.role.permissions) {
+      this.access = store.state.role.permissions.map((el) => el.id);
     }
-    this.is_active = this.$store.state.role.is_active;
+    this.is_active = store.state.role.is_active;
     if (this.roleType === 'edit') {
-      this.$store.state.role.permissions.forEach((el) => {
+      store.state.role.permissions.forEach((el) => {
         this.roleBody.permission.push(String(el.id));
       });
     }
@@ -175,7 +176,7 @@ export default {
       }));
     },
     flagging(row) {
-      let checked = this.$store.state.permissions.filter((e) => row.id === e.id);
+      let checked = store.state.permissions.filter((e) => row.id === e.id);
       if (checked.length && checked.length > 0) {
         checked = true;
       } else {
@@ -237,7 +238,7 @@ export default {
       try {
         const {
           data: { data },
-        } = await API.patch(`/roles/${this.$store.state.role.id}`, body);
+        } = await API.patch(`/roles/${store.state.role.id}`, body);
         this.toast.success(`${data.name || 'role'} successfully edited`);
       } catch (error) {
         if (error.message === 'Network Error') {
@@ -253,10 +254,10 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     roleType() {
-      return this.$store.state.roleType;
+      return store.state.roleType;
     },
   },
 };

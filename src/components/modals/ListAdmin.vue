@@ -33,6 +33,7 @@
 // import HelpButton from '@/components/atoms/Button.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import mixin from '@/mixin';
+import store from '@/store';
 
 export default {
   name: 'ListAdmin',
@@ -67,10 +68,10 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
     roleAdmin() {
-      return this.$store.state.roleAdmin;
+      return store.state.roleAdmin;
     },
   },
   mounted() {

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuCard.vue should render correctly 1`] = `undefined`;
+
+exports[`MerchantItemForm.vue should render correctly 1`] = `undefined`;
+
+exports[`Navbar.vue should render correctly 1`] = `undefined`;
+
+exports[`Option.vue should render correctly 1`] = `undefined`;
+
+exports[`Select.vue should render correctly 1`] = `undefined`;
+
+exports[`Sidebar.vue should render correctly 1`] = `undefined`;
+
+exports[`SummaryCard.vue should render correctly 1`] = `undefined`;
+
+exports[`TableFooter.vue should render correctly 1`] = `undefined`;

@@ -618,7 +618,7 @@
 
 <script>
 export default {
-  name: 'Icon',
+  name: 'HelpIcon',
   props: {
     name: {
       type: String,

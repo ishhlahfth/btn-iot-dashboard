@@ -308,6 +308,7 @@ import HelpBadge from '@/components/atoms/Badge.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import MenuCard from '@/components/molecules/MenuCard.vue';
+import store from '@/store';
 import API from '../apis';
 
 export default {
@@ -321,7 +322,7 @@ export default {
   },
   computed: {
     screenWidth() {
-      return this.$store.state.screenWidth;
+      return store.state.screenWidth;
     },
   },
   data() {
@@ -388,11 +389,8 @@ export default {
     async copyMerchantAtoB() {
       this.loading.transfering = true;
       try {
-        const {
-          data: { data },
-        } = await API.post(`items/from/${this.idMerchantA}/to/${this.idMerchantB}/duplicate`, {});
+        await API.post(`items/from/${this.idMerchantA}/to/${this.idMerchantB}/duplicate`, {});
         this.toast.success('successfully copy item !');
-        console.log(data, 'ini data final');
       } catch (error) {
         this.toast.error(error.message);
       }
@@ -441,7 +439,6 @@ export default {
             items: filtered,
           };
         });
-        console.log(finalData, 'data items');
         payload.items = finalData;
       } catch (error) {
         this.toast.error(error.message);

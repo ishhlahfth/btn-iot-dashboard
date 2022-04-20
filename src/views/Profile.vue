@@ -117,17 +117,23 @@ import { uuid } from 'uuidv4';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { useToast } from 'vue-toastification';
 import Icon from '@/components/atoms/Icon.vue';
 import HelpAvatar from '@/components/atoms/Avatar.vue';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
-import { useToast } from 'vue-toastification';
 import API from '@/apis';
 import mixin from '@/mixin';
 
 export default {
   name: 'Profile',
   mixins: [mixin],
+  components: {
+    HelpButton,
+    HelpInput,
+    HelpAvatar,
+    Icon,
+  },
   setup() {
     const toast = useToast();
     return { toast };
@@ -157,12 +163,6 @@ export default {
       visiblePasswordRe: false,
       bannerId: 0,
     };
-  },
-  components: {
-    HelpButton,
-    HelpInput,
-    HelpAvatar,
-    Icon,
   },
   computed: {
     s3() {
@@ -232,7 +232,11 @@ export default {
         const {
           data: { data },
         } = await API.patch(`/employees/${this.$store.state.currentUser.id}`, dataToSend);
-        this.handleEditAdmin(data.id);
+        if (this.bannerId) {
+          this.handleEditAdmin(data.id);
+        } else {
+          this.handleAddAdmin(data.id);
+        }
       } catch (error) {
         if (error.message === 'Network Error') {
           this.toast.error("Error: Check your network or it's probably a CORS error");
@@ -240,6 +244,40 @@ export default {
           this.toast.error(error.message);
         }
       }
+    },
+    handleAddAdmin(id) {
+      this.uploadS3(async (S3Response) => {
+        const BNSParams = {
+          title: this.form.name,
+          hyperlink: this.hyperlink,
+          bannerable: {
+            id,
+            type: 'EMPLOYEE',
+          },
+          group: 'COVER',
+          provider: {
+            name: 'S3',
+            config: {
+              location: this.imageFile.url,
+              etag: S3Response.ETag.slice(1, -1),
+              bucket: 'help-bns-bucket',
+              key: this.imageFile.fileName,
+            },
+          },
+        };
+
+        try {
+          const {
+            data: { data },
+          } = await API.post('/banners', BNSParams);
+          this.$store.commit('SET_IMAGE_PROFILE', data.image_url);
+          this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
+        } catch (error) {
+          this.toast.error(error.message);
+        }
+      });
+      this.loading = false;
+      this.form.password = '';
     },
     handleEditAdmin(id) {
       const payload = {
@@ -305,7 +343,6 @@ export default {
         const {
           data: { data },
         } = await API.patch(`banners/${this.bannerId}`, payload);
-        console.log(data, 'result banner');
         this.$store.commit('SET_IMAGE_PROFILE', data.image_url);
         this.toast.success(`${this.form.name}'s profile has been successfully edited !`);
       } catch (error) {

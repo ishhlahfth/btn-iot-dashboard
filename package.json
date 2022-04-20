@@ -5,13 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "^3.13.0",
     "@aws-sdk/client-s3": "^3.13.0",
     "@aws-sdk/credential-provider-cognito-identity": "^3.13.0",
-    "@mathieustan/vue-datepicker": "^0.2.11",
     "@tailwindcss/postcss7-compat": "2.0.2",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
@@ -50,17 +50,23 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "^4.5.15",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^2.0.0-rc.18",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
     "dotenv": "^8.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "jest-canvas-mock": "^2.3.1",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
-    "vue-cli-plugin-tailwind": "~2.0.5"
+    "typescript": "~3.9.3",
+    "vue-cli-plugin-tailwind": "~2.0.5",
+    "vue-jest": "^5.0.0-0"
   }
 }

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`_Components.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Admin.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Banner.vue has the expected html structure 1`] = `undefined`;
+
+exports[`CopyMerchant.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Dashboard.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Home.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Invoice.vue has the expected html structure 1`] = `undefined`;
+
+exports[`InvoiceDownload.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Login.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Merchant.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Order.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Payment.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Profile.vue has the expected html structure 1`] = `undefined`;
+
+exports[`ResetPassword.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Role.vue has the expected html structure 1`] = `undefined`;
+
+exports[`TermsConditions.vue has the expected html structure 1`] = `undefined`;
+
+exports[`Transfer.vue has the expected html structure 1`] = `undefined`;

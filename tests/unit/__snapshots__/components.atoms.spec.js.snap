@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar.vue should render correctly 1`] = `
+<div
+  class="bg-midnight rounded-full flex flex-col justify-center items-center cursor-default select-none"
+  style="width: 64px; height: 64px;"
+>
+  <p
+    class="text-white text-subheading font-medium"
+  />
+  
+  
+</div>
+`;
+
+exports[`Badge.vue should render correctly 1`] = `
+<div
+  class="flex justify-center max-w-min self-start rounded-full font-medium text-center text-xsmall py-1 px-2 px-4 text-flame-dark bg-flame-soft"
+>
+  <div
+    class="grid grid-flow-col auto-cols-max gap-1"
+  >
+    <!--v-if-->
+    <div
+      class="h-full w-full flex items-center"
+    >
+      <p
+        class="capitalize"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Button.vue should render correctly 1`] = `
+<button
+  class="flex items-center justify-center font-semibold transition-all bg-midnight text-white py-2 px-4 rounded-lg hover:bg-opacity-80"
+  type="submit"
+>
+  <div
+    class="grid grid-flow-col auto-cols-max gap-2"
+  >
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
+</button>
+`;
+
+exports[`Checkbox.vue should render correctly 1`] = `
+<div
+  class="grid grid-flow-col auto-cols-max gap-1 place-items-center"
+>
+  <input
+    class="cursor-pointer bg-white help-checkbox appearance-none h-5 w-5 m-1 border text-royal border-grey-2 checked:bg-royal rounded focus:outline-none"
+    type="checkbox"
+  />
+  <!--v-if-->
+</div>
+`;
+
+exports[`Icon.vue should render correctly 1`] = `
+<div
+  class="w-4 h-4 border border-dashed rounded-sm"
+/>
+`;
+
+exports[`Input.vue should render correctly 1`] = `undefined`;
+
+exports[`NavExpandableItem.vue should render correctly 1`] = `undefined`;
+
+exports[`NavItem.vue should render correctly 1`] = `
+<router-link-stub
+  ariacurrentvalue="page"
+  custom="true"
+  replace="false"
+  to="/"
+/>
+`;
+
+exports[`OptionItem.vue should render correctly 1`] = `
+<p
+  class="rounded py-2.5 px-4 w-full min-w-max cursor-pointer font-medium select-none hover:bg-grey-6"
+/>
+`;
+
+exports[`Radio.vue should render correctly 1`] = `
+<div
+  class="grid grid-flow-col auto-cols-max gap-1 place-items-center"
+>
+  <input
+    class="cursor-pointer bg-white help-radio appearance-none relative h-5 w-5 m-1 border text-royal border-grey-2 rounded-full checked:bg-royal checked:border-transparent focus:outline-none"
+    name=""
+    type="radio"
+    value="false"
+  />
+  <!--v-if-->
+</div>
+`;
+
+exports[`Thumbnail.vue should render correctly 1`] = `
+<div
+  class="border-2 border-grey-4 border-dashed rounded-md flex flex-col justify-center items-center"
+  style="width: 160px; height: 90px; background-image: none; background-size: none;"
+>
+  
+  <icon-stub
+    name="photograph"
+    size="4"
+  />
+  <p
+    class="text-xsmall font-medium"
+  >
+    No Image
+  </p>
+  
+</div>
+`;
+
+exports[`Toggle.vue should render correctly 1`] = `
+<div
+  class="w-11 p-0.5 flex rounded-full cursor-pointer transition-all duration-200 ease-in-out"
+  style="background: rgb(228, 231, 235);"
+>
+  <input
+    class="appearance-none cursor-pointer transition-all duration-200 ease-in-out"
+    type="checkbox"
+    value="false"
+  />
+  <label
+    class="w-5 h-5 rounded-full bg-white shadow cursor-pointer"
+  />
+</div>
+`;
+
+exports[`Tooltip.vue should render correctly 1`] = `
+<div
+  class="relative flex tooltip-container"
+>
+  
+  
+  <div
+    class="tooltip bg-grey-2 text-white text-center opacity-0 w-auto rounded py-1 px-3 absolute left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-75"
+    style="bottom: 110%;"
+  >
+    <p
+      class="text-xsmall"
+    />
+  </div>
+</div>
+`;

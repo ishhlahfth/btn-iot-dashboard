@@ -56,10 +56,18 @@
           :position="screenWidth < 640 ? ['top', 'right'] : ['bottom', 'right']"
         />
       </div>
-      <div class="w-full" v-if="needsReason">
+      <div class="w-full" v-if="needsReason.customer">
         <help-select
           v-model="selectedReason"
-          label="Choose cancel reason"
+          label="Choose cancel reason (customer side)"
+          :options="reasons"
+          :position="['top', 'right']"
+        />
+      </div>
+      <div class="w-full" v-if="needsReason.merchant">
+        <help-select
+          v-model="selectedReason"
+          label="Choose cancel reason (merchant side)"
           :options="reasons"
           :position="['top', 'right']"
         />
@@ -79,11 +87,11 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
+import dayjs from 'dayjs';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
 import Icon from '@/components/atoms/Icon.vue';
-import { useToast } from 'vue-toastification';
-import dayjs from 'dayjs';
 import API from '../../apis';
 
 export default {
@@ -124,7 +132,10 @@ export default {
         steps: false,
         update: false,
       },
-      needsReason: false,
+      needsReason: {
+        customer: false,
+        merchant: false,
+      },
       selectedReason: {
         /* value: '', label: '' */
       },
@@ -154,8 +165,9 @@ export default {
           ...el,
           process_date: dayjs(el.process_date).format('DD-MM-YYYY HH:mm:ss'),
         }));
+        this.history = this.history.filter((el, i) => this.history.findIndex((e) => e.step_title === el.step_title) === i);
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.history = false;
     },
@@ -172,7 +184,7 @@ export default {
           : [];
         this.selectedAction = this.actions.length ? this.actions[0] : {};
       } catch (error) {
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.steps = false;
     },
@@ -180,8 +192,11 @@ export default {
       this.loading.update = true;
 
       const payload = {};
-      if (this.needsReason) {
+      if (this.needsReason.customer) {
         payload.cancel_reason_id = this.selectedReason.value;
+      }
+      if (this.needsReason.merchant) {
+        payload.reject_reason_id = this.selectedReason.value;
       }
 
       try {
@@ -194,7 +209,7 @@ export default {
         this.getOrderSteps();
       } catch (error) {
         this.toast.error(error);
-        console.log(error);
+        this.toast.error(error.message);
       }
       this.loading.update = false;
       this.$emit('close');
@@ -205,7 +220,8 @@ export default {
       deep: true,
       async handler() {
         if (this.selectedAction.label === 'Batalkan Pesanan') {
-          this.needsReason = true;
+          this.needsReason.customer = true;
+          this.needsReason.merchant = false;
           try {
             const {
               data: { data },
@@ -213,10 +229,23 @@ export default {
             this.reasons = data.map((el) => ({ value: el.id, label: el.reason }));
             this.selectedReason = this.reasons[0];
           } catch (error) {
-            console.log(error);
+            this.toast.error(error.message);
+          }
+        } else if (this.selectedAction.label === 'Tolak Pesanan') {
+          this.needsReason.merchant = true;
+          this.needsReason.customer = false;
+          try {
+            const {
+              data: { data },
+            } = await API.get('order-reject-reasons');
+            this.reasons = data.map((el) => ({ value: el.id, label: el.reason }));
+            this.selectedReason = this.reasons[0];
+          } catch (error) {
+            this.toast.error(error.message);
           }
         } else {
-          this.needsReason = false;
+          this.needsReason.customer = false;
+          this.needsReason.merchant = false;
         }
       },
     },
