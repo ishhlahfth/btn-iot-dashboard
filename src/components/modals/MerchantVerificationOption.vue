@@ -39,10 +39,10 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import HelpButton from '@/components/atoms/Button.vue';
 import HelpInput from '@/components/atoms/Input.vue';
 import HelpSelect from '@/components/molecules/Select.vue';
-import { useToast } from 'vue-toastification';
 import API from '../../apis';
 
 export default {
@@ -93,15 +93,10 @@ export default {
         this.$emit('closeAndRefetch');
         this.toast.success(`Successully updated ${data.name}`);
       } catch (error) {
-        this.toast.error(error);
-        console.log(error);
+        this.toast.error(error.message);
       }
     },
   },
-  // mounted() {
-  //   console.log('🌛', this.verifDetail);
-  //   this.selectedStatus = this.statuses.filter((el) => el.label === this.verifDetail.verify_status)[0];
-  // },
 };
 </script>
 
