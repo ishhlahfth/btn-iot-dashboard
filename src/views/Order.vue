@@ -153,6 +153,7 @@ export default {
         { field: 'discounts', label: 'discount' },
         { field: 'service_fee', label: 'service fee' },
         { field: 'payment_method', label: 'payment method', sortable: true },
+        { field: 'grand_total', label: 'grand total', sortable: false },
         { field: 'detail', label: 'detail', align: 'center' },
       ],
       transferMode: false,
@@ -290,6 +291,7 @@ export default {
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
+          grand_total: this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))),
         }));
 
         this.orderPagination = {
@@ -355,6 +357,7 @@ export default {
             ? String(el.discounts?.total)
             : '0',
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
+          grand_total: this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))),
           payment_method: el.payment.name,
         }));
       } catch (error) {
