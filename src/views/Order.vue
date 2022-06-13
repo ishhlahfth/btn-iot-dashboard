@@ -292,7 +292,7 @@ export default {
             : '',
           initial_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
-          grand_total: this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))),
+          grand_total: el.delivery_code ? this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))) : this.convertToRp(el.subtotal_price),
         }));
 
         this.orderPagination = {
@@ -358,7 +358,7 @@ export default {
             ? String(el.discounts?.total)
             : '0',
           service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
-          grand_total: this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))),
+          grand_total: el.delivery_code ? this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))) : this.convertToRp(el.subtotal_price),
           payment_method: el.payment.name,
         }));
       } catch (error) {
