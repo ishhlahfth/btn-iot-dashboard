@@ -120,7 +120,7 @@ export default createStore({
       try {
         const {
           data: { data },
-        } = await API.get(`/api/landing-page/agent-type-category`);
+        } = await API.get(`merchants/${merchantId}`);
 
         merchant = {
           merchant_id: data.id,
