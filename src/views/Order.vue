@@ -350,14 +350,14 @@ export default {
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
-          item_price: this.convertToRp(el.subtotal_price),
-          commission: this.convertToRp(el.commission_fee),
-          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
+          item_price: el.subtotal_price,
+          commission: el.commission_fee,
+          delivery_price: el.order_type_details?.delivery_method?.initial_price,
           discount: el.discounts?.total
             ? String(el.discounts?.total)
             : '0',
-          service_fee: this.convertToRp(el.order_type_details?.delivery_method?.service_fee),
-          grand_total: el.order_type === 'Delivery' ? this.convertToRp((el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0))) : this.convertToRp(el.subtotal_price),
+          service_fee: el.order_type_details?.delivery_method?.service_fee,
+          grand_total: el.order_type === 'Delivery' ? (el.subtotal_price + el.order_type_details?.delivery_method?.initial_price + el.order_type_details?.delivery_method?.service_fee) - (Math.abs(el.discounts ? el.discounts.total : 0)) : el.subtotal_price,
           payment_method: el.payment.name,
         }));
       } catch (error) {
