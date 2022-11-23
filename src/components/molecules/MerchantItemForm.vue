@@ -148,8 +148,8 @@
           Product description is required
         </p>
         <help-input
-          type="number"
-          mask="############"
+          type="text"
+          mask="#*"
           label="Product Price (Rp)"
           placeholder="Rp 1.000.000"
           left-icon="price"
