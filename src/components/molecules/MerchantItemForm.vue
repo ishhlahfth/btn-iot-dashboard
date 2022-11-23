@@ -149,6 +149,7 @@
         </p>
         <help-input
           type="number"
+          mask="############"
           label="Product Price (Rp)"
           placeholder="Rp 1.000.000"
           left-icon="price"
