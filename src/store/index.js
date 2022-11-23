@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { useToast } from 'vue-toastification';
 import createPersistedState from 'vuex-persistedstate';
 import dayjs from 'dayjs';
 import API from '../apis';
@@ -113,7 +114,7 @@ export default createStore({
     },
   },
   actions: {
-    async loadMerchant({ commit, dispatch }, merchantId) {
+    async loadMerchant({ commit }, merchantId) {
       commit('SET_LOADING', { type: 'merchant', payload: true });
       let merchant = {};
       try {
@@ -145,7 +146,7 @@ export default createStore({
           menu: [],
         };
         if (data.banners?.length) {
-          merchant.imageUrl = await dispatch('loadImage', data.banners[0].image_url);
+          merchant.imageUrl = data.banners[0].image_url;
         }
 
         const {
@@ -171,7 +172,7 @@ export default createStore({
 
         commit('SET_MERCHANT', merchant);
       } catch (error) {
-        console.log(error);
+        useToast().error(error.message);
       }
       commit('SET_LOADING', { type: 'merchant', payload: false });
     },
@@ -183,7 +184,7 @@ export default createStore({
         } = await API.get(bnsURL);
         imageURL = responseURL;
       } catch (error) {
-        console.log(error);
+        useToast().error(`${error.message} - assadsadsad`);
       }
       return imageURL;
     },

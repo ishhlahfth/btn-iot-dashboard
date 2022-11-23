@@ -388,11 +388,8 @@ export default {
     async copyMerchantAtoB() {
       this.loading.transfering = true;
       try {
-        const {
-          data: { data },
-        } = await API.post(`items/from/${this.idMerchantA}/to/${this.idMerchantB}/duplicate`, {});
+        await API.post(`items/from/${this.idMerchantA}/to/${this.idMerchantB}/duplicate`, {});
         this.toast.success('successfully copy item !');
-        console.log(data, 'ini data final');
       } catch (error) {
         this.toast.error(error.message);
       }
@@ -441,7 +438,6 @@ export default {
             items: filtered,
           };
         });
-        console.log(finalData, 'data items');
         payload.items = finalData;
       } catch (error) {
         this.toast.error(error.message);
