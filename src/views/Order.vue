@@ -137,7 +137,7 @@ export default {
       searchValue: '',
       columns: [
         { field: 'date', label: 'order date', sortable: true },
-        { field: 'code', label: 'po number' },
+        { field: 'code', label: 'po number', align: 'center' },
         { field: 'type', label: 'order type' },
         {
           field: 'current_step',
@@ -350,9 +350,9 @@ export default {
           current_step: el.current_step.title,
           merchant_name: el.merchant?.name,
           customer_name: el.customer?.profile?.name,
-          item_price: el.subtotal_price,
-          commission: el.commission_fee,
-          delivery_price: el.order_type_details?.delivery_method?.initial_price,
+          item_price: this.convertToRp(el.subtotal_price),
+          commission: this.convertToRp(el.commission_fee),
+          delivery_price: this.convertToRp(el.order_type_details?.delivery_method?.initial_price),
           discount: el.discounts?.total
             ? String(el.discounts?.total)
             : '0',
