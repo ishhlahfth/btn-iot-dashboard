@@ -5,7 +5,7 @@
       :href="href"
       @click="navigate"
       class="nav-item h-10 w-full rounded-md text-white p-2 flex items-center justify-between overflow-hidden cursor-pointer"
-      :class="{ 'bg-midnight-dark not-selectable': isActive }"
+      :class="{ 'bg-grey-1 not-selectable': isActive }"
     >
       <div class="flex items-center whitespace-nowrap select-none">
         <div class="w-6 h-5 flex items-center justify-center mr-2">
@@ -41,12 +41,12 @@ export default {
 <style lang="scss" scoped>
 .nav-item {
   &:hover {
-    background: rgba($color: #003168, $alpha: .3);
+    background: rgba($color: #a1a1a1, $alpha: .3);
   }
 }
 .not-selectable {
   &:hover {
-    background: rgba($color: #003168, $alpha: 1);
+    background: rgba($color: #a1a1a1, $alpha: 1);
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="h-full fixed inset-y-0 left-0 sm:grid gap-2 auto-rows-max bg-midnight overflow-hidden z-50 sm:p-2 transition-all duration-200"
+    class="h-full fixed inset-y-0 left-0 sm:grid gap-2 auto-rows-max bg-botanee overflow-hidden z-50 sm:p-2 transition-all duration-200"
     :class="mini ? 'w-0 sm:w-14' : 'p-2 w-64'"
     @mouseover="$store.commit('SET_MINI', false)"
     @mouseleave="$store.commit('SET_MINI', true)"
@@ -16,7 +16,7 @@
       >
         <img
           alt="Help logo"
-          src="@/assets/why-white.png"
+          src="@/assets/btn-img-crop.jpg"
           width="145.38"
           height="43.09"
           class="mx-auto my-3"
@@ -49,37 +49,8 @@ export default {
   data() {
     return {
       collapsed: true,
-      menu: {
-        dashboard: false,
-        merchant: {
-          update: false,
-          delete: false,
-        },
-        order: {
-          update: false,
-          delete: false,
-        },
-        transfer: {
-          update: false,
-          delete: false,
-        },
-        payment: {
-          update: false,
-          delete: false,
-        },
-        banner: {
-          create: false,
-          update: false,
-          delete: false,
-        },
-        admin: {
-          create: false,
-          update: false,
-          delete: false,
-        },
-      },
       links: [
-        // { path: '/bns/dashboard', label: 'Dashboard', icon: 'home' },
+        { path: '/btn/dashboard', label: 'Dashboard', icon: 'home' },
         // { path: '/bns/merchant', label: 'Merchant', icon: 'user' },
         // { path: '/bns/order', label: 'Order', icon: 'cube' },
         // { path: '/bns/transfer', label: 'Transfer', icon: 'switch-horizontal' },
@@ -112,121 +83,6 @@ export default {
     },
   },
   mounted() {
-    const permission = this.$store.state.access.access;
-    const tempFilter = permission.permissions
-      .filter((el) => el.dummySequence)
-      .sort((a, b) => a.dummySequence - b.dummySequence);
-    console.log(tempFilter, 'bisa ga');
-    if (tempFilter) {
-      tempFilter.forEach((el) => {
-        switch (el.module.toLowerCase()) {
-          case 'dashboard':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/dashboard',
-                label: 'Dashboard',
-                icon: 'home',
-                sort: 1,
-              });
-            }
-            break;
-          case 'merchant':
-            if (el.action === 'READ' && el.id === 42) {
-              this.links.push({
-                path: '/bns/merchant',
-                label: 'Merchant',
-                icon: 'merchant',
-                sort: 2,
-              });
-            }
-            break;
-          case 'order-type':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/order',
-                label: 'Order',
-                icon: 'cube',
-                sort: 4,
-              });
-            }
-            break;
-          case 'transfer_queues':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/transfer',
-                label: 'Transfer',
-                icon: 'switch-horizontal',
-                sort: 5,
-                subMenu: [
-                  {
-                    path: '/bns/transfer',
-                    label: 'Transfer Merchant',
-                  },
-                  {
-                    path: '/bns/transfer-agent',
-                    label: 'Transfer Agent',
-                  },
-                ],
-              });
-            }
-            break;
-          case 'payment':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/payment',
-                label: 'Payment',
-                icon: 'credit-card',
-                sort: 7,
-              });
-            }
-            break;
-          case 'banner':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/banner',
-                label: 'Banner',
-                icon: 'photograph',
-                sort: 8,
-              });
-            }
-            break;
-          case 'user':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/admin',
-                label: 'Admin',
-                icon: 'shield',
-                sort: 9,
-              });
-            }
-            break;
-          case 'role':
-            if (el.action === 'READ') {
-              this.links.push({
-                path: '/bns/role',
-                label: 'Role',
-                icon: 'user-group',
-                sort: 10,
-              });
-            }
-            break;
-          default:
-            break;
-        }
-      });
-      this.links.push({
-        path: '/bns/copy_merchant',
-        label: 'Copy Merchant',
-        icon: 'copy',
-        sort: 11,
-      });
-      this.links.push({
-        path: '/bns/agents',
-        label: 'Agents',
-        icon: 'user',
-        sort: 3,
-      });
-    }
     this.links.sort((a, b) => a.sort - b.sort);
   },
 };

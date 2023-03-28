@@ -1,8 +1,8 @@
 import axios from 'axios';
-import store from '@/store';
+// import store from '@/store';
 
 const API = axios.create({
-  baseURL: `${process.env.VUE_APP_BASE_URL}v1/`,
+  baseURL: `${process.env.VUE_APP_BASE_URL}`,
   headers: {
     'x-device-type': 'LINUX',
     'x-device-os-version': 'Ubuntu18.04',
@@ -18,12 +18,12 @@ const API = axios.create({
   },
 });
 
-API.interceptors.request.use(
-  (config) => {
-    config.headers['x-api-key'] = store.state.currentUser.access_token;
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
+// API.interceptors.request.use(
+//   (config) => {
+//     config.headers['x-api-key'] = store.state.currentUser.access_token;
+//     return config;
+//   },
+//   (error) => Promise.reject(error),
+// );
 
 export default API;

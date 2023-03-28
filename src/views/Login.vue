@@ -17,7 +17,6 @@
   </help-modal>
   <div class="w-full sm:min-w-min p-8 sm:p-24 sm:pb-10 sm:mb-5 bg-snow absolute top-12">
     <div class="flex flex-col items-center mb-16">
-      <img alt="logo" src="../assets/red-no-label.png" style="width: 83px;" />
       <h5 class="m-0 font-semibold text-gray-600 text-center text-heading3 sm:text-3xl">
         Sign in to continue
       </h5>
@@ -149,66 +148,6 @@ export default {
       }
     });
 
-    const getRoleById = async (id, token) => {
-      try {
-        const {
-          data: { data },
-        } = await axios(`${process.env.VUE_APP_BASE_URL}v1/roles/${id}`, {
-          headers: {
-            'x-device-type': 'LINUX',
-            'x-device-os-version': 'Ubuntu18.04',
-            'x-device-model': '4s-dk0115AU',
-            'x-app-version': 'v1.2',
-            'x-request-id': '1234',
-            'x-device-utc-offset': '+07:00',
-            'x-device-lang': 'en',
-            'x-device-notification-code': 'secret-xDeviceNotificationCode-for-developer',
-            'x-api-key': `${token}`,
-          },
-        });
-        const dataToSend = {
-          ...data,
-          permissions: data.permissions.map((el) => {
-            switch (el.module.toLowerCase()) {
-              case 'dashboard':
-                el.dummySequence = 1;
-                break;
-              case 'order-type':
-                el.dummySequence = 3;
-                break;
-              case 'payment':
-                el.dummySequence = 5;
-                break;
-              case 'merchant':
-                el.dummySequence = 2;
-                break;
-              case 'banner':
-                el.dummySequence = 6;
-                break;
-              case 'role':
-                el.dummySequence = 8;
-                break;
-              case 'user':
-                el.dummySequence = 7;
-                break;
-              case 'transfer_queues':
-                el.dummySequence = 4;
-                break;
-              default:
-                break;
-            }
-            return el;
-          }),
-        };
-        store.commit('setAccess', dataToSend);
-        store.commit('setRedirect', data.permissions);
-        router.push('/bns');
-        loadingBackdrop.value = false;
-      } catch (error) {
-        toast.error(error.message);
-      }
-    };
-
     const signIn = async () => {
       if (!email.value) invalid.value.email = true;
       if (!password.value) invalid.value.password = true;
@@ -225,7 +164,6 @@ export default {
           } = await axios.post(`${process.env.VUE_APP_BASE_URL}dashboard/login`, payload, {
             headers: { authorization: auth },
           });
-          getRoleById(data.role_id, data.access_token);
           loadingBackdrop.value = true;
           if (data) {
             let user = Utf8.parse(JSON.stringify(data));
@@ -235,12 +173,17 @@ export default {
               cookieValue: user,
               expiresIn: 3,
             });
+            router.push('/btn');
           }
         } catch (error) {
           toast.error(error.response.data.meta.message);
         }
         loading.value = false;
       }
+    };
+
+    const passLogin = async () => {
+      router.push('/bns');
     };
 
     onMounted(async () => {
@@ -273,6 +216,7 @@ export default {
       resetEmail,
       invalid,
       signIn,
+      passLogin,
       visiblePassword,
       loading,
       loadingBackdrop,
@@ -280,6 +224,11 @@ export default {
       resetPasswordLoading,
       sendVerifyEmail,
     };
+  },
+  methods: {
+    passLogins() {
+      this.router.push('/bns');
+    },
   },
 };
 </script>

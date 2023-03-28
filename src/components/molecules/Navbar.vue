@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import API from '@/apis';
 import store from '@/store';
 import HelpAvatar from '../atoms/Avatar.vue';
 import HelpOption from './Option.vue';
@@ -77,7 +76,7 @@ export default {
     },
   },
   mounted() {
-    this.generateProfile();
+    // this.generateProfile();
   },
   methods: {
     navigate(menu) {
@@ -86,15 +85,7 @@ export default {
         this.$router.push('/');
         localStorage.clear();
       } else if (menu === 'Profile') {
-        this.$router.push('/bns/profile');
-      }
-    },
-    async generateProfile() {
-      const {
-        data: { data },
-      } = await API.get(`/employees/${this.currentUser.id}`);
-      if (data.banner) {
-        store.commit('SET_IMAGE_PROFILE', data.banner.location);
+        this.$router.push('/btn/profile');
       }
     },
   },

@@ -41,8 +41,8 @@ const routes = [
     component: () => import('@/views/Login.vue'),
   },
   {
-    path: '/bns',
-    redirect: '/bns/dashboard',
+    path: '/btn',
+    redirect: '/btn/dashboard',
     name: 'BNS',
     component: () => import('@/components/layouts/Main.vue'),
     beforeEnter: authenticate,

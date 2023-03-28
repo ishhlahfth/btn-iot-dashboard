@@ -92,6 +92,7 @@ module.exports = {
       'grey-7': '#F6F6F6',
       'midnight-dark': '#003168',
       flame: '#FF5630',
+      botanee: '#5B6C7C',
       'flame-soft': '#F7E6E8',
       'flame-dark': '#B51229',
       gold: '#FFAB00',
